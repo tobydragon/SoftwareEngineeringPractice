@@ -39,7 +39,32 @@ public class BankAccount {
         if (email.indexOf('@') == -1){
             return false;
         }
+
+        else if(email.indexOf("..") != -1){
+            return false;
+        }
+
+        else if(email.indexOf('#')!= -1){
+            return false;
+        }
+
+        else if(email.indexOf("-@") != -1){
+            return false;
+        }
+
+        else if(email.indexOf('.') == 0){
+            return false;
+        }
+
         else {
+            String domain = email.substring(email.indexOf('@'));
+            if(domain.indexOf('.') == -1){
+                return false;
+            }
+            String extension = domain.substring(domain.indexOf('.')+1);
+            if(extension.indexOf('.') != -1){
+                return false;
+            }
             return true;
         }
     }
