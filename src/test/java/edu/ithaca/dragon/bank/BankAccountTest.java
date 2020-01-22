@@ -18,14 +18,17 @@ class BankAccountTest {
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
         bankAccount.withdraw(100);
 
+
         assertEquals(100, bankAccount.getBalance());
     }
 
+
     @Test
     void isEmailValidTest(){
-        assertTrue(BankAccount.isEmailValid( "a@b.com"));
-        assertFalse( BankAccount.isEmailValid(""));
+        assertTrue(BankAccount.isEmailValid( "abc@google.com"));
+        assertFalse( BankAccount.isEmailValid("abc-@google.com"));
     }
+
 
     @Test
     void constructorTest() {
