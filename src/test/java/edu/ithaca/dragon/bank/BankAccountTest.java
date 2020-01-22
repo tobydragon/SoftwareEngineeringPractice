@@ -25,6 +25,17 @@ class BankAccountTest {
     void isEmailValidTest(){
         assertTrue(BankAccount.isEmailValid( "a@b.com"));
         assertFalse( BankAccount.isEmailValid(""));
+
+        // prefix tests
+        assertFalse(BankAccount.isEmailValid("a-@b.com"));
+        assertFalse(BankAccount.isEmailValid("a..@b.com"));
+        assertFalse(BankAccount.isEmailValid(".a@b.com"));
+        assertFalse(BankAccount.isEmailValid("a#b@b.com"));
+
+        // domain tests
+        assertFalse(BankAccount.isEmailValid("a@b."));
+        assertFalse(BankAccount.isEmailValid("a@b.."));
+
     }
 
     @Test
