@@ -27,16 +27,18 @@ class BankAccountTest {
         //assertFalse( BankAccount.isEmailValid(""));
 
         //Josue's invalid email prefix tests
-        assertFalse((BankAccount.isEmailValid("TomHanksIsCool-@b.com")));
-        assertFalse((BankAccount.isEmailValid("Maud..Vile@b.com")));
-        assertFalse((BankAccount.isEmailValid("Yung#Muney@b.com")));
-        assertFalse((BankAccount.isEmailValid(".TableScraps@b.com")));
+        assertFalse((BankAccount.isEmailValid("TomHanksIsCool-@b.com"))); //equivalence case is - next to the @ edge case
+        assertFalse((BankAccount.isEmailValid("Maud..Vile@b.com"))); //equivalence case is .. in the prefix edge case
+        assertFalse((BankAccount.isEmailValid("Yung#Muney@b.com"))); //equivalence case is # in the prefix edge case
+        assertFalse((BankAccount.isEmailValid(".TableScraps@b.com")));  //equivalence case is prefix starting with . edge case
 
         //Josue's invalid email domain tests
-        assertFalse((BankAccount.isEmailValid("TomHanksIsCold@b#c.com")));
-        assertFalse((BankAccount.isEmailValid("KevinLevin@b")));
-        assertFalse((BankAccount.isEmailValid("JetSetRadio@b..com")));
-        assertFalse((BankAccount.isEmailValid("Jajaja@b.SpanishLaugh.com")));
+        assertFalse((BankAccount.isEmailValid("TomHanksIsCold@b#c.com"))); //equivalence case # in domain edge case
+        assertFalse((BankAccount.isEmailValid("KevinLevin@b"))); //equivalence case no extension to the domain edge case
+        assertFalse((BankAccount.isEmailValid("JetSetRadio@b..com"))); //equivalence case .. in the domain edge case
+        assertFalse((BankAccount.isEmailValid("Jajaja@b.SpanishLaugh.com"))); //equivalence case two . in the domain edge case
+        //there is no equivalence case for there only being one letter in the extension. edge case
+        //there is no equivalence case for any valid emails.
     }
 
     @Test
