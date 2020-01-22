@@ -37,4 +37,32 @@ class BankAccountTest {
         assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", 100));
     }
 
+    @Test
+    void isEmailValidTestUpdated(){
+        assertFalse(BankAccount.isEmailValid(""));
+        assertFalse(BankAccount.isEmailValid("a-@b.com"));
+        assertFalse(BankAccount.isEmailValid("a..@b.com"));
+        assertFalse(BankAccount.isEmailValid(".a@b.com"));
+        assertFalse(BankAccount.isEmailValid("a#@b.com"));
+        assertFalse(BankAccount.isEmailValid("a@b.c"));
+        assertFalse(BankAccount.isEmailValid("a@b#c.com"));
+        assertFalse(BankAccount.isEmailValid("a@b"));
+        assertFalse(BankAccount.isEmailValid("a@b..com"));
+        assertTrue(BankAccount.isEmailValid("a@b.com"));
+        assertTrue(BankAccount.isEmailValid("a-b@c.com"));
+        assertTrue(BankAccount.isEmailValid("a.b@c.com"));
+        assertTrue(BankAccount.isEmailValid("a_b@c.com"));
+        assertTrue(BankAccount.isEmailValid("a@b.cc"));
+        assertTrue(BankAccount.isEmailValid("a@b-c.com"));
+    }
+
+    @Test
+    void withdrawTestUpdated(){
+        BankAccount bankAccount = new BankAccount("a@b.com", 200);
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount.withdraw(-100));
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount.withdraw(300));
+        bankAccount.withdraw(100);
+        assertEquals(100, bankAccount.getBalance());
+    }
+
 }
