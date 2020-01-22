@@ -37,4 +37,32 @@ class BankAccountTest {
         assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", 100));
     }
 
+    @Test
+    void isEmailValidCorrectTest(){
+        String correctEmail = "correct@test.com";
+        String incorrectEmail = "incor#rect@test.com";
+
+        String correctEmail2 = "cor-rect@test.com";
+        String incorrectEmail2 = "incorrect-@test.com";
+
+        String correctEmail3 = "cor.rect@test.com";
+        String incorrectEmail3 = "incor..rect@test.com";
+
+        String correctEmail4 = "cor_rect@test.com";
+        String incorrectEmail4 = ".incorrect@test.com";
+
+        assertFalse(BankAccount.isEmailValid(incorrectEmail));
+        assertTrue(BankAccount.isEmailValid(correctEmail));
+
+        assertFalse(BankAccount.isEmailValid(incorrectEmail2));
+        assertTrue(BankAccount.isEmailValid(correctEmail2));
+
+        assertFalse(BankAccount.isEmailValid(incorrectEmail3));
+        assertTrue(BankAccount.isEmailValid(correctEmail3));
+
+        assertFalse(BankAccount.isEmailValid(incorrectEmail4));
+        assertTrue(BankAccount.isEmailValid(correctEmail4));
+
+    }
+
 }
