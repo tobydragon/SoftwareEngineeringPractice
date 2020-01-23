@@ -23,8 +23,6 @@ class BankAccountTest {
 
     @Test
     void isEmailValidTest(){
-        assertTrue(BankAccount.isEmailValid( "a@b.com"));
-        assertFalse( BankAccount.isEmailValid(""));
         //Email should be true if starts with character or number, includes @ and ends with .'character'
         assertTrue(BankAccount.isEmailValid( "a@b.com"));
         assertFalse( BankAccount.isEmailValid(""));
@@ -38,8 +36,7 @@ class BankAccountTest {
         assertFalse(BankAccount.isEmailValid(".n@Gcom"));
         assertFalse(BankAccount.isEmailValid(".#Gcom"));
         assertFalse(BankAccount.isEmailValid("n$@@G$$com"));
-        assertTrue(BankAccount.isEmailValid("n122@gyi.g"));
-        assertTrue(BankAccount.isEmailValid("n122@gyi.g"));
+        assertTrue(BankAccount.isEmailValid("n122@gyi.guo"));
 
 
     }
