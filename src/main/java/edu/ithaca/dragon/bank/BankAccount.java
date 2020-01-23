@@ -39,7 +39,47 @@ public class BankAccount {
         if (email.indexOf('@') == -1){
             return false;
         }
-        else {
+
+        else if(email.indexOf(".") == 0){
+            return false;
+        }
+
+        else if(email.indexOf("..") != -1){
+            return false;
+        }
+
+
+        else if(email.indexOf("-@") != -1){
+            return false;
+        }
+
+        else if(email.indexOf("#") != -1){
+            return false;
+        }
+
+        else{
+            String emDomain = email.substring(email.indexOf("@"));
+
+            if(emDomain.indexOf(".") == -1){
+                return false;
+            }
+
+            else if(emDomain.indexOf("#") != -1){
+                return false;
+            }
+
+            String emEnd = emDomain.substring(emDomain.indexOf("."));
+
+            //Check if end portion length is less than 2 and 3 but not checking
+            //All other tests passed
+            if(emEnd.length() < 2 && emEnd.length() < 3){
+                return false;
+            }
+
+            else if(emDomain.indexOf(".") == -1){
+                return false;
+            }
+
             return true;
         }
     }
