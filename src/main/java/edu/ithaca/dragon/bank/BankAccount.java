@@ -36,11 +36,6 @@ public class BankAccount {
 
 
     public static boolean isEmailValid(String email){
-        if (email.indexOf('@') == -1){
-            return false;
-        }
-        else {
-            return true;
-        }
+        return email.matches("(\\w)+((_|\\.|-)+\\w+)?@(\\w)+.(com|org|cc)");
     }
 }
