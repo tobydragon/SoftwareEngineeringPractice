@@ -37,8 +37,15 @@ class BankAccountTest {
         assertFalse((BankAccount.isEmailValid("KevinLevin@b"))); //equivalence case no extension to the domain edge case
         assertFalse((BankAccount.isEmailValid("JetSetRadio@b..com"))); //equivalence case .. in the domain edge case
         assertFalse((BankAccount.isEmailValid("Jajaja@b.SpanishLaugh.com"))); //equivalence case two . in the domain edge case
+
         //there is no equivalence case for there only being one letter in the extension. edge case
+        assertFalse((BankAccount.isEmailValid("Jajaja@b.c")));
+
         //there is no equivalence case for any valid emails.
+        //Josue's True email tests
+        assertTrue(BankAccount.isEmailValid( "bagles@b.com"));
+        assertTrue(BankAccount.isEmailValid( "animale.farm@b.org"));
+        assertTrue(BankAccount.isEmailValid( "bagles@fircracker.cc"));
     }
 
     @Test
