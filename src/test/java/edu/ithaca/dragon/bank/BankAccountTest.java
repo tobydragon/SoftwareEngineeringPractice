@@ -73,15 +73,13 @@ class BankAccountTest {
         assertTrue(BankAccount.isEmailValid("abc@mail.com"));
         assertTrue(BankAccount.isEmailValid("abc_def@mail.com"));
 
-        /**
-         * The BankAccount check for this is not working
-         */
-        //Equivalence class being in third partition, with boundary value to indexOf(".") to end)
+        //Equivalence class being in second partitions, with boundary value to indexOf(".")->end
         assertFalse(BankAccount.isEmailValid("abc.def@mail.c"));
-
         //Equivalence class being in second partitions, with boundary value to indexOf("@")->indexOf(".")
         assertFalse(BankAccount.isEmailValid("abc.def@mail#archive.com"));
+        //Equivalence class being in third partitions, with boundary value to indexOf("@")->end
         assertFalse(BankAccount.isEmailValid("bc.def@mail"));
+        //Equivalence class being in second partitions, with boundary value to indexOf("@")->indexOf(".")
         assertFalse(BankAccount.isEmailValid("abc.def@mail..com"));
 
         //Equivalence class being in second partitions, with boundary value to indexOf("@)->indexOf(extensions)
