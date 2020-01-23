@@ -45,21 +45,21 @@ public class BankAccount {
         int lastAtIdx = email.indexOf('@');
 
         //Checks that there is no more than 1 @.
-        if (atIdx != lastAtIdx) { return false; }
+        if (atIdx != lastAtIdx) return false;
 
         //Checks that there is an @.
-        if (atIdx == -1) { return false; }
+        if (atIdx == -1) return false;
 
         //Checks that there is a period in the only two spots it can be in the domain.
         //Note that there can only be 2 or 3 characters after the period in the domain.
         int len = email.length();
         int lastPeriodIdx = email.lastIndexOf('.');
 
-        if (lastPeriodIdx == -1){ return false; }
-        if (lastPeriodIdx != len - 3 && lastPeriodIdx != len - 4) { return false; }
+        if (lastPeriodIdx == -1) return false;
+        if (lastPeriodIdx != len - 3 && lastPeriodIdx != len - 4) return false;
 
         //Checks that the @ is before the last period.
-        if (atIdx>lastPeriodIdx) { return false; }
+        if (atIdx>lastPeriodIdx) return false;
 
         //Checks that all characters are valid and that the email obeys the letter after special rule.
         int i = len - 1;
@@ -69,15 +69,16 @@ public class BankAccount {
         while (i > -1) {
 
             //if invalid character return false
-            if (!(validCharArr.contains(email.charAt(i)))) { return false; }
+            if (!(validCharArr.contains(email.charAt(i)))) return false;
 
             //if special character, make sure following character is not special
             if (isSpecialChar(email.charAt(i))){
-                //if leading character is special, return false
-                if (i == 0){ return false; }
+                //if leading or last character is special, return false
+                if (i == 0 || i == len - 1) return false;
                 //if the next character is also special return false
-                if (isSpecialChar(email.charAt(i + 1))){ return false; }
+                if (isSpecialChar(email.charAt(i + 1))) return false;
             }
+            //go to the letter one previous
             i--;
         }
         //if no invalid characters found or special rules broken, return true

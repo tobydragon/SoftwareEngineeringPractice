@@ -1,3 +1,4 @@
+
 package edu.ithaca.dragon.bank;
 
 import org.junit.jupiter.api.Test;
@@ -33,15 +34,16 @@ class BankAccountTest {
         assertTrue(BankAccount.isEmailValid( "a.c@mail.com"));
 
         
-        assertFalse( BankAccount.isEmailValid(""));
-        assertFalse( BankAccount.isEmailValid("a-@b.com"));
-        assertFalse( BankAccount.isEmailValid("a..c@b.com"));
-        assertFalse( BankAccount.isEmailValid(".a@b.com"));
-        assertFalse( BankAccount.isEmailValid("a#c@b.com"));
-        assertFalse( BankAccount.isEmailValid("a.c@b.c"));
-        assertFalse( BankAccount.isEmailValid("a.c@b#archive.com"));
-        assertFalse( BankAccount.isEmailValid("a.c@b"));
-        assertFalse( BankAccount.isEmailValid("a.c@b..com"));
+        assertFalse(BankAccount.isEmailValid(""));
+        assertFalse(BankAccount.isEmailValid("a-@b.com"));
+        assertFalse(BankAccount.isEmailValid("a..c@b.com"));
+        assertFalse(BankAccount.isEmailValid(".a@b.com"));
+        assertFalse(BankAccount.isEmailValid("a#c@b.com"));
+        assertFalse(BankAccount.isEmailValid("a.c@b.c"));
+        assertFalse(BankAccount.isEmailValid("a.c@b#archive.com"));
+        assertFalse(BankAccount.isEmailValid("a.c@b"));
+        assertFalse(BankAccount.isEmailValid("a.c@b..com"));
+        assertFalse(BankAccount.isEmailValid("abc@def.co-"));
 
 
 
