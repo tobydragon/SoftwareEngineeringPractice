@@ -32,6 +32,9 @@ public class BankAccount {
     print out "Amount wanted is less than 0" error
     Don't change the original balance
 
+    if the amount is 0
+    return the balance as is/do nothing and have the subtraction be 0
+
     if the amount is less than the current balance
     print out "Amount wanted is less than the current balance" error
     Don't change the original balance
@@ -45,6 +48,9 @@ public class BankAccount {
 
 
     public static boolean isEmailValid(String email){
+        if(email == ""){
+            return false;
+        }
         if (email.indexOf('@') == -1){
             return false;
         }
@@ -76,20 +82,20 @@ public class BankAccount {
             else if(emDomain.indexOf("#") != -1){
                 return false;
             }
+            else {
+                String emEnd = emDomain.substring(emDomain.indexOf("."));
 
-            String emEnd = emDomain.substring(emDomain.indexOf("."));
-
-            //Check if end portion length is less than 2 and 3 but not checking
-            //All other tests passed
-            if(emEnd.length() < 2 && emEnd.length() < 3){
-                return false;
+                /**
+                 * Check if end portion length is less than 2 and 3 but not checking
+                 * All other tests passed
+                 */
+                if (emEnd.length() < 2 && emEnd.length() < 3) {
+                    return false;
+                } else if (emDomain.indexOf(".") == -1) {
+                    return false;
+                }
             }
-
-            else if(emDomain.indexOf(".") == -1){
-                return false;
-            }
-
-            return true;
         }
+        return true;
     }
 }
