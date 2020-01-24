@@ -1,6 +1,6 @@
 package edu.ithaca.dragon.bank;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 
 public class BankAccount {
 
@@ -32,8 +32,9 @@ public class BankAccount {
      * @post reduces the balance by amount if amount is non-negative and smaller than balance
      */
     public void withdraw (double amount)  {
-        balance -= amount;
-
+        if (amount <= 0) throw new IllegalArgumentException("Cannot withdraw 0 or less.");
+        if (balance >= amount) balance -= amount;
+        else throw new IllegalArgumentException("Cannot draw more than account balance.");
     }
 
     /**
@@ -41,20 +42,16 @@ public class BankAccount {
      */
 
     public static boolean isEmailValid(String email) {
+
+        //Checks that there is only 1 @.
         int atIdx = email.indexOf('@');
-        int lastAtIdx = email.indexOf('@');
+        int lastAtIdx = email.lastIndexOf('@');
+        if (atIdx != lastAtIdx || atIdx == -1) return false;
 
-        //Checks that there is no more than 1 @.
-        if (atIdx != lastAtIdx) return false;
-
-        //Checks that there is an @.
-        if (atIdx == -1) return false;
-
-        //Checks that there is a period in the only two spots it can be in the domain.
-        //Note that there can only be 2 or 3 characters after the period in the domain.
+        //Checks that there is a period in the one of two spots it must be in the domain.
+        //Note that there can only be 2 or 3 characters after the last period in the domain.
         int len = email.length();
         int lastPeriodIdx = email.lastIndexOf('.');
-
         if (lastPeriodIdx == -1) return false;
         if (lastPeriodIdx != len - 3 && lastPeriodIdx != len - 4) return false;
 
@@ -63,13 +60,11 @@ public class BankAccount {
 
         //Checks that all characters are valid and that the email obeys the letter after special rule.
         int i = len - 1;
-        ArrayList<Character> validCharArr = getValidCharArr();
-
-        //going through each character in the email
-        while (i > -1) {
+        HashSet<Character> validCharSet = getValidCharSet();
+        while (i > -1) { //going through each character in the email
 
             //if invalid character return false
-            if (!(validCharArr.contains(email.charAt(i)))) return false;
+            if (!validCharSet.contains(email.charAt(i))) return false;
 
             //if special character, make sure following character is not special
             if (isSpecialChar(email.charAt(i))){
@@ -78,7 +73,7 @@ public class BankAccount {
                 //if the next character is also special return false
                 if (isSpecialChar(email.charAt(i + 1))) return false;
             }
-            //go to the letter one previous
+            //go back one letter
             i--;
         }
         //if no invalid characters found or special rules broken, return true
@@ -87,75 +82,75 @@ public class BankAccount {
 
     private static boolean isSpecialChar(char c) { return c == '.' || c == '-' || c == '_' || c == '@'; }
 
-    private static ArrayList<Character> getValidCharArr(){
-        ArrayList<Character> validCharArr = new ArrayList<>();
-        validCharArr.add('@');
-        validCharArr.add('.');
-        validCharArr.add('_');
-        validCharArr.add('-');
-        validCharArr.add('q');
-        validCharArr.add('w');
-        validCharArr.add('e');
-        validCharArr.add('r');
-        validCharArr.add('t');
-        validCharArr.add('y');
-        validCharArr.add('u');
-        validCharArr.add('i');
-        validCharArr.add('o');
-        validCharArr.add('p');
-        validCharArr.add('a');
-        validCharArr.add('s');
-        validCharArr.add('d');
-        validCharArr.add('f');
-        validCharArr.add('g');
-        validCharArr.add('h');
-        validCharArr.add('j');
-        validCharArr.add('k');
-        validCharArr.add('l');
-        validCharArr.add('z');
-        validCharArr.add('x');
-        validCharArr.add('c');
-        validCharArr.add('v');
-        validCharArr.add('b');
-        validCharArr.add('n');
-        validCharArr.add('m');
-        validCharArr.add('Q');
-        validCharArr.add('W');
-        validCharArr.add('E');
-        validCharArr.add('R');
-        validCharArr.add('T');
-        validCharArr.add('Y');
-        validCharArr.add('U');
-        validCharArr.add('I');
-        validCharArr.add('O');
-        validCharArr.add('P');
-        validCharArr.add('A');
-        validCharArr.add('S');
-        validCharArr.add('D');
-        validCharArr.add('F');
-        validCharArr.add('G');
-        validCharArr.add('H');
-        validCharArr.add('J');
-        validCharArr.add('K');
-        validCharArr.add('L');
-        validCharArr.add('Z');
-        validCharArr.add('X');
-        validCharArr.add('C');
-        validCharArr.add('V');
-        validCharArr.add('B');
-        validCharArr.add('N');
-        validCharArr.add('M');
-        validCharArr.add('1');
-        validCharArr.add('2');
-        validCharArr.add('3');
-        validCharArr.add('4');
-        validCharArr.add('5');
-        validCharArr.add('6');
-        validCharArr.add('7');
-        validCharArr.add('8');
-        validCharArr.add('9');
-        validCharArr.add('0');
+    private static HashSet<Character> getValidCharSet(){
+        HashSet<Character> validCharSet = new HashSet<>();
+        validCharSet.add('@');
+        validCharSet.add('.');
+        validCharSet.add('_');
+        validCharSet.add('-');
+        validCharSet.add('q');
+        validCharSet.add('w');
+        validCharSet.add('e');
+        validCharSet.add('r');
+        validCharSet.add('t');
+        validCharSet.add('y');
+        validCharSet.add('u');
+        validCharSet.add('i');
+        validCharSet.add('o');
+        validCharSet.add('p');
+        validCharSet.add('a');
+        validCharSet.add('s');
+        validCharSet.add('d');
+        validCharSet.add('f');
+        validCharSet.add('g');
+        validCharSet.add('h');
+        validCharSet.add('j');
+        validCharSet.add('k');
+        validCharSet.add('l');
+        validCharSet.add('z');
+        validCharSet.add('x');
+        validCharSet.add('c');
+        validCharSet.add('v');
+        validCharSet.add('b');
+        validCharSet.add('n');
+        validCharSet.add('m');
+        validCharSet.add('Q');
+        validCharSet.add('W');
+        validCharSet.add('E');
+        validCharSet.add('R');
+        validCharSet.add('T');
+        validCharSet.add('Y');
+        validCharSet.add('U');
+        validCharSet.add('I');
+        validCharSet.add('O');
+        validCharSet.add('P');
+        validCharSet.add('A');
+        validCharSet.add('S');
+        validCharSet.add('D');
+        validCharSet.add('F');
+        validCharSet.add('G');
+        validCharSet.add('H');
+        validCharSet.add('J');
+        validCharSet.add('K');
+        validCharSet.add('L');
+        validCharSet.add('Z');
+        validCharSet.add('X');
+        validCharSet.add('C');
+        validCharSet.add('V');
+        validCharSet.add('B');
+        validCharSet.add('N');
+        validCharSet.add('M');
+        validCharSet.add('1');
+        validCharSet.add('2');
+        validCharSet.add('3');
+        validCharSet.add('4');
+        validCharSet.add('5');
+        validCharSet.add('6');
+        validCharSet.add('7');
+        validCharSet.add('8');
+        validCharSet.add('9');
+        validCharSet.add('0');
 
-        return validCharArr;
+        return validCharSet;
     }
 }
