@@ -40,14 +40,23 @@ class BankAccountTest {
     @Test
     void isEmailValidTestUpdated(){
         assertFalse(BankAccount.isEmailValid(""));
+        // Empty String
         assertFalse(BankAccount.isEmailValid("a-@b.com"));
+        // Ends in special char
         assertFalse(BankAccount.isEmailValid("a..@b.com"));
+        // Ends in two dots
         assertFalse(BankAccount.isEmailValid(".a@b.com"));
+        // Starts with dot
         assertFalse(BankAccount.isEmailValid("a#@b.com"));
+        // Ends in special char
         assertFalse(BankAccount.isEmailValid("a@b.c"));
+        // Too short a domain
         assertFalse(BankAccount.isEmailValid("a@b#c.com"));
+        // Special char in domain
         assertFalse(BankAccount.isEmailValid("a@b"));
+        // Too short a domain
         assertFalse(BankAccount.isEmailValid("a@b..com"));
+        // Two dots in domain
         assertTrue(BankAccount.isEmailValid("a@b.com"));
         assertTrue(BankAccount.isEmailValid("a-b@c.com"));
         assertTrue(BankAccount.isEmailValid("a.b@c.com"));
