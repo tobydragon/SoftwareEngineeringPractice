@@ -1,4 +1,6 @@
 package edu.ithaca.dragon.bank;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class BankAccount {
 
@@ -32,16 +34,28 @@ public class BankAccount {
      * @throws IllegalArgumentException if value to withdraw is larger than the bank account balance
      */
     public void withdraw (double amount)  {
+        if (amount > balance){
+            throw new IllegalArgumentException("Too small a balance");
+        }
+        if (amount < 0){
+            throw new IllegalArgumentException("Cannot withdraw a negative amount");
+        }
         balance -= amount;
     }
 
 
     public static boolean isEmailValid(String email){
-        if (email.indexOf('@') == -1){
-            return false;
+        String pattern = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+        Pattern regex_pattern = Pattern.compile(pattern);
+        Matcher matcher = regex_pattern.matcher(email);
+        int indexOfAt = email.indexOf("@");
+        if(indexOfAt > 0){
+            if(email.charAt(indexOfAt-1) == '-'){
+                return false;
+            }
         }
-        else {
-            return true;
-        }
+        return matcher.matches();
+
     }
 }
