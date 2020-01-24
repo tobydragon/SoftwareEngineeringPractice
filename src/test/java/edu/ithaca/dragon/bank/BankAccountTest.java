@@ -27,6 +27,10 @@ class BankAccountTest {
         //assertFalse( BankAccount.isEmailValid(""));
 
         //Josue's invalid email prefix tests
+        assertFalse((BankAccount.isEmailValid("a..@b.com")));
+        assertFalse((BankAccount.isEmailValid("..a@b.com")));
+        assertFalse((BankAccount.isEmailValid("#a@b.com")));
+        assertFalse((BankAccount.isEmailValid("-a@b.cc")));
         assertFalse((BankAccount.isEmailValid("TomHanksIsCool-@b.com"))); //equivalence case is - next to the @ edge case
         assertFalse((BankAccount.isEmailValid("Maud..Vile@b.com"))); //equivalence case is .. in the prefix edge case
         assertFalse((BankAccount.isEmailValid("Yung#Muney@b.com"))); //equivalence case is # in the prefix edge case
