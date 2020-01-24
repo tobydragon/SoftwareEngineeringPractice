@@ -39,14 +39,21 @@ class BankAccountTest {
 
     @Test
     void isEmailValidCorrectTest(){
+        //border
         assertFalse(BankAccount.isEmailValid("abc-@mail.com"));
         assertTrue(BankAccount.isEmailValid("abc-d@mail.com"));
 
+        //border
         assertFalse(BankAccount.isEmailValid(".abc@mail.com"));
         assertTrue(BankAccount.isEmailValid("abc@mail.com"));
 
+        //border
         assertFalse(BankAccount.isEmailValid("abc.def@mail"));
         assertTrue(BankAccount.isEmailValid("abc.def@mail.com"));
+
+        //no test for  .. -- __
+        //no test for other symbols besides . - _
+        //no test to see that at least two characters follow the . in the domain name
     }
 
 }
