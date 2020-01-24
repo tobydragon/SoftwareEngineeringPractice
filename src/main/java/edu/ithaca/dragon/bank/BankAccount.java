@@ -42,7 +42,7 @@ public class BankAccount {
     if all past if statements failed/was not used
     subtract the amount from the current balance regularly
      */
-    public void withdraw (double amount){
+    public void withdraw (double amount) throws InsufficientFundsException{
         balance -= amount;
     }
 

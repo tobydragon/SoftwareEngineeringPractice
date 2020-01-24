@@ -14,7 +14,7 @@ class BankAccountTest {
     }
 
     @Test
-    void withdrawTest() {
+    void withdrawTest() throws InsufficientFundsException{
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
         bankAccount.withdraw(100);
 
@@ -62,16 +62,29 @@ class BankAccountTest {
         //Partitions of ""=invalid partition, address first, domain second, extension third
 
         //Equivalence class being in first partitions, with boundary value to index[0]->indexOf(@)
+        //Multiple periods Partition tests
         assertFalse(BankAccount.isEmailValid("a..b@male.com"));
-        assertFalse(BankAccount.isEmailValid("abc-@mail.com"));
-        assertFalse(BankAccount.isEmailValid(".abc@mail.com"));
-        assertFalse(BankAccount.isEmailValid("abc#def@mail.com"));
+        assertTrue(BankAccount.isEmailValid("a.f.a@tah.com"));
+        assertTrue(BankAccount.isEmailValid("a.ffff.a@gasd.asd"));
+        assertFalse(BankAccount.isEmailValid("a...f@asdf.asd"));
 
-        //Equivalence class being in first partitions, with boundary value to index[0]->indexOf(@)
+        //Slash partitionTest
+        assertFalse(BankAccount.isEmailValid("abc-@mail.com"));
         assertTrue(BankAccount.isEmailValid("abc-d@mail.com"));
-        assertTrue(BankAccount.isEmailValid("abc.def@mail.com"));
+
+        //Invalid period Location
+        assertFalse(BankAccount.isEmailValid(".abc@mail.com"));
+        assertTrue(BankAccount.isEmailValid("a.a@gasd.com"));
+
+        //Invalid Character Partitions
+        assertFalse(BankAccount.isEmailValid("abc#def@mail.com"));
         assertTrue(BankAccount.isEmailValid("abc@mail.com"));
         assertTrue(BankAccount.isEmailValid("abc_def@mail.com"));
+        assertFalse(BankAccount.isEmailValid("abc.def@mail#archive.com"));
+        //Equivalence class being in first partitions, with boundary value to index[0]->indexOf(@)
+
+        assertTrue(BankAccount.isEmailValid("abc.def@mail.com"));
+
 
         //Equivalence class being in second partitions, with boundary value to indexOf(".")->end
         assertFalse(BankAccount.isEmailValid("abc.def@mail.c"));
