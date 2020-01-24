@@ -55,6 +55,9 @@ public class BankAccount {
         else if(email.indexOf('.') == 0){
             return false;
         }
+        else if(email.charAt(email.length()-2)=='.' || email.charAt(email.length()-1)=='.'){
+            return false;
+        }
 
         else {
             String domain = email.substring(email.indexOf('@'));
