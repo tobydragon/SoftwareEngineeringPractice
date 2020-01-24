@@ -23,19 +23,34 @@ class BankAccountTest {
 
     @Test
     void isEmailValidTest(){
+        //valid equivalence class
+        //border case
         assertTrue(BankAccount.isEmailValid( "a@b.com"));
 
+        //invalid equivalence class email length
+        //border case-less
         assertFalse( BankAccount.isEmailValid(""));
 
+        //invalid equivalence class special characters
+        //not border case
         // prefix tests
         assertFalse(BankAccount.isEmailValid("a-@b.com"));
-
+        //invalid equivalence class email with dots
+        //not border case
         assertFalse(BankAccount.isEmailValid("a..@b.com"));
+        //invalid equivalence class email with dots
+        //border case
         assertFalse(BankAccount.isEmailValid(".a@b.com"));
+        //invalid equivalence class special characters
+        //not border case
         assertFalse(BankAccount.isEmailValid("a#b@b.com"));
 
         // domain tests
+        //invalid equivalence class email domain
+        //border case
         assertFalse(BankAccount.isEmailValid("a@b."));
+        //invalid equivalence class email domain
+        //not a border case
         assertFalse(BankAccount.isEmailValid("a@b.."));
 
     }
