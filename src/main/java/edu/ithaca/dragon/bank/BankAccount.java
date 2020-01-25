@@ -28,9 +28,14 @@ public class BankAccount {
     /**
      * @post reduces the balance by amount if amount is non-negative and smaller than balance
      */
-    public void withdraw(double amount) {
-        balance -= amount;
-
+    public void withdraw(double amount) throws InsufficientFundsException, IllegalArgumentException {
+        if (amount > balance) {
+            throw new InsufficientFundsException("Cant withdraw more than you have in your account");
+        } else if (amount < 0) {
+            throw new IllegalArgumentException("Can't withdraw a negative amount");
+        } else {
+            balance -= amount;
+        }
     }
 
 
