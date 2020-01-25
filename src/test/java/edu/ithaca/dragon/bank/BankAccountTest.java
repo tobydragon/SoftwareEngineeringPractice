@@ -8,9 +8,17 @@ class BankAccountTest {
 
     @Test
     void getBalanceTest() {
+        //Equivalence Class starting positive balance
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
-
         assertEquals(200, bankAccount.getBalance());
+        bankAccount = new BankAccount("a@b.com", 0);
+        assertEquals(0, bankAccount.getBalance());
+
+        //Equivalence Class Negative Starting Balance
+        bankAccount = new BankAccount("a@b.com", -200);
+        assertEquals(-200, bankAccount.getBalance());
+        bankAccount = new BankAccount("a@b.com", -1);
+        assertEquals(-1, bankAccount.getBalance());
     }
 
     @Test
@@ -20,38 +28,26 @@ class BankAccountTest {
 
         assertEquals(100, bankAccount.getBalance());
 
-        //New tests
-        //Partitions of -0.01=invalid partition, 0.00->100.0 first, 101.00->200.00 second, 201.00+ third
+        //Equivalence Class Has balance
+        BankAccount bankAccount1 = new BankAccount("a@c.com", 300);
+        bankAccount1.withdraw(100);//valid withdraw
+        assertEquals(200, bankAccount1.getBalance());
+        bankAccount1.withdraw(0);//valid withdraw edgecase
+        assertEquals(200, bankAccount1.getBalance());
+        bankAccount1.withdraw(201);//overdraw
+        assertEquals(200, bankAccount1.getBalance());
+        bankAccount1.withdraw(20100);//major overdraw
+        assertEquals(200, bankAccount1.getBalance());
+        bankAccount1.withdraw(200);//perfect withdraw edgecase
+        assertEquals(0, bankAccount1.getBalance());
 
-        //Equivalence class above the maximum balance as a third, with a invalid boundary value above 200.00 maximum
-        BankAccount newAccount1 = new BankAccount("c@d.com", 200);
-        newAccount1.withdraw( 300);
-        assertEquals(200, newAccount1.getBalance());
+        //Equivalence Class No balance
+        BankAccount ba2 = new BankAccount("a@c.cm", 0);
+        ba2.withdraw(0); //only valid withdraw
+        assertEquals(0, ba2.getBalance());
+        ba2.withdraw(1);//overdraw
+        assertEquals(0, ba2.getBalance());
 
-        //Equivalence class less being an invalid partition, with the boundary value of -0.01
-        BankAccount newAccount2 = new BankAccount("c@d.com", 200);
-        newAccount2.withdraw(-200);
-        assertEquals(200, newAccount2.getBalance());
-
-        //Equivalence class being valid with a staring partition of 0 with first, with boundary value 0.00
-        BankAccount newAccount3 = new BankAccount("c@d.com", 200);
-        newAccount3.withdraw(0);
-        assertEquals(200, newAccount3.getBalance());
-
-        //Equivalence class being valid as the maximum partition with second, with a boundary value of 200.00 maximum
-        BankAccount newAccount4 = new BankAccount("c@d.com", 200);
-        newAccount4.withdraw(200);
-        assertEquals(0, newAccount4.getBalance());
-
-        //Equivalence class being valid as the second partition, with a boundary value of 0.00 and 100.00 maximum
-        BankAccount newAccount5 = new BankAccount("c@d.com", 200);
-        newAccount5.withdraw(67);
-        assertEquals(133, newAccount5.getBalance());
-
-        //Equivalence class being valid as the third partition, with a boundary value between 101.00 and 200.00 maximum
-        BankAccount newAccount6 = new BankAccount("c@d.com", 200);
-        newAccount6.withdraw(146);
-        assertEquals(54, newAccount6.getBalance());
     }
 
     @Test
@@ -67,6 +63,7 @@ class BankAccountTest {
         assertTrue(BankAccount.isEmailValid("a.f.a@tah.com"));
         assertTrue(BankAccount.isEmailValid("a.ffff.a@gasd.asd"));
         assertFalse(BankAccount.isEmailValid("a...f@asdf.asd"));
+        assertFalse(BankAccount.isEmailValid("abc.def@mail..com")); //Only one is allowed in the second half regardless
 
         //Slash partitionTest
         assertFalse(BankAccount.isEmailValid("abc-@mail.com"));
@@ -75,31 +72,31 @@ class BankAccountTest {
         //Invalid period Location
         assertFalse(BankAccount.isEmailValid(".abc@mail.com"));
         assertTrue(BankAccount.isEmailValid("a.a@gasd.com"));
+        assertTrue(BankAccount.isEmailValid("abc.def@mail.com"));
 
         //Invalid Character Partitions
         assertFalse(BankAccount.isEmailValid("abc#def@mail.com"));
+        assertFalse(BankAccount.isEmailValid("abc.def@mail#archive.com"));
         assertTrue(BankAccount.isEmailValid("abc@mail.com"));
         assertTrue(BankAccount.isEmailValid("abc_def@mail.com"));
-        assertFalse(BankAccount.isEmailValid("abc.def@mail#archive.com"));
-        //Equivalence class being in first partitions, with boundary value to index[0]->indexOf(@)
 
-        assertTrue(BankAccount.isEmailValid("abc.def@mail.com"));
-
-
-        //Equivalence class being in second partitions, with boundary value to indexOf(".")->end
+        //Equivalence class Short or missing extentions
         assertFalse(BankAccount.isEmailValid("abc.def@mail.c"));
-        //Equivalence class being in second partitions, with boundary value to indexOf("@")->indexOf(".")
-        assertFalse(BankAccount.isEmailValid("abc.def@mail#archive.com"));
-        //Equivalence class being in third partitions, with boundary value to indexOf("@")->end
         assertFalse(BankAccount.isEmailValid("bc.def@mail"));
-        //Equivalence class being in second partitions, with boundary value to indexOf("@")->indexOf(".")
-        assertFalse(BankAccount.isEmailValid("abc.def@mail..com"));
+        assertFalse(BankAccount.isEmailValid("asd@mail."));
+        assertTrue(BankAccount.isEmailValid("asd@asd.cc"));
+        assertTrue(BankAccount.isEmailValid("asd@asd.ccc"));
 
-        //Equivalence class being in second partitions, with boundary value to indexOf("@)->indexOf(extensions)
-        assertTrue(BankAccount.isEmailValid("abc.def@mail.cc"));
+        //Equivalence Class different extentions
         assertTrue(BankAccount.isEmailValid("abc.def@mail-archive.com"));
         assertTrue(BankAccount.isEmailValid("abc.def@mail.org"));
         assertTrue(BankAccount.isEmailValid("abc.def@mail.com"));
+
+        //Equivalence Class @ symbols
+        assertFalse(BankAccount.isEmailValid("as@as@asd.com"));
+        assertFalse(BankAccount.isEmailValid("ASDF@ADSA.F@ASCOM"));
+        assertFalse(BankAccount.isEmailValid("asdfasdfsadf.sad"));
+        assertFalse(BankAccount.isEmailValid("asdfasdfasdf"));
     }
 
     @Test
