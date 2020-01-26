@@ -36,6 +36,26 @@ class BankAccountTest {
         bankAccount.withdraw(100);
 
         assertEquals(100, bankAccount.getBalance());
+
+        BankAccount bankAccount2 = new BankAccount("j@h.com", 367.54); //Valid withraw
+        bankAccount2.withdraw(100);
+        assertEquals(267.54, bankAccount2.getBalance());
+        BankAccount bankAccount3 = new BankAccount("j@h.com", 367.54); //Valid withdraw with edgecase
+        bankAccount3.withdraw(367.54);
+        assertEquals(0, bankAccount3.getBalance());
+        BankAccount bankAccount4 = new BankAccount("j@h.com", 367.54); //Withdrawing larger than balance
+        bankAccount4.withdraw(400);
+        assertEquals(367.54, bankAccount4.getBalance());
+        BankAccount bankAccount5 = new BankAccount("j@h.com", 367.54); //Withdrawing very large amount, over balance
+        bankAccount4.withdraw(6000);
+        assertEquals(367.54, bankAccount4.getBalance());
+
+        BankAccount bankAccount6 = new BankAccount("j@h.com", -367.54); //Withdrawing non-existing number, negatives automatically change to 0
+        bankAccount4.withdraw(400);
+        assertEquals(0, bankAccount4.getBalance());
+        BankAccount bankAccount6 = new BankAccount("j@h.com", -367.54); //Withdrawing non-existing number, negatives automatically change to 0
+        bankAccount4.withdraw(40000);
+        assertEquals(0, bankAccount4.getBalance());
     }
 
     @Test
