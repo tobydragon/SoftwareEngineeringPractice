@@ -16,9 +16,36 @@ class BankAccountTest {
     @Test
     void withdrawTest() {
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
-        bankAccount.withdraw(100);
 
+        //part of non-negative and smaller equivalence class
+        bankAccount.withdraw(100);
         assertEquals(100, bankAccount.getBalance());
+        bankAccount.withdraw(0);
+        assertEquals(100, bankAccount.getBalance());
+        bankAccount.withdraw(5);
+        assertEquals(95,bankAccount.getBalance());
+
+        //non-negative and larger equivalence class
+        BankAccount bankAccount1 = new BankAccount("a@b.com",200);
+        bankAccount1.withdraw(500);
+        assertEquals(200,bankAccount1.getBalance());
+        bankAccount1.withdraw(1000);
+        assertEquals(200,bankAccount1.getBalance());
+
+        //negative and smaller equivalence class
+        BankAccount bankAccount2 = new BankAccount("a@b.com",200);
+        bankAccount2.withdraw(-5);
+        assertEquals(200,bankAccount2.getBalance());
+        bankAccount2.withdraw(-100);
+        assertEquals(200,bankAccount2.getBalance());
+
+        //negative and larger equivalence class
+        BankAccount bankAccount3 = new BankAccount("a@b.com",200);
+        bankAccount3.withdraw(-500);
+        assertEquals(200,bankAccount3.getBalance());
+        bankAccount1.withdraw(-1000);
+        assertEquals(200,bankAccount3.getBalance());
+
     }
 
     @Test
@@ -51,9 +78,22 @@ class BankAccountTest {
         assertFalse(BankAccount.isEmailValid("abc.def@mail"));
         assertTrue(BankAccount.isEmailValid("abc.def@mail.com"));
 
-        //no test for  .. -- __
+        //no test for  .. -- _
         //no test for other symbols besides . - _
         //no test to see that at least two characters follow the . in the domain name
+
+        assertFalse(BankAccount.isEmailValid("ab..c@mail.com"));
+        assertFalse(BankAccount.isEmailValid("ab....c@mail.com")); //tests for .. and multiple consecutive .'s
+        assertFalse(BankAccount.isEmailValid("ab--c@mail.com")); //testing --
+        assertFalse(BankAccount.isEmailValid("ab_c@mail.com"));
+        assertFalse(BankAccount.isEmailValid("ab__c@mail.com")); // testing _ and __
+
+        assertFalse(BankAccount.isEmailValid("ab#c@mail.com"));
+        assertFalse(BankAccount.isEmailValid("ab##c@mail.com")); //testing # symbol
+
+        assertFalse(BankAccount.isEmailValid("abc@mail.c"));
+        assertFalse(BankAccount.isEmailValid("abvc@mail.")); //testing need two characters after .
+
     }
 
 }
