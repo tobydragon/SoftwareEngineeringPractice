@@ -35,19 +35,38 @@ public class BankAccount {
     if the amount is 0
     return the balance as is/do nothing and have the subtraction be 0
 
-    if the amount is less than the current balance
-    print out "Amount wanted is less than the current balance" error
+    if the amount is greater than the current balance
+    print out "Amount wanted is greater than the current balance" error
     Don't change the original balance
 
     if all past if statements failed/was not used
     subtract the amount from the current balance regularly
      */
     public void withdraw (double amount) throws InsufficientFundsException{
-        balance -= amount;
+        if(amount <= 0){
+            balance = balance;
+        }
+        else if(amount > balance){
+            balance = balance;
+        }
+        else{
+            balance -= amount;
+        }
     }
 
 
     public static boolean isEmailValid(String email){
+        char atChar = '@'; //The "@" as a string has to be char to work
+        int atCount = 0; //To count the amount of @ symbols
+        for (int i = 0; i < email.length(); i++) {
+            if (email.charAt(i) == atChar) {
+                atCount++;
+            }
+        }
+        if(atCount >= 2){
+            return false;
+        }
+
         if(email == ""){
             return false;
         }
@@ -71,7 +90,6 @@ public class BankAccount {
         else if(email.indexOf("#") != -1){
             return false;
         }
-
         else{
             String emDomain = email.substring(email.indexOf("@"));
 
