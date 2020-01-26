@@ -47,15 +47,15 @@ class BankAccountTest {
         bankAccount4.withdraw(400);
         assertEquals(367.54, bankAccount4.getBalance());
         BankAccount bankAccount5 = new BankAccount("j@h.com", 367.54); //Withdrawing very large amount, over balance
-        bankAccount4.withdraw(6000);
-        assertEquals(367.54, bankAccount4.getBalance());
+        bankAccount5.withdraw(6000);
+        assertEquals(367.54, bankAccount5.getBalance());
 
         BankAccount bankAccount6 = new BankAccount("j@h.com", -367.54); //Withdrawing non-existing number, negatives automatically change to 0
-        bankAccount4.withdraw(400);
-        assertEquals(0, bankAccount4.getBalance());
-        BankAccount bankAccount6 = new BankAccount("j@h.com", -367.54); //Withdrawing non-existing number, negatives automatically change to 0
-        bankAccount4.withdraw(40000);
-        assertEquals(0, bankAccount4.getBalance());
+        bankAccount6.withdraw(400);
+        assertEquals(0, bankAccount6.getBalance());
+        BankAccount bankAccount7 = new BankAccount("j@h.com", -367.54); //Withdrawing non-existing number, negatives automatically change to 0
+        bankAccount7.withdraw(40000);
+        assertEquals(0, bankAccount7.getBalance());
     }
 
     @Test
