@@ -52,13 +52,13 @@ class BankAccountTest {
         assertTrue(BankAccount.isEmailValid( "bagles@fircracker.cc"));
 
         //New tests 1-3
-        assertFalse((BankAccount.isEmailValid("a@b-g.com")));
-        assertFalse((BankAccount.isEmailValid("a#@g.cc")));
-        assertFalse((BankAccount.isEmailValid("..yt@g.cc")));
-        assertFalse((BankAccount.isEmailValid("h@g.c")));
-        assertFalse((BankAccount.isEmailValid("@g.cc")));
-        assertFalse((BankAccount.isEmailValid("a@.cc")));
-        assertFalse((BankAccount.isEmailValid("a@g.")));
+        assertFalse((BankAccount.isEmailValid("a@b-g.com"))); //equivalence case - in domain edge case
+        assertFalse((BankAccount.isEmailValid("a#@g.cc"))); //equivalence case # in domain edge case
+        assertFalse((BankAccount.isEmailValid("..yt@g.cc"))); //equivalence case .. in domain edge case
+        assertFalse((BankAccount.isEmailValid("h@g.c"))); //equivalence case single letter extension domain edge case
+        assertFalse((BankAccount.isEmailValid("@g.cc"))); //equivalence case no address domain edge case
+        assertFalse((BankAccount.isEmailValid("a@.cc"))); //equivalence case no domain in domain edge case
+        assertFalse((BankAccount.isEmailValid("a@g."))); //equivalence case no extension to the domain edge case
     }
 
     @Test
