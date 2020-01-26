@@ -7,10 +7,17 @@ import static org.junit.jupiter.api.Assertions.*;
 class BankAccountTest {
 
     @Test
-    void getBalanceTest() {
+    void getBalanceTest() throws InsufficientFundsException{
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
-
-        assertEquals(200, bankAccount.getBalance());
+        assertEquals(200, bankAccount.getBalance()); //check get balance == starting balance
+        bankAccount.withdraw(50);
+        assertEquals(150,bankAccount.getBalance()); //check balance after withdraw
+        assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(200)); //check if throws exception for invalid withfraw
+        assertEquals(150, bankAccount.getBalance()); //check if balance remains same
+        assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(-200));
+        assertEquals(150, bankAccount.getBalance()); //check for withdraw negative amount
+        bankAccount.withdraw(0);
+        assertEquals(150, bankAccount.getBalance()); //balance after withdraw 0
     }
 
     @Test
@@ -21,11 +28,8 @@ class BankAccountTest {
         assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(300)); //check if withdraw amount greater than amount in bank account/ test exception
         bankAccount.withdraw(100);
         assertEquals(0, bankAccount.getBalance()); //check if amount of total withdraw equal to balance
-        bankAccount.withdraw(-100); //check if withdraw negative number
-        //assertEquals(0, bankAccount.getBalance()); //shouldn't equal 100
-
-
-
+        assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(-100)); //check if withdraw negative number
+        assertEquals(0, bankAccount.getBalance()); //shouldn't equal 100
 
     }
 
