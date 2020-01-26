@@ -8,9 +8,21 @@ class BankAccountTest {
 
     @Test
     void getBalanceTest() {
-        BankAccount bankAccount = new BankAccount("a@b.com", 200);
+        //negative balance (invalid) equivalence class
+        BankAccount bankAccount1 = new BankAccount("a@b.com", -5);
+        assertEquals(-5,bankAccount1.getBalance());
+        BankAccount bankAccount2 = new BankAccount("a@b.com", -200);
+        assertEquals(-200,bankAccount2.getBalance());
 
+        //0 balance equivalence class
+        BankAccount bankAccount3 = new BankAccount("a@b.com", 0);
+        assertEquals(0,bankAccount3.getBalance());
+
+        //positive balance equivalence class
+        BankAccount bankAccount = new BankAccount("a@b.com", 200);
         assertEquals(200, bankAccount.getBalance());
+        BankAccount bankAccount4 = new BankAccount("a@b.com", 5);
+        assertEquals(5,bankAccount4.getBalance());
     }
 
     @Test
