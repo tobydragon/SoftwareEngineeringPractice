@@ -11,6 +11,23 @@ class BankAccountTest {
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
 
         assertEquals(200, bankAccount.getBalance());
+
+        //Josue's getBalanceTest
+        BankAccount bankAccount2 = new BankAccount("a@b.com", 0); //Equivalence case of 0 dollars (nothing) in bankaccount case
+        BankAccount bankAccount3= new BankAccount("a@b.com", 50); //Equivalence case of 50 dollars (small amount) in bankaccount case
+        BankAccount bankAccount4 = new BankAccount("a@b.com", 10000); //Equivalence case of 10000 dollars (large amount) in bankaccount case
+        BankAccount bankAccount5 = new BankAccount("a@b.com", -10); //Equivalence case of -10 dollars (negative) in bankaccount case
+        BankAccount bankAccount6 = new BankAccount("a@b.com", -150); //Equivalence case of -150 dollars (negative) in bankaccount case
+        BankAccount bankAccount7 = new BankAccount("a@b.com", -5000); //Equivalence case of -5000 dollars (negative) in bankaccount case
+        BankAccount bankAccount8 = new BankAccount("a@b.com", 67.86); //Equivalence case of 67.86 dollars (float) in bankaccount case
+
+        assertEquals(0, bankAccount2.getBalance());
+        assertEquals(50, bankAccount3.getBalance());
+        assertEquals(10000, bankAccount4.getBalance());
+        assertEquals(-10, bankAccount5.getBalance());
+        assertEquals(-150, bankAccount6.getBalance());
+        assertEquals(-5000, bankAccount7.getBalance());
+        assertEquals(67.86, bankAccount8.getBalance());
     }
 
     @Test
