@@ -25,6 +25,42 @@ class BankAccountTest {
 
     @Test
     void isEmailValidTestUpdated(){
+        // checks for a basic, valid email and for empty string
+        assertTrue(BankAccount.isEmailValid( "a@b.com"));
+        assertFalse( BankAccount.isEmailValid(""));
+
+        // checks for forbidden characters... border case:  one forbidden characters is present
+        assertFalse(BankAccount.isEmailValid("ab#c@gmail.com"));
+        assertFalse(BankAccount.isEmailValid("ab-c @gmail.com"));
+
+        // checks for 1 period after the @... border case: 0, 1, or 2 periods found
+        assertTrue(BankAccount.isEmailValid("hay@mail.com"));
+        assertFalse(BankAccount.isEmailValid("hayyy@mailcom"));
+        assertFalse(BankAccount.isEmailValid("hay@ma.il.com"));
+
+        // checks for the proper number of @ symbols... border case: 0, 1, or 2 @'s present
+        assertTrue(BankAccount.isEmailValid("cmartano@gmail.com"));
+        assertFalse(BankAccount.isEmailValid("cmartanoaol.com"));
+        assertFalse(BankAccount.isEmailValid("c@martano@yahoo.com"));
+
+        // checks for the number of characters after the last period... border case: 1 or 2
+        assertTrue(BankAccount.isEmailValid("name@place.co"));
+        assertFalse(BankAccount.isEmailValid("name@place.c"));
+
+        // checks that each dash is a "legal" dash... border case: dash to start, 2 in a row, before @ symbol
+        assertTrue(BankAccount.isEmailValid("c-martano@gmail.com"));
+        assertFalse(BankAccount.isEmailValid("marta--no@gmail.com"));
+        assertFalse(BankAccount.isEmailValid("-christianmar-tano@aol.com"));
+        assertFalse(BankAccount.isEmailValid("c-l-martano-@gmail.com"));
+
+        // checks that each period is a "legal" period... border case: period to start, 2 in a row, before @ symbol
+        assertTrue(BankAccount.isEmailValid("c.martano@gmail.com"));
+        assertFalse(BankAccount.isEmailValid("c.ma..rtano@gmail.com"));
+        assertFalse(BankAccount.isEmailValid(".christian@gmail.com"));
+        assertFalse(BankAccount.isEmailValid("c.l.martano.@gmail.com"));
+
+
+        //presence of invalid character
         assertTrue(BankAccount.isEmailValid("abc@google.com"));
         assertFalse( BankAccount.isEmailValid("abc-@mail.com"));
         assertFalse( BankAccount.isEmailValid("abc.@mail.com"));
