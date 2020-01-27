@@ -37,11 +37,11 @@ class BankAccountTest {
         BankAccount bankAccount = new BankAccount("a@b.com", 1000);
         //sufficient funds
         bankAccount.withdraw(100);
-        assertEquals(900, bankAccount.getBalance());
+        assertEquals(900, bankAccount.getBalance());            //equivalence class of less than and not border case
         bankAccount.withdraw(500);
-        assertEquals(400, bankAccount.getBalance());
+        assertEquals(400, bankAccount.getBalance());            //equivalence class of more than and not border case
         bankAccount.withdraw(400);
-        assertEquals(0, bankAccount.getBalance());
+        assertEquals(0, bankAccount.getBalance());              //equivalence class of zero and border case
         //insufficient funds
         int min = Integer.MIN_VALUE;
         int max = Integer.MAX_VALUE;
@@ -51,42 +51,42 @@ class BankAccountTest {
         //negative numbers, does nothing for now
         BankAccount negative = new BankAccount("a@b.com", 1000);
         negative.withdraw(-1);
-        assertEquals(1000, negative.getBalance());
+        assertEquals(1000, negative.getBalance());          //equivalence class of negative balance and border case
         negative.withdraw(-500);
-        assertEquals(1000, negative.getBalance());
+        assertEquals(1000, negative.getBalance());          //equivalence class of negative balance and not border case
         negative.withdraw(min);
-        assertEquals(1000, negative.getBalance());
-
+        assertEquals(1000, negative.getBalance());          //equivalence class of negative balance and border case
     }
 
     @Test
     void isEmailValidTest(){
         //one @ symbol class
-        assertTrue(BankAccount.isEmailValid( "a@b.com"));
-        assertFalse(BankAccount.isEmailValid("abc@def@mail.com"));
-        assertFalse(BankAccount.isEmailValid("abc@d@ef@mail.com"));
-        assertFalse(BankAccount.isEmailValid("abc@d@ef@ma@il.com"));
-        assertFalse( BankAccount.isEmailValid(""));
+        assertTrue(BankAccount.isEmailValid( "a@b.com"));                   //equivalence class of one @ and not border case
+        assertFalse(BankAccount.isEmailValid("abc@def@mail.com"));          //equivalence class of one multiple @ and border case
+        assertFalse(BankAccount.isEmailValid("abc@d@ef@mail.com"));         //equivalence class of one multiple @ and border case
+        assertFalse(BankAccount.isEmailValid("abc@d@ef@ma@il.com"));        //equivalence class of one multiple @ and border case
+        assertFalse( BankAccount.isEmailValid(""));                         //equivalence class of one no @ and border case
         //valid special characters in prefix
-        assertFalse(BankAccount.isEmailValid("abc-@mail.com"));
-        assertFalse(BankAccount.isEmailValid("abc..@mail.com"));
-        assertFalse(BankAccount.isEmailValid(".abc@mail.com"));
+        assertFalse(BankAccount.isEmailValid("abc-@mail.com"));             //equivalence class  of one valid special characters and not border case
+        assertFalse(BankAccount.isEmailValid("abc..@mail.com"));            //equivalence class  of two valid special characters and not border case
+        assertFalse(BankAccount.isEmailValid(".abc@mail.com"));             //equivalence class  of valid special characters and not border case
         //invalid characters in prefix
-        assertFalse(BankAccount.isEmailValid("abc#def@mail.com"));
-        assertFalse(BankAccount.isEmailValid("abc#de!f@mail.com"));
-        assertTrue(BankAccount.isEmailValid("abc.def@mail.com"));
+        assertFalse(BankAccount.isEmailValid("abc#def@mail.com"));          //equivalence class  of one invalid characters and border case
+        assertFalse(BankAccount.isEmailValid("abc#de!f@mail.com"));         //equivalence class  of two invalid characters and border case
+        assertTrue(BankAccount.isEmailValid("abc.def@mail.com"));           //equivalence class  of one invalid characters and not border case
         //invalid suffix characters
-        assertFalse(BankAccount.isEmailValid("abc.def@mail#archive.com"));
-        assertFalse(BankAccount.isEmailValid("abc.def@mail!ar%chive.com"));
-        assertFalse(BankAccount.isEmailValid("abc.def@mail!ar%chi.ve.com"));
-        assertFalse(BankAccount.isEmailValid("abc.def@mail--archive.com"));
-        assertFalse(BankAccount.isEmailValid("abc.def@mail-arc!h.ive.com"));
+        assertFalse(BankAccount.isEmailValid("abc.def@mail#archive.com"));  //equivalence class  of invalid suffix characters and border case
+        assertFalse(BankAccount.isEmailValid("abc.def@mail!ar%chive.com")); //equivalence class  of invalid suffix characters and border case
+        assertFalse(BankAccount.isEmailValid("abc.def@mail!ar%chi.ve.com"));    //equivalence class  of invalid suffix characters and border case
+        assertFalse(BankAccount.isEmailValid("abc.def@mail--archive.com")); //equivalence class  of invalid suffix characters and border case
+        assertFalse(BankAccount.isEmailValid("abc.def@mail-arc!h.ive.com"));    //equivalence class  of invalid suffix characters and border case
         //valid domain
-        assertFalse(BankAccount.isEmailValid("abc.def@mail.c"));
-        assertFalse(BankAccount.isEmailValid("abc.def@mail"));
-        assertFalse(BankAccount.isEmailValid("abc.def@mail..com"));
-        assertTrue(BankAccount.isEmailValid("abc.def@mail.cc"));
+        assertFalse(BankAccount.isEmailValid("abc.def@mail.c"));            //equivalence class  of invalid domain and not border case
+        assertFalse(BankAccount.isEmailValid("abc.def@mail"));              //equivalence class  of no domain and border case
+        assertFalse(BankAccount.isEmailValid("abc.def@mail..com"));         //equivalence class  of two . in domain and border case
+        assertTrue(BankAccount.isEmailValid("abc.def@mail.cc"));            //equivalence class  of invalid domain and not border case
 
+        /* equivalence class of Domain present twice and border case */
     }
 
     @Test
