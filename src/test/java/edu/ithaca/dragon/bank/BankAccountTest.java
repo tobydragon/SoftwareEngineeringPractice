@@ -16,9 +16,27 @@ class BankAccountTest {
     @Test
     void withdrawTest() {
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
-        bankAccount.withdraw(100);
 
-        assertEquals(100, bankAccount.getBalance());
+        bankAccount.withdraw(400);
+        assertEquals(200, bankAccount.getBalance());//equivalence for amount greater than balance
+
+        bankAccount.withdraw(201);
+        assertEquals(200, bankAccount.getBalance());//border for amount greater than balance
+
+        bankAccount.withdraw(-1);
+        assertEquals(200, bankAccount.getBalance()); //border for negative amount
+
+        bankAccount.withdraw(-100);
+        assertEquals(200, bankAccount.getBalance()); //equivalence for negative amount
+
+        bankAccount.withdraw(50);
+        assertEquals(150, bankAccount.getBalance());//equivalence for double digit amount
+
+        bankAccount.withdraw(125);
+        assertEquals(25, bankAccount.getBalance());//equivalence for triple digit (middle) amount
+
+        bankAccount.withdraw(0);
+        assertEquals(25, bankAccount.getBalance());
     }
 
     @Test
