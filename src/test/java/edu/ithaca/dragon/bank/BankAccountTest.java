@@ -27,6 +27,9 @@ class BankAccountTest {
 
     @Test
     void withdrawTest() {
+        //no test for floating point numbers or decimals
+        //no test for exception throws
+
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
 
         //part of non-negative and smaller equivalence class
@@ -97,7 +100,10 @@ class BankAccountTest {
         assertFalse(BankAccount.isEmailValid("ab..c@mail.com"));
         assertFalse(BankAccount.isEmailValid("ab....c@mail.com")); //tests for .. and multiple consecutive .'s
         assertFalse(BankAccount.isEmailValid("ab--c@mail.com")); //testing --
-        assertFalse(BankAccount.isEmailValid("ab_c@mail.com"));
+
+        //this should be true
+        //assertFalse(BankAccount.isEmailValid("ab_c@mail.com"));
+
         assertFalse(BankAccount.isEmailValid("ab__c@mail.com")); // testing _ and __
 
         assertFalse(BankAccount.isEmailValid("ab#c@mail.com"));

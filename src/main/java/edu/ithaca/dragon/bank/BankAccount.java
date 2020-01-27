@@ -30,8 +30,9 @@ public class BankAccount {
      * if amount is negative or larger than balance, balance stays the same
      */
     public void withdraw(double amount) {
-        balance -= amount;
-
+        if(balance >= amount){
+            balance -= amount;
+        }
     }
 
 
@@ -42,12 +43,28 @@ public class BankAccount {
         if (email.startsWith(".")) {
             return false;
         }
-
         if (!email.endsWith(".com")) {
             return false;
         }
-
         if(email.contains("-@")){
+            return false;
+        }
+        if(email.contains("..")){
+            return false;
+        }
+        if(email.contains("--")){
+            return false;
+        }
+        if(email.contains("__")){
+            return false;
+        }
+        if(email.contains("#")){
+            return false;
+        }
+        if(email.contains("##")){
+            return false;
+        }
+        if(!email.substring(email.length()-4,email.length()-1).contains("c")){
             return false;
         }
 
