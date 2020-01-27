@@ -8,9 +8,9 @@ class BankAccountTest {
 
     @Test
         void newFunction(){
-        assertTrue(Bankaccount.isEmailValid("abc@gmail.com"));
-        assertFalse(Bankaccount.isEmailValid("abc-@gmail.com"));
-        assertFalse(Bankaccount.isEmailValid("abc.@gmail.com"));
+        assertTrue(BankAccount.isEmailValid("abc@gmail.com"));
+        assertFalse(BankAccount.isEmailValid("abc-@gmail.com"));
+        assertFalse(BankAccount.isEmailValid("abc.@gmail.com"));
         }
     @Test
     void getBalanceTest() {

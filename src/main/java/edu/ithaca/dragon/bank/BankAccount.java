@@ -35,44 +35,54 @@ public class BankAccount {
     }
 
 
-    public static boolean isEmailValid(String email){
-        int count=0;
-        for(int i = 0, n = email.length() ; i < n ; i++) {
-            char c = email.charAt(i);
-            count += 1;
-
-            if (count == 1) {
-                if (c == '@' || c=='.')
-                    return false;
-            }
-            else {
-                if (c == '#')
-                    return false;
-
-                if (c == '@') {
-                    if (email.charAt(count - 1) == ('.') || email.charAt(count - 1) == ('-'))
-                        return false;
-
-                    if (c == '.') {
-                        if (email.charAt(count + 1) == '.')
-                            return false;
-                        String domain=email.substring(count+1);
-                        if (domain=="cc" || domain=="com" || domain=="org")
-                            return true;
-                        else
-                            return false;
-                    }
-                }
-            }
-        }
-
-
-        if (email.indexOf('@') == -1){
+    public static boolean isEmailValid(String email) {
+        int atsym = email.indexOf('@');
+        if (atsym == -1)
             return false;
+
+
+        if (email.charAt(0) == '-' || email.charAt(atsym - 1) == '-')
+            return false;
+
+        if (email.charAt(0) == '.' || email.charAt(atsym - 1) == '.')
+            return false;
+
+        String domain = email.substring(atsym + 1);
+        int period = domain.indexOf('.');
+
+        if (period == -1)
+            return false;
+
+        int pdcount = 0;
+        for (int i = 0; i < domain.length(); i++) {
+            if (domain.charAt(i) == '@')
+                return false;
+            else if (domain.charAt(i) == '.')
+                pdcount++;
         }
-        else {
-            return true;
+
+
+
+        if (pdcount != 1)
+            return false;
+        if (domain.substring(period).length() < 3)
+            return false;
+        for (int i = 0; i < email.length(); i++) {
+            if (email.charAt(i) == '#')
+                return false;
+            else if (email.charAt(i) == ' ')
+                return false;
+            else if (email.charAt(i) == '.') {
+                if (email.charAt(i + 1) == '.')
+                    return false;
+            } else if (email.charAt(i) == '-') {
+                if (email.charAt(i + 1) == '-')
+                    return false;
+            }
         }
+
+        return true;
+
     }
 
 }
