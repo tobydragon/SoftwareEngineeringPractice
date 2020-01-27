@@ -39,29 +39,35 @@ class BankAccountTest {
 
     @Test
     void isEmailValidCorrectTest(){
-        String correctEmail = "correct@test.com";
-        String incorrectEmail = "incor#rect@test.com";
+        assertTrue(BankAccount.isEmailValid("correct@test.com")); //Equivalence for simple correct email address
+        assertFalse(BankAccount.isEmailValid("incorrect@test"));
 
-        String correctEmail2 = "cor-rect@test.com";
-        String incorrectEmail2 = "incorrect-@test.com";
+        //Email with/without "#" character
+        assertFalse(BankAccount.isEmailValid("incor#rect@test.com")); //border
+        assertFalse(BankAccount.isEmailValid("incorrect@te#st.com"));//border
 
-        String correctEmail3 = "cor.rect@test.com";
-        String incorrectEmail3 = "incor..rect@test.com";
+        //Email with "-, ., _" prefixes
+        assertTrue(BankAccount.isEmailValid("cor-rect@test.com")); //Equivalence for correctly used "-" in email
+        assertTrue(BankAccount.isEmailValid("cor_rect@test.com")); //Equivalence for correctly used "_" in email
+        assertTrue(BankAccount.isEmailValid("cor.rect@test.com")); //Equivalence for correctly used "." in email
+        assertFalse(BankAccount.isEmailValid("incorrect-@test.com")); //Equivalence for "-" with no letter/number following
+        assertFalse(BankAccount.isEmailValid("incorrect_@test.com"));//Equivalence for "_" with no letter/number following
+        assertFalse(BankAccount.isEmailValid("incorrect.@test.com"));//Equivalence for "." with no letter/number following
+        assertTrue(BankAccount.isEmailValid(".incorrect@test.com"));//Border for "." at beginning
+        assertTrue(BankAccount.isEmailValid("-incorrect@test.com"));//Border for "-" at beginning
+        assertTrue(BankAccount.isEmailValid("_incorrect@test.com"));//Border for "_" at beginning
+        assertFalse(BankAccount.isEmailValid("incorrect@test.com."));//Border for "." at end
+        assertFalse(BankAccount.isEmailValid("incorrect@test.com-"));//Border for "-" at end
+        assertFalse(BankAccount.isEmailValid("incorrect@test.com_"));//Border for "_" at end
+        assertFalse(BankAccount.isEmailValid("incor..rect@test.com"));//Equivalence for repeated "."
+        assertFalse(BankAccount.isEmailValid("incor--rect@test.com"));//Equivalence for repeated "-"
+        assertFalse(BankAccount.isEmailValid("incor__rect@test.com"));//Equivalence for repeated "_"
 
-        String correctEmail4 = "cor_rect@test.com";
-        String incorrectEmail4 = ".incorrect@test.com";
+        //Email with "-" domain
+        assertTrue(BankAccount.isEmailValid("correct@te-st.com")); //Equivalence for correctly used "-" in domain
+        assertFalse(BankAccount.isEmailValid("incorrect@test.c")); //Equivalence for last portion being less than 2 letters
+        assertFalse(BankAccount.isEmailValid("incorrect@test..com")); //Equivalence for two "." in ".com"
 
-        assertFalse(BankAccount.isEmailValid(incorrectEmail));
-        assertTrue(BankAccount.isEmailValid(correctEmail));
-
-        assertFalse(BankAccount.isEmailValid(incorrectEmail2));
-        assertTrue(BankAccount.isEmailValid(correctEmail2));
-
-        assertFalse(BankAccount.isEmailValid(incorrectEmail3));
-        assertTrue(BankAccount.isEmailValid(correctEmail3));
-
-        assertFalse(BankAccount.isEmailValid(incorrectEmail4));
-        assertTrue(BankAccount.isEmailValid(correctEmail4));
 
     }
 
