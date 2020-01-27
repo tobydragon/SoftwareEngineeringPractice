@@ -14,7 +14,7 @@ class BankAccountTest {
     }
 
     @Test
-    void withdrawTest() {
+    void withdrawTest() throws InsufficientFundsException{
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
         bankAccount.withdraw(100);
 
@@ -23,62 +23,58 @@ class BankAccountTest {
 
     @Test
     void isEmailValidTest(){
-        //Valid Checks
+        //Prefix length tests
+        //Invalid case (0)
+        assertFalse(BankAccount.isEmailValid("@mail.com"));  //Edge case, size 0
+        //Valid case (1-infinity)
+        assertTrue(BankAccount.isEmailValid( "a@mail.com"));  //Edge case, size 1
+        assertTrue(BankAccount.isEmailValid( "abcdef@mail.com"));  //Normal case, size 5
 
+        //Invalid character tests:
+        //Valid case (0)
+        assertTrue(BankAccount.isEmailValid( "abcdef@mail.com"));  //Edge case, 0 invalid characters
+        //Invalid case (1-infinity)
+        assertFalse( BankAccount.isEmailValid("abc#def@mail.com"));  //Edge case, 1 invalid character
+        assertFalse( BankAccount.isEmailValid("a^bc#de%f@mail.com"));  //Normal case, 3 invalid characters
 
-        //equivalence class
-        assertTrue(BankAccount.isEmailValid( "a@b.com"));
-        //equivalence class
-        assertTrue(BankAccount.isEmailValid( "abc-d@mail.com"));
+        //Number of @ signs tests:
+        //Invalid case (0)
+        assertFalse(BankAccount.isEmailValid( "abcdef.mail.com"));  //Edge case, 0 @ signs
+        //Valid case (1)
+        assertTrue(BankAccount.isEmailValid( "abcdef@mail.com"));  //Edge case, 1 @ sign
+        //Invalid case (2-infinity)
+        assertFalse(BankAccount.isEmailValid( "abcdef@@mail.com"));  //Edge case, 2 @ signs
+        assertFalse(BankAccount.isEmailValid( "abcdef@@@@@mail.com"));  //Normal case, 5 @ signs
 
-        //equivalence
-        assertTrue(BankAccount.isEmailValid( "abc.def@mail.com"));
+        //.com length tests:
+        //Invalid case (0-1)
+        assertFalse(BankAccount.isEmailValid( "abcdef@mail"));  //Edge case, 0 .com length
+        assertFalse(BankAccount.isEmailValid( "abcdef@mail."));  //Edge case, 0 .com length
+        assertFalse(BankAccount.isEmailValid( "abcdef@mail.c"));  //Edge case, 1 .com length
+        //Valid case (2-infinity)
+        assertTrue(BankAccount.isEmailValid( "abcdef@mail.co"));  //Edge case, 2 .com length
+        assertTrue(BankAccount.isEmailValid( "abcdef@mail.info"));  //Normal case, 4 .com length
 
-        //
-        assertTrue(BankAccount.isEmailValid( "abc@mail.com"));
+        //Alphanumeric characters in a row tests:
+        //Valid case (0-1)
+        assertTrue(BankAccount.isEmailValid( "abcdef@mail.com"));  //Normal case, 0 non-alphanum character, 0 in a row
+        assertTrue(BankAccount.isEmailValid( "abc.def@mail.com"));  //Normal case, 1 non-alphanum character, 1 in a row
+        assertTrue(BankAccount.isEmailValid( "a.b.c.d.e.f@mail.com"));  //Edge case, 5 non-alphanum characters, 1 in a row
+        //Invalid case (2-infinity)
+        assertFalse(BankAccount.isEmailValid( "abc..def@mail.com"));  //Edge case, 2 non-alphanum characters, 2 in a row
+        assertFalse(BankAccount.isEmailValid( "a.b.c..d.e.f@mail.com"));  //Normal case, 6 non-alphanum characters, 2 in a row
+        assertFalse(BankAccount.isEmailValid( "abc.....def@mail.com"));  //Normal case, 5 non-alphanum characters, 5 in a row
 
-        //
-        assertTrue(BankAccount.isEmailValid( "abc_def@mail.com"));
-
-        //
-        assertTrue(BankAccount.isEmailValid( "abc.def@mail.cc"));
-
-        //equivalence class
-        assertTrue(BankAccount.isEmailValid( "abc.def@mail-archive.com"));
-
-        //
-        assertTrue(BankAccount.isEmailValid( "abc.def@mail.org\n"));
-
-        //
-        assertTrue(BankAccount.isEmailValid( "abc.def@mail.com"));
-
-        //Invalid Checks
-        //equivalence class
-        assertFalse( BankAccount.isEmailValid(""));
-
-        //equivalence class
-        assertFalse( BankAccount.isEmailValid("abc-@mail.com"));
-
-        //equivalence class
-        assertFalse( BankAccount.isEmailValid("abc..def@mail.com"));
-
-        //equivalence class
-        assertFalse( BankAccount.isEmailValid(".abc@mail.com"));
-
-        //equivalence class
-        assertFalse( BankAccount.isEmailValid("abc#def@mail.com"));
-
-        //equivalence class
-        assertFalse( BankAccount.isEmailValid("abc.def@mail.c"));
-
-        //equivalence class
-        assertFalse( BankAccount.isEmailValid("abc.def@mail#archive.com"));
-
-        //equivalence class
-        assertFalse( BankAccount.isEmailValid("abc.def@mail"));
-
-        //equivalence class
-        assertFalse( BankAccount.isEmailValid("abc.def@mail..com"));
+        //Alphanumeric starting/ending characters test:
+        //Valid case (Prefix, domain, and .com all start and end with alphanumeric characters):
+        assertTrue(BankAccount.isEmailValid( "abcdef@mail.com"));  //Edge case, all valid
+        //Invalid case (Prefix, domain, or .com don't start or end with alphanumeric characters):
+        assertFalse(BankAccount.isEmailValid( "-abcdef@mail.com"));  //Edge case, prefix doesn't start with alphanumeric character
+        assertFalse(BankAccount.isEmailValid( "abcdef-@mail.com"));  //Edge case, prefix doesn't end with alphanumeric character
+        assertFalse(BankAccount.isEmailValid( "abcdef@-mail.com"));  //Edge case, suffix doesn't start with alphanumeric character
+        assertFalse(BankAccount.isEmailValid( "abcdef@mail-.com"));  //Edge case, suffix doesn't end with alphanumeric character
+        assertFalse(BankAccount.isEmailValid( "abcdef@mail.-com"));  //Edge case, domain doesn't start with alphanumeric character
+        assertFalse(BankAccount.isEmailValid( "abcdef@mail.com-"));  //Edge case, domain doesn't end with alphanumeric character
     }
 
     @Test
