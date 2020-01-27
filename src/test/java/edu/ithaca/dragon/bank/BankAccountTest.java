@@ -52,6 +52,9 @@ class BankAccountTest {
         //invalid equivalence class email domain
         //not a border case
         assertFalse(BankAccount.isEmailValid("a@b.."));
+        assertFalse(BankAccount.isEmailValid("a@b#.com"));
+        //test length of domain
+        assertFalse(BankAccount.isEmailValid("a@b"));
 
     }
 
