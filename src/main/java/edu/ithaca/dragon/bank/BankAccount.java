@@ -68,6 +68,9 @@ public class BankAccount {
         //checks if email is empty
         if (email.isEmpty()) {
             return false;
+            //checks if that there is exactly one @ symbol
+        }  else if (atCount != 1) {
+            return false;
         }
 
         //split the email at the @ so we can only look at domain
@@ -94,9 +97,8 @@ public class BankAccount {
             //checks that first character is a letter
         } else if (!Character.isLetter(email.charAt(0))) {
             return false;
-
-            //checks if that there is exactly one @ symbol
-        } else if (atCount != 1) {
+            //checks if last character is letter or number
+        } else if (!(Character.isLetter(email.charAt(email.length()-1)) || Character.isDigit(email.charAt(email.length()-1)))) {
             return false;
         } else {
             return true;
