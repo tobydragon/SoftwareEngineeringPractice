@@ -9,9 +9,19 @@ class BankAccountTest {
 
     @Test
     void getBalanceTest() {
-        BankAccount bankAccount = new BankAccount("a@b.com", 200);
 
+        //correctly gives you the balance when you have a valid email
+        BankAccount bankAccount = new BankAccount("a@b.com", 200);
         assertEquals(200, bankAccount.getBalance());
+
+        //gives you your balance when your balance is 0. Valid email.
+        BankAccount bankAccount1 = new BankAccount("abc-d@mail.com", 200);
+        assertEquals(200, bankAccount.getBalance());
+
+        //returns your balance when it is negative. Valid email.
+        BankAccount bankAccount2 = new BankAccount("abc-d@mail.com", 200);
+        assertEquals(200, bankAccount.getBalance());
+
     }
 
     @Test
@@ -42,15 +52,6 @@ class BankAccountTest {
         bankAccount.withdraw(100);
         assertEquals(-50, bankAccount.getBalance());
 
-        //tests for a valid withdrawal with an invalid email.
-        BankAccount bankAccount5 = new BankAccount("a@b", 200);
-        bankAccount.withdraw(100);
-        assertEquals(100, bankAccount.getBalance());
-
-        //tests for an invalid withdrawal with and invalid email.
-        BankAccount bankAccount6 = new BankAccount("ab.com@j", 50);
-        bankAccount.withdraw(100);
-        assertEquals(-50, bankAccount.getBalance());
 
     }
 
