@@ -35,11 +35,16 @@ public class BankAccount {
      * @throws InsufficientFundsException if there are not enough funds for a given withdrawal.
      */
     public void withdraw (double amount) throws InsufficientFundsException{
-        if (amount <= balance){
-            balance -= amount;
-        }
-        else {
-            throw new InsufficientFundsException("Not enough money");
+        if (amount > 0) {
+            if (amount <= balance){
+                String amountStr = ""+amount;
+                int decimalLength = amountStr.substring( amountStr.indexOf(".")+1 ).length();
+
+                if (decimalLength < 3)  balance -= amount;
+            }
+            else {
+                throw new InsufficientFundsException("Not enough money");
+            }
         }
     }
 
