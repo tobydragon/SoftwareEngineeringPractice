@@ -16,10 +16,42 @@ class BankAccountTest {
 
     @Test
     void withdrawTest() {
+
+        //tests for a valid withdrawal that will leave you with a half balance. Valid email is provided.
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
         bankAccount.withdraw(100);
-
         assertEquals(100, bankAccount.getBalance());
+
+        //tests for a valid withdrawal that will leave you with no money left in the account. Valid Email.
+        BankAccount bankAccount1 = new BankAccount("abc-d@mail.com", 100);
+        bankAccount.withdraw(100);
+        assertEquals(0, bankAccount.getBalance());
+
+        //tests for a valid withdrawal of $0 that will leave you with the same balance no matter what it is. Valid email.
+        BankAccount bankAccount2 = new BankAccount("abc.def@mail.com", 2);
+        bankAccount.withdraw(0);
+        assertEquals(2, bankAccount.getBalance());
+
+        //tests for an invalid withdrawal that is more than your current balance. valid email.
+        BankAccount bankAccount3 = new BankAccount("abc@mail.com", 50);
+        bankAccount.withdraw(100);
+        assertEquals(-50, bankAccount.getBalance());
+
+        //tests for an invalid withdrawal that is a negative number. Valid email.
+        BankAccount bankAccount4 = new BankAccount("abc_def@mail.com", 50);
+        bankAccount.withdraw(100);
+        assertEquals(-50, bankAccount.getBalance());
+
+        //tests for a valid withdrawal with an invalid email.
+        BankAccount bankAccount5 = new BankAccount("a@b", 200);
+        bankAccount.withdraw(100);
+        assertEquals(100, bankAccount.getBalance());
+
+        //tests for an invalid withdrawal with and invalid email.
+        BankAccount bankAccount6 = new BankAccount("ab.com@j", 50);
+        bankAccount.withdraw(100);
+        assertEquals(-50, bankAccount.getBalance());
+
     }
 
     @Test
@@ -67,13 +99,6 @@ class BankAccountTest {
         assertFalse(BankAccount.isEmailValid("abc.def@mail..com"));
         //tests for a special character at the end of the email.
         assertFalse(BankAccount.isEmailValid("abc@def.co-"));
-
-
-
-
-
-
-
 
 
     }
