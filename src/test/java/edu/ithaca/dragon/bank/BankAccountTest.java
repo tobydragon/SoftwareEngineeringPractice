@@ -15,10 +15,30 @@ class BankAccountTest {
 
     @Test
     void withdrawTest() throws InsufficientFundsException{
-        BankAccount bankAccount = new BankAccount("a@b.com", 200);
+        BankAccount bankAccount;
+        //Withdrawing only available funds tests:
+        //Valid case (does not go over available funds)
+        bankAccount = new BankAccount("a@b.com", 200);
+        bankAccount.withdraw(200);
+        assertEquals(0, bankAccount.getBalance());  //Edge case, withdrawing all available funds
+        bankAccount = new BankAccount("a@b.com", 200);
         bankAccount.withdraw(100);
+        assertEquals(100, bankAccount.getBalance());  //Normal case, withdrawing only half of available funds
+        //Invalid case (withdraws more than available)
+        BankAccount bankAccount1 = new BankAccount("a@b.com", 200);
+        assertThrows(InsufficientFundsException.class, ()-> bankAccount1.withdraw(201));  //Edge case, withdrawing just over available funds
+        assertThrows(InsufficientFundsException.class, ()-> bankAccount1.withdraw(400));  //Normal case, withdrawing double available funds
 
-        assertEquals(100, bankAccount.getBalance());
+        //Passing only positive values tests:
+        //Valid case (positive values including 0)
+        bankAccount = new BankAccount("a@b.com", 200);
+        bankAccount.withdraw(0);  //Edge case, withdrawing 0
+        bankAccount = new BankAccount("a@b.com", 200);
+        bankAccount.withdraw(100);  //Normal case, withdrawing positive number
+        //Invalid case (negative values)
+        BankAccount bankAccount2 = new BankAccount("a@b.com", 200);
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount2.withdraw(-1));  //Edge case, passing barely negative value
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount2.withdraw(-200));  //Normal case, passing very negative value
     }
 
     @Test
