@@ -12,22 +12,22 @@ class BankAccountTest {
         BankAccount bankAccount = new BankAccount("a@b.com", 1000);
 
         //fresh account
-        assertEquals(1000, bankAccount.getBalance());
+        assertEquals(1000, bankAccount.getBalance());               //equivalence class starting balance and not border cas
         //after withdrawal
         bankAccount.withdraw(100);
-        assertEquals(900, bankAccount.getBalance());
+        assertEquals(900, bankAccount.getBalance());                //equivalence class of less than and not border case
         bankAccount.withdraw(500);
-        assertEquals(400, bankAccount.getBalance());
+        assertEquals(400, bankAccount.getBalance());                //equivalence class of more than and not border case
         bankAccount.withdraw(400);
-        assertEquals(0, bankAccount.getBalance());
+        assertEquals(0, bankAccount.getBalance());                  //equivalence class of zero and border case
 
         //after unsuccessful withdrawal
         BankAccount unsuccessful = new BankAccount("a@b.com",1000);
-        assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(1100));
+        assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(1100));       //equivalence class of greater than and border case
         assertEquals(1000, bankAccount.getBalance());
-        assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(2000));
+        assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(2000));       //equivalence class of middle value and not border case
         assertEquals(1000, bankAccount.getBalance());
-        assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(Integer.MAX_VALUE));
+        assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(Integer.MAX_VALUE));  //equivalence class of Max Value and border case
         assertEquals(1000, bankAccount.getBalance());
     }
 
@@ -62,9 +62,9 @@ class BankAccountTest {
     void isEmailValidTest(){
         //one @ symbol class
         assertTrue(BankAccount.isEmailValid( "a@b.com"));                   //equivalence class of one @ and not border case
-        assertFalse(BankAccount.isEmailValid("abc@def@mail.com"));          //equivalence class of one multiple @ and border case
-        assertFalse(BankAccount.isEmailValid("abc@d@ef@mail.com"));         //equivalence class of one multiple @ and border case
-        assertFalse(BankAccount.isEmailValid("abc@d@ef@ma@il.com"));        //equivalence class of one multiple @ and border case
+        assertFalse(BankAccount.isEmailValid("abc@def@mail.com"));          //equivalence class of multiple @ and border case
+        assertFalse(BankAccount.isEmailValid("abc@d@ef@mail.com"));         //equivalence class of multiple @ and border case
+        assertFalse(BankAccount.isEmailValid("abc@d@ef@ma@il.com"));        //equivalence class of multiple @ and border case
         assertFalse( BankAccount.isEmailValid(""));                         //equivalence class of one no @ and border case
         //valid special characters in prefix
         assertFalse(BankAccount.isEmailValid("abc-@mail.com"));             //equivalence class  of one valid special characters and not border case
