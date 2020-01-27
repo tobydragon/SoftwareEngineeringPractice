@@ -18,6 +18,10 @@ public class BankAccount {
     }
 
     public double getBalance() {
+        /**
+         * This function simply returns the current amount of money in the account. On it's own, it should
+         * not care about its validity as it is presently structured as a getter-type of function.
+         */
         return balance;
     }
 
@@ -26,11 +30,17 @@ public class BankAccount {
     }
 
     /**
-     * @post reduces the balance by amount if amount is non-negative and smaller than balance
+     * @post reduces the balance by amount if amount is non-negative, non-zero (of course) and smaller or equal to balance.
+     * Allows withdrawals of numeric values with up to two decimal places. Anything beyond is not valid.
+     * @throws InsufficientFundsException if there are not enough funds for a given withdrawal.
      */
-    public void withdraw(double amount) {
-        balance -= amount;
-
+    public void withdraw (double amount) throws InsufficientFundsException{
+        if (amount <= balance){
+            balance -= amount;
+        }
+        else {
+            throw new InsufficientFundsException("Not enough money");
+        }
     }
 
 
