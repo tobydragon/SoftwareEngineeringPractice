@@ -11,13 +11,11 @@ public class BankAccount {
      * @throws IllegalArgumentException if email is invalid
      */
     public BankAccount(String email, double startingBalance){
-        if (isEmailValid(email)){
-            this.email = email;
-            this.balance = startingBalance;
-        }
-        else {
-            throw new IllegalArgumentException("Email address: " + email + " is invalid, cannot create account");
-        }
+        if (isEmailValid(email)) this.email = email;
+        else throw new IllegalArgumentException("Email address: " + email + " is invalid, cannot create account");
+
+        if (startingBalance >= 0)this.balance = startingBalance;
+        else throw new IllegalArgumentException("Cannot open account with negative balance");
     }
 
     public double getBalance(){
