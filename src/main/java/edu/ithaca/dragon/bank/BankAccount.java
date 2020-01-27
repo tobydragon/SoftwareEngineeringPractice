@@ -45,22 +45,7 @@ public class BankAccount {
 
 
     public static boolean isEmailValid(String email) {
-        String prefix = email.substring(0, email.indexOf("@"));
-        String domain = email.substring(email.indexOf("@") + 1, email.indexOf("."));
-        String end = email.substring(email.indexOf("."));
-        int prefixchar = (prefix.indexOf("-") + 1);
-        boolean pfc = prefixCheck(prefix);
-        boolean dmc = prefixCheck(domain);
-        boolean ec = endCheck(end);
-        String domainend = domain.substring(domain.indexOf(".") + 1);
-        if (email.indexOf('@') == -1) {
-            return false;
-        }
-        if ((pfc && dmc && ec) == true) {
-            return true;
-        } else {
-            return false;
-        }
+        return email.matches("(\\w)+((_|\\.|-)+\\w+)?@(\\w)+((_|\\.|-)+\\w+)?\\.\\w{2,}$");
     }
 
     public static boolean prefixCheck(String subString1) {
