@@ -95,4 +95,27 @@ class BankAccountTest {
 
     }
 
+    @Test
+    void depositTest(){
+        BankAccount bankAccount = new BankAccount("a@bana.com", 100);
+
+        //Test valid amount to deposit (throws exceptions), test valid amounts deposit to increase account amount
+
+
+        bankAccount.deposit(.01);
+        assertEquals(100.01, bankAccount.getBalance());
+        bankAccount.deposit(1.01);
+        assertEquals(101.02, bankAccount.getBalance());
+        assertThrows(IllegalArgumentException.class, () ->bankAccount.deposit(0.034234));
+        assertThrows(IllegalArgumentException.class, () ->bankAccount.deposit(-130));
+        bankAccount.deposit(1000);
+        assertEquals(1101.02, bankAccount.getBalance());
+
+
+
+
+
+
+    }
+
 }

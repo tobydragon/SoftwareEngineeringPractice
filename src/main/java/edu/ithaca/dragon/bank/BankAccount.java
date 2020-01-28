@@ -52,6 +52,22 @@ public class BankAccount {
     }
 
     /**
+     * @throws IllegalArgumentException if amount is negative or contains more than two decimals
+     * @param amount
+     * @post adds the amount to the balance of the bankAccount, should increase
+     */
+
+    public void deposit(double amount){
+//        if(isAmountValid(amount)){
+//            balance+=amount;
+//        }
+
+
+
+
+    }
+
+    /**
      * @param amount
      * @return true if amount is not negative and two decimals or less
      */
@@ -79,16 +95,13 @@ public class BankAccount {
 
 
     public static boolean isEmailValid(String email){
-
         if (email.indexOf('@') == -1 || email.indexOf('@') == 0) {
             return false;
         }
         if (email.indexOf('.') == -1) {
             return false;
         }
-
         int count = 0;
-
         for (int i = email.indexOf('@'); i < email.length(); i++) {
             if (email.charAt(i) == ('.')) {
                 count++;
@@ -146,4 +159,9 @@ public class BankAccount {
             return true;
         }
     }
+
+
+
+
+
 }
