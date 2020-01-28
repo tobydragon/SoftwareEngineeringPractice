@@ -52,10 +52,24 @@ public class BankAccount {
      */
 
     public static boolean isAmountValid(double amount) {
-        return false;
+        if(amount < 0) {
+            return false;
+        }
+
+        String s = ""+amount;
+
+        int i = s.indexOf('.');
+
+        if(s.length()-i-1 > 2){
+            return false;
+        }
 
 
+        return true;
     }
+
+
+
 
 
 
