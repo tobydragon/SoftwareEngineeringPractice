@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class BankAccountTest {
 
     @Test
-    void getBalanceTest() throws InsufficientFundsException {
+    void getBalanceTest() throws InsufficientFundsException, IllegalArgumentException {
         //classes - fresh account, after withdrawal, after unsuccessful withdrawal
         BankAccount bankAccount = new BankAccount("a@b.com", 1000);
 
@@ -24,18 +24,20 @@ class BankAccountTest {
         //after unsuccessful withdrawal
         BankAccount unsuccessful = new BankAccount("a@b.com",1000);
         assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(1100));       //equivalence class of greater than and border case
-        assertEquals(1000, bankAccount.getBalance());
+        assertEquals(1000, unsuccessful.getBalance());
         assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(2000));       //equivalence class of middle value and not border case
-        assertEquals(1000, bankAccount.getBalance());
+        assertEquals(1000, unsuccessful.getBalance());
         assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(Integer.MAX_VALUE));  //equivalence class of Max Value and border case
-        assertEquals(1000, bankAccount.getBalance());
+        assertEquals(1000, unsuccessful.getBalance());
     }
 
     @Test
-    void withdrawTest() throws InsufficientFundsException{
+    void withdrawTest() throws InsufficientFundsException, IllegalArgumentException{
         //classes - sufficient funds, insufficient funds, negative funds
         BankAccount bankAccount = new BankAccount("a@b.com", 1000);
         //sufficient funds
+        bankAccount.withdraw(0);
+        assertEquals(1000, bankAccount.getBalance());
         bankAccount.withdraw(100);
         assertEquals(900, bankAccount.getBalance());            //equivalence class of less than and not border case
         bankAccount.withdraw(500);
@@ -48,20 +50,20 @@ class BankAccountTest {
         assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(300));
         assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(max));
         assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(1));
-        //negative numbers, does nothing for now
+        //negative numbers
         BankAccount negative = new BankAccount("a@b.com", 1000);
-        negative.withdraw(-1);
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(-100));
         assertEquals(1000, negative.getBalance());          //equivalence class of negative balance and border case
-        negative.withdraw(-500);
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(-500));
         assertEquals(1000, negative.getBalance());          //equivalence class of negative balance and not border case
-        negative.withdraw(min);
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(min));
         assertEquals(1000, negative.getBalance());          //equivalence class of negative balance and border case
     }
 
     @Test
     void isEmailValidTest(){
         //one @ symbol class
-        assertTrue(BankAccount.isEmailValid( "a@b.com"));                   //equivalence class of one @ and not border case
+        assertTrue(BankAccount.isEmailValid( "a.b.c@b.com"));                   //equivalence class of one @ and not border case
         assertFalse(BankAccount.isEmailValid("abc@def@mail.com"));          //equivalence class of multiple @ and border case
         assertFalse(BankAccount.isEmailValid("abc@d@ef@mail.com"));         //equivalence class of multiple @ and border case
         assertFalse(BankAccount.isEmailValid("abc@d@ef@ma@il.com"));        //equivalence class of multiple @ and border case
@@ -86,7 +88,6 @@ class BankAccountTest {
         assertFalse(BankAccount.isEmailValid("abc.def@mail..com"));         //equivalence class  of two . in domain and border case
         assertTrue(BankAccount.isEmailValid("abc.def@mail.cc"));            //equivalence class  of invalid domain and not border case
 
-        /* equivalence class of Domain present twice and border case */
     }
 
     @Test
@@ -97,6 +98,11 @@ class BankAccountTest {
         assertEquals(200, bankAccount.getBalance());
         //check for exception thrown correctly
         assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", 100));
+    }
+
+    @Test
+    void isAmountValidTest(){
+
     }
 
 }

@@ -29,20 +29,32 @@ public class BankAccount {
     /**
      * @post reduces the balance by amount if amount is non-negative and smaller than balance
      * throws InsufficientFundsException if the amount is larger than the balance
-     * If balance is negative, do nothing
+     * If balance is negative or has more than 2 decimal places, throws IllegalArgumentException
      */
-    public void withdraw (double amount) throws InsufficientFundsException  {
-        if (balance >= amount && amount > 0) {
+    public void withdraw (double amount) throws InsufficientFundsException, IllegalArgumentException  {
+        if(!isAmountValid(amount)){
+            throw new IllegalArgumentException("Amount must have 2 decimal places and must be positive ");
+        }
+        if (balance >= amount) {
             balance -= amount;
         }
-        else if(balance < amount){
+        else{
             throw new InsufficientFundsException("Amount requested is more than in your account by " + (amount - balance));
         }
 
     }
 
+    /**
+     * @post TODO
+     */
+    public boolean isAmountValid(double amount){
+        String doubleCheck = Double.toString(Math.abs(amount));
+        int integerPlaces = doubleCheck.indexOf('.');
+        int decimalPlaces = doubleCheck.length() - integerPlaces - 1;
+        return (decimalPlaces <= 2 || doubleCheck.indexOf('E') != -1) && !(amount < 0);
+    }
 
     public static boolean isEmailValid(String email){
-        return email.matches("(\\w)+((_|\\.|-)+\\w+)?@(\\w)+\\.\\w{2,}$");
+        return email.matches("(\\w)+((_|\\.|-)+\\w+)*@(\\w)+((-)?\\w+)*\\.\\w{2,}$");
     }
 }
