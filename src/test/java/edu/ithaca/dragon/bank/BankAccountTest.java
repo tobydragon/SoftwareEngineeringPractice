@@ -80,7 +80,7 @@ class BankAccountTest {
         assertFalse(BankAccount.isEmailValid("incorrect-@test.com")); //Equivalence for "-" with no letter/number following
         assertFalse(BankAccount.isEmailValid("incorrect_@test.com"));//Equivalence for "_" with no letter/number following
         assertFalse(BankAccount.isEmailValid("incorrect.@test.com"));//Equivalence for "." with no letter/number following
-        assertTrue(BankAccount.isEmailValid(".incorrect@test.com"));//Border for "." at beginning
+        assertFalse(BankAccount.isEmailValid(".incorrect@test.com"));//Border for "." at beginning
         assertTrue(BankAccount.isEmailValid("-incorrect@test.com"));//Border for "-" at beginning
         assertTrue(BankAccount.isEmailValid("_incorrect@test.com"));//Border for "_" at beginning
         assertFalse(BankAccount.isEmailValid("incorrect@test.com."));//Border for "." at end

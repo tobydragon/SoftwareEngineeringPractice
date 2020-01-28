@@ -46,7 +46,20 @@ public class BankAccount {
             return false;
         } else if (email.indexOf("..") != -1) {
             return false;
-        } else if (email.indexOf("-@") != -1) {
+        }
+        else if (email.indexOf("--") != -1){
+            return false;
+        }
+        else if (email.indexOf("__") != -1){
+            return false;
+        }
+        else if (email.indexOf("_@") != -1){
+            return false;
+        }
+        else if (email.indexOf(".@") != -1){
+            return false;
+        }
+        else if (email.indexOf("-@") != -1) {
             return false;
         } else if (email.indexOf("#") != -1) {
             return false;
@@ -69,6 +82,34 @@ public class BankAccount {
                 }
 
                 else if (eDomain.indexOf(".") == -1){
+                    return false;
+                }
+                int periodCount = 0;
+                int hyCount = 0;
+                int unCount = 0;
+
+                char perChar = '.';
+                char hyChar = '-';
+                char unChar = '_';
+
+                for (int i = 0; i < emailEnd.length(); i++){
+                    if(emailEnd.charAt(i) == perChar){
+                        periodCount++;
+                    }
+                    if(emailEnd.charAt(i) == hyChar){
+                        hyCount++;
+                    }
+                    if(emailEnd.charAt(i) == unChar){
+                        unCount++;
+                    }
+                }
+                if(periodCount > 1){
+                    return false;
+                }
+                if(hyCount > 0){
+                    return false;
+                }
+                if(unCount > 0){
                     return false;
                 }
             }
