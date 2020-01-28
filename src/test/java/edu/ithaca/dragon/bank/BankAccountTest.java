@@ -83,9 +83,9 @@ class BankAccountTest {
         assertThrows(IllegalArgumentException.class, ()-> bankAccount2.withdraw(199.999));
         // Valid border case (<=2 decimal places allowed)
         bankAccount2.withdraw(199.99);
-        assertEquals(1.01, bankAccount2.getBalance());
+        assertEquals(0.01, bankAccount2.getBalance());
         // Invalid border case (greater amount with decimals)
-        assertThrows(InsufficientFundsException.class, ()-> bankAccount2.withdraw(200.01));
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount2.withdraw(200.001));
     }
 
 }
