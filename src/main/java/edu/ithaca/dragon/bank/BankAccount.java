@@ -46,19 +46,21 @@ public class BankAccount {
 
     }
 
+    /**
+     * @param amount
+     * @return true if amount is not negative and two decimals or less
+     */
+
+    public static boolean isAmountValid(double amount) {
+        return false;
+
+
+    }
+
+
 
     public static boolean isEmailValid(String email){
-//        String emailRegex =  "^[a-z 0-9]+@[a-z 0-9]+\\.[a-z]{0,9}";
-//        Pattern emailPat = Pattern.compile(emailRegex, Pattern.CASE_INSENSITIVE);
-//        Matcher matcher = emailPat.matcher(email);
-//
-//        return matcher.find();
-//        if (email.indexOf('@') == -1 && email.indexOf('.') ==-1 ){
-//            return false;
-//        }
-//        else {
-//            return true;
-//        }
+
         if (email.indexOf('@') == -1 || email.indexOf('@') == 0) {
             return false;
         }
@@ -120,12 +122,6 @@ public class BankAccount {
         if(count4 <=1){
             return false;
         }
-
-
-
-
-
-
 
         else {
             return true;

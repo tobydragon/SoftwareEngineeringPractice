@@ -48,7 +48,34 @@ class BankAccountTest {
         assertFalse(BankAccount.isEmailValid(".n@Gcom"));
         assertFalse(BankAccount.isEmailValid(".#Gcom"));
         assertFalse(BankAccount.isEmailValid("n$@@G$$com"));
-        assertTrue(BankAccount.isEmailValid("n122@gyi.g"));
+        assertTrue(BankAccount.isEmailValid("n12.2@gyi.g"));
+    }
+
+    @Test
+    void isAmountValidTest(){
+
+        /*Equivalence tests would : test negative number no decimals, test positive number no decimals, test negative float, test positive float
+        test float with more than two decimals positive and negative, test float with one decimal positive and negative, test 0 */
+
+        assertTrue(BankAccount.isAmountValid(10)); //positive int
+        assertTrue(BankAccount.isAmountValid(0.01)); //positive float
+        assertTrue(BankAccount.isAmountValid(.01)); //positive float without leading number
+        assertTrue(BankAccount.isAmountValid(1.1)); //positive float with one decimal
+        assertTrue(BankAccount.isAmountValid(0)); //testing 0
+
+
+
+        assertFalse(BankAccount.isAmountValid(-10)); //negative int
+        assertFalse(BankAccount.isAmountValid(-0.01)); //negative float
+        assertFalse(BankAccount.isAmountValid(-.01)); //negative float without leading number
+        assertFalse(BankAccount.isAmountValid(0.009)); //positive float with more than 2 decimals
+        assertFalse(BankAccount.isAmountValid(-0.00242423)); //negative float with more than 2 decimals
+
+
+
+
+
+
 
 
     }
