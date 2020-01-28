@@ -99,7 +99,7 @@ class BankAccountTest {
     void depositTest(){
         BankAccount bankAccount = new BankAccount("a@bana.com", 100);
 
-        //Test valid amount to deposit (throws exceptions), test valid amounts deposit to increase account amount
+        //Test valid amount to deposit (throws exceptions), test valid amounts deposit to increase the account amount
 
 
         bankAccount.deposit(.01);
