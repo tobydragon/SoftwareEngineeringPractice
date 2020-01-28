@@ -19,27 +19,27 @@ class BankAccountTest {
         assertThrows(InsufficientFundsException.class, ()-> new BankAccount("a@b.com", 100).withdraw(101));
 
         //less than balance
-        BankAccount bankAccount = new BankAccount("a@b.com", 200);
-        bankAccount.withdraw(100);
-        assertEquals(100, bankAccount.getBalance());
+        BankAccount bankaccount = new BankAccount("a@b.com", 200);
+        bankaccount.withdraw(100);
+        assertEquals(100, bankaccount.getBalance());
 
 
         //equal to balance
-        bankAccount = new BankAccount("a@b.com", 300);
-        bankAccount.withdraw(300);
-        assertEquals(0, bankAccount.getBalance());
+        bankaccount = new BankAccount("a@b.com", 300);
+        bankaccount.withdraw(300);
+        assertEquals(0, bankaccount.getBalance());
 
 
         //negative
-        bankAccount = new BankAccount("a@b.com", 300);
-        bankAccount.withdraw(-1);
-        assertEquals(300, bankAccount.getBalance());
+        bankaccount = new BankAccount("a@b.com", 300);
+        bankaccount.withdraw(-1);
+        assertEquals(300, bankaccount.getBalance());
 
 
         //negative
-        bankAccount = new BankAccount("a@b.com", 200);
-        bankAccount.withdraw(-300);
-        assertEquals(200, bankAccount.getBalance());
+        bankaccount = new BankAccount("a@b.com", 200);
+        bankaccount.withdraw(-300);
+        assertEquals(200, bankaccount.getBalance());
 
     }
 
