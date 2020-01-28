@@ -8,44 +8,47 @@ class BankAccountTest {
 
     @Test
     void getBalanceTest() {
-        BankAccount bankAccount = new BankAccount("a@b.com", 200);//middle balance equivalence class
-        assertEquals(200, bankAccount.getBalance());
+        BankAccount bankAccount = new BankAccount("a@b.com", 200.34);//middle balance equivalence class
+        assertEquals(200.34, bankAccount.getBalance());
 
-        BankAccount bankAccount2 = new BankAccount("a@h.com", 5);//low balance equivalence class
-        assertEquals(5, bankAccount2.getBalance());
+        BankAccount bankAccount2 = new BankAccount("a@h.com", 5.10);//low balance equivalence class
+        assertEquals(5.10, bankAccount2.getBalance());
 
-        BankAccount bankAccount3 = new BankAccount("e@h.com", 1000);//high balance equivalence class
-        assertEquals(1000, bankAccount3.getBalance());
+        BankAccount bankAccount3 = new BankAccount("e@h.com", 1000.00);//high balance equivalence class
+        assertEquals(1000.00, bankAccount3.getBalance());
 
-        BankAccount bankAccount4 = new BankAccount("g@u.com", 0);// 0 balance equivalence class
-        assertEquals(0, bankAccount4.getBalance());
+        BankAccount bankAccount4 = new BankAccount("g@u.com", 0.00);// 0 balance equivalence class
+        assertEquals(0.00, bankAccount4.getBalance());
     }
 
     @Test
     void withdrawTest() {
-        BankAccount bankAccount = new BankAccount("a@f.com", 200);
-
+        BankAccount bankAccount = new BankAccount("a@f.com", 200.73);
         bankAccount.withdraw(400);
-        assertEquals(200, bankAccount.getBalance());//equivalence for amount greater than balance
+        assertEquals(200.73, bankAccount.getBalance());//equivalence for amount greater than balance
 
         bankAccount.withdraw(-100);
-        assertEquals(200, bankAccount.getBalance()); //equivalence for negative amount
+        assertEquals(200.73, bankAccount.getBalance()); //equivalence for negative amount
 
         bankAccount.withdraw(50);
-        assertEquals(150, bankAccount.getBalance());//equivalence for double digit amount
+        assertEquals(150.73, bankAccount.getBalance());//equivalence for double digit amount
 
-        BankAccount bankAccount2 = new BankAccount("a@h.com", 300);
+        BankAccount bankAccount2 = new BankAccount("a@h.com", 300.27);
         bankAccount2.withdraw(301);
-        assertEquals(300, bankAccount2.getBalance());//border for amount greater than balance
+        assertEquals(300.27, bankAccount2.getBalance());//border for amount greater than balance
 
         bankAccount2.withdraw(-1);
-        assertEquals(300, bankAccount2.getBalance()); //border for negative amount
+        assertEquals(300.27, bankAccount2.getBalance()); //border for negative amount
 
         bankAccount2.withdraw(150);
-        assertEquals(150, bankAccount2.getBalance());//equivalence for triple digit (middle) amount
+        assertEquals(150.27, bankAccount2.getBalance());//equivalence for triple digit (middle) amount
 
         bankAccount2.withdraw(0);
-        assertEquals(150, bankAccount2.getBalance());
+        assertEquals(150.27, bankAccount2.getBalance());
+
+        BankAccount testAccount = new BankAccount("d@a.com", 1000.00);
+        testAccount.withdraw(487.735);
+        assertEquals(IllegalArgumentException.class, testAccount.getBalance());
     }
 
     @Test
