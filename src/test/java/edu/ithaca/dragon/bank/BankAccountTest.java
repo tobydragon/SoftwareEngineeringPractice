@@ -14,12 +14,33 @@ class BankAccountTest {
     }
 
     @Test
-    void withdrawTest() {
+    void withdrawTest() throws InsufficientFundsException{
+        //greater than balance
+        assertThrows(InsufficientFundsException.class, ()-> new BankAccount("a@b.com", 100).withdraw(101));
+
+        //less than balance
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
         bankAccount.withdraw(100);
-
-
         assertEquals(100, bankAccount.getBalance());
+
+
+        //equal to balance
+        bankAccount = new BankAccount("a@b.com", 300);
+        bankAccount.withdraw(300);
+        assertEquals(0, bankAccount.getBalance());
+
+
+        //negative
+        bankAccount = new BankAccount("a@b.com", 300);
+        bankAccount.withdraw(-1);
+        assertEquals(300, bankAccount.getBalance());
+
+
+        //negative
+        bankAccount = new BankAccount("a@b.com", 200);
+        bankAccount.withdraw(-300);
+        assertEquals(200, bankAccount.getBalance());
+
     }
 
 
@@ -27,7 +48,7 @@ class BankAccountTest {
     void isEmailValidTestUpdated(){
         // checks for a basic, valid email and for empty string
         assertTrue(BankAccount.isEmailValid( "a@b.com"));
-        assertFalse( BankAccount.isEmailValid(""));
+        assertFalse( BankAccount.isEmailValid(" "));
 
         // checks for forbidden characters... border case:  one forbidden characters is present
         assertFalse(BankAccount.isEmailValid("ab#c@gmail.com"));
