@@ -54,6 +54,14 @@ public class BankAccount {
         }
     }
 
+    /**
+     * Returns true if amountIn is positive and has 2 or less decimal places. Returns false otherwise.
+     * @param amountIn
+     * @return
+     */
+    public static boolean isAmountValid(double amountIn){
+        return false;
+    }
 
     public static boolean isEmailValid(String email){
         char atChar = '@'; //The "@" as a string has to be char to work

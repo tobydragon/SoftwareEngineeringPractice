@@ -109,4 +109,32 @@ class BankAccountTest {
         assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", 100));
     }
 
+    @Test
+    void isAmountValidTest(){
+        assertTrue(BankAccount.isAmountValid(10));
+        assertTrue(BankAccount.isAmountValid(10.0));
+        assertTrue(BankAccount.isAmountValid(10.00));
+        assertTrue(BankAccount.isAmountValid(10.000000000));
+        assertTrue(BankAccount.isAmountValid(10.1));
+        assertTrue(BankAccount.isAmountValid(10.11));
+        assertTrue(BankAccount.isAmountValid(0.0000000));
+        assertTrue(BankAccount.isAmountValid(0.1));
+        assertTrue(BankAccount.isAmountValid(0.01));
+        assertTrue(BankAccount.isAmountValid(0.00000000001));
+
+        assertFalse(BankAccount.isAmountValid(10.001));
+        assertFalse(BankAccount.isAmountValid(10.0001));
+        assertFalse(BankAccount.isAmountValid(10.00000001));
+        assertFalse(BankAccount.isAmountValid(-10));
+        assertFalse(BankAccount.isAmountValid(-10.0));
+        assertFalse(BankAccount.isAmountValid(-10.00));
+        assertFalse(BankAccount.isAmountValid(-10.00000));
+        assertFalse(BankAccount.isAmountValid(-10.1));
+        assertFalse(BankAccount.isAmountValid(-10.01));
+        assertFalse(BankAccount.isAmountValid(-10.001));
+        assertFalse(BankAccount.isAmountValid(-0.1));
+        assertFalse(BankAccount.isAmountValid(-0.01));
+        assertFalse(BankAccount.isAmountValid(-0.001));
+    }
+
 }
