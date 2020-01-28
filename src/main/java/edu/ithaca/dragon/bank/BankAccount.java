@@ -39,59 +39,59 @@ public class BankAccount {
         balance -= amount;
     }
 
-
-    public static boolean isEmailValid(String email){
-        if (email.indexOf('@') == -1||email.indexOf('@')==0){
+    private  static  boolean isExtensionValid(String extension){ //Private method to check if extension is valid
+        if (extension.indexOf('.') != -1) { //Check if a period is in the extension
             return false;
         }
+        return true;
+    }
 
-        else if(email.indexOf("..") != -1){
+    private static boolean isDomainValid(String domain) { //Private method to check if extension is valid
+        if (domain.indexOf('.') == -1) {
+            return false;
+        } else if (domain.indexOf('.') == 0) { //Check if a period is in the place of the @ symbol
+            return false;
+        } else if (domain.indexOf('@') != -1) { //Check if the @ symbol is in the domain
+            return false;
+        } else if (domain.indexOf('-') != -1) { //Check if a - is in the domain
             return false;
         }
+        return true;
+    }
 
-        else if(email.indexOf('#')!= -1){
+    public static boolean isEmailValid(String email) { //Public method to check if email is valid
+        if (email.indexOf('@') == -1 || email.indexOf('@') == 0) { //Check if @ symbol is gone or in front of address
             return false;
-        }
-
-        else if(email.indexOf("-@") != -1){
+        } else if (email.indexOf("..") != -1) { //Check if .. is in the address
             return false;
-        }
-
-        else if(email.indexOf('-')==0){
+        } else if (email.indexOf('#') != -1) { //Check if # is in the address
             return false;
-        }
-
-        else if(email.indexOf('.') == 0){
+        } else if (email.indexOf("-@") != -1) { //Check if -@ is in the address
             return false;
-        }
-
-        else if(email.charAt(email.length()-2)=='.' || email.charAt(email.length()-1)=='.'){
+        } else if (email.indexOf('-') == 0) { //Check if - is in the the front of the address
             return false;
-        }
+        } else if (email.indexOf('.') == 0) { //Check if . is in the front of the address
+            return false;
+        } else if (email.charAt(email.length() - 2) == '.' || email.charAt(email.length() - 1) == '.') { //Check if a period is in multiple areas of the address
+            return false;
+        } else {
+            String domain = email.substring(email.indexOf('@') + 1);
 
-        else {
-            String domain = email.substring(email.indexOf('@')+1);
-            if(domain.indexOf('.') == -1){
+            if (isDomainValid(domain) == false){ //Calling private method isDomainValid()
                 return false;
+            } else {
+                String extension = domain.substring(domain.indexOf('.') + 1);
+                if(isExtensionValid(extension) == false){ //Calling private method isExtensionValid()
+                    return false;
+                }
+                return true; //Email is valid
             }
-
-            else if(domain.indexOf('.')==0){
-                return false;
-            }
-
-            else if(domain.indexOf('@')!= -1){
-                return false;
-            }
-
-            else if(domain.indexOf('-')!= -1){
-                return false;
-            }
-
-            String extension = domain.substring(domain.indexOf('.')+1);
-            if(extension.indexOf('.') != -1){
-                return false;
-            }
-            return true;
         }
     }
+    /*
+    public static boolean isAmountValid(double amount){
+    }
+
+     */
 }
+

@@ -96,6 +96,8 @@ class BankAccountTest {
         assertFalse((BankAccount.isEmailValid("@g.cc"))); //equivalence case no address domain edge case
         assertFalse((BankAccount.isEmailValid("a@.cc"))); //equivalence case no domain in domain edge case
         assertFalse((BankAccount.isEmailValid("a@g."))); //equivalence case no extension to the domain edge case
+        assertFalse((BankAccount.isEmailValid("a@a@b@g.com")));
+        assertFalse((BankAccount.isEmailValid("a@b.com..")));
     }
 
     @Test
