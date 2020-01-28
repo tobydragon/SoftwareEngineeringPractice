@@ -26,11 +26,20 @@ public class BankAccount {
         return email;
     }
 
+
     /**
      * @post reduces the balance by amount if amount is non-negative and smaller than balance
      */
-    public void withdraw (double amount)  {
-        balance -= amount;
+    public void withdraw (double amount) throws InsufficientFundsException {
+        if (amount < 0){
+            balance = balance;
+        }
+        else if (balance < amount) {
+            throw new InsufficientFundsException("Cannot withdraw an amount larger than you balance");
+        }
+        else{
+            balance -= amount;
+        }
 
     }
 
@@ -62,10 +71,9 @@ public class BankAccount {
         }
 
 
-
         if (pdcount != 1)
             return false;
-        if (domain.substring(period).length() < 3)
+        if (domain.substring(period).length() < 2)
             return false;
         for (int i = 0; i < email.length(); i++) {
             if (email.charAt(i) == '#')
