@@ -15,17 +15,23 @@ class BankAccountTest {
         assertEquals(200, bankAccount.getBalance());
 
         //gives you your balance when your balance is 0. Valid email.
-        BankAccount bankAccount1 = new BankAccount("abc-d@mail.com", 200);
-        assertEquals(200, bankAccount.getBalance());
+        BankAccount bankAccount1 = new BankAccount("abc-d@mail.com", 0);
+        assertEquals(0, bankAccount1.getBalance());
 
         //returns your balance when it is negative. Valid email.
-        BankAccount bankAccount2 = new BankAccount("abc-d@mail.com", 200);
-        assertEquals(200, bankAccount.getBalance());
+        BankAccount bankAccount2 = new BankAccount("abc-d@mail.com", -10);
+        assertEquals(-10, bankAccount2.getBalance());
+
+        //correctly gives you the balance when you have a valid email
+        BankAccount bankAccount3 = new BankAccount("a@b.com", 800.67);
+        assertEquals(800.67, bankAccount3.getBalance());
+
+
 
     }
 
     @Test
-    void withdrawTest() {
+    void withdrawTest() throws InsufficientFundsException {
 
         //tests for a valid withdrawal that will leave you with a half balance. Valid email is provided.
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
@@ -37,20 +43,23 @@ class BankAccountTest {
         bankAccount.withdraw(100);
         assertEquals(0, bankAccount.getBalance());
 
-        //tests for a valid withdrawal of $0 that will leave you with the same balance no matter what it is. Valid email.
-        BankAccount bankAccount2 = new BankAccount("abc.def@mail.com", 2);
-        bankAccount.withdraw(0);
-        assertEquals(2, bankAccount.getBalance());
+        //tests for an invalid withdrawal of $0 that will leave you with the same balance no matter what it is. Valid email.
+        BankAccount bankAccount2 = new BankAccount("abc-d@mail.com", 100);
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount2.withdraw(0));
+        assertEquals(100,bankAccount2.getBalance());
 
         //tests for an invalid withdrawal that is more than your current balance. valid email.
-        BankAccount bankAccount3 = new BankAccount("abc@mail.com", 50);
-        bankAccount.withdraw(100);
-        assertEquals(-50, bankAccount.getBalance());
+        BankAccount bankAccount3 = new BankAccount("abc-d@mail.com", 348.08);
+        assertThrows(InsufficientFundsException.class, ()-> bankAccount3.withdraw(349));
+        assertEquals(348.08,bankAccount3.getBalance());
 
         //tests for an invalid withdrawal that is a negative number. Valid email.
-        BankAccount bankAccount4 = new BankAccount("abc_def@mail.com", 50);
-        bankAccount.withdraw(100);
-        assertEquals(-50, bankAccount.getBalance());
+        BankAccount bankAccount4 = new BankAccount("abc-d@mail.com", 590.02);
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount4.withdraw(-20));
+        assertEquals(590.02,bankAccount4.getBalance());
+
+        //tests for an invalid withdrawal that is a fraction of a penny. Should return an illegal argument exception
+        //assertThrows(IllegalArgumentException.class, ()-> new BankAccount("a@b.com", 200).withdraw(2.005));
 
 
     }

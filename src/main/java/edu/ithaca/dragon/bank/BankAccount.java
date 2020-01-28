@@ -1,5 +1,6 @@
 package edu.ithaca.dragon.bank;
 
+
 import java.util.HashSet;
 
 public class BankAccount {
@@ -30,13 +31,21 @@ public class BankAccount {
 
     /**
      * @post reduces the balance by amount if amount is non-negative and smaller than balance
-     * throws IllegalArgument if the amount is more than the balance or is negative,
+     * throws IllegalArgument if the amount is more than the balance
+     * for negative numbers return the unchanged balance
      * returns the balance if the withdraw amount is less than your balance and a positive number.
      */
-    public void withdraw (double amount)  {
-        if (amount <= 0) throw new IllegalArgumentException("Cannot withdraw 0 or less.");
-        if (balance >= amount) balance -= amount;
-        else throw new IllegalArgumentException("Cannot draw more than account balance.");
+    public void withdraw (double amount) throws InsufficientFundsException  {
+
+        if (amount < .01)
+            throw new IllegalArgumentException("Cannot withdraw $0 or less");
+
+        else if (balance >= amount)
+            balance -= amount;
+
+        else if (balance < amount)
+            throw new InsufficientFundsException("Cannot draw more than account balance.");
+
     }
 
     /**
