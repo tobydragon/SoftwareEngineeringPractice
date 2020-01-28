@@ -32,6 +32,12 @@ public class BankAccount {
      * If balance is negative, do nothing
      */
     public void withdraw (double amount) throws InsufficientFundsException  {
+        if (balance >= amount && amount > 0) {
+            balance -= amount;
+        }
+        else if(balance < amount){
+            throw new InsufficientFundsException("Amount requested is more than in your account by " + (amount - balance));
+        }
 
     }
 
