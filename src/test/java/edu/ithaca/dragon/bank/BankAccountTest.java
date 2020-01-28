@@ -21,16 +21,19 @@ class BankAccountTest {
     }
 
     @Test
-    void withdrawTest() throws InsufficientFundsException {
+    void withdrawTest() throws InsufficientFundsException, IllegalArgumentException {
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
         bankAccount.withdraw(100);
         assertEquals(100, bankAccount.getBalance()); // check if withdraw decreased in account
         assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(300)); //check if withdraw amount greater than amount in bank account/ test exception
         bankAccount.withdraw(100);
         assertEquals(0, bankAccount.getBalance()); //check if amount of total withdraw equal to balance
-        assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(-100)); //check if withdraw negative number
-        assertEquals(0, bankAccount.getBalance()); //shouldn't equal 100
-
+        bankAccount.withdraw(0);
+        assertEquals(0, bankAccount.getBalance());
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(-100)); //check if withdraw negative number
+        assertEquals(0, bankAccount.getBalance()); //shouldn't equal 100 and remain at balance it was before
+        assertThrows(IllegalArgumentException.class, () ->bankAccount.withdraw(10.103234));
+        assertEquals(0, bankAccount.getBalance()); //should still remain 0
     }
 
     @Test
@@ -64,19 +67,11 @@ class BankAccountTest {
         assertTrue(BankAccount.isAmountValid(0)); //testing 0
 
 
-
         assertFalse(BankAccount.isAmountValid(-10)); //negative int
         assertFalse(BankAccount.isAmountValid(-0.01)); //negative float
         assertFalse(BankAccount.isAmountValid(-.01)); //negative float without leading number
         assertFalse(BankAccount.isAmountValid(0.009)); //positive float with more than 2 decimals
         assertFalse(BankAccount.isAmountValid(-0.00242423)); //negative float with more than 2 decimals
-
-
-
-
-
-
-
 
     }
 
@@ -88,6 +83,16 @@ class BankAccountTest {
         assertEquals(200, bankAccount.getBalance());
         //check for exception thrown correctly
         assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", 100));
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(-100)); //illegal arguement negative withdraw
+
+        BankAccount bankAccount2 = new BankAccount("a@be.com", 200);
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount2.withdraw(.00012));
+        assertThrows(InsufficientFundsException.class, () ->bankAccount2.withdraw(200.01)); //throw insufficient funds exception
+        assertThrows(IllegalArgumentException.class, () ->bankAccount2.withdraw(200.0001));
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("a32@gt.com", -100)); //invalid starting negative throw illegal argument
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("a32@gt.com", 100.5345)); //invalid starting float throw illegal argument
+
+
     }
 
 }
