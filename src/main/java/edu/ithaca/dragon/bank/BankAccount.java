@@ -102,10 +102,19 @@ public class BankAccount {
             validChar.add((char)(x+65));
             validChar.add((char)(x+97));
         }
+        for(int x = 0; x < 10; x++){
+            validChar.add((char)(x+'0'));
+        }
         validChar.add('-');
         validChar.add('_');
         validChar.add('@');
         validChar.add('.');
         return validChar;
     }
+
+
+    public void deposit(double amount) throws IllegalArgumentException{
+    }
+
+    public void transfer(double amount, String email) throws IllegalArgumentException{}
 }
