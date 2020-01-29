@@ -30,9 +30,9 @@ class BankAccountTest {
 
         //Equivalence Class Has balance
         BankAccount bankAccount1 = new BankAccount("a@c.com", 300);
-        bankAccount1.withdraw(100);//valid withdraw
-        assertEquals(200, bankAccount1.getBalance());
-        bankAccount1.withdraw(0);//valid withdraw edgecase
+        bankAccount1.withdraw(99);//valid withdraw
+        assertEquals(201, bankAccount1.getBalance());
+        bankAccount1.withdraw(1);//valid withdraw edgecase
         assertEquals(200, bankAccount1.getBalance());
         bankAccount1.withdraw(201);//overdraw
         assertEquals(200, bankAccount1.getBalance());
@@ -43,10 +43,14 @@ class BankAccountTest {
 
         //Equivalence Class No balance
         BankAccount ba2 = new BankAccount("a@c.cm", 0);
-        ba2.withdraw(0); //only valid withdraw
-        assertEquals(0, ba2.getBalance());
         ba2.withdraw(1);//overdraw
         assertEquals(0, ba2.getBalance());
+
+        BankAccount ba3 = new BankAccount("a@c.cm", 200);
+        assertThrows(IllegalArgumentException.class, ()-> ba3.withdraw(0));
+        assertThrows(IllegalArgumentException.class, ()-> ba3.withdraw(1.001));
+        assertThrows(IllegalArgumentException.class, ()-> ba3.withdraw(-14));
+        assertThrows(IllegalArgumentException.class, ()-> ba3.withdraw(-0.001));
 
     }
 
@@ -107,6 +111,8 @@ class BankAccountTest {
         assertEquals(200, bankAccount.getBalance());
         //check for exception thrown correctly
         assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", 100));
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("a@basd.com", 100.001));
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("a@basd.com", -100));
     }
 
     @Test
