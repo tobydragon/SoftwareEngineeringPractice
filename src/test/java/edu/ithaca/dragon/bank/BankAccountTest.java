@@ -146,19 +146,39 @@ class BankAccountTest {
     @Test
     void depositTest(){
         BankAccount bankAccount = new BankAccount("a@a.cc", 0);
+
         bankAccount.deposit(100);
         assertEquals(100, bankAccount.getBalance(), 10);
         bankAccount.deposit(0.1);
         assertEquals(100.1, bankAccount.getBalance(), 10);
         bankAccount.deposit(0.01);
         assertEquals(100.11, bankAccount.getBalance(), 10);
-        bankAccount.deposit(0);
-        assertEquals(100.11, bankAccount.getBalance(), 10);
 
         assertThrows(IllegalArgumentException.class, ()-> bankAccount.deposit(-1));
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount.deposit(0));
         assertThrows(IllegalArgumentException.class, ()-> bankAccount.deposit(-1.01));
         assertThrows(IllegalArgumentException.class, ()-> bankAccount.deposit(1.001));
         assertThrows(IllegalArgumentException.class, ()-> bankAccount.deposit(-1.001));
+    }
+
+    @Test
+    void transferTest(){
+        BankAccount bankAccount = new BankAccount("a@a.cc", 300);
+
+        bankAccount.transfer(100, "a@a.com");
+        assertEquals(200, bankAccount.getBalance(), 10);
+        bankAccount.transfer(0.1, "a@a.com");
+        assertEquals(199.9, bankAccount.getBalance(), 10);
+        bankAccount.transfer(0.01, "a@a.com");
+        assertEquals(199.89, bankAccount.getBalance(), 10);
+
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount.transfer(0, "a@a.com"));
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount.transfer(-1, "a@a.com"));
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount.transfer(-1.01, "a@a.com"));
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount.transfer(-1.0001, "a@a.com"));
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount.transfer(0.001, "a@a.com"));
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount.transfer(1, "a@a.c"));//invalid email
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount.transfer(1, "a@a.cc"));//same email as account
     }
 
 }
