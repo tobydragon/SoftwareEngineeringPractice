@@ -59,6 +59,11 @@ public class BankAccount {
         else return true;
     }
 
+    /**
+     * returns true if email is valid and false if not
+     * @param email
+     * @return if email is valid
+     */
     public static boolean isEmailValid(String email){
         char atChar = '@'; //The "@" as a string has to be char to work
         int atCount = 0; //To count the amount of @ symbols

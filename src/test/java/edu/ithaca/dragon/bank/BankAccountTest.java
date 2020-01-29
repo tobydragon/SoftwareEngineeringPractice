@@ -99,6 +99,9 @@ class BankAccountTest {
         assertFalse(BankAccount.isEmailValid("ASDF@ADSA.F@ASCOM"));
         assertFalse(BankAccount.isEmailValid("asdfasdfsadf.sad"));
         assertFalse(BankAccount.isEmailValid("asdfasdfasdf"));
+
+        assertFalse(BankAccount.isEmailValid("asd%@asddff.coc"));
+        assertFalse(BankAccount.isEmailValid("asd@asddff.coco"));
     }
 
     @Test
