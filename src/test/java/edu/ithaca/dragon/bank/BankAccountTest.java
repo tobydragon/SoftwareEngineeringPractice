@@ -107,7 +107,6 @@ class BankAccountTest {
     @Test
     void constructorTest() {
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
-
         assertEquals("a@b.com", bankAccount.getEmail());
         assertEquals(200, bankAccount.getBalance());
         //check for exception thrown correctly
