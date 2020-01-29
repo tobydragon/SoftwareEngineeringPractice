@@ -164,21 +164,23 @@ class BankAccountTest {
     @Test
     void transferTest(){
         BankAccount bankAccount = new BankAccount("a@a.cc", 300);
+        BankAccount bankAccount1 = new BankAccount("A@AA.CC", 0);
 
-        bankAccount.transfer(100, "a@a.com");
+        bankAccount.transfer(100, bankAccount1);
         assertEquals(200, bankAccount.getBalance(), 10);
-        bankAccount.transfer(0.1, "a@a.com");
+        assertEquals(100, bankAccount1.getBalance(), 10);
+        bankAccount.transfer(0.1, bankAccount1);
         assertEquals(199.9, bankAccount.getBalance(), 10);
-        bankAccount.transfer(0.01, "a@a.com");
+        assertEquals(100.1, bankAccount1.getBalance(), 10);
+        bankAccount.transfer(0.01, bankAccount1);
         assertEquals(199.89, bankAccount.getBalance(), 10);
+        assertEquals(100.11, bankAccount1.getBalance(), 10);
 
-        assertThrows(IllegalArgumentException.class, ()-> bankAccount.transfer(0, "a@a.com"));
-        assertThrows(IllegalArgumentException.class, ()-> bankAccount.transfer(-1, "a@a.com"));
-        assertThrows(IllegalArgumentException.class, ()-> bankAccount.transfer(-1.01, "a@a.com"));
-        assertThrows(IllegalArgumentException.class, ()-> bankAccount.transfer(-1.0001, "a@a.com"));
-        assertThrows(IllegalArgumentException.class, ()-> bankAccount.transfer(0.001, "a@a.com"));
-        assertThrows(IllegalArgumentException.class, ()-> bankAccount.transfer(1, "a@a.c"));//invalid email
-        assertThrows(IllegalArgumentException.class, ()-> bankAccount.transfer(1, "a@a.cc"));//same email as account
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount.transfer(0, bankAccount1));
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount.transfer(-1, bankAccount1));
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount.transfer(-1.01, bankAccount1));
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount.transfer(-1.0001, bankAccount1));
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount.transfer(0.001, bankAccount1));
     }
 
 }
