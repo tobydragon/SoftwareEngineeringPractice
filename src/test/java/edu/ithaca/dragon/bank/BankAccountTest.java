@@ -31,7 +31,6 @@ class BankAccountTest {
         bankAccount1.withdraw(0.1);
         assertEquals(199.9, bankAccount1.getBalance(),10);
         bankAccount1.withdraw(0.01);
-        System.out.println(bankAccount1.getBalance());
         assertEquals(199.89, bankAccount1.getBalance(), 10);
         assertThrows(InsufficientFundsException.class, ()-> bankAccount1.withdraw(201));
         assertEquals(199.89, bankAccount1.getBalance(), 10);
@@ -42,7 +41,7 @@ class BankAccountTest {
 
         //Equivalence Class No balance
         BankAccount ba2 = new BankAccount("a@c.cm", 0);
-        assertThrows(InsufficientFundsException.class, ()-> bankAccount.withdraw(1));
+        assertThrows(InsufficientFundsException.class, ()-> ba2.withdraw(1));
         assertEquals(0, ba2.getBalance());
 
         BankAccount ba3 = new BankAccount("a@c.cm", 200);

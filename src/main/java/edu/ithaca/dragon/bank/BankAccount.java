@@ -42,7 +42,7 @@ public class BankAccount {
     public void withdraw (double amount) throws InsufficientFundsException, IllegalArgumentException{
         if (Double.compare(amount, 0.0)==0) throw new IllegalArgumentException("Cannot withdraw zero dollars");
         if (!isAmountValid(amount)) throw new IllegalArgumentException(Double.toString(amount)+" is not a valid withdraw amount");
-        if(amount > balance);
+        if(amount > balance) throw new InsufficientFundsException("Not enough Money");
         else balance -= amount;
     }
 
