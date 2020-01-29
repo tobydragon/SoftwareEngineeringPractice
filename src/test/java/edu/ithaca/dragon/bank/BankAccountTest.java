@@ -13,12 +13,6 @@ class BankAccountTest {
         assertEquals(200, bankAccount.getBalance());
         bankAccount = new BankAccount("a@b.com", 0);
         assertEquals(0, bankAccount.getBalance());
-
-        //Equivalence Class Negative Starting Balance
-        bankAccount = new BankAccount("a@b.com", -200);
-        assertEquals(-200, bankAccount.getBalance());
-        bankAccount = new BankAccount("a@b.com", -1);
-        assertEquals(-1, bankAccount.getBalance());
     }
 
     @Test
