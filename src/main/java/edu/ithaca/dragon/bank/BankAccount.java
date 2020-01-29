@@ -30,7 +30,7 @@ public class BankAccount {
      * if amount is negative or larger than balance, balance stays the same
      */
     public void withdraw(double amount) {
-        if(balance >= amount){
+        if (!(balance < amount) && amount > 0){
             balance -= amount;
         }
     }
@@ -71,5 +71,26 @@ public class BankAccount {
         else {
             return true;
         }
+    }
+
+    /**
+     * @param amount
+     * @return function returns a boolean telling whether an amount is a valid input
+     * valid inputs are positive and 2 decimal points or less
+     */
+    public static boolean isAmountValid(double amount){
+        boolean isValid = true;
+
+        if (amount <= 0){
+            isValid = false;
+        }
+        else {
+            String amountString = Double.toString(amount);
+            if (amountString.indexOf('.')+2 < amountString.length()-1){
+                isValid=false;
+            }
+        }
+
+        return isValid;
     }
 }

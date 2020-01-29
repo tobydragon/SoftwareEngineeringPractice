@@ -27,12 +27,9 @@ class BankAccountTest {
 
     @Test
     void withdrawTest() {
-        //no test for floating point numbers or decimals
-        //no test for exception throws
-
-        BankAccount bankAccount = new BankAccount("a@b.com", 200);
 
         //part of non-negative and smaller equivalence class
+        BankAccount bankAccount = new BankAccount("a@b.com", 200);
         bankAccount.withdraw(100);
         assertEquals(100, bankAccount.getBalance());
         bankAccount.withdraw(0);
@@ -112,6 +109,33 @@ class BankAccountTest {
         assertFalse(BankAccount.isEmailValid("abc@mail.c"));
         assertFalse(BankAccount.isEmailValid("abvc@mail.")); //testing need two characters after .
 
+    }
+
+    @Test
+    void isAmountValidTest(){
+        BankAccount bankAccount = new BankAccount("a@b.com", 200);
+        //equivalence classes:
+        //positive and 2 decimal place amounts
+        assertTrue(BankAccount.isAmountValid(.01));
+        assertTrue(BankAccount.isAmountValid(.99));
+
+        //positive and 3 decimal places
+        assertFalse(BankAccount.isAmountValid(.001));
+        assertFalse(BankAccount.isAmountValid(.999));
+
+        //0 and 2 decimal places (0 is not valid)
+        assertFalse(BankAccount.isAmountValid(0.00));
+
+        //0 and 3 decimals (0 is not valid)
+        assertFalse(BankAccount.isAmountValid(0.000));
+
+        //negative and 2 decimals
+        assertFalse(BankAccount.isAmountValid(-.01));
+        assertFalse(BankAccount.isAmountValid(-.99));
+
+        //negative and 3 decimals
+        assertFalse(BankAccount.isAmountValid(-.001));
+        assertFalse(BankAccount.isAmountValid(-.999));
     }
 
 }
