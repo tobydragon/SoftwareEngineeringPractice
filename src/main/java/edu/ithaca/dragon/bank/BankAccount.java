@@ -60,7 +60,11 @@ public class BankAccount {
      * @return
      */
     public static boolean isAmountValid(double amountIn){
-        return false;
+        if (amountIn < 0) return false;
+        double scale = Math.pow(10, 9);
+        amountIn = Math.round(amountIn*scale)/scale;
+        if(Double.compare(amountIn, Math.round(amountIn*100)/100.0)!= 0) return false;
+        else return true;
     }
 
     public static boolean isEmailValid(String email){
