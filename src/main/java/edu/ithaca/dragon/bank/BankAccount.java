@@ -6,7 +6,9 @@ public class BankAccount {
     private double balance;
 
     /**
+     * @post creates a bank account object
      * @throws IllegalArgumentException if email is invalid
+     *
      */
     public BankAccount(String email, double startingBalance) {
         if (isEmailValid(email)) {
@@ -36,7 +38,6 @@ public class BankAccount {
     /**
      * @post checks if inputted dollar amount is a valid dollar amount
      *
-     *
      */
     public static boolean isAmountValid(double amount) {
 
@@ -62,17 +63,19 @@ public class BankAccount {
     /**
      * @post reduces the balance by amount if amount is non-negative and smaller than balance
      * @throws InsufficientFundsException if trying to withdraw more than whats in account.
+     * @throws IllegalArgumentException if inputted amount is invalid.
      *
      */
 
     public void withdraw (double amount) throws InsufficientFundsException, IllegalArgumentException {
 
+        //checks for valid input
         if (!isAmountValid(amount)) {
             throw new IllegalArgumentException("Invalid Input");
         }
-
+        //checks for valid withdraw amount
         if (balance < amount) {
-            throw new InsufficientFundsException("Cannot withdraw an amount larger than you balance");
+            throw new InsufficientFundsException("Cannot withdraw an amount larger than your balance");
         }
 
         else{
@@ -85,7 +88,6 @@ public class BankAccount {
 
     /**
      * @post checks if inputted email is a valid email.
-     *
      *
      */
     public static boolean isEmailValid(String email) {
@@ -131,7 +133,7 @@ public class BankAccount {
             return false;
 
         //must be at least 2 characters after period
-        if (domain.substring(period).length() < 2)
+        if (domain.substring(period+1).length() < 2)
             return false;
 
 
@@ -158,5 +160,52 @@ public class BankAccount {
         return true;
 
     }
+
+
+    /**
+     * @post Adds the amount to the balance if amount is non-negative and smaller than balance
+     * @throws IllegalArgumentException if inputted amount is invalid.
+     *
+     */
+    public void Deposit(double amount) throws IllegalArgumentException, InsufficientFundsException {
+        //checks for valid input
+        if (!isAmountValid(amount)) {
+            throw new IllegalArgumentException("Invalid Input");
+        }
+        else {
+            balance += amount;
+        }
     }
+
+
+    /**
+     * @post removes the amount from the balance and adds the amount to the other bank account if amount is non-negative and smaller than balance
+     * @throws InsufficientFundsException if trying to withdraw more than whats in account.
+     * @throws IllegalArgumentException if inputted amount is invalid.
+     *
+     */
+    public void Transfer(BankAccount transferacct, double amount) throws IllegalArgumentException, InsufficientFundsException{
+        //checks for valid input
+        if (!isAmountValid(amount)){
+            throw new IllegalArgumentException("Invalid Input");
+        }
+        //checks for valid transfer amount
+        if (balance < amount){
+            throw new InsufficientFundsException("Cannot transfer an amount larger than your balance");
+        }
+
+        else{
+            balance-= amount;
+            transferacct.balance+=amount;
+        }
+    }
+      
+
+          
+        }
+
+
+
+
+
 

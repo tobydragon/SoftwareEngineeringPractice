@@ -7,11 +7,16 @@ import static org.junit.jupiter.api.Assertions.*;
 class BankAccountTest {
 
     @Test
-    void getBalanceTest() {
+    void getBalanceTest() throws InsufficientFundsException {
 
+        //valid case
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
-
         assertEquals(200, bankAccount.getBalance());
+
+        //after successfull withdraw
+        bankAccount.withdraw(100);
+        assertEquals(100, bankAccount.getBalance());
+
     }
 
     @Test
