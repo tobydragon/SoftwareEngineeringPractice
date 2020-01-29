@@ -112,9 +112,25 @@ public class BankAccount {
         return validChar;
     }
 
-
+    /**
+     * If non zero valid amount add amount ot balance
+     * @param amount
+     * @throws IllegalArgumentException
+     */
     public void deposit(double amount) throws IllegalArgumentException{
+        if(Double.compare(amount, 0)==0)throw new IllegalArgumentException("Cannot deposit zero dollars");
+        if(!isAmountValid(amount))throw new IllegalArgumentException(Double.toString(amount)+" is not a valid deposit amount");
+        else balance+=amount;
     }
 
-    public void transfer(double amount, String email) throws IllegalArgumentException{}
+    /**
+     * transfers amount from this to transferTo if amount is non zero and valid
+     * @param amount
+     * @param transferTo
+     * @throws IllegalArgumentException
+     */
+    public void transfer(double amount, BankAccount transferTo) throws IllegalArgumentException, InsufficientFundsException {
+        this.withdraw(amount);
+        transferTo.deposit(amount);
+    }
 }
