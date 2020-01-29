@@ -110,12 +110,19 @@ class BankAccountTest {
 
     @Test
     void constructorTest() {
+        //valid test case
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
-
         assertEquals("a@b.com", bankAccount.getEmail());
         assertEquals(200, bankAccount.getBalance());
-        //check for exception thrown correctly
+
+        //check for email exception thrown correctly
         assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", 100));
+
+        //check for balance exception thrown correctly, border case
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("a@b.com", -00.01));
+
     }
+
+
 
 }
