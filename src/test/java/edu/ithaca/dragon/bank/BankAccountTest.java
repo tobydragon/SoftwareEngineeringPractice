@@ -8,15 +8,38 @@ class BankAccountTest {
 
     @Test
     void getBalanceTest() {
+
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
 
         assertEquals(200, bankAccount.getBalance());
     }
 
     @Test
-    void withdrawTest() throws InsufficientFundsException{
+    void isAmountValidTest(){
+        //negative amount border case
+        assertFalse(BankAccount.isAmountValid(-00.01));
+
+        //negative amount
+        assertFalse(BankAccount.isAmountValid(-100));
+
+        //positive border case
+        assertTrue(BankAccount.isAmountValid(00.01));
+
+        //positive amount
+        assertTrue(BankAccount.isAmountValid(100.00));
+
+        //invalid format border case
+        assertFalse(BankAccount.isAmountValid(123.987));
+
+        //invalid format
+        assertFalse(BankAccount.isAmountValid(83746.82736453));
+    }
+
+    @Test
+    void withdrawTest() throws InsufficientFundsException, IllegalArgumentException{
         //greater than balance
         assertThrows(InsufficientFundsException.class, ()-> new BankAccount("a@b.com", 100).withdraw(101));
+
 
         //less than balance
         BankAccount bankaccount = new BankAccount("a@b.com", 200);
@@ -30,17 +53,12 @@ class BankAccountTest {
         assertEquals(0, bankaccount.getBalance());
 
 
-        //negative
-        bankaccount = new BankAccount("a@b.com", 300);
-        bankaccount.withdraw(-1);
-        assertEquals(300, bankaccount.getBalance());
+        //negative - argument thrown
+        assertThrows(IllegalArgumentException.class,() -> new BankAccount("a@b.com", 300).withdraw(-1));
 
 
-        //negative
-        bankaccount = new BankAccount("a@b.com", 200);
-        bankaccount.withdraw(-300);
-        assertEquals(200, bankaccount.getBalance());
-
+        //invalid input
+        assertThrows(IllegalArgumentException.class,() -> new BankAccount("a@b.com",200).withdraw(100.005));
     }
 
 
