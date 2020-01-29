@@ -1,5 +1,8 @@
 package edu.ithaca.dragon.bank;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -22,9 +25,7 @@ public class BankAccount {
         }
     }
 
-    public double getBalance(){
-        return balance;
-    }
+    public double getBalance(){ return balance; }
 
     public String getEmail(){
         return email;
@@ -32,6 +33,7 @@ public class BankAccount {
 
     /**
      * @throws InsufficientFundsException if withdraw amount is greater than balance
+     * @throws IllegalArgumentException if withdraw amount is negative or has more than 2 decimals
      * @post reduces the balance by amount if amount is non-negative and smaller than balance
      */
     public void withdraw (double amount) throws InsufficientFundsException, IllegalArgumentException {
@@ -51,6 +53,43 @@ public class BankAccount {
 
     }
 
+
+    /**
+     * @throws InsufficientFundsException if amount is more than is available
+     * @param amount
+     * @post subtracts from account1 to account2
+     */
+
+    public void transfer(double amount, BankAccount fromAccount, BankAccount toAccount) throws IllegalArgumentException, InsufficientFundsException {
+        if(isAmountValid(amount)){
+
+            fromAccount.withdraw(amount);
+
+
+            toAccount.deposit(amount);
+
+            DecimalFormat newFormat = new DecimalFormat("#. ##");
+
+
+            fromAccount.balance = Double.valueOf(newFormat.format(fromAccount.balance));
+
+            toAccount.balance = Double.valueOf(newFormat.format(toAccount.balance));
+
+        }
+
+        else if(!isAmountValid(amount)){
+            throw new IllegalArgumentException("Not a valid amount to transfer");
+        }
+
+        else {
+            throw new InsufficientFundsException("Not enough money to transfer");
+        }
+    }
+
+
+
+
+
     /**
      * @throws IllegalArgumentException if amount is negative or contains more than two decimals
      * @param amount
@@ -58,13 +97,19 @@ public class BankAccount {
      */
 
     public void deposit(double amount){
-//        if(isAmountValid(amount)){
-//            balance+=amount;
-//        }
+        if(isAmountValid(amount)){
+            balance+=amount;
+
+            DecimalFormat newFormat = new DecimalFormat("#. ##");
+
+            balance = Double.valueOf(newFormat.format(balance));
 
 
 
-
+        }
+        else{
+            throw new IllegalArgumentException("Invalid deposit amount");
+        }
     }
 
     /**
@@ -79,7 +124,7 @@ public class BankAccount {
 
         String s = ""+amount;
 
-        int i = s.indexOf('.');
+        int i = s.lastIndexOf('.');
 
         if(s.length()-i-1 > 2){
             return false;
@@ -144,20 +189,11 @@ public class BankAccount {
         }
 
 
-        int count4 =0;
         int indx = email.lastIndexOf('.');
 
-        while(indx < email.length()) {
-            count4++;
-            indx++;
-        }
-        if(count4 <=1){
-            return false;
-        }
+        int length = email.substring(indx + 1).length();
+        return length >= 2;
 
-        else {
-            return true;
-        }
     }
 
 

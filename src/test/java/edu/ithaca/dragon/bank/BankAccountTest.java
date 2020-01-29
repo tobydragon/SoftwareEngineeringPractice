@@ -7,14 +7,14 @@ import static org.junit.jupiter.api.Assertions.*;
 class BankAccountTest {
 
     @Test
-    void getBalanceTest() throws InsufficientFundsException{
+    void getBalanceTest() throws InsufficientFundsException, IllegalArgumentException{
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
         assertEquals(200, bankAccount.getBalance()); //check get balance == starting balance
         bankAccount.withdraw(50);
         assertEquals(150,bankAccount.getBalance()); //check balance after withdraw
         assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(200)); //check if throws exception for invalid withfraw
         assertEquals(150, bankAccount.getBalance()); //check if balance remains same
-        assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(-200));
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(-200));
         assertEquals(150, bankAccount.getBalance()); //check for withdraw negative amount
         bankAccount.withdraw(0);
         assertEquals(150, bankAccount.getBalance()); //balance after withdraw 0
@@ -26,7 +26,8 @@ class BankAccountTest {
         bankAccount.withdraw(100);
         assertEquals(100, bankAccount.getBalance()); // check if withdraw decreased in account
         assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(300)); //check if withdraw amount greater than amount in bank account/ test exception
-        bankAccount.withdraw(100);
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(100.0001));
+        bankAccount.withdraw(100.0000);
         assertEquals(0, bankAccount.getBalance()); //check if amount of total withdraw equal to balance
         bankAccount.withdraw(0);
         assertEquals(0, bankAccount.getBalance());
@@ -39,6 +40,7 @@ class BankAccountTest {
     @Test
     void isEmailValidTest(){
         //Email should be true if starts with character or number, includes @ and ends with .'character'
+
         assertTrue(BankAccount.isEmailValid( "a@b.com"));
         assertFalse( BankAccount.isEmailValid(""));
         assertTrue(BankAccount.isEmailValid("23s@b.com"));
@@ -51,7 +53,7 @@ class BankAccountTest {
         assertFalse(BankAccount.isEmailValid(".n@Gcom"));
         assertFalse(BankAccount.isEmailValid(".#Gcom"));
         assertFalse(BankAccount.isEmailValid("n$@@G$$com"));
-        assertTrue(BankAccount.isEmailValid("n12.2@gyi.g"));
+        assertFalse(BankAccount.isEmailValid("n12.2@gyi.g"));
     }
 
     @Test
@@ -110,11 +112,43 @@ class BankAccountTest {
         assertThrows(IllegalArgumentException.class, () ->bankAccount.deposit(-130));
         bankAccount.deposit(1000);
         assertEquals(1101.02, bankAccount.getBalance());
+    }
+
+    @Test
+    void transferTest() throws InsufficientFundsException{
 
 
+        BankAccount bankAccount1 = new BankAccount("bob@12.com", 500);
+        BankAccount bankAccount2 = new BankAccount("ang@2.com", 600);
 
 
+        bankAccount1.transfer(100, bankAccount1 , bankAccount2); //check if normal transfer works (positive number)
 
+        assertEquals(400, bankAccount1.getBalance());
+
+        assertEquals(700, bankAccount2.getBalance());
+
+        assertThrows(InsufficientFundsException.class, () ->bankAccount1.transfer(1000, bankAccount2, bankAccount1)); //throw insufficient funds
+
+        assertThrows(IllegalArgumentException.class, () ->bankAccount1.transfer(-120, bankAccount2, bankAccount1)); //throw illegal argument negative
+
+        assertThrows(IllegalArgumentException.class, () ->bankAccount1.transfer(.43234, bankAccount2, bankAccount1)); //throw illegal argument more than 2 decimals
+
+        assertEquals(400, bankAccount1.getBalance()); //make sure amount didn't change
+
+        assertEquals(700, bankAccount2.getBalance()); //make sure amount didn't change
+
+        bankAccount1.transfer(1.04, bankAccount2 , bankAccount1); //check transfer from reverse order with decimal number
+
+        assertEquals(401.04, bankAccount1.getBalance());
+
+        assertEquals(698.96, bankAccount2.getBalance());
+
+        bankAccount1.transfer(.04, bankAccount2 , bankAccount1); //check transfer amont of just cents
+
+        assertEquals(401.08, bankAccount1.getBalance());
+
+        assertEquals(698.92, bankAccount2.getBalance());
 
     }
 
