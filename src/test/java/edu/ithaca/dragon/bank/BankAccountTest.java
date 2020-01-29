@@ -122,33 +122,33 @@ class BankAccountTest {
         BankAccount bankAccount2 = new BankAccount("ang@2.com", 600);
 
 
-        bankAccount1.transfer(100, bankAccount1 , bankAccount2); //check if normal transfer works (positive number)
+        bankAccount1.transfer(100,  bankAccount2); //check if normal transfer works (positive number)
 
         assertEquals(400, bankAccount1.getBalance());
 
         assertEquals(700, bankAccount2.getBalance());
 
-        assertThrows(InsufficientFundsException.class, () ->bankAccount1.transfer(1000, bankAccount2, bankAccount1)); //throw insufficient funds
+        assertThrows(InsufficientFundsException.class, () ->bankAccount1.transfer(10000,  bankAccount2)); //throw insufficient funds
 
-        assertThrows(IllegalArgumentException.class, () ->bankAccount1.transfer(-120, bankAccount2, bankAccount1)); //throw illegal argument negative
+        assertThrows(IllegalArgumentException.class, () ->bankAccount1.transfer(-120,  bankAccount2)); //throw illegal argument negative
 
-        assertThrows(IllegalArgumentException.class, () ->bankAccount1.transfer(.43234, bankAccount2, bankAccount1)); //throw illegal argument more than 2 decimals
+        assertThrows(IllegalArgumentException.class, () ->bankAccount1.transfer(.43234,  bankAccount2)); //throw illegal argument more than 2 decimals
 
         assertEquals(400, bankAccount1.getBalance()); //make sure amount didn't change
 
         assertEquals(700, bankAccount2.getBalance()); //make sure amount didn't change
 
-        bankAccount1.transfer(1.04, bankAccount2 , bankAccount1); //check transfer from reverse order with decimal number
+        bankAccount1.transfer(1.04, bankAccount2); //check transfer with decimal number
 
-        assertEquals(401.04, bankAccount1.getBalance());
+        assertEquals(398.96, bankAccount1.getBalance());
 
-        assertEquals(698.96, bankAccount2.getBalance());
+        assertEquals(701.04, bankAccount2.getBalance());
 
-        bankAccount1.transfer(.04, bankAccount2 , bankAccount1); //check transfer amont of just cents
+        bankAccount2.transfer(.04, bankAccount1); //check transfer amount of just cents in reverse order
 
-        assertEquals(401.08, bankAccount1.getBalance());
+        assertEquals(399, bankAccount1.getBalance());
 
-        assertEquals(698.92, bankAccount2.getBalance());
+        assertEquals(701.00, bankAccount2.getBalance());
 
     }
 

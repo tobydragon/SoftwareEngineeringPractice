@@ -60,10 +60,13 @@ public class BankAccount {
      * @post subtracts from account1 to account2
      */
 
-    public void transfer(double amount, BankAccount fromAccount, BankAccount toAccount) throws IllegalArgumentException, InsufficientFundsException {
+    public void transfer(double amount, BankAccount toAccount) throws IllegalArgumentException, InsufficientFundsException {
+        if(amount > balance){
+            throw new InsufficientFundsException("Not enough money to transfer");
+        }
         if(isAmountValid(amount)){
 
-            fromAccount.withdraw(amount);
+            balance = balance - amount;
 
 
             toAccount.deposit(amount);
@@ -71,19 +74,18 @@ public class BankAccount {
             DecimalFormat newFormat = new DecimalFormat("#. ##");
 
 
-            fromAccount.balance = Double.valueOf(newFormat.format(fromAccount.balance));
+            balance = Double.valueOf(newFormat.format(balance));
 
             toAccount.balance = Double.valueOf(newFormat.format(toAccount.balance));
-
         }
+
 
         else if(!isAmountValid(amount)){
             throw new IllegalArgumentException("Not a valid amount to transfer");
         }
 
-        else {
-            throw new InsufficientFundsException("Not enough money to transfer");
-        }
+
+
     }
 
 
