@@ -58,6 +58,20 @@ class BankAccountTest {
         bankAccount1.withdraw(-1000);
         assertEquals(200,bankAccount3.getBalance());
 
+        //decimal tests
+        //negatives and 3 decimals
+
+        BankAccount bankAccount4 = new BankAccount("a@b.com",200);
+
+        assertThrows(IllegalArgumentException.class, bankAccount4.withdraw(0.00);
+        assertThrows(IllegalArgumentException.class, bankAccount4.withdraw(0.000);
+        assertThrows(IllegalArgumentException.class, bankAccount4.withdraw(.001);
+        assertThrows(IllegalArgumentException.class, bankAccount4.withdraw(.999);
+        assertThrows(IllegalArgumentException.class, bankAccount4.withdraw(-.01);
+        assertThrows(IllegalArgumentException.class, bankAccount4.withdraw(-.99);
+        assertThrows(IllegalArgumentException.class, bankAccount4.withdraw(-.001);
+        assertThrows(IllegalArgumentException.class, bankAccount4.withdraw(-.999);
+
     }
 
     @Test
@@ -74,6 +88,17 @@ class BankAccountTest {
         assertEquals(200, bankAccount.getBalance());
         //check for exception thrown correctly
         assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", 100));
+
+        //check for exception thrown correctly for decimal balance
+        //negative 3 decimal
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", 0.00));
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", 0.000));
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", .001);
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", .999));
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", -.01);
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", -.99);
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", -.001);
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", -.999));
     }
 
     @Test
@@ -97,9 +122,6 @@ class BankAccountTest {
         assertFalse(BankAccount.isEmailValid("ab..c@mail.com"));
         assertFalse(BankAccount.isEmailValid("ab....c@mail.com")); //tests for .. and multiple consecutive .'s
         assertFalse(BankAccount.isEmailValid("ab--c@mail.com")); //testing --
-
-        //this should be true
-        //assertFalse(BankAccount.isEmailValid("ab_c@mail.com"));
 
         assertFalse(BankAccount.isEmailValid("ab__c@mail.com")); // testing _ and __
 
