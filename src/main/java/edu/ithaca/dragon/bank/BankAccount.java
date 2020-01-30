@@ -41,8 +41,15 @@ public class BankAccount {
      * @return boolean (true if amount is positive and has two decimal points or less, otherwise false)
      */
     public static boolean isAmountValid(double amount){
-        //TODO
-        return true;
+        String[] splitter = Double.toString(amount).split("\\.");
+        splitter[0].length();   // Before Decimal Count
+        int decimalLength = splitter[1].length();
+        if(amount > -1 && decimalLength < 3){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     public static boolean isEmailValid(String email) {

@@ -63,9 +63,6 @@ class BankAccountTest {
 
     @Test
     void isAmountValidTest(){
-        //Border cases where user enters 0.000
-        assertFalse(BankAccount.isAmountValid(0.000));
-        assertTrue(BankAccount.isAmountValid(0.00));
 
         //Negative number
         assertFalse(BankAccount.isAmountValid(-5.276));
