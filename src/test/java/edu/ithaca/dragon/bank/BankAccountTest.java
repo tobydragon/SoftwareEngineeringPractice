@@ -14,37 +14,57 @@ class BankAccountTest {
     }
 
     @Test
-    void withdrawTest() throws InsufficientFundsException{
+    void withdrawTest() throws InsufficientFundsException {
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
+
+        //non-negative amount less than or equal to balance
         bankAccount.withdraw(100);
-
         assertEquals(100, bankAccount.getBalance());
-        assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(300));
 
+        //non-negative amount greater than balance
+        assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(300));
+        //negative amount
         assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(-100));
     }
 
     @Test
-    void isEmailValidTest(){
+    void isEmailValidTest() {
+        //valid prefix and domain
         assertTrue(BankAccount.isEmailValid("a@b.com"));
-        assertFalse( BankAccount.isEmailValid(""));
+        //missing prefix and/or domain
+        assertFalse(BankAccount.isEmailValid(""));
 
+        //prefix with underscore, period, or dash not followed by one or more letter or number
         assertFalse(BankAccount.isEmailValid("abc-@mail.com"));
+        //prefix with underscore, period, or dash followed by one or more letter or number
         assertTrue(BankAccount.isEmailValid("abc-d@mail.com"));
+        //prefix with underscore, period, or dash not followed by one or more letter or number
         assertFalse(BankAccount.isEmailValid("abc..def@mail.com"));
+        //prefix with underscore, period, or dash followed by one or more letter or number
         assertTrue(BankAccount.isEmailValid("abc.def@mail.com"));
+        //prefix with underscore, period, or dash not preceded by one or more letter or number
         assertFalse(BankAccount.isEmailValid(".abc@mail.com"));
+        //valid prefix and domain
         assertTrue(BankAccount.isEmailValid("abc@mail.com"));
+        //prefix with invalid character
         assertFalse(BankAccount.isEmailValid("abc#def@mail.com"));
+        //prefix with underscore, period, or dash followed by one or more letter or number
         assertTrue(BankAccount.isEmailValid("abc_def@mail.com"));
-
+        //last portion of the domain without at least two characters
         assertFalse(BankAccount.isEmailValid("abc.def@mail.c"));
+        //last portion of the domain with at least two characters
         assertTrue(BankAccount.isEmailValid("abc.def@mail.cc"));
+        //domain with invalid character
         assertFalse(BankAccount.isEmailValid("abc.def@mail#archive.com"));
+        //domain with period or dash followed by one or more letter or number
         assertTrue(BankAccount.isEmailValid("abc.def@mail-archive.com"));
+        //last portion of the domain without at least two characters
         assertFalse(BankAccount.isEmailValid("abc.def@mail"));
+        //last portion of the domain with at least two characters
         assertTrue(BankAccount.isEmailValid("abc.def@mail.org"));
+        //domain with period or dash not followed by one or more letter or number
         assertFalse(BankAccount.isEmailValid("abc.def@mail..com"));
+        //prefix with underscore, period, or dash followed by one or more letter or number
         assertTrue(BankAccount.isEmailValid("abc.def@mail.com"));
     }
 

@@ -29,7 +29,7 @@ public class BankAccount {
     }
 
     /**
-     * reduces the balance by amount if amount is non-negative and smaller than balance
+     * reduces the balance by amount if amount is non-negative and smaller or equal to balance
      * @param amount quantity to reduce balance by
      * @throws IllegalArgumentException if amount is negative
      * @throws InsufficientFundsException if amount is larger than balance
