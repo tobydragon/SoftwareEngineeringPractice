@@ -25,36 +25,30 @@ class BankAccountTest {
     void withdrawTest() {
         BankAccount bankAccount = new BankAccount("a@f.com", 200.73);
         bankAccount.withdraw(400);
-        assertEquals(200.73, bankAccount.getBalance());//equivalence for amount greater than balance
+        assertEquals(200.73, bankAccount.getBalance(), 1e-8);//equivalence for amount greater than balance
 
-        bankAccount.withdraw(-100);
-        assertEquals(200.73, bankAccount.getBalance()); //equivalence for negative amount
+        bankAccount.withdraw(-100); //illegalArgumentException
+        assertEquals(200.73, bankAccount.getBalance(), 1e-8); //equivalence for negative amount
 
         bankAccount.withdraw(50);
-        assertEquals(150.73, bankAccount.getBalance());//equivalence for double digit amount
+        assertEquals(150.73, bankAccount.getBalance(), 1e-8);//equivalence for double digit amount
 
         BankAccount bankAccount2 = new BankAccount("a@h.com", 300.27);
         bankAccount2.withdraw(301);
-        assertEquals(300.27, bankAccount2.getBalance());//border for amount greater than balance
+        assertEquals(300.27, bankAccount2.getBalance(), 1e-8);//border for amount greater than balance
 
-        bankAccount2.withdraw(-1);
-        assertEquals(300.27, bankAccount2.getBalance()); //border for negative amount
+        bankAccount2.withdraw(-1);//illegalArgumentException
+        assertEquals(300.27, bankAccount2.getBalance(), 1e-8); //border for negative amount
 
         bankAccount2.withdraw(150);
-        assertEquals(150.27, bankAccount2.getBalance());//equivalence for triple digit (middle) amount
+        assertEquals(150.27, bankAccount2.getBalance(), 1e-8);//equivalence for triple digit (middle) amount
 
         bankAccount2.withdraw(0);
-        assertEquals(150.27, bankAccount2.getBalance());
+        assertEquals(150.27, bankAccount2.getBalance(), 1e-8);
 
         BankAccount testAccount = new BankAccount("d@a.com", 1000.00);
         testAccount.withdraw(487.735);
         assertEquals(IllegalArgumentException.class, testAccount.getBalance());
-    }
-
-    @Test
-    void isEmailValidTest(){
-        assertTrue(BankAccount.isEmailValid( "a@b.com"));
-        assertFalse( BankAccount.isEmailValid(""));
     }
 
     @Test
@@ -68,7 +62,32 @@ class BankAccountTest {
     }
 
     @Test
-    void isEmailValidCorrectTest(){
+    void isAmountValidTest(){
+        //Border cases where user enters 0.000
+        assertFalse(BankAccount.isAmountValid(0.000));
+        assertTrue(BankAccount.isAmountValid(0.00));
+
+        //Negative number
+        assertFalse(BankAccount.isAmountValid(-5.276));
+        assertFalse(BankAccount.isAmountValid(-50.673));
+        assertFalse(BankAccount.isAmountValid(-100.736));
+        assertFalse(BankAccount.isAmountValid(-1672.976));
+
+        //Positive Number three decimal places
+        assertFalse(BankAccount.isAmountValid(7.505));
+        assertFalse(BankAccount.isAmountValid(35.825));
+        assertFalse(BankAccount.isAmountValid(206.537));
+        assertFalse(BankAccount.isAmountValid(1598.001));
+
+        //Positive number two decimal places (Test that program also recognizes correct user input
+        assertTrue(BankAccount.isAmountValid(4.50));
+        assertTrue(BankAccount.isAmountValid(97.38));
+        assertTrue(BankAccount.isAmountValid(427.94));
+        assertTrue(BankAccount.isAmountValid(2374.62));
+    }
+
+    @Test
+    void isEmailValidTest(){
         assertTrue(BankAccount.isEmailValid("correct@test.com")); //Equivalence for simple correct email address
         assertFalse(BankAccount.isEmailValid("incorrect@test"));
 
@@ -84,8 +103,8 @@ class BankAccountTest {
         assertFalse(BankAccount.isEmailValid("incorrect_@test.com"));//Equivalence for "_" with no letter/number following
         assertFalse(BankAccount.isEmailValid("incorrect.@test.com"));//Equivalence for "." with no letter/number following
         assertFalse(BankAccount.isEmailValid(".incorrect@test.com"));//Border for "." at beginning
-        assertTrue(BankAccount.isEmailValid("-incorrect@test.com"));//Border for "-" at beginning
-        assertTrue(BankAccount.isEmailValid("_incorrect@test.com"));//Border for "_" at beginning
+        assertFalse(BankAccount.isEmailValid("-incorrect@test.com"));//Border for "-" at beginning
+        assertFalse(BankAccount.isEmailValid("_incorrect@test.com"));//Border for "_" at beginning
         assertFalse(BankAccount.isEmailValid("incorrect@test.com."));//Border for "." at end
         assertFalse(BankAccount.isEmailValid("incorrect@test.com-"));//Border for "-" at end
         assertFalse(BankAccount.isEmailValid("incorrect@test.com_"));//Border for "_" at end

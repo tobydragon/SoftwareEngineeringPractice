@@ -35,6 +35,15 @@ public class BankAccount {
         }
     }
 
+    /**
+     * Checks if the amount is in proper format
+     * @param amount
+     * @return boolean (true if amount is positive and has two decimal points or less, otherwise false)
+     */
+    public static boolean isAmountValid(double amount){
+        //TODO
+        return true;
+    }
 
     public static boolean isEmailValid(String email) {
         if (email == "") {
@@ -44,7 +53,11 @@ public class BankAccount {
             return false;
         } else if (email.indexOf(".") == 0) {
             return false;
-        } else if (email.indexOf("..") != -1) {
+        } else if (email.indexOf("-") == 0) {
+            return false;
+        }else if (email.indexOf("_") == 0) {
+            return false;
+        }else if (email.indexOf("..") != -1) {
             return false;
         }
         else if (email.indexOf("--") != -1){
