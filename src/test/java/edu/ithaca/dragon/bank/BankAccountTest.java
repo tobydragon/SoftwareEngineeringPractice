@@ -89,6 +89,35 @@ class BankAccountTest {
     }
 
     @Test
+    void isAmountValidTest() {
+        //non-negative amount with two decimal points or less
+        assertTrue(BankAccount.isAmountValid(0));
+        assertTrue(BankAccount.isAmountValid(0.01));
+        assertTrue(BankAccount.isAmountValid(0.99));
+        assertTrue(BankAccount.isAmountValid(250));
+        assertTrue(BankAccount.isAmountValid(1234.50));
+
+        //non-negative amount with more than two decimal points
+        assertFalse(BankAccount.isAmountValid(0.001));
+        assertFalse(BankAccount.isAmountValid(0.9999));
+        assertFalse(BankAccount.isAmountValid(536));
+        assertFalse(BankAccount.isAmountValid(Double.MIN_VALUE));
+        assertFalse(BankAccount.isAmountValid(Double.MAX_VALUE));
+
+        //negative amount with two decimal points or less
+        assertFalse(BankAccount.isAmountValid(-0.01));
+        assertFalse(BankAccount.isAmountValid(-0.99));
+        assertFalse(BankAccount.isAmountValid(-120));
+        assertFalse(BankAccount.isAmountValid(-946.50));
+
+        //negative amount with more than two decimal points
+        assertFalse(BankAccount.isAmountValid(-0.001));
+        assertFalse(BankAccount.isAmountValid(-0.9999));
+        assertFalse(BankAccount.isAmountValid(-Double.MIN_VALUE));
+        assertFalse(BankAccount.isAmountValid(-Double.MAX_VALUE));
+    }
+
+    @Test
     void constructorTest() {
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
 

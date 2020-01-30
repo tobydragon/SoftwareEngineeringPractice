@@ -48,4 +48,13 @@ public class BankAccount {
         String regex = "[\\w-]+(\\.[\\w]+)*(?<!-)@[\\w-]+(\\.[\\w]+)*(\\.[a-z]{2,})";
         return Pattern.compile(regex).matcher(email).matches();
     }
+
+    /**
+     * returns true if the amount is non-negative and has two decimal points or less, and false otherwise
+     * @param amount quantity to check
+     * @return true if the amount is non-negative and has two decimal points or less, and false otherwise
+     */
+    public static boolean isAmountValid(double amount) {
+        return false;
+    }
 }
