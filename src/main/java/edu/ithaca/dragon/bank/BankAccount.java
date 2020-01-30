@@ -56,7 +56,18 @@ public class BankAccount {
     }
 
     public static boolean isAmountValid(double amount) {
-        return false;
+        if (amount < 0){
+            return false;
+        }
+
+        // check number of decimal places
+        String checkDouble = Double.toString(amount);
+        int indexDecimal = checkDouble.indexOf('.');
+        if (checkDouble.length()-indexDecimal <= 3){
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }
