@@ -96,13 +96,12 @@ public class BankAccount {
      * @return
      */
     public static boolean isAmountValid(double amount){
-        /**
         if(amount > 0){
-            String stAmount = Double.toString(amount);
-            String decimalPoints = stAmount.substring();
+            String stAmount = "" +amount;
+            String decimalPoints = stAmount.substring(stAmount.indexOf(".")+1);
             int decimals = 0;
             for(int i = 0; i > decimalPoints.length(); i++){
-                decimals++;
+                decimals ++;
             }
             if(decimals > 2){
                 return false;
@@ -112,8 +111,6 @@ public class BankAccount {
         else{
             return false;
         }
-         */
-        return false;
     }
 }
 

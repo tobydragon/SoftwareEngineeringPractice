@@ -103,17 +103,18 @@ class BankAccountTest {
     @Test
     void isAmountValid(){
         //True statements
-        assertTrue(BankAccount.isAmountValid(50)); //equivalence case
-        assertTrue(BankAccount.isAmountValid(1.5));
-        assertTrue(BankAccount.isAmountValid(0.01));
-        assertTrue(BankAccount.isAmountValid(1000.20));
-        assertTrue(BankAccount.isAmountValid(50.00));
+        assertTrue(BankAccount.isAmountValid(50)); //equivalence case valid with 50 and nothing above decimal points
+        assertTrue(BankAccount.isAmountValid(1.5)); //equivalence case valid with 1.5 and one decimal point
+        assertTrue(BankAccount.isAmountValid(0.01)); //equivalence case valid edgecase with 0.01 being the least number before being 0 or 0.001
+        assertTrue(BankAccount.isAmountValid(1000.20)); //equivalence case valid with 1000.20 with a large number and 2/1 decimal points
+        assertTrue(BankAccount.isAmountValid(50.00)); //equivalence case valid with 50 and 2/none above decimal points
+        assertTrue(BankAccount.isAmountValid(1000000000000.00)); //equivalence case valid with a large number and 2/none above decimal points
 
         //False Statements
-        assertFalse(BankAccount.isAmountValid(50.001));
-        assertFalse(BankAccount.isAmountValid(-0.1));
-        assertFalse(BankAccount.isAmountValid(0.0000000000034));
-        assertFalse(BankAccount.isAmountValid(-.022));
+        assertFalse(BankAccount.isAmountValid(50.001)); //equivalence case is an extra decimal point
+        assertFalse(BankAccount.isAmountValid(-0.1)); //equivalence case is under 0/is negative
+        assertFalse(BankAccount.isAmountValid(0.0000000000034)); //equivalence case has more than 2 decimal points
+        assertFalse(BankAccount.isAmountValid(-.022)); //equivalence case is negative and more than 2 decimal points
 
     }
 
