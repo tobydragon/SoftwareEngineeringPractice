@@ -21,10 +21,22 @@ class BankAccountTest {
         bankAccount.withdraw(100);
         assertEquals(100, bankAccount.getBalance());
 
+        //non-negative amount less than or equal to balance
+        bankAccount.withdraw(0);
+        assertEquals(100, bankAccount.getBalance());
+
+        //non-negative amount greater than balance
+        assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(101));
+
         //non-negative amount greater than balance
         assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(300));
+
         //negative amount
         assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(-100));
+
+        //non-negative amount less than or equal to balance
+        bankAccount.withdraw(100);
+        assertEquals(0, bankAccount.getBalance());
     }
 
     @Test
