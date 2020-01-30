@@ -32,8 +32,8 @@ class BankAccountTest {
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
         bankAccount.withdraw(100);
         assertEquals(100, bankAccount.getBalance());
-        bankAccount.withdraw(0);
-        assertEquals(100, bankAccount.getBalance());
+        //bankAccount.withdraw(0);
+        //assertEquals(100, bankAccount.getBalance());
         bankAccount.withdraw(5);
         assertEquals(95,bankAccount.getBalance());
 
@@ -44,6 +44,7 @@ class BankAccountTest {
         bankAccount1.withdraw(1000);
         assertEquals(200,bankAccount1.getBalance());
 
+        /*
         //negative and smaller equivalence class
         BankAccount bankAccount2 = new BankAccount("a@b.com",200);
         bankAccount2.withdraw(-5);
@@ -57,20 +58,21 @@ class BankAccountTest {
         assertEquals(200,bankAccount3.getBalance());
         bankAccount1.withdraw(-1000);
         assertEquals(200,bankAccount3.getBalance());
+        */
 
         //decimal tests
         //negatives and 3 decimals
 
         BankAccount bankAccount4 = new BankAccount("a@b.com",200);
 
-        assertThrows(IllegalArgumentException.class, bankAccount4.withdraw(0.00);
-        assertThrows(IllegalArgumentException.class, bankAccount4.withdraw(0.000);
-        assertThrows(IllegalArgumentException.class, bankAccount4.withdraw(.001);
-        assertThrows(IllegalArgumentException.class, bankAccount4.withdraw(.999);
-        assertThrows(IllegalArgumentException.class, bankAccount4.withdraw(-.01);
-        assertThrows(IllegalArgumentException.class, bankAccount4.withdraw(-.99);
-        assertThrows(IllegalArgumentException.class, bankAccount4.withdraw(-.001);
-        assertThrows(IllegalArgumentException.class, bankAccount4.withdraw(-.999);
+        assertThrows(IllegalArgumentException.class, ()->bankAccount4.withdraw(0.00));
+        assertThrows(IllegalArgumentException.class, ()->bankAccount4.withdraw(0.000));
+        assertThrows(IllegalArgumentException.class, ()->bankAccount4.withdraw(.001));
+        assertThrows(IllegalArgumentException.class, ()->bankAccount4.withdraw(.999));
+        assertThrows(IllegalArgumentException.class, ()->bankAccount4.withdraw(-.01));
+        assertThrows(IllegalArgumentException.class, ()->bankAccount4.withdraw(-.99));
+        assertThrows(IllegalArgumentException.class, ()->bankAccount4.withdraw(-.001));
+        assertThrows(IllegalArgumentException.class, ()->bankAccount4.withdraw(-.999));
 
     }
 
@@ -93,11 +95,11 @@ class BankAccountTest {
         //negative 3 decimal
         assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", 0.00));
         assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", 0.000));
-        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", .001);
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", .001));
         assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", .999));
-        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", -.01);
-        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", -.99);
-        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", -.001);
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", -.01));
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", -.99));
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", -.001));
         assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", -.999));
     }
 
