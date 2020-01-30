@@ -8,9 +8,17 @@ class BankAccountTest {
 
     @Test
     void getBalanceTest() {
-        BankAccount bankAccount = new BankAccount("a@b.com", 200);
+        //negative balance
+        BankAccount bankAccount = new BankAccount("a@b.com", -200);
+        assertEquals(-200, bankAccount.getBalance());
 
-        assertEquals(200, bankAccount.getBalance());
+        //non-negative balance
+        bankAccount = new BankAccount("a@b.com", 0);
+        assertEquals(0, bankAccount.getBalance());
+
+        //non-negative balance
+        bankAccount = new BankAccount("a@b.com", 100);
+        assertEquals(100, bankAccount.getBalance());
     }
 
     @Test
