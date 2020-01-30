@@ -27,8 +27,7 @@ class BankAccountTest {
         bankAccount.withdraw(400);
         assertEquals(200.73, bankAccount.getBalance(), 1e-8);//equivalence for amount greater than balance
 
-        bankAccount.withdraw(-100); //illegalArgumentException
-        assertEquals(200.73, bankAccount.getBalance(), 1e-8); //equivalence for negative amount
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount.withdraw(-100));//equivalence for negative amount
 
         bankAccount.withdraw(50);
         assertEquals(150.73, bankAccount.getBalance(), 1e-8);//equivalence for double digit amount
@@ -37,8 +36,7 @@ class BankAccountTest {
         bankAccount2.withdraw(301);
         assertEquals(300.27, bankAccount2.getBalance(), 1e-8);//border for amount greater than balance
 
-        bankAccount2.withdraw(-1);//illegalArgumentException
-        assertEquals(300.27, bankAccount2.getBalance(), 1e-8); //border for negative amount
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount2.withdraw(-1));//border for negative amount
 
         bankAccount2.withdraw(150);
         assertEquals(150.27, bankAccount2.getBalance(), 1e-8);//equivalence for triple digit (middle) amount
