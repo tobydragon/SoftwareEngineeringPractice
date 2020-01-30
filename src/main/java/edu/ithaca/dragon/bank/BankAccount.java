@@ -62,6 +62,23 @@ public class BankAccount {
         }
     }
 
+    /**
+     * adds amount to balance if amountIsValid
+     * @param amount
+     */
+    public void deposit(double amount){
+        //TODO
+    }
+
+    /**
+     * subtracts from bank account and adds to balance of account, transfer
+     * @param amount
+     * @param account
+     */
+    public void transfer(double amount, BankAccount account){
+        //TODO
+    }
+
     public static boolean isEmailValid(String email) {
         if (email == "") {
             return false;
