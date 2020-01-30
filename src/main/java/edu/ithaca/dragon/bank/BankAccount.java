@@ -63,11 +63,7 @@ public class BankAccount {
         // check number of decimal places
         String checkDouble = Double.toString(amount);
         int indexDecimal = checkDouble.indexOf('.');
-        if (checkDouble.length()-indexDecimal <= 3){
-            return true;
-        } else {
-            return false;
-        }
+        return checkDouble.length() - indexDecimal <= 3;
     }
 
 }
