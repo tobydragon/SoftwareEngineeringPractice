@@ -100,7 +100,7 @@ class BankAccountTest {
         //non-negative amount with more than two decimal points
         assertFalse(BankAccount.isAmountValid(0.001));
         assertFalse(BankAccount.isAmountValid(0.9999));
-        assertFalse(BankAccount.isAmountValid(536));
+        assertFalse(BankAccount.isAmountValid(536.125));
         assertFalse(BankAccount.isAmountValid(Double.MIN_VALUE));
         assertFalse(BankAccount.isAmountValid(Double.MAX_VALUE));
 

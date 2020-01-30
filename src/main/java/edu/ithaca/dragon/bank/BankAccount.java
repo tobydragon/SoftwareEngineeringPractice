@@ -1,5 +1,6 @@
 package edu.ithaca.dragon.bank;
 
+import java.math.BigDecimal;
 import java.util.regex.Pattern;
 
 public class BankAccount {
@@ -55,6 +56,8 @@ public class BankAccount {
      * @return true if the amount is non-negative and has two decimal points or less, and false otherwise
      */
     public static boolean isAmountValid(double amount) {
-        return false;
+        String amountStr = String.valueOf(amount);
+        int charsAfterDec = amountStr.length() - amountStr.indexOf('.') - 1;
+        return amount >= 0 && charsAfterDec <= 2;
     }
 }
