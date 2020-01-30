@@ -1,5 +1,7 @@
 package edu.ithaca.dragon.bank;
 
+import java.util.regex.Pattern;
+
 public class BankAccount {
 
     private String email;
@@ -33,20 +35,17 @@ public class BankAccount {
      * @throws InsufficientFundsException if amount is larger than balance
      */
     public void withdraw (double amount) throws InsufficientFundsException{
-        if (amount <= balance){
-            balance -= amount;
-        }
-        else {
+        if (amount < 0) {
+            throw new IllegalArgumentException("Amount: " + amount + " is invalid, cannot create account");
+        } else if (amount > balance) {
             throw new InsufficientFundsException("Not enough money");
+        } else {
+            balance -= amount;
         }
     }
 
-    public static boolean isEmailValid(String email){
-        if (email.indexOf('@') == -1){
-            return false;
-        }
-        else {
-            return true;
-        }
+    public static boolean isEmailValid(String email) {
+        String regex = "[\\w-]+(\\.[\\w]+)*(?<!-)@[\\w-]+(\\.[\\w]+)*(\\.[a-z]{2,})";
+        return Pattern.compile(regex).matcher(email).matches();
     }
 }
