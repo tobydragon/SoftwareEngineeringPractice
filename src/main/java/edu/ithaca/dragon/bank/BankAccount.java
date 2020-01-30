@@ -87,6 +87,9 @@ public class BankAccount {
         if (isAmountValid(amount) == false){
             throw new IllegalArgumentException("The amount you entered " + amount + " is invalid");
         }
+        else if (amount == 0){
+            throw new IllegalArgumentException("You cannot deposit $0");
+        }
         else {
             balance += amount;
         }

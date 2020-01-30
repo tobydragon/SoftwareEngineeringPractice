@@ -84,6 +84,10 @@ class BankAccountTest {
         assertThrows(IllegalArgumentException.class, () -> bankAccount5.deposit(-10000000.9874));
         assertEquals(75,bankAccount5.getBalance());
 
+        BankAccount bankAccount6 = new BankAccount("abg@g.com",75); //tests for an invalid deposit of 0.
+        assertThrows(IllegalArgumentException.class, () -> bankAccount5.deposit(0));
+        assertEquals(75,bankAccount5.getBalance());
+
 
 
 
@@ -225,8 +229,9 @@ class BankAccountTest {
         //check for exception thrown correctly
         assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", 100));
 
-//        BankAccount bankAccount1;
-//        assertThrows(IllegalArgumentException.class ()-> bankAccount1 = new BankAccount("a@b.com", 200.98034));
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", 100.908)); //no email inputed and invalid starting balance
+
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("a@b.com", 10.804)); //throws exception for illegal starting balance
 
     }
 
