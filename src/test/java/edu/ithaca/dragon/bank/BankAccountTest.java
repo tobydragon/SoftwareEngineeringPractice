@@ -124,7 +124,7 @@ class BankAccountTest {
         assertFalse(BankAccount.isAmountValid(500.597));
         assertFalse(BankAccount.isAmountValid(500.56690930452));
         assertFalse(BankAccount.isAmountValid(500.999));
-        assertFalse(BankAccount.isAmountValid(500.999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999));
+        assertFalse(BankAccount.isAmountValid(500.2048675849586746));
         //invalid number, negative with 0 decimals
         assertFalse(BankAccount.isAmountValid(-1));
         assertFalse(BankAccount.isAmountValid(-100));
@@ -141,7 +141,7 @@ class BankAccountTest {
         assertFalse(BankAccount.isAmountValid(-100.001));
         assertFalse(BankAccount.isAmountValid(-100.5689));
         assertFalse(BankAccount.isAmountValid(-100.5784939576859));
-        assertFalse(BankAccount.isAmountValid(-999.99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999));
+        assertFalse(BankAccount.isAmountValid(-999.9999999999999999));
 
 
 

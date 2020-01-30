@@ -32,9 +32,9 @@ public class BankAccount {
      * If balance is negative or has more than 2 decimal places, throws IllegalArgumentException
      */
     public void withdraw (double amount) throws InsufficientFundsException, IllegalArgumentException  {
-        /*if(!isAmountValid(amount)){
+        if(!isAmountValid(amount)){
             throw new IllegalArgumentException("Amount must have 2 decimal places and must be positive ");
-        }*/
+        }
         if (balance >= amount && amount >= 0) {
             balance -= amount;
         }
@@ -49,8 +49,10 @@ public class BankAccount {
      * Returns false if double has more than 2 decimal places, or is negative
      */
     public static boolean isAmountValid(double amount){
-
-        return false;
+        String doubleCheck = Double.toString(Math.abs(amount));
+        int integerPlaces = doubleCheck.indexOf('.');
+        int decimalPlaces = doubleCheck.length() - integerPlaces - 1;
+        return (decimalPlaces <= 2 || doubleCheck.indexOf('E') != -1) && !(amount < 0);
     }
 
     public static boolean isEmailValid(String email){
