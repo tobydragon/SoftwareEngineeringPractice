@@ -102,6 +102,50 @@ class BankAccountTest {
 
     @Test
     void isAmountValidTest(){
+        //valid number, no decimals
+        assertTrue(BankAccount.isAmountValid(0));
+        assertTrue(BankAccount.isAmountValid(1));
+        assertTrue(BankAccount.isAmountValid(500));
+        assertTrue(BankAccount.isAmountValid(678));
+        assertTrue(BankAccount.isAmountValid(Integer.MAX_VALUE));
+        //valid number, 1 decimal
+        assertTrue(BankAccount.isAmountValid(500.0));
+        assertTrue(BankAccount.isAmountValid(500.1));
+        assertTrue(BankAccount.isAmountValid(500.5));
+        assertTrue(BankAccount.isAmountValid(500.9));
+        //valid number, 2 decimals
+        assertTrue(BankAccount.isAmountValid(500.00));
+        assertTrue(BankAccount.isAmountValid(500.01));
+        assertTrue(BankAccount.isAmountValid(500.10));
+        assertTrue(BankAccount.isAmountValid(500.62));
+        assertTrue(BankAccount.isAmountValid(500.99));
+        //invalid number, more than 2 decimals
+        assertFalse(BankAccount.isAmountValid(500.001));
+        assertFalse(BankAccount.isAmountValid(500.597));
+        assertFalse(BankAccount.isAmountValid(500.56690930452));
+        assertFalse(BankAccount.isAmountValid(500.999));
+        assertFalse(BankAccount.isAmountValid(500.999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999));
+        //invalid number, negative with 0 decimals
+        assertFalse(BankAccount.isAmountValid(-1));
+        assertFalse(BankAccount.isAmountValid(-100));
+        assertFalse(BankAccount.isAmountValid(Integer.MIN_VALUE));
+        //invalid number, negative with 1 decimal
+        assertFalse(BankAccount.isAmountValid(-1.0));
+        assertFalse(BankAccount.isAmountValid(-100.7));
+        assertFalse(BankAccount.isAmountValid(-999999.9));
+        //invalid number, negative with 2 decimals
+        assertFalse(BankAccount.isAmountValid(-1.00));
+        assertFalse(BankAccount.isAmountValid(-100.59));
+        assertFalse(BankAccount.isAmountValid(-999999999999.99));
+        //invalid number, negative with more than 2 decimals
+        assertFalse(BankAccount.isAmountValid(-100.001));
+        assertFalse(BankAccount.isAmountValid(-100.5689));
+        assertFalse(BankAccount.isAmountValid(-100.5784939576859));
+        assertFalse(BankAccount.isAmountValid(-999.99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999));
+
+
+
+
 
     }
 
