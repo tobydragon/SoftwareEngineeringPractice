@@ -88,10 +88,32 @@ public class BankAccount {
             }
         }
     }
-    /*
-    public static boolean isAmountValid(double amount){
-    }
 
+    /**
+     *
+     * @param amount
+     * should return false if the amount has more than 2 decimal points or is not positive
+     * @return
      */
+    public static boolean isAmountValid(double amount){
+        /**
+        if(amount > 0){
+            String stAmount = Double.toString(amount);
+            String decimalPoints = stAmount.substring();
+            int decimals = 0;
+            for(int i = 0; i > decimalPoints.length(); i++){
+                decimals++;
+            }
+            if(decimals > 2){
+                return false;
+            }
+            return true;
+        }
+        else{
+            return false;
+        }
+         */
+        return false;
+    }
 }
 
