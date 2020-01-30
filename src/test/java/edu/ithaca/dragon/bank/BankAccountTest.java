@@ -58,6 +58,24 @@ class BankAccountTest {
         assertEquals(1000, negative.getBalance());          //equivalence class of negative balance and not border case
         assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(min));
         assertEquals(1000, negative.getBalance());          //equivalence class of negative balance and border case
+        //numbers with more than 2 decimals
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(300.001));
+        assertEquals(1000, negative.getBalance());          //equivalence class of negative balance and border case
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(1000.04940));
+        assertEquals(1000, negative.getBalance());          //equivalence class of negative balance and not border case
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(50.1029384958674950));
+        assertEquals(1000, negative.getBalance());          //equivalence class of negative balance and border case
+        //negative numbers with more than 2 decimals
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(-100.001));
+        assertEquals(1000, negative.getBalance());          //equivalence class of negative balance and border case
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(-100.10239485));
+        assertEquals(1000, negative.getBalance());          //equivalence class of negative balance and not border case
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(-100.1029384758493815));
+        assertEquals(1000, negative.getBalance());          //equivalence class of negative balance and border case
+
+
+
+
     }
 
     @Test
@@ -96,8 +114,20 @@ class BankAccountTest {
 
         assertEquals("a@b.com", bankAccount.getEmail());
         assertEquals(200, bankAccount.getBalance());
-        //check for exception thrown correctly
+        //check for exception thrown correctly for email
         assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", 100));
+        //checks if it throws an argument for negative numbers
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("a@b.com", -1));
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("a@b.com", -150));
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("a@b.com", -10000000));
+        //checks if it throws an argument for numbers with more than 2 decimal places
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("a@b.com", 100.001));
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("a@b.com", 150.01020495));
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("a@b.com", -123.1029384758495837));
+        //checks if it throws an argument for numbers that are negative and have more than 2 decimal places
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("a@b.com", -1.001));
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("a@b.com", -120.123453));
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("a@b.com", -100.102938456744854));
     }
 
     @Test
