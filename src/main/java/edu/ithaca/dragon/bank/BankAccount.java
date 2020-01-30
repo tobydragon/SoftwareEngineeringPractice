@@ -67,7 +67,12 @@ public class BankAccount {
      * @param amount
      */
     public void deposit(double amount){
-        //TODO
+        if (isAmountValid(amount)){
+            balance+=amount;
+        }
+        else{
+            throw new IllegalArgumentException("Deposit amount: " + amount + " is invalid, cannot withdraw money");
+        }
     }
 
     /**
@@ -76,7 +81,13 @@ public class BankAccount {
      * @param account
      */
     public void transfer(double amount, BankAccount account){
-        //TODO
+        if (isAmountValid(amount)){
+            this.withdraw(amount);
+            account.deposit(amount);
+        }
+        else{
+            throw new IllegalArgumentException("Transfer amount: " + amount + " is invalid, cannot withdraw money");
+        }
     }
 
     public static boolean isEmailValid(String email) {
