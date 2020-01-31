@@ -50,6 +50,23 @@ public class BankAccount {
     }
 
     /**
+     * @post adds to the balance by amount if amount is non-negative and has 2 or less decimal places
+     * @throws IllegalArgumentException if amount is negative or has more than 2 decimal places
+     */
+    public void deposit(double amount) throws IllegalArgumentException{
+
+    }
+
+    /**
+     * @post transfers funds from one bank account to the one passed in, as long as amount is non-negative and has 2 or less decimal places
+     * @throws IllegalArgumentException if amount is negative or has more than 2 decimal places, or if bankAccount to transfer to is the current one
+     * @throws InsufficientFundsException if amount is larger than current bank account balance
+     */
+    public void transfer(double amount, BankAccount toTransfer) throws InsufficientFundsException, IllegalArgumentException{
+
+    }
+
+    /**
      * @post checks to see if a double is a valid input to be withdrawn
      * Returns false if double has more than 2 decimal places, or is negative
      */
