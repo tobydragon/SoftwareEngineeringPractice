@@ -150,6 +150,7 @@ class BankAccountTest {
         assertTrue(BankAccount.isAmountValid(500.62));
         assertTrue(BankAccount.isAmountValid(500.99));
         //invalid number, more than 2 decimals
+        assertTrue(BankAccount.isAmountValid(500.00000000));
         assertFalse(BankAccount.isAmountValid(500.001));
         assertFalse(BankAccount.isAmountValid(500.597));
         assertFalse(BankAccount.isAmountValid(500.56690930452));

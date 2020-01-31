@@ -78,10 +78,15 @@ public class BankAccount {
      * Returns false if double has more than 2 decimal places, or is negative
      */
     public static boolean isAmountValid(double amount){
-        String doubleCheck = Double.toString(Math.abs(amount));
-        int integerPlaces = doubleCheck.indexOf('.');
-        int decimalPlaces = doubleCheck.length() - integerPlaces - 1;
-        return (decimalPlaces <= 2 || doubleCheck.indexOf('E') != -1) && !(amount < 0);
+        double positiveRoundOff = Math.abs(Math.round(amount * 100.0) / 100.0);
+        if(amount != positiveRoundOff){
+
+            String doubleCheck = Double.toString(Math.abs(amount));
+            int integerPlaces = doubleCheck.indexOf('.');
+            int decimalPlaces = doubleCheck.length() - integerPlaces - 1;
+            return (decimalPlaces <= 2 || doubleCheck.indexOf('E') != -1) && !(amount < 0);
+        }
+        return true;
     }
 
     public static boolean isEmailValid(String email){
