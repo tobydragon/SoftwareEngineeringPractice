@@ -19,10 +19,11 @@ class BankAccountTest {
         bankAccount = new BankAccount("a@b.com", 0);
         assertEquals(0, bankAccount.getBalance());
         /*
-         * Checks for a bank account with negative amount of money. Equivalence case.
+         * Checks for a bank account with negative amount of money. Equivalence case. No longer valid since
+         * this test is covered by the constructor test.
          */
-        bankAccount = new BankAccount("a@b.com", -200);
-        assertEquals(-200.00, bankAccount.getBalance());
+        assertThrows(IllegalArgumentException.class, () -> new BankAccount("a@b.com", -200));
+        //assertEquals(0, bankAccount.getBalance());
     }
 
     @Test
