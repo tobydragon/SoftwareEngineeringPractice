@@ -148,7 +148,7 @@ class BankAccountTest {
     }
 
     @Test
-    void transferTest(){
+    void transferTest() throws InsufficientFundsException{
         BankAccount account1 = new BankAccount("a@b.com", 200);
         BankAccount account2 = new BankAccount("c@d.com", 200);
         assertThrows(IllegalArgumentException.class, ()-> account1.transfer(account2, -100)); // invalid middle case (value)

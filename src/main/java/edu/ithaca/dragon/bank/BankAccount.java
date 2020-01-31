@@ -54,7 +54,10 @@ public class BankAccount {
      * @throws IllegalArgumentException if value to withdraw is negative or value contains precision more than 0.01  (ex. 0.001, 0.0001, ...)
      */
     public void deposit (double amount){
-
+        if (!isAmountValid(amount)){
+            throw new IllegalArgumentException("Amount is invalid");
+        }
+        balance += amount;
     }
 
     /**
@@ -65,8 +68,18 @@ public class BankAccount {
      * @throws IllegalArgumentException if the bank account being transferred to is the same
      * @throws InsufficientFundsException if value to transfer is larger than this account's current balance
      */
-    public void transfer(BankAccount account, double amount){
-
+    public void transfer(BankAccount account, double amount) throws InsufficientFundsException{
+        if (account == this){
+            throw new IllegalArgumentException("Cannot transfer to the same account");
+        }
+        if (amount > balance){
+            throw new InsufficientFundsException("Insufficient funds to transfer");
+        }
+        if (!isAmountValid(amount)){
+            throw new IllegalArgumentException("Invalid amount");
+        }
+        this.withdraw(amount);
+        account.deposit(amount);
     }
 
     /**
