@@ -78,6 +78,7 @@ public class BankAccount {
      * @param amount how much money should be transferred out of this current account.
      * @param otherAccount the account to which the amount is being transferred to.
      * @throws IllegalArgumentException if invalid amount is provided.
+     * @throws InsufficientFundsException if not enough money is being withdrawn.
      */
     public void transfer(double amount, BankAccount otherAccount) throws InsufficientFundsException, IllegalArgumentException{
         withdraw(amount);
