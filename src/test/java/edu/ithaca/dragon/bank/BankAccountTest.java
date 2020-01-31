@@ -184,51 +184,51 @@ class BankAccountTest {
         bankAccount.deposit(100);
         assertEquals(1101, bankAccount.getBalance());
         bankAccount.deposit(10000);
-        assertEquals(10101, bankAccount.getBalance());
+        assertEquals(11101, bankAccount.getBalance());
         //deposit valid double with < 1 decimal
         bankAccount.deposit(1.1);
-        assertEquals(10102.1, bankAccount.getBalance());
+        assertEquals(11102.1, bankAccount.getBalance());
         bankAccount.deposit(10.5);
-        assertEquals(10112.6, bankAccount.getBalance());
+        assertEquals(11112.6, bankAccount.getBalance());
         bankAccount.deposit(10.9);
-        assertEquals(101123.5, bankAccount.getBalance());
+        assertEquals(11123.5, bankAccount.getBalance());
         //deposit valid with 2 decimals
         bankAccount.deposit(1.00);
-        assertEquals(101123.50, bankAccount.getBalance());
+        assertEquals(11124.50, bankAccount.getBalance());
         bankAccount.deposit(1.11);
-        assertEquals(101124.51, bankAccount.getBalance());
+        assertEquals(11125.61, bankAccount.getBalance());
         bankAccount.deposit(1.57);
-        assertEquals(101126.08, bankAccount.getBalance());
+        assertEquals(11127.18, bankAccount.getBalance());
         bankAccount.deposit(1.99);
-        assertEquals(101128.07, bankAccount.getBalance());
+        assertEquals(11129.17, bankAccount.getBalance());
         //invalid number, negative
         assertThrows(IllegalArgumentException.class, ()-> bankAccount.deposit(-1));
-        assertEquals(101128.07, bankAccount.getBalance());
+        assertEquals(11129.17, bankAccount.getBalance());
         assertThrows(IllegalArgumentException.class, ()-> bankAccount.deposit(-500));
-        assertEquals(101128.07, bankAccount.getBalance());
+        assertEquals(11129.17, bankAccount.getBalance());
         assertThrows(IllegalArgumentException.class, ()-> bankAccount.deposit(Integer.MIN_VALUE));
-        assertEquals(101128.07, bankAccount.getBalance());
+        assertEquals(11129.17, bankAccount.getBalance());
         //invalid number, negative, one decimal
         assertThrows(IllegalArgumentException.class, ()-> bankAccount.deposit(-1.1));
-        assertEquals(101128.07, bankAccount.getBalance());
+        assertEquals(11129.17, bankAccount.getBalance());
         assertThrows(IllegalArgumentException.class, ()-> bankAccount.deposit(-1.5));
-        assertEquals(101128.07, bankAccount.getBalance());
+        assertEquals(11129.17, bankAccount.getBalance());
         assertThrows(IllegalArgumentException.class, ()-> bankAccount.deposit(-1.9));
-        assertEquals(101128.07, bankAccount.getBalance());
+        assertEquals(11129.17, bankAccount.getBalance());
         //invalid number, negative, 2 decimals
         assertThrows(IllegalArgumentException.class, ()-> bankAccount.deposit(-1.00));
-        assertEquals(101128.07, bankAccount.getBalance());
+        assertEquals(11129.17, bankAccount.getBalance());
         assertThrows(IllegalArgumentException.class, ()-> bankAccount.deposit(-1.57));
-        assertEquals(101128.07, bankAccount.getBalance());
+        assertEquals(11129.17, bankAccount.getBalance());
         assertThrows(IllegalArgumentException.class, ()-> bankAccount.deposit(-1.99));
-        assertEquals(101128.07, bankAccount.getBalance());
+        assertEquals(11129.17, bankAccount.getBalance());
         //invalid number, more than 2 decimals
         assertThrows(IllegalArgumentException.class, ()-> bankAccount.deposit(1.001));
-        assertEquals(101128.07, bankAccount.getBalance());
+        assertEquals(11129.17, bankAccount.getBalance());
         assertThrows(IllegalArgumentException.class, ()-> bankAccount.deposit(-1.585976));
-        assertEquals(101128.07, bankAccount.getBalance());
+        assertEquals(11129.17, bankAccount.getBalance());
         assertThrows(IllegalArgumentException.class, ()-> bankAccount.deposit(50.102938475960794));
-        assertEquals(101128.07, bankAccount.getBalance());
+        assertEquals(11129.17, bankAccount.getBalance());
 
 
     }

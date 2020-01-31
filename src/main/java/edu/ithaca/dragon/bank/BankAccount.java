@@ -54,7 +54,10 @@ public class BankAccount {
      * @throws IllegalArgumentException if amount is negative or has more than 2 decimal places
      */
     public void deposit(double amount) throws IllegalArgumentException{
-
+        if(!isAmountValid(amount)){
+            throw new IllegalArgumentException("Amount must have 2 or less decimal places and must be positive");
+        }
+        balance += amount;
     }
 
     /**
@@ -63,7 +66,11 @@ public class BankAccount {
      * @throws InsufficientFundsException if amount is larger than current bank account balance
      */
     public void transfer(double amount, BankAccount toTransfer) throws InsufficientFundsException, IllegalArgumentException{
-
+            if(!isAmountValid(amount) || toTransfer == this){
+                throw new IllegalArgumentException("Amount must be positive, have 2 decimals or less, and transfer to a new bank account");
+            }
+            this.withdraw(amount);
+            toTransfer.deposit(amount);
     }
 
     /**
