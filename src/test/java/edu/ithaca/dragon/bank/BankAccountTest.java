@@ -38,6 +38,18 @@ class BankAccountTest {
     }
 
     @Test
+    void constructorTestUpdated() {
+        BankAccount bankAccount = new BankAccount("a@b.com", 200);
+
+        assertEquals("a@b.com", bankAccount.getEmail());
+        assertEquals(200, bankAccount.getBalance());
+        //check for exception thrown correctly
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", 100));
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("a@b.com", -0.01)); // invalid border case (amount)
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("a@b.com", 0.001)); // invalid border case (decimal place limit)
+    }
+
+    @Test
     void isEmailValidTestUpdated(){
         assertFalse(BankAccount.isEmailValid(""));
         // Empty String
