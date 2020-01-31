@@ -128,6 +128,65 @@ class BankAccountTest {
 
     }
 
+    @Test
+    void depositTest() throws IllegalArgumentException, InsufficientFundsException {
+        //successful deposit
+        BankAccount bankAccount = new BankAccount("a@b.com", 0);
+        bankAccount.Deposit(100);
+        assertEquals(100, bankAccount.getBalance());
+        bankAccount.Deposit(0);
+        assertEquals(100, bankAccount.getBalance());
+
+        //checks for negative values
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("a@b.com", 50).Deposit(-0.01));
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("a@b.com", 50).Deposit(-50));
+
+        //successful deposit including change
+        bankAccount = new BankAccount("a@b.com", 150);
+        bankAccount.Deposit(0.10);
+        assertEquals(150.10, bankAccount.getBalance());
+        bankAccount.Deposit(31.31);
+        assertEquals(181.41, bankAccount.getBalance());
+
+        //invalid input check
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("a@b.com", 50).Deposit(100.031));
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("a@b.com", 50).Deposit(0.00001));
+
+
+    }
+
+    @Test
+    void transferTest() throws IllegalArgumentException, InsufficientFundsException{
+        BankAccount sender = new BankAccount("a@b.com", 500);
+        BankAccount reciever = new BankAccount("y@z.com", 0);
+        //successfull transfer
+        sender.Transfer(reciever,100);
+        assertEquals(400, sender.getBalance());
+        assertEquals(100, reciever.getBalance());
+
+        //transfer with change
+        sender.Transfer(reciever, 1.50);
+        assertEquals(398.50, sender.getBalance());
+        assertEquals(101.50, reciever.getBalance());
+
+        //0 dollars transfered
+        sender.Transfer(reciever, 0);
+        assertEquals(398.50, sender.getBalance());
+        assertEquals(101.50, reciever.getBalance());
+
+        //negative amount trying to be transfered
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("a@b.com", 100).Transfer(new BankAccount("c@d.com", 0),-5));
+
+        //invalid input check
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("a@b.com", 100).Transfer(new BankAccount("y@z.com", 0),0.223));
+
+        //trying to transfer insufficent funds
+        assertThrows(InsufficientFundsException.class, ()-> new BankAccount("a@b.com", 100).Transfer(new BankAccount("hay@hay.com", 0),300));
+
+        //checks to be sure illegal argument is thrown rather than insufficient funds when both are valid
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("a@b.com", 10).Transfer(new BankAccount("c@d.com", 0),100.3131));
+    }
+
 
 
 }
