@@ -38,6 +38,14 @@ public class BankAccount {
         }
     }
 
+    /**
+     * @param amount is a double representing a monetary value
+     * @return true if non-negative and 2 or less decimal points, else false
+     */
+    public static boolean isAmountValid(double amount){
+        return false;
+    }
+
 
     public static boolean isEmailValid(String email) {
         String validDigits = "-_@.";

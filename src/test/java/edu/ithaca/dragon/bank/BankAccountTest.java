@@ -52,6 +52,25 @@ class BankAccountTest {
     }
 
     @Test
+    void isAmountValidTest(){
+        //Non-negative test
+        //Invalid case (-infinity - -0.01)
+        assertEquals(false, BankAccount.isAmountValid(-100.00));  //Normal case, very negative value
+        assertEquals(false, BankAccount.isAmountValid(-0.01));  //Edge case, barely negative value
+        //Valid case (0.00 - infinity)
+        assertEquals(true, BankAccount.isAmountValid(0.00));  //Edge case, barely non-negative
+        assertEquals(true, BankAccount.isAmountValid(100.00));  //Normal case, postitive
+
+        //Decimal place test
+        //Valid case (0 - 2 decimal points)
+        assertEquals(true, BankAccount.isAmountValid(10));  //Normal case, 0 decimal points
+        assertEquals(true, BankAccount.isAmountValid(100.00));  //Edge case, 2 decimal points
+        //Valid case (0 - 2 decimal points)
+        assertEquals(false, BankAccount.isAmountValid(100.001));  //Edge case, 3 decimal points
+        assertEquals(false, BankAccount.isAmountValid(100.00001));  //Normal case, 5 decimal points
+    }
+
+    @Test
     void isEmailValidTest(){
         //Prefix length tests
         //Invalid case (0)
