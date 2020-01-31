@@ -9,7 +9,7 @@ class BankAccountTest {
     @Test
     void getBalanceTest() {
         //Positive, negative, and 0 account value testing:
-        //Valid case (-infinity-infinity)  If some values are not valid, please let me know and I will change this test
+        //Valid case (0 - infinity)
         BankAccount bankAccount;
         bankAccount = new BankAccount("a@b.com", 200);
         assertEquals(200, bankAccount.getBalance());  //Normal case, positive
@@ -17,10 +17,6 @@ class BankAccountTest {
         assertEquals(1, bankAccount.getBalance());  //Edge case, positive
         bankAccount = new BankAccount("a@b.com", 0);
         assertEquals(0, bankAccount.getBalance());  //Edge case, 0
-        bankAccount = new BankAccount("a@b.com", -1);
-        assertEquals(-1, bankAccount.getBalance());  //Edge case, negative
-        bankAccount = new BankAccount("a@b.com", -200);
-        assertEquals(-200, bankAccount.getBalance());  //Normal case, negative
     }
 
     @Test
