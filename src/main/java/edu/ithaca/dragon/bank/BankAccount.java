@@ -172,6 +172,7 @@ public class BankAccount {
         if (!isAmountValid(amount)) {
             throw new IllegalArgumentException("Invalid Input");
         }
+
         else {
             balance += amount;
         }
@@ -189,6 +190,7 @@ public class BankAccount {
         if (!isAmountValid(amount)){
             throw new IllegalArgumentException("Invalid Input");
         }
+
         //checks for valid transfer amount
         if (balance < amount){
             throw new InsufficientFundsException("Cannot transfer an amount larger than your balance");
@@ -199,10 +201,8 @@ public class BankAccount {
             transferacct.balance+=amount;
         }
     }
-      
 
-          
-        }
+}
 
 
 
