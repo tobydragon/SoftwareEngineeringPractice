@@ -146,6 +146,63 @@ class BankAccountTest {
     }
 
     @Test
+    void isAmountValidTest(){
+        BankAccount bankAccount = new BankAccount("a@b.com", 200);
+        /**
+         * Equivalence test checking a valid positive mid-value.
+         */
+        assertTrue(bankAccount.isAmountValid(100));
+        /**
+         * Border test checking a valid positive border value.
+         */
+        assertTrue(bankAccount.isAmountValid(1));
+        /**
+         * Equivalence test checking a valid non-negative number.
+         */
+        assertTrue(bankAccount.isAmountValid(0));
+        /**
+         * Border test checking an invalid negative border value.
+         */
+        assertFalse(bankAccount.isAmountValid(-1));
+        /**
+         * Border test checking a valid decimal value.
+         */
+        assertTrue(bankAccount.isAmountValid(100.1));
+        /**
+         * Equivalence test checking a valid decimal mid-value.
+         */
+        assertTrue(bankAccount.isAmountValid(100.12));
+        /**
+         * Border test checking an invalid decimal border value with too many digits.
+         */
+        assertFalse(bankAccount.isAmountValid(100.123));
+        /**
+         * Border test checking a valid positive decimal number that needs to be truncated.
+         */
+        assertTrue(bankAccount.isAmountValid(100.000));
+
+    }
+
+    @Test
+    void transferTest(){
+        BankAccount bankAccountA = new BankAccount("a@b.com", 200);
+        BankAccount bankAccountB = new BankAccount("a@b.com", 200);
+
+        bankAccountA.transfer(100, bankAccountB);
+        assertEquals(100, bankAccountA.getBalance());
+        assertEquals(300, bankAccountB.getBalance());
+
+        bankAccountA.transfer(300, bankAccountB);
+        assertEquals(100, bankAccountA.getBalance());
+        assertEquals(300, bankAccountB.getBalance());
+    }
+
+    @Test
+    void depositTest(){
+        BankAccount bankAccount = new BankAccount("a@b.com", 200);
+    }
+
+    @Test
     void constructorTest() {
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
 

@@ -48,6 +48,17 @@ public class BankAccount {
         }
     }
 
+    public boolean isAmountValid(double amount){
+        return false;
+    }
+
+    public void transfer(double amount, BankAccount otherAccount){
+
+    }
+
+    public void deposit(double amount){
+
+    }
 
     public static boolean isEmailValid(String email) {
         return email.matches("(\\w)+((_|\\.|-)+\\w+)?@(\\w)+((_|\\.|-)+\\w+)?\\.\\w{2,}$");
