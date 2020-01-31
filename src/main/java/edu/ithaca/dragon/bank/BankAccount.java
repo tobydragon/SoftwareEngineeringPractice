@@ -97,4 +97,11 @@ public class BankAccount {
 
         return isValid;
     }
+
+    /**
+     * function will add money of specified amount to the balance of the account
+     */
+    public static void deposit (double amount){
+
+    }
 }

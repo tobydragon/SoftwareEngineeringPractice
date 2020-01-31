@@ -162,4 +162,42 @@ class BankAccountTest {
         assertFalse(BankAccount.isAmountValid(-.999));
     }
 
+    @Test
+    void depositTest(){
+        //equivalence classes:
+        // positive, negative, 0
+
+        //positive numbers
+        //no decimal, or decimal of 2 places
+        BankAccount bankAccount = new BankAccount("a@b.com", 200);
+        bankAccount.deposit(200);
+        assertEquals(400, bankAccount.getBalance());
+        bankAccount.deposit(1);
+        assertEquals(401,bankAccount.getBalance());
+        bankAccount.deposit(.01);
+        assertTrue(bankAccount.getBalance()-401.01 < .1);
+        bankAccount.deposit(.99);
+        assertTrue(bankAccount.getBalance()-402 < .1);
+
+        //decimal of 3 places
+        BankAccount bankAccount1 = new BankAccount("a@b.com", 200);
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount1.deposit(.001));
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount1.deposit(.999));
+
+        // negative numbers
+        //no decimal or 2 places
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount1.deposit(-200));
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount1.deposit(-1));
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount1.deposit(-.01));
+
+        //decimal of 3 places
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount1.deposit(-.001));
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount1.deposit(-.999));
+
+
+
+
+
+
+    }
 }
