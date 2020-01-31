@@ -131,10 +131,16 @@ public class BankAccount {
      * @param account1
      * @param account2
      * @param amountWanted
-     * Will exchange the a certain amount of money from the first account to the second account
+     * Will exchange the a certain amount of money to the first account from the second account
+     * Will make the wantedAmount 0 if the second account has nothing or less than money to transfer
      */
     public static void transfer(BankAccount account1, BankAccount account2, double amountWanted){
-        return;
+        if(account2.getBalance() <= 0 || account2.getBalance() < amountWanted){
+            amountWanted = 0;
+        }
+        account1.deposit(amountWanted);
+        account2.withdraw(amountWanted);
     }
+
 }
 

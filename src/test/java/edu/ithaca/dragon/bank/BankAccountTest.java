@@ -121,51 +121,75 @@ class BankAccountTest {
     @Test
     void depositTest(){
         //Basic test
-        BankAccount bankAccount = new BankAccount("a@b.com", 200);
+        BankAccount bankAccount = new BankAccount("a@b.com", 200); //equivalence case is a regular amount of 100 dollars deposited
         bankAccount.deposit(100.);
         assertEquals(300, bankAccount.getBalance());
 
-        BankAccount bankAccount2 = new BankAccount("a@b.com", 400);
-        bankAccount2.deposit(200);
-        assertEquals(600, bankAccount2.getBalance());
+        BankAccount bankAccount2 = new BankAccount("a@b.com", 7000.0); //equivalence case using decimals and values above 5000 in account
+        bankAccount2.deposit(234.98);
+        assertEquals(7234.98, bankAccount2.getBalance());
 
         //Negative balance
-        BankAccount bankAccount3 = new BankAccount("a@b.com", -1000);
+        BankAccount bankAccount3 = new BankAccount("a@b.com", -1000); //equivalence case is negative with the balance automatically becoming 0
         bankAccount3.deposit(200);
         assertEquals(200, bankAccount3.getBalance());
 
-        BankAccount bankAccount4 = new BankAccount("a@b.com", -50);
+        BankAccount bankAccount4 = new BankAccount("a@b.com", -50); //equivalence case is negative by turning -50 to 0 and then depositing 50
         bankAccount4.deposit(50);
         assertEquals(50, bankAccount4.getBalance());
 
         //Negative deposit amount
-        BankAccount bankAccount5 = new BankAccount("a@b.com", 200);
+        BankAccount bankAccount5 = new BankAccount("a@b.com", 200); //equivalence case with withdraw being a negative and automatically adding nothing
         bankAccount5.deposit(-600);
         assertEquals(200, bankAccount5.getBalance());
 
-        BankAccount bankAccount6 = new BankAccount("a@b.com", 100000);
+        BankAccount bankAccount6 = new BankAccount("a@b.com", 100000); //equivalence edge case without anything being deposited
         bankAccount6.deposit(-10000);
         assertEquals(100000, bankAccount6.getBalance());
 
         //Multiple deposits with doubles
-        BankAccount bankAccount7 = new BankAccount("a@b.com", 400);
+        BankAccount bankAccount7 = new BankAccount("a@b.com", 400); //equivalence case with multiple decimal value deposits
         bankAccount7.deposit(65.93);
-        assertEquals(600, bankAccount7.getBalance());
+        assertEquals(465.93, bankAccount7.getBalance());
         bankAccount7.deposit(23.93);
-        assertEquals(600, bankAccount7.getBalance());
+        assertEquals(489.86, bankAccount7.getBalance());
 
-        BankAccount bankAccount8 = new BankAccount("a@b.com", 400);
+        BankAccount bankAccount8 = new BankAccount("a@b.com", 400); //equivalence case with multiple low decimal value deposits
         bankAccount8.deposit(16.75);
-        assertEquals(600, bankAccount8.getBalance());
+        assertEquals(416.75, bankAccount8.getBalance());
         bankAccount8.deposit(3.40);
-        assertEquals(600, bankAccount8.getBalance());
+        assertEquals(420.15, bankAccount8.getBalance());
     }
 
     @Test
     void transferTest(){
+        //equivalence case with basic balances of 200 and 500 with 50 dollar transfer
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
         BankAccount bankAccount2 = new BankAccount("a@b.com", 500);
         BankAccount.transfer(bankAccount, bankAccount2, 50.00);
+        assertEquals(250, bankAccount.getBalance());
+        assertEquals(450, bankAccount2.getBalance());
+
+        //equivalence case with a negative balance(turns to 0) for 1st account and soon transferring decimal value of 35.76 from 2nd account
+        BankAccount bankAccount3 = new BankAccount("a@b.com", -100);
+        BankAccount bankAccount4 = new BankAccount("a@b.com", 1000);
+        BankAccount.transfer(bankAccount3, bankAccount4, 35.76);
+        assertEquals(35.76, bankAccount3.getBalance());
+        assertEquals(964.24, bankAccount4.getBalance());
+
+        //equivalence case with with 2nd account(turn to 0) but not transfer of money as there isn't anything to transfer
+        BankAccount bankAccount5 = new BankAccount("a@b.com", 549.34);
+        BankAccount bankAccount6 = new BankAccount("a@b.com", -643);
+        BankAccount.transfer(bankAccount5, bankAccount6, 48.54);
+        assertEquals(549.34, bankAccount5.getBalance());
+        assertEquals(0, bankAccount6.getBalance());
+
+        //equivalence case with 2nd account is less than amount wanted to transfer, so nothing gets transferred
+        BankAccount bankAccount7 = new BankAccount("a@b.com", 549.34);
+        BankAccount bankAccount8 = new BankAccount("a@b.com", 47);
+        BankAccount.transfer(bankAccount7, bankAccount8, 48.54);
+        assertEquals(549.34, bankAccount7.getBalance());
+        assertEquals(47, bankAccount8.getBalance());
     }
 
     @Test
