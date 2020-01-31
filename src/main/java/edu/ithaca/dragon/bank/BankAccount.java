@@ -47,7 +47,11 @@ public class BankAccount {
      * @post increases the balance by amount if amount is non-negative and has 2 or less significant decimals
      */
     public void deposit(double amount) throws IllegalArgumentException {
-
+        if(!isAmountValid(amount)){
+            throw new IllegalArgumentException("Can't withdraw a negative amount or one with more than 2 significant decimals");
+        } else {
+            balance += amount;
+        }
     }
 
     /**
