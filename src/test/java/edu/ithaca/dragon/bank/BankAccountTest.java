@@ -6,16 +6,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class BankAccountTest {
 
-    private static final double THRESHOLD = .001;
+    private static final double THRESHOLD = 0.001;
 
     @Test
     void getBalanceTest() {
         //negative balance
-        BankAccount bankAccount = new BankAccount("a@b.com", -200);
-        assertEquals(-200, bankAccount.getBalance());
+        assertThrows(IllegalArgumentException.class, () -> new BankAccount("a@b.com", -200));
 
         //non-negative balance
-        bankAccount = new BankAccount("a@b.com", 0);
+        BankAccount bankAccount = new BankAccount("a@b.com", 0);
         assertEquals(0, bankAccount.getBalance());
 
         //non-negative balance
@@ -34,9 +33,9 @@ class BankAccountTest {
         assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(Double.MIN_VALUE));
 
         //non-negative amount greater than balance with two decimal places or less
-        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(1000.01));
-        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(5432));
-        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(3216.8));
+        assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(1000.01));
+        assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(5432));
+        assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(3216.8));
 
         //non-negative amount greater than balance with more than two decimal places
         assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(1000.001));
@@ -62,11 +61,9 @@ class BankAccountTest {
         assertEquals(900, bankAccount.getBalance(), THRESHOLD);
         bankAccount.withdraw(0.01);
         assertEquals(899.99, bankAccount.getBalance(), THRESHOLD);
-        bankAccount.withdraw(0.99);
-        assertEquals(899, bankAccount.getBalance(), THRESHOLD);
         bankAccount.withdraw(898.99);
-        assertEquals(0.01, bankAccount.getBalance(), THRESHOLD);
-        bankAccount.withdraw(0.01);
+        assertEquals(1, bankAccount.getBalance(), THRESHOLD);
+        bankAccount.withdraw(1);
         assertEquals(0, bankAccount.getBalance(), THRESHOLD);
     }
 
@@ -180,7 +177,5 @@ class BankAccountTest {
         assertThrows(IllegalArgumentException.class, () -> new BankAccount("a@b.com", -369.333));
         assertThrows(IllegalArgumentException.class, () -> new BankAccount("a@b.com", -Double.MAX_VALUE));
         assertThrows(IllegalArgumentException.class, () -> new BankAccount("a@b.com", -Double.MIN_VALUE));
-
     }
-
 }
