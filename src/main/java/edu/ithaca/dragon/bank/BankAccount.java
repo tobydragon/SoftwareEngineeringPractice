@@ -49,7 +49,13 @@ public class BankAccount {
     }
 
     public boolean isAmountValid(double amount){
-        return false;
+        if(amount < 0){
+            return false;
+        }else if((amount * 100)%1 != 0){
+            return false;
+        }else{
+            return true;
+        }
     }
 
     public void transfer(double amount, BankAccount otherAccount){
