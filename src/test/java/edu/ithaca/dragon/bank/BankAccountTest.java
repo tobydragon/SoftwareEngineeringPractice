@@ -104,6 +104,56 @@ class BankAccountTest {
     }
 
     @Test
+    void transferTest() throws InsufficientFundsException {
+        BankAccount a = new BankAccount("a@b.com", 1000);
+        BankAccount b = new BankAccount("a@b.com", 0);
+
+        //non-negative amount less than or equal to balance with more than two decimal places
+        assertThrows(IllegalArgumentException.class, () -> a.transfer(b, 0.001));
+        assertThrows(IllegalArgumentException.class, () -> a.transfer(b, 0.9999));
+        assertThrows(IllegalArgumentException.class, () -> a.transfer(b, 999.999));
+
+        //non-negative amount greater than balance with two decimal places or less
+        assertThrows(InsufficientFundsException.class, () -> a.transfer(b, 1000.01));
+        assertThrows(InsufficientFundsException.class, () -> a.transfer(b, 2500.5));
+        assertThrows(InsufficientFundsException.class, () -> a.transfer(b, 1357));
+
+        //non-negative amount greater than balance with more than two decimal places
+        assertThrows(IllegalArgumentException.class, () -> a.transfer(b, 1000.001));
+        assertThrows(IllegalArgumentException.class, () -> a.transfer(b, 6666.6666));
+        assertThrows(IllegalArgumentException.class, () -> a.transfer(b, Double.MAX_VALUE));
+
+        //negative amount with two decimal places or less
+        assertThrows(IllegalArgumentException.class, () -> a.transfer(b, -0.01));
+        assertThrows(IllegalArgumentException.class, () -> a.transfer(b, -0.99));
+        assertThrows(IllegalArgumentException.class, () -> a.transfer(b, -607.2));
+
+        //negative amount with more than two decimal places
+        assertThrows(IllegalArgumentException.class, () -> a.transfer(b, -0.001));
+        assertThrows(IllegalArgumentException.class, () -> a.transfer(b, -0.9999));
+        assertThrows(IllegalArgumentException.class, () -> a.transfer(b, -9876.54321));
+        assertThrows(IllegalArgumentException.class, () -> a.transfer(b, -Double.MIN_VALUE));
+        assertThrows(IllegalArgumentException.class, () -> a.transfer(b, -Double.MAX_VALUE));
+
+        //non-negative amount less than or equal to balance with two decimal places or less
+        a.transfer(b, 0);
+        assertEquals(1000, a.getBalance(), THRESHOLD);
+        assertEquals(0, b.getBalance(), THRESHOLD);
+        a.transfer(b, 0.01);
+        assertEquals(999.99, a.getBalance(), THRESHOLD);
+        assertEquals(0.01, b.getBalance(), THRESHOLD);
+        a.transfer(b, 500);
+        assertEquals(499.99, a.getBalance(), THRESHOLD);
+        assertEquals(500.01, b.getBalance(), THRESHOLD);
+        a.transfer(b, 499.98);
+        assertEquals(.01, a.getBalance(), THRESHOLD);
+        assertEquals(999.99, b.getBalance(), THRESHOLD);
+        a.transfer(b, .01);
+        assertEquals(0, a.getBalance(), THRESHOLD);
+        assertEquals(1000, b.getBalance(), THRESHOLD);
+    }
+
+    @Test
     void isEmailValidTest() {
         //valid prefix and domain
         assertTrue(BankAccount.isEmailValid("a@b.com"));

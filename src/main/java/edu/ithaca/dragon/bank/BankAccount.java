@@ -59,6 +59,17 @@ public class BankAccount {
         }
     }
 
+    /**
+     * withdraws amount from balance and deposits it into to's balance
+     * @param to BankAccount who's balance will be deposited into
+     * @param amount quantity to withdraw from balance and deposit into to's balance
+     * @throws IllegalArgumentException if amount is negative or has more than 2 decimals
+     * @throws InsufficientFundsException if amount is larger than balance
+     */
+    public void transfer(BankAccount to, double amount) throws InsufficientFundsException {
+
+    }
+
     public static boolean isEmailValid(String email) {
         String regex = "[\\w-]+(\\.[\\w]+)*(?<!-)@[\\w-]+(\\.[\\w]+)*(\\.[a-z]{2,})";
         return Pattern.compile(regex).matcher(email).matches();
