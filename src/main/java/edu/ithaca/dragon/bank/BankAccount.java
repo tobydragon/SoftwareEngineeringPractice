@@ -51,8 +51,12 @@ public class BankAccount {
      * @param amount quantity to increase balance by
      * @throws IllegalArgumentException if amount is negative or has more than 2 decimal places
      */
-    public void depost(double amount) {
-        //TODO
+    public void deposit(double amount) {
+        if (!isAmountValid(amount)) {
+            throw new IllegalArgumentException("Amount: " + amount + " is invalid, cannot deposit");
+        } else {
+            balance += amount;
+        }
     }
 
     public static boolean isEmailValid(String email) {
