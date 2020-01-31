@@ -69,10 +69,18 @@ public class BankAccount {
      * @param accountToTransferTo BankAccount object to transfer to
      * @param amount amount to be withdrawn and deposited
      * @throws IllegalArgumentException when amount is invalid
-     * @throws InsufficientFundsException amount is greater than native balance
+     * @throws InsufficientFundsException amount is greater than native balance
      */
     public void transfer(BankAccount accountToTransferTo, double amount) throws IllegalArgumentException, InsufficientFundsException {
+        if (!isAmountValid(amount)) {
+            throw new IllegalArgumentException("Amount is invalid, should be non-negative with two or less decimal places");
+        }
+        if (amount > this.balance) {
+            throw new InsufficientFundsException("Cannot transfer amount greater than balance");
+        }
 
+        this.withdraw(amount);
+        accountToTransferTo.deposit(amount);
     }
 
     public static boolean isEmailValid(String email) {
