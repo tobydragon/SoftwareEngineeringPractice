@@ -86,7 +86,7 @@ class BankAccountTest {
     }
 
     @Test
-    void transferTest() {
+    void transferTest() throws InsufficientFundsException{
         BankAccount bankAccount;
         BankAccount bankAccount1;
 

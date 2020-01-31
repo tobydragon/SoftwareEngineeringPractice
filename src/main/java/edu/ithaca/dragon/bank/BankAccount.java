@@ -57,8 +57,9 @@ public class BankAccount {
     /**
      * @post decreases the balance by amount and increases the balance of targetAccount by amount if amount is non-negative and has 2 or less significant decimals
      */
-    public void transfer(double amount, BankAccount targetAccount) throws IllegalArgumentException, IllegalArgumentException {
-
+    public void transfer(double amount, BankAccount targetAccount) throws IllegalArgumentException, InsufficientFundsException {
+        this.withdraw(amount);
+        targetAccount.deposit(amount);
     }
 
     /**
