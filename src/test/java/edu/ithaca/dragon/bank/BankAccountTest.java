@@ -18,20 +18,20 @@ class BankAccountTest {
     }
 
     @Test
-    void withdrawTest() throws InsufficientFundsException {
+    void withdrawTest() throws IllegalArgumentException, InsufficientFundsException {
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
         // check zero balance
         bankAccount.withdraw(100);
         assertEquals(100, bankAccount.getBalance());
 
-        assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(200));
-        assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(-20));
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(200));
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(-20));
 
         bankAccount.withdraw(100);
         assertEquals(0, bankAccount.getBalance());
 
-        assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(1));
-        assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(-20000));
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(1));
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(-20000));
     }
 
     @Test
@@ -72,13 +72,15 @@ class BankAccountTest {
     }
 
     @Test
-    void constructorTest() {
+    void constructorTest() throws IllegalArgumentException{
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
 
         assertEquals("a@b.com", bankAccount.getEmail());
         assertEquals(200, bankAccount.getBalance());
         //check for exception thrown correctly
         assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", 100));
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("a@b.com", -100));
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("a@b.com", 100.000));
     }
 
     @Test
