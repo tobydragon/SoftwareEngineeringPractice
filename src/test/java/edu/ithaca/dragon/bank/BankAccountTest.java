@@ -145,10 +145,10 @@ class BankAccountTest {
         a.transfer(b, 500);
         assertEquals(499.99, a.getBalance(), THRESHOLD);
         assertEquals(500.01, b.getBalance(), THRESHOLD);
-        a.transfer(b, 499.98);
-        assertEquals(.01, a.getBalance(), THRESHOLD);
-        assertEquals(999.99, b.getBalance(), THRESHOLD);
-        a.transfer(b, .01);
+        a.transfer(b, 498.99);
+        assertEquals(1, a.getBalance(), THRESHOLD);
+        assertEquals(999, b.getBalance(), THRESHOLD);
+        a.transfer(b, 1);
         assertEquals(0, a.getBalance(), THRESHOLD);
         assertEquals(1000, b.getBalance(), THRESHOLD);
     }

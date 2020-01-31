@@ -67,7 +67,14 @@ public class BankAccount {
      * @throws InsufficientFundsException if amount is larger than balance
      */
     public void transfer(BankAccount to, double amount) throws InsufficientFundsException {
-
+        if (!isAmountValid(amount)) {
+            throw new IllegalArgumentException("Amount: " + amount + " is invalid, cannot transfer");
+        } else if (amount > balance) {
+            throw new InsufficientFundsException("Not enough money");
+        } else {
+            withdraw(amount);
+            to.deposit(amount);
+        }
     }
 
     public static boolean isEmailValid(String email) {
