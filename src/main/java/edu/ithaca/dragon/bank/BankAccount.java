@@ -62,6 +62,7 @@ public class BankAccount {
      * @param account the account to transfer the amount to
      * @param amount the amount being transferred
      * @throws IllegalArgumentException if value to transfer is negative or value contains precision more than 0.01  (ex. 0.001, 0.0001, ...)
+     * @throws IllegalArgumentException if the bank account being transferred to is the same
      * @throws InsufficientFundsException if value to transfer is larger than this account's current balance
      */
     public void transfer(BankAccount account, double amount){

@@ -149,7 +149,21 @@ class BankAccountTest {
 
     @Test
     void transferTest(){
+        BankAccount account1 = new BankAccount("a@b.com", 200);
+        BankAccount account2 = new BankAccount("c@d.com", 200);
+        assertThrows(IllegalArgumentException.class, ()-> account1.transfer(account2, -100)); // invalid middle case (value)
+        assertThrows(IllegalArgumentException.class, ()-> account1.transfer(account2, -0.01)); // invalid border case (value)
+        assertThrows(IllegalArgumentException.class, ()-> account1.transfer(account2, -0.009)); // invalid border case (decimal place limit)
+        assertThrows(IllegalArgumentException.class, ()-> account1.transfer(account2, 0.001)); // invalid border case (decimal place limit)
+        assertThrows(IllegalArgumentException.class, ()-> account1.transfer(account1, 100)); // invalid case (same account)
 
+        account1.transfer(account2, 100); // valid middle case (value)
+        assertEquals(300, account2.getBalance());
+        assertEquals(100, account1.getBalance());
+
+        account2.transfer(account1, 100.25); // valid middle case (decimal limit)
+        assertEquals(199.75, account2.getBalance());
+        assertEquals(200.25, account1.getBalance());
     }
 
 }
