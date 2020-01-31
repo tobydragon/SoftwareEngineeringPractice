@@ -41,13 +41,11 @@ class BankAccountTest {
         /*
          * Check for invalid negative withdrawal. Border test.
          */
-        bankAccount.withdraw(-1);
-        assertEquals(100, bankAccount.getBalance());
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(-1));
         /*
          * Check for invalid negative withdrawal. Equivalence test.
          */
-        bankAccount.withdraw(-100);
-        assertEquals(100, bankAccount.getBalance());
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(-100));
         /*
          * Check for valid withdrawal use with valid non-whole number. Border test.
          */
@@ -61,8 +59,7 @@ class BankAccountTest {
         /*
          * Check for valid withdrawal use with invalid non-whole number. Border test.
          */
-        bankAccount.withdraw(5.321);
-        assertEquals(79, bankAccount.getBalance());
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(5.321));
         /*
          * Check for InsufficientFundsException error. Border test.
          */

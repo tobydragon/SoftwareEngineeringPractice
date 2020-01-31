@@ -9,7 +9,7 @@ public class BankAccount {
      * @throws IllegalArgumentException if email is invalid
      */
     public BankAccount(String email, double startingBalance) {
-        if (isEmailValid(email)) {
+        if (isEmailValid(email) && isAmountValid(startingBalance)) {
             this.email = email;
             this.balance = startingBalance;
         }else {
@@ -34,17 +34,14 @@ public class BankAccount {
      * Allows withdrawals of numeric values with up to two decimal places. Anything beyond is not valid.
      * @throws InsufficientFundsException if there are not enough funds for a given withdrawal.
      */
-    public void withdraw (double amount) throws InsufficientFundsException{
-        if (amount > 0) {
-            if (amount <= balance){
-                String amountStr = ""+amount;
-                int decimalLength = amountStr.substring( amountStr.indexOf(".")+1 ).length();
-
-                if (decimalLength < 3)  balance -= amount;
-            }
-            else {
-                throw new InsufficientFundsException("Not enough money");
-            }
+    public void withdraw (double amount) throws InsufficientFundsException, IllegalArgumentException{
+        if(!isAmountValid(amount)){
+            throw new IllegalArgumentException("Illegal amount entered");
+        }
+        if (amount <= balance) {
+             balance -= amount;
+        }else {
+            throw new InsufficientFundsException("Not enough money");
         }
     }
 
