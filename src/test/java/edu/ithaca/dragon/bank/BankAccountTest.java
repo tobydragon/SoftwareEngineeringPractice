@@ -63,9 +63,9 @@ class BankAccountTest {
         //Passing only positive values tests:
         //Valid case (positive values including 0)
         bankAccount = new BankAccount("a@b.com", 200);
-        bankAccount.deposit(0);  //Edge case, withdrawing 0
+        bankAccount.deposit(0);  //Edge case, depositing 0
         assertEquals(200, bankAccount.getBalance(), 0.0001);
-        bankAccount.deposit(100);  //Normal case, withdrawing positive number
+        bankAccount.deposit(100);  //Normal case, depositing positive number
         assertEquals(300, bankAccount.getBalance(), 0.0001);
         //Invalid case (negative values)
         BankAccount bankAccount2 = new BankAccount("a@b.com", 200);
@@ -75,14 +75,52 @@ class BankAccountTest {
         //Significant decimals tests:
         //Valid case (0 - 2 significant decimals)
         bankAccount = new BankAccount("a@b.com", 200);
-        bankAccount.deposit(50.3);  //Normal case, withdrawing 1 significant decimal
+        bankAccount.deposit(50.3);  //Normal case, depositing 1 significant decimal
         assertEquals(250.3, bankAccount.getBalance(), 0.0001);
-        bankAccount.deposit(50.35);  //Edge case, withdrawing 2 significant decimal
+        bankAccount.deposit(50.35);  //Edge case, depositing 2 significant decimal
         assertEquals(300.65, bankAccount.getBalance(), 0.0001);
         //Invalid case (3 - infinity significant decimals)
         BankAccount bankAccount3 = new BankAccount("a@b.com", 200);
-        assertThrows(IllegalArgumentException.class, ()-> bankAccount3.deposit(50.352));  //Edge case, withdrawing 3 significant decimal
-        assertThrows(IllegalArgumentException.class, ()-> bankAccount3.deposit(50.35662));  //Normal case, withdrawing 5 significant decimal
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount3.deposit(50.352));  //Edge case, depositing 3 significant decimal
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount3.deposit(50.35662));  //Normal case, depositing 5 significant decimal
+    }
+
+    @Test
+    void transferTest() {
+        BankAccount bankAccount;
+        BankAccount bankAccount1;
+
+        //Passing only positive values tests:
+        //Valid case (positive values including 0)
+        bankAccount = new BankAccount("a@b.com", 200);
+        bankAccount1 = new BankAccount("a@b.com", 200);
+        bankAccount.transfer(0, bankAccount1);  //Edge case, transferring 0
+        assertEquals(200, bankAccount.getBalance(), 0.0001);
+        assertEquals(200, bankAccount1.getBalance(), 0.0001);
+        bankAccount.transfer(100, bankAccount1);  //Normal case, transferring positive number
+        assertEquals(100, bankAccount.getBalance(), 0.0001);
+        assertEquals(300, bankAccount1.getBalance(), 0.0001);
+        //Invalid case (negative values)
+        BankAccount bankAccount2 = new BankAccount("a@b.com", 200);
+        BankAccount bankAccount3 = new BankAccount("a@b.com", 200);
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount2.transfer(-1, bankAccount3));  //Edge case, passing barely negative value
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount2.transfer(-200, bankAccount3));  //Normal case, passing very negative value
+
+        //Significant decimals tests:
+        //Valid case (0 - 2 significant decimals)
+        bankAccount = new BankAccount("a@b.com", 200);
+        bankAccount1 = new BankAccount("a@b.com", 200);
+        bankAccount.transfer(50.3, bankAccount1);  //Normal case, transferring 1 significant decimal
+        assertEquals(149.7, bankAccount.getBalance(), 0.0001);
+        assertEquals(250.3, bankAccount1.getBalance(), 0.0001);
+        bankAccount.transfer(50.35, bankAccount1);  //Edge case, transferring 2 significant decimal
+        assertEquals(99.35, bankAccount.getBalance(), 0.0001);
+        assertEquals(300.65, bankAccount1.getBalance(), 0.0001);
+        //Invalid case (3 - infinity significant decimals)
+        BankAccount bankAccount4 = new BankAccount("a@b.com", 200);
+        BankAccount bankAccount5 = new BankAccount("a@b.com", 200);
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount4.transfer(50.352, bankAccount5));  //Edge case, transferring 3 significant decimal
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount4.transfer(50.35662, bankAccount5));  //Normal case, transferring 5 significant decimal
     }
 
     @Test
