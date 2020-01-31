@@ -31,7 +31,7 @@ class BankAccountTest {
     }
 
     @Test
-    void withdrawTest(){
+    void withdrawTest() throws InsufficientFundsException{
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
         bankAccount.withdraw(100);
 
@@ -101,14 +101,14 @@ class BankAccountTest {
     }
 
     @Test
-    void isAmountValid(){
+    void isAmountValidTest(){
         //True statements
         assertTrue(BankAccount.isAmountValid(50)); //equivalence case valid with 50 and nothing above decimal points
         assertTrue(BankAccount.isAmountValid(1.5)); //equivalence case valid with 1.5 and one decimal point
         assertTrue(BankAccount.isAmountValid(0.01)); //equivalence case valid edgecase with 0.01 being the least number before being 0 or 0.001
         assertTrue(BankAccount.isAmountValid(1000.20)); //equivalence case valid with 1000.20 with a large number and 2/1 decimal points
         assertTrue(BankAccount.isAmountValid(50.00)); //equivalence case valid with 50 and 2/none above decimal points
-        assertTrue(BankAccount.isAmountValid(1000000000000.00)); //equivalence case valid with a large number and 2/none above decimal points
+        assertTrue(BankAccount.isAmountValid(100000.00)); //equivalence case valid with a large number and 2/none above decimal points
 
         //False Statements
         assertFalse(BankAccount.isAmountValid(50.001)); //equivalence case is an extra decimal point
@@ -116,6 +116,56 @@ class BankAccountTest {
         assertFalse(BankAccount.isAmountValid(0.0000000000034)); //equivalence case has more than 2 decimal points
         assertFalse(BankAccount.isAmountValid(-.022)); //equivalence case is negative and more than 2 decimal points
 
+    }
+
+    @Test
+    void depositTest(){
+        //Basic test
+        BankAccount bankAccount = new BankAccount("a@b.com", 200);
+        bankAccount.deposit(100.);
+        assertEquals(300, bankAccount.getBalance());
+
+        BankAccount bankAccount2 = new BankAccount("a@b.com", 400);
+        bankAccount2.deposit(200);
+        assertEquals(600, bankAccount2.getBalance());
+
+        //Negative balance
+        BankAccount bankAccount3 = new BankAccount("a@b.com", -1000);
+        bankAccount3.deposit(200);
+        assertEquals(200, bankAccount3.getBalance());
+
+        BankAccount bankAccount4 = new BankAccount("a@b.com", -50);
+        bankAccount4.deposit(50);
+        assertEquals(50, bankAccount4.getBalance());
+
+        //Negative deposit amount
+        BankAccount bankAccount5 = new BankAccount("a@b.com", 200);
+        bankAccount5.deposit(-600);
+        assertEquals(200, bankAccount5.getBalance());
+
+        BankAccount bankAccount6 = new BankAccount("a@b.com", 100000);
+        bankAccount6.deposit(-10000);
+        assertEquals(100000, bankAccount6.getBalance());
+
+        //Multiple deposits with doubles
+        BankAccount bankAccount7 = new BankAccount("a@b.com", 400);
+        bankAccount7.deposit(65.93);
+        assertEquals(600, bankAccount7.getBalance());
+        bankAccount7.deposit(23.93);
+        assertEquals(600, bankAccount7.getBalance());
+
+        BankAccount bankAccount8 = new BankAccount("a@b.com", 400);
+        bankAccount8.deposit(16.75);
+        assertEquals(600, bankAccount8.getBalance());
+        bankAccount8.deposit(3.40);
+        assertEquals(600, bankAccount8.getBalance());
+    }
+
+    @Test
+    void transferTest(){
+        BankAccount bankAccount = new BankAccount("a@b.com", 200);
+        BankAccount bankAccount2 = new BankAccount("a@b.com", 500);
+        BankAccount.transfer(bankAccount, bankAccount2, 50.00);
     }
 
     @Test
@@ -127,5 +177,4 @@ class BankAccountTest {
         //check for exception thrown correctly
         assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", 100));
     }
-
 }

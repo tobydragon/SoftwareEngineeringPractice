@@ -29,7 +29,7 @@ public class BankAccount {
     /**
      * @post reduces the balance by amount if amount is non-negative and smaller than balance
      */
-    public void withdraw (double amount){
+    public void withdraw(double amount){
         if(balance < 0){
             balance = 0;
         }
@@ -96,14 +96,10 @@ public class BankAccount {
      * @return
      */
     public static boolean isAmountValid(double amount){
-        if(amount > 0){
+        if(amount > 0.0){
             String stAmount = "" +amount;
             String decimalPoints = stAmount.substring(stAmount.indexOf(".")+1);
-            int decimals = 0;
-            for(int i = 0; i > decimalPoints.length(); i++){
-                decimals ++;
-            }
-            if(decimals > 2){
+            if(decimalPoints.length() > 2){
                 return false;
             }
             return true;
@@ -111,6 +107,34 @@ public class BankAccount {
         else{
             return false;
         }
+    }
+
+    /**
+     *
+     * @param amount
+     * Changes the balance by adding a positive amount of money as a double
+     * Will change balance to 0 if balance is under 0
+     * Will not change the balance amount if the amount is under 0
+     */
+    public void deposit(double amount){
+        if(balance < 0){
+            balance = 0;
+        }
+        if(amount < 0){
+            return;
+        }
+        balance += amount;
+    }
+
+    /**
+     *
+     * @param account1
+     * @param account2
+     * @param amountWanted
+     * Will exchange the a certain amount of money from the first account to the second account
+     */
+    public static void transfer(BankAccount account1, BankAccount account2, double amountWanted){
+        return;
     }
 }
 
