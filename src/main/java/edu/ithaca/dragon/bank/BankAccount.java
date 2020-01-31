@@ -64,6 +64,17 @@ public class BankAccount {
         }
     }
 
+    /**
+     * transfer balance from this instance of BankAccount to another one via deposits and withdrawals
+     * @param accountToTransferTo BankAccount object to transfer to
+     * @param amount amount to be withdrawn and deposited
+     * @throws IllegalArgumentException when amount is invalid
+     * @throws InsufficientFundsException amount is greater than native balance
+     */
+    public void transfer(BankAccount accountToTransferTo, double amount) throws IllegalArgumentException, InsufficientFundsException {
+
+    }
+
     public static boolean isEmailValid(String email) {
         if (email.indexOf('@') == -1) {
             return false;
