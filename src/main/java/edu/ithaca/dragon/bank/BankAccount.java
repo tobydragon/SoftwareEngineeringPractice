@@ -101,7 +101,13 @@ public class BankAccount {
     /**
      * function will add money of specified amount to the balance of the account
      */
-    public static void deposit (double amount){
-
+    public void deposit (double amount){
+        if (isAmountValid(amount)) {
+            if (!(balance < amount) && amount > 0) {
+                balance += amount;
+            }
+        }else{
+            throw new IllegalArgumentException("deposit amount: " + amount + " is invalid, amount cannot be withdrawn");
+        }
     }
 }
