@@ -73,8 +73,8 @@ class BankAccountTest {
     @Test
     void withdrawTestUpdated() throws InsufficientFundsException{
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
-        assertThrows(InsufficientFundsException.class, ()-> bankAccount.withdraw(-100));
-        assertThrows(IllegalArgumentException.class, ()-> bankAccount.withdraw(300));
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount.withdraw(-100));
+        assertThrows(InsufficientFundsException.class, ()-> bankAccount.withdraw(300));
         bankAccount.withdraw(100);
         assertEquals(100, bankAccount.getBalance());
 
@@ -104,8 +104,9 @@ class BankAccountTest {
         // equivalence class integers converted to doubles
         assertTrue(BankAccount.isAmountValid(42.0)); // valid middle case (decimal place limit)
         assertTrue(BankAccount.isAmountValid(42.00)); // valid border case (decimal place limit)
-        assertFalse(BankAccount.isAmountValid(42.000)); // invalid border case (decimal place limit, amount)
-        assertFalse(BankAccount.isAmountValid(42.000000)); // invalid middle case (decimal place limit)
+        // these cases are based on Java's double mechanism (X.0000 becomes X.0 for an integer X in Java)
+        assertTrue(BankAccount.isAmountValid(42.000)); // valid border case (decimal place limit is invalid, amount is chopped off to 42.0 by Java, so it becomes valid)
+        assertTrue(BankAccount.isAmountValid(42.000000)); // valid middle case (decimal place limit, amount is chopped off to 42.0 by Java, so it becomes valid)
     }
 
 }
