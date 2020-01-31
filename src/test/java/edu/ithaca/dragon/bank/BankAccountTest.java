@@ -57,6 +57,31 @@ class BankAccountTest {
     }
 
     @Test
+    void depositTest() {
+        BankAccount bankAccount;
+
+        //Passing only positive values tests:
+        //Valid case (positive values including 0)
+        bankAccount = new BankAccount("a@b.com", 200);
+        bankAccount.deposit(0);  //Edge case, withdrawing 0
+        bankAccount.deposit(100);  //Normal case, withdrawing positive number
+        //Invalid case (negative values)
+        BankAccount bankAccount2 = new BankAccount("a@b.com", 200);
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount2.deposit(-1));  //Edge case, passing barely negative value
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount2.deposit(-200));  //Normal case, passing very negative value
+
+        //Significant decimals tests:
+        //Valid case (0 - 2 significant decimals)
+        bankAccount = new BankAccount("a@b.com", 200);
+        bankAccount.deposit(50.3);  //Normal case, withdrawing 1 significant decimal
+        bankAccount.deposit(50.35);  //Edge case, withdrawing 2 significant decimal
+        //Invalid case (3 - infinity significant decimals)
+        BankAccount bankAccount3 = new BankAccount("a@b.com", 200);
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount3.deposit(50.352));  //Edge case, withdrawing 3 significant decimal
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount3.deposit(50.35662));  //Normal case, withdrawing 5 significant decimal
+    }
+
+    @Test
     void isAmountValidTest(){
         //Non-negative test
         //Invalid case (-infinity - -0.01)
