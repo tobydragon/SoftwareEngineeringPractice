@@ -6,6 +6,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class BankAccountTest {
 
+    private static final double THRESHOLD = .001;
+
     @Test
     void getBalanceTest() {
         //negative balance
@@ -23,28 +25,49 @@ class BankAccountTest {
 
     @Test
     void withdrawTest() throws InsufficientFundsException {
-        BankAccount bankAccount = new BankAccount("a@b.com", 200);
+        BankAccount bankAccount = new BankAccount("a@b.com", 1000);
 
-        //non-negative amount less than or equal to balance
-        bankAccount.withdraw(100);
-        assertEquals(100, bankAccount.getBalance());
+        //non-negative amount less than or equal to balance with more than two decimal places
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(0.001));
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(0.9999));
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(3141.592));
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(Double.MIN_VALUE));
 
-        //non-negative amount less than or equal to balance
+        //non-negative amount greater than balance with two decimal places or less
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(1000.01));
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(5432));
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(3216.8));
+
+        //non-negative amount greater than balance with more than two decimal places
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(1000.001));
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(9876.543));
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(Double.MAX_VALUE));
+
+        //negative amount with two decimal places or less
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(-0.01));
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(-0.99));
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(-2718.2));
+
+        //negative amount with more than two decimal places
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(-0.001));
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(-0.9999));
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(-14850.607));
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(-Double.MIN_VALUE));
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(-Double.MAX_VALUE));
+
+        //non-negative amount less than or equal to balance with two decimal places or less
         bankAccount.withdraw(0);
-        assertEquals(100, bankAccount.getBalance());
-
-        //non-negative amount greater than balance
-        assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(101));
-
-        //non-negative amount greater than balance
-        assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(300));
-
-        //negative amount
-        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(-100));
-
-        //non-negative amount less than or equal to balance
+        assertEquals(1000, bankAccount.getBalance(), THRESHOLD);
         bankAccount.withdraw(100);
-        assertEquals(0, bankAccount.getBalance());
+        assertEquals(900, bankAccount.getBalance(), THRESHOLD);
+        bankAccount.withdraw(0.01);
+        assertEquals(899.99, bankAccount.getBalance(), THRESHOLD);
+        bankAccount.withdraw(0.99);
+        assertEquals(899, bankAccount.getBalance(), THRESHOLD);
+        bankAccount.withdraw(898.99);
+        assertEquals(0.01, bankAccount.getBalance(), THRESHOLD);
+        bankAccount.withdraw(0.01);
+        assertEquals(0, bankAccount.getBalance(), THRESHOLD);
     }
 
     @Test
@@ -108,7 +131,7 @@ class BankAccountTest {
         assertFalse(BankAccount.isAmountValid(-0.01));
         assertFalse(BankAccount.isAmountValid(-0.99));
         assertFalse(BankAccount.isAmountValid(-120));
-        assertFalse(BankAccount.isAmountValid(-946.50));
+        assertFalse(BankAccount.isAmountValid(-946.5));
 
         //negative amount with more than two decimal points
         assertFalse(BankAccount.isAmountValid(-0.001));
@@ -124,7 +147,40 @@ class BankAccountTest {
         assertEquals("a@b.com", bankAccount.getEmail());
         assertEquals(200, bankAccount.getBalance());
         //check for exception thrown correctly
-        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", 100));
+        assertThrows(IllegalArgumentException.class, () -> new BankAccount("", 100));
+
+        //non-negative balance with two decimal places or less
+        bankAccount = new BankAccount("a@b.com", 0);
+        assertEquals(0, bankAccount.getBalance(), THRESHOLD);
+        bankAccount = new BankAccount("a@b.com", 0.01);
+        assertEquals(0.01, bankAccount.getBalance(), THRESHOLD);
+        bankAccount = new BankAccount("a@b.com", 0.99);
+        assertEquals(0.99, bankAccount.getBalance(), THRESHOLD);
+        bankAccount = new BankAccount("a@b.com", 9876.5);
+        assertEquals(9876.5, bankAccount.getBalance(), THRESHOLD);
+        bankAccount = new BankAccount("a@b.com", 248);
+        assertEquals(248, bankAccount.getBalance(), THRESHOLD);
+
+        //non-negative balance with more than two decimal places
+        assertThrows(IllegalArgumentException.class, () -> new BankAccount("a@b.com", 0.001));
+        assertThrows(IllegalArgumentException.class, () -> new BankAccount("a@b.com", 0.9999));
+        assertThrows(IllegalArgumentException.class, () -> new BankAccount("a@b.com", 369.333));
+        assertThrows(IllegalArgumentException.class, () -> new BankAccount("a@b.com", Double.MAX_VALUE));
+        assertThrows(IllegalArgumentException.class, () -> new BankAccount("a@b.com", Double.MIN_VALUE));
+
+        //negative balance with two decimal places or less
+        assertThrows(IllegalArgumentException.class, () -> new BankAccount("a@b.com", -0.01));
+        assertThrows(IllegalArgumentException.class, () -> new BankAccount("a@b.com", -0.99));
+        assertThrows(IllegalArgumentException.class, () -> new BankAccount("a@b.com", -10.2));
+        assertThrows(IllegalArgumentException.class, () -> new BankAccount("a@b.com", -125));
+
+        //negative balance with more than two decimal places
+        assertThrows(IllegalArgumentException.class, () -> new BankAccount("a@b.com", -0.001));
+        assertThrows(IllegalArgumentException.class, () -> new BankAccount("a@b.com", -0.9999));
+        assertThrows(IllegalArgumentException.class, () -> new BankAccount("a@b.com", -369.333));
+        assertThrows(IllegalArgumentException.class, () -> new BankAccount("a@b.com", -Double.MAX_VALUE));
+        assertThrows(IllegalArgumentException.class, () -> new BankAccount("a@b.com", -Double.MIN_VALUE));
+
     }
 
 }
