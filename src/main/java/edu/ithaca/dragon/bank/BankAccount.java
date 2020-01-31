@@ -57,7 +57,11 @@ public class BankAccount {
      * @throws IllegalArgumentException if amount is invalid
      */
     public void deposit (double amount) throws IllegalArgumentException {
-
+        if (!isAmountValid(amount)) {
+            throw new IllegalArgumentException("Cannot deposit a negative amount of money or an amount with more than two decimal places.");
+        } else {
+            balance += amount;
+        }
     }
 
     public static boolean isEmailValid(String email) {
@@ -72,6 +76,8 @@ public class BankAccount {
     public static boolean isAmountValid(double amount) {
         if (amount < 0){
             return false;
+        } else if (amount == 0) {
+            return true;
         }
 
         // check number of decimal places

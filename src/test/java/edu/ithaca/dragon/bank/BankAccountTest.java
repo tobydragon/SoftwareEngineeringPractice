@@ -112,12 +112,16 @@ class BankAccountTest {
         assertThrows(IllegalArgumentException.class, () -> bankAccount.deposit(-10.123));
 
         //check zero
-        assertThrows(IllegalArgumentException.class, () -> bankAccount.deposit(0));
+        bankAccount.deposit(0);
+        assertEquals(0, bankAccount.getBalance());
 
         // check positive
-        assertThrows(IllegalArgumentException.class, () -> bankAccount.deposit(1.0));
-        assertThrows(IllegalArgumentException.class, () -> bankAccount.deposit(10.0002));
-        assertThrows(IllegalArgumentException.class, () -> bankAccount.deposit(12345670));
+        bankAccount.deposit(1.0);
+        assertEquals(1, bankAccount.getBalance());
+
+        BankAccount newBankAccount = new BankAccount("a@b.com", 0);
+        assertThrows(IllegalArgumentException.class, () -> newBankAccount.deposit(10.0002));
+        assertThrows(IllegalArgumentException.class, () -> newBankAccount.deposit(12345670));
     }
 
 }
