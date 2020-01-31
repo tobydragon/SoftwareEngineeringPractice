@@ -213,15 +213,15 @@ class BankAccountTest {
         //no decimal, or decimal of 2 places, within available balance
         bankAccount2.transfer(150, bankAccount1); //no decimal
         assertEquals(250, bankAccount1.getBalance()); //check balance of account getting the money
-        assertEquals(250, bankAccount2.getBalance()); //check balance of account withdrawn from
+        assertEquals(350, bankAccount2.getBalance()); //check balance of account withdrawn from
         bankAccount2.transfer(50.00, bankAccount1); //decimal
         assertEquals(300, bankAccount1.getBalance()); //check balance of account getting the money
-        assertEquals(200, bankAccount2.getBalance()); //check balance of account withdrawn from
+        assertEquals(300, bankAccount2.getBalance()); //check balance of account withdrawn from
 
         //positive numbers
         //no decimal, or decimal of 2 places, out of balance range
-        assertThrows(IllegalArgumentException.class, ()-> bankAccount2.transfer(300,bankAccount1));
-        assertThrows(IllegalArgumentException.class, ()-> bankAccount2.transfer(300.00,bankAccount1));
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount2.transfer(400,bankAccount1));
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount2.transfer(400.00,bankAccount1));
         assertThrows(IllegalArgumentException.class, ()-> bankAccount2.transfer(100.001,bankAccount1));//3 decimal
 
         //ZERO

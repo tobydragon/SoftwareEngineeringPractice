@@ -107,7 +107,7 @@ public class BankAccount {
                 balance += amount;
             }
         }else{
-            throw new IllegalArgumentException("deposit amount: " + amount + " is invalid, amount cannot be withdrawn");
+            throw new IllegalArgumentException("deposit amount: " + amount + " is invalid, amount cannot be deposited");
         }
     }
 
@@ -117,6 +117,11 @@ public class BankAccount {
      * @param bankAccounta
      */
     public void transfer (double amount, BankAccount bankAccounta){
-
+        if (isAmountValid(amount) && amount < this.balance){
+            this.withdraw(amount);
+            bankAccounta.balance = bankAccounta.balance + amount;
+        }else{
+            throw new IllegalArgumentException("transfer amount: " + amount + " is invalid, amount cannot be transfered");
+        }
     }
 }
