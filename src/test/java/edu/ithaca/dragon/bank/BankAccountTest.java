@@ -194,10 +194,46 @@ class BankAccountTest {
         assertThrows(IllegalArgumentException.class, ()-> bankAccount1.deposit(-.001));
         assertThrows(IllegalArgumentException.class, ()-> bankAccount1.deposit(-.999));
 
+        //ZERO
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount1.deposit(0));
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount1.deposit(0.00));
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount1.deposit(0.000));
 
+    }
 
+    @Test
+    void transferTest(){
+        //equivalence classes:
+        // positive, negative, 0
 
+        BankAccount bankAccount1 = new BankAccount("a@b.com",100);
+        BankAccount bankAccount2 = new BankAccount("b@a.com", 500);
 
+        //positive numbers
+        //no decimal, or decimal of 2 places, within available balance
+        bankAccount2.transfer(150, bankAccount1); //no decimal
+        assertEquals(250, bankAccount1.getBalance()); //check balance of account getting the money
+        assertEquals(250, bankAccount2.getBalance()); //check balance of account withdrawn from
+        bankAccount2.transfer(50.00, bankAccount1); //decimal
+        assertEquals(300, bankAccount1.getBalance()); //check balance of account getting the money
+        assertEquals(200, bankAccount2.getBalance()); //check balance of account withdrawn from
+
+        //positive numbers
+        //no decimal, or decimal of 2 places, out of balance range
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount2.transfer(300,bankAccount1));
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount2.transfer(300.00,bankAccount1));
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount2.transfer(100.001,bankAccount1));//3 decimal
+
+        //ZERO
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount2.transfer(0,bankAccount1));
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount2.transfer(0.00,bankAccount1));
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount2.transfer(0.000,bankAccount1));
+
+        //negative numbers
+        //no decimal, or decimal of 2 places, within available balance
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount2.transfer(-100,bankAccount1));
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount2.transfer(-50.00,bankAccount1));
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount2.transfer(-50.001,bankAccount1));//3 decimal
 
     }
 }

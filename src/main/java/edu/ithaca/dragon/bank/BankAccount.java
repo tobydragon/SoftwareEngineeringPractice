@@ -110,4 +110,13 @@ public class BankAccount {
             throw new IllegalArgumentException("deposit amount: " + amount + " is invalid, amount cannot be withdrawn");
         }
     }
+
+    /**
+     * function withdraws valid amount from account and deposits to new account
+     * @param amount
+     * @param bankAccounta
+     */
+    public void transfer (double amount, BankAccount bankAccounta){
+
+    }
 }
