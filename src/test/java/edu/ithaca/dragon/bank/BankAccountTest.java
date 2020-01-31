@@ -107,7 +107,7 @@ class BankAccountTest {
         assertTrue(BankAccount.isAmountValid(0.01)); // valid border case (decimal place limit)
         assertFalse(BankAccount.isAmountValid(0.009)); // invalid border case (decimal place limit)
         assertFalse(BankAccount.isAmountValid(0.0000093739)); // invalid middle case (decimal place limit)
-        assertTrue(BankAccount.isAmountValid(0)); // valid border case (amount value)
+        assertFalse(BankAccount.isAmountValid(0)); // invalid border case (amount value)
         // equivalence class amount < 0
         assertFalse(BankAccount.isAmountValid(-100)); // invalid middle case (amount value)
         assertFalse(BankAccount.isAmountValid(-0.01)); // invalid border case (amount value invalid, decimal place limit technically valid)
