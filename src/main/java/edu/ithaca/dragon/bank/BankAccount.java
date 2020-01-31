@@ -11,12 +11,15 @@ public class BankAccount {
      * @throws IllegalArgumentException if email is invalid
      */
     public BankAccount(String email, double startingBalance){
-        if (isEmailValid(email)){
+        if (isEmailValid(email) && isAmountValid(startingBalance)){
             this.email = email;
             this.balance = startingBalance;
         }
-        else {
+        else if(!isEmailValid(email)) {
             throw new IllegalArgumentException("Email address: " + email + " is invalid, cannot create account");
+        }
+        else if(!isAmountValid(startingBalance)){
+            throw new IllegalArgumentException("Starting balance: " + startingBalance + " is invalid, cannot create account");
         }
     }
 
@@ -34,15 +37,8 @@ public class BankAccount {
      * @throws InsufficientFundsException if value to withdraw is larger than the bank account balance
      */
     public void withdraw (double amount) throws InsufficientFundsException {
-        if (amount < 0) {
-            throw new IllegalArgumentException("Cannot withdraw a negative amount");
-        }
-        String amountString = "" + amount;
-        if (amountString.indexOf(".") != -1) {
-            String places = amountString.substring(amountString.indexOf("."), amountString.length() - 1);
-            if (places.length() > 2){
-                throw new IllegalArgumentException("Cannot have more than 0.01 precision");
-            }
+        if (!isAmountValid(amount)){
+            throw new IllegalArgumentException("Cannot withdraw a negative amount or an amount with more than 0.01 precision");
         }
         if (amount > balance){
             throw new InsufficientFundsException("Too small a balance");
@@ -76,14 +72,12 @@ public class BankAccount {
      * @return true if the amount to be checked is a valid amount or false if not valid
      */
     public static boolean isAmountValid(double amount){
-        System.out.println("Amount in: " + amount);
         if (amount < 0){
             return false;
         }
         String amountString = "" + amount;
         if (amountString.indexOf(".") != -1){
             String decimalPlaces = amountString.substring(amountString.indexOf(".") + 1);
-            System.out.println(decimalPlaces);
             if (decimalPlaces.length() > 2){
                 return false;
             }
