@@ -9,7 +9,7 @@ public class BankAccount {
     private double balance;
 
     /**
-     * @throws IllegalArgumentException if email or startingBalance is invalid
+     * @throws IllegalArgumentException if email is invalid, or startingBalance is negative or has more than 2 decimal places
      */
     public BankAccount(String email, double startingBalance) {
         if (!isEmailValid(email)) {
@@ -31,12 +31,12 @@ public class BankAccount {
     }
 
     /**
-     * reduces the balance by amount if amount is non-negative and smaller or equal to balance
+     * reduces the balance by amount if amount is non-negative, has 2 or fewer decimals and is smaller or equal to balance
      * @param amount quantity to reduce balance by
-     * @throws IllegalArgumentException if amount is negative
+     * @throws IllegalArgumentException if amount is negative or has more than 2 decimals
      * @throws InsufficientFundsException if amount is larger than balance
      */
-    public void withdraw (double amount) throws InsufficientFundsException {
+    public void withdraw(double amount) throws InsufficientFundsException {
         if (!isAmountValid(amount)) {
             throw new IllegalArgumentException("Amount: " + amount + " is invalid, cannot withdraw");
         } else if (amount > balance) {
@@ -44,6 +44,15 @@ public class BankAccount {
         } else {
             balance -= amount;
         }
+    }
+
+    /**
+     * increases the balance by amount if non-negative and has 2 or fewer decimals
+     * @param amount quantity to increase balance by
+     * @throws IllegalArgumentException if amount is negative or has more than 2 decimal places
+     */
+    public void depost(double amount) {
+        //TODO
     }
 
     public static boolean isEmailValid(String email) {
