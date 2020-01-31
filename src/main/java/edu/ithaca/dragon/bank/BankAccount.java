@@ -6,10 +6,16 @@ public class BankAccount {
     private double balance;
 
     /**
-     * @throws IllegalArgumentException if email is invalid
+     * @post The constructor of the BankAccount class
+     * @param email a String denoting the email address of the account owner.
+     * @param startingBalance a double denoting the amount of initial money in the account.
+     * @throws IllegalArgumentException if email or starting balance is invalid
      */
     public BankAccount(String email, double startingBalance) {
-        if (isEmailValid(email) && isAmountValid(startingBalance)) {
+        if(!isAmountValid(startingBalance)){
+            throw new IllegalArgumentException("Starting balance: " + startingBalance + " is invalid, cannot create account");
+        }
+        if (isEmailValid(email)) {
             this.email = email;
             this.balance = startingBalance;
         }else {
@@ -19,12 +25,18 @@ public class BankAccount {
 
     public double getBalance() {
         /**
+         * @post
          * This function simply returns the current amount of money in the account. On it's own, it should
          * not care about its validity as it is presently structured as a getter-type of function.
+         * @return a double which denotes the balance or money left on the current account.
          */
         return balance;
     }
 
+    /**
+     * @post A getter for the email data member.
+     * @return a string denoting the email associated with the current account.
+     */
     public String getEmail() {
         return email;
     }
@@ -45,6 +57,11 @@ public class BankAccount {
         }
     }
 
+    /**
+     * @post a function to check if the amount of provided money is a valid input
+     * @param amount how much money is provided as an input to a given function.
+     * @return true or false depending on if the amount follows the limitations appropriately.
+     */
     public boolean isAmountValid(double amount){
         if(amount < 0){
             return false;
@@ -55,11 +72,23 @@ public class BankAccount {
         }
     }
 
-    public void transfer(double amount, BankAccount otherAccount){
+    /**
+     * @post A function for moving money from this account, to another account.
+     * @param amount how much money should be transferred out of this current account.
+     * @param otherAccount the account to which the amount is being transferred to.
+     * @throws IllegalArgumentException if invalid amount is provided.
+     */
+    public void transfer(double amount, BankAccount otherAccount) throws IllegalArgumentException{
 
     }
 
-    public void deposit(double amount){
+    /**
+     * @post A function to add money to the present account.
+     * @param amount how much money to add to present account object.
+     * @throws IllegalArgumentException if invalid amount is provided. Must be non-negative
+     * with only up to two decimal places if they're nonzero.
+     */
+    public void deposit(double amount) throws IllegalArgumentException{
 
     }
 
@@ -128,20 +157,3 @@ public class BankAccount {
     }
 
 }
-   /** public static boolean domainCheck(String subString2){
-        int l =0;
-        while(l<subString2.length()){
-            char x1 = subString2.charAt(l);
-            if((((int)x1>=48 &&(int)x1<58)||((int)x1>=65 &&(int)x1<91)||((int)x1>=97 &&(int)x1<123))==true){
-                l=l+1;
-
-            }
-            else{
-                return false;
-            }
-
-        }
-        return true;
-
-**/
-
