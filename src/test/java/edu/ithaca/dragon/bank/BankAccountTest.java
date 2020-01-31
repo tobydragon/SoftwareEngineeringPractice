@@ -181,17 +181,66 @@ class BankAccountTest {
     }
 
     @Test
-    void transferTest(){
+    void transferTest() throws IllegalArgumentException, InsufficientFundsException{
         BankAccount bankAccountA = new BankAccount("a@b.com", 200);
         BankAccount bankAccountB = new BankAccount("a@b.com", 200);
 
+        /**
+         * Equivalence test for a valid positive mid-value.
+         */
         bankAccountA.transfer(100, bankAccountB);
         assertEquals(100, bankAccountA.getBalance());
         assertEquals(300, bankAccountB.getBalance());
 
-        bankAccountA.transfer(300, bankAccountB);
-        assertEquals(100, bankAccountA.getBalance());
-        assertEquals(300, bankAccountB.getBalance());
+        /**
+         * Border test for a valid positive border value.
+         */
+        bankAccountA.transfer(1, bankAccountB);
+        assertEquals(99, bankAccountA.getBalance());
+        assertEquals(301, bankAccountB.getBalance());
+
+        /**
+         * Border test for a valid non-negative border value.
+         */
+        bankAccountA.transfer(0, bankAccountB);
+        assertEquals(99, bankAccountA.getBalance());
+        assertEquals(301, bankAccountB.getBalance());
+
+        /**
+         * Border test for a valid decimal value.
+         */
+        bankAccountA.transfer(10.1, bankAccountB);
+        assertEquals(88.9, bankAccountA.getBalance());
+        assertEquals(311.1, bankAccountB.getBalance());
+
+        /**
+         * Equivalence test for a valid decimal mid-value.
+         */
+        bankAccountA.transfer(10.12, bankAccountB);
+        assertEquals(78.78, bankAccountA.getBalance());
+        assertEquals(321.22, bankAccountB.getBalance());
+
+        /**
+         * Border value for a valid decimal value that needs to be truncated.
+         */
+        bankAccountA.transfer(10.000, bankAccountB);
+        assertEquals(68.78, bankAccountA.getBalance());
+        assertEquals(331.22, bankAccountB.getBalance());
+
+        /**
+         * Border test for an invalid negative border value.
+         */
+        assertThrows(IllegalArgumentException.class, ()-> bankAccountA.transfer(-1, bankAccountB));
+
+        /**
+         * Equivalence test for an invalid negative mid-value.
+         */
+        assertThrows(IllegalArgumentException.class, ()-> bankAccountA.transfer(-100, bankAccountB));
+
+        /**
+         * Border test for an invalid decimal value with too many digits.
+         */
+        assertThrows(IllegalArgumentException.class, ()-> bankAccountA.transfer(10.123, bankAccountB));
     }
 
     @Test

@@ -79,8 +79,9 @@ public class BankAccount {
      * @param otherAccount the account to which the amount is being transferred to.
      * @throws IllegalArgumentException if invalid amount is provided.
      */
-    public void transfer(double amount, BankAccount otherAccount) throws IllegalArgumentException{
-
+    public void transfer(double amount, BankAccount otherAccount) throws InsufficientFundsException, IllegalArgumentException{
+        withdraw(amount);
+        otherAccount.deposit(amount);
     }
 
     /**
