@@ -56,6 +56,14 @@ class BankAccountTest {
         BankAccount bankAccount7 = new BankAccount("j@h.com", -367.54); //Withdrawing non-existing number, negatives automatically change to 0
         bankAccount7.withdraw(40000);
         assertEquals(0, bankAccount7.getBalance());
+
+        //with isAmountValid
+        BankAccount bankAccount8 = new BankAccount("j@h.com", -367.54); //Withdrawing non-existing number, negatives automatically change to 0
+        bankAccount8.withdraw(400);
+        assertEquals(0, bankAccount8.getBalance());
+        BankAccount bankAccount9 = new BankAccount("j@h.com", -367.54); //Withdrawing non-existing number, negatives automatically change to 0
+        bankAccount9.withdraw(40000);
+        assertEquals(0, bankAccount9.getBalance());
     }
 
     @Test
@@ -199,6 +207,8 @@ class BankAccountTest {
         assertEquals("a@b.com", bankAccount.getEmail());
         assertEquals(200, bankAccount.getBalance());
         //check for exception thrown correctly
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", 100));
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("a", -100));
         assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", 100));
     }
 }

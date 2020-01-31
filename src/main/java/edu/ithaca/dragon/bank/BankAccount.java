@@ -11,7 +11,12 @@ public class BankAccount {
     public BankAccount(String email, double startingBalance){
         if (isEmailValid(email)){
             this.email = email;
-            this.balance = startingBalance;
+            if(isAmountValid(startingBalance)){
+                this.balance = startingBalance;
+            }
+            else{
+                throw new IllegalArgumentException("Starting Balance: " + startingBalance + " is invalid, cannot create account");
+            }
         }
         else {
             throw new IllegalArgumentException("Email address: " + email + " is invalid, cannot create account");
@@ -33,7 +38,7 @@ public class BankAccount {
         if(balance < 0){
             balance = 0;
         }
-        if(amount > balance){
+        if(isAmountValid(amount) == false){
             return;
         }
         balance -= amount;
@@ -96,7 +101,7 @@ public class BankAccount {
      * @return
      */
     public static boolean isAmountValid(double amount){
-        if(amount > 0.0){
+        if(amount >= 0){
             String stAmount = "" +amount;
             String decimalPoints = stAmount.substring(stAmount.indexOf(".")+1);
             if(decimalPoints.length() > 2){
