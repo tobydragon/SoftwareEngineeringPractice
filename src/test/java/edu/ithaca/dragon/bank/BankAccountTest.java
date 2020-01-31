@@ -226,13 +226,13 @@ class BankAccountTest {
          * Equivalence test checking a valid value with two decimal places.
          */
         bankAccount.deposit(10.12);
-        assertEquals(323.22, bankAccount.getBalance());
+        assertEquals(321.22, bankAccount.getBalance());
 
         /**
          * Border test checking a valid decimal value that needs to be truncated.
          */
         bankAccount.deposit(10.000);
-        assertEquals(333.22, bankAccount.getBalance());
+        assertEquals(331.22, bankAccount.getBalance());
 
         /**
          * Border value testing an invalid negative border-value.

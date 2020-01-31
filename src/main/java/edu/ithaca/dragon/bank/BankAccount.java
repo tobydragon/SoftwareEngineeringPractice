@@ -65,7 +65,8 @@ public class BankAccount {
     public boolean isAmountValid(double amount){
         if(amount < 0){
             return false;
-        }else if((amount * 100)%1 != 0){
+        }else if((amount * 100)%1 != 0 && String.valueOf(amount).substring(String.valueOf(amount).indexOf(".") + 1).length() > 2){
+            String why = String.valueOf(amount).substring(String.valueOf(amount).indexOf("."));
             return false;
         }else{
             return true;
@@ -89,7 +90,11 @@ public class BankAccount {
      * with only up to two decimal places if they're nonzero.
      */
     public void deposit(double amount) throws IllegalArgumentException{
-
+        if(!isAmountValid(amount)){
+            throw new IllegalArgumentException("Illegal amount provided");
+        }else{
+            balance += amount;
+        }
     }
 
     public static boolean isEmailValid(String email) {
