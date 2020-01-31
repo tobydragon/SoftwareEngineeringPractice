@@ -16,17 +16,11 @@ class BankAccountTest {
         BankAccount bankAccount2 = new BankAccount("a@b.com", 0); //Equivalence case of 0 dollars (nothing) in bankaccount case
         BankAccount bankAccount3= new BankAccount("a@b.com", 50); //Equivalence case of 50 dollars (small amount) in bankaccount case
         BankAccount bankAccount4 = new BankAccount("a@b.com", 10000); //Equivalence case of 10000 dollars (large amount) in bankaccount case
-        BankAccount bankAccount5 = new BankAccount("a@b.com", -10); //Equivalence case of -10 dollars (negative) in bankaccount case
-        BankAccount bankAccount6 = new BankAccount("a@b.com", -150); //Equivalence case of -150 dollars (negative) in bankaccount case
-        BankAccount bankAccount7 = new BankAccount("a@b.com", -5000); //Equivalence case of -5000 dollars (negative) in bankaccount case
         BankAccount bankAccount8 = new BankAccount("a@b.com", 67.86); //Equivalence case of 67.86 dollars (float) in bankaccount case
 
         assertEquals(0, bankAccount2.getBalance());
         assertEquals(50, bankAccount3.getBalance());
         assertEquals(10000, bankAccount4.getBalance());
-        assertEquals(-10, bankAccount5.getBalance());
-        assertEquals(-150, bankAccount6.getBalance());
-        assertEquals(-5000, bankAccount7.getBalance());
         assertEquals(67.86, bankAccount8.getBalance());
     }
 
@@ -49,27 +43,12 @@ class BankAccountTest {
         BankAccount bankAccount5 = new BankAccount("j@h.com", 367.54); //Withdrawing very large amount, over balance
         bankAccount5.withdraw(6000);
         assertEquals(367.54, bankAccount5.getBalance());
-
-        BankAccount bankAccount6 = new BankAccount("j@h.com", -367.54); //Withdrawing non-existing number, negatives automatically change to 0
-        bankAccount6.withdraw(400);
-        assertEquals(0, bankAccount6.getBalance());
-        BankAccount bankAccount7 = new BankAccount("j@h.com", -367.54); //Withdrawing non-existing number, negatives automatically change to 0
-        bankAccount7.withdraw(40000);
-        assertEquals(0, bankAccount7.getBalance());
-
-        //with isAmountValid
-        BankAccount bankAccount8 = new BankAccount("j@h.com", -367.54); //Withdrawing non-existing number, negatives automatically change to 0
-        bankAccount8.withdraw(400);
-        assertEquals(0, bankAccount8.getBalance());
-        BankAccount bankAccount9 = new BankAccount("j@h.com", -367.54); //Withdrawing non-existing number, negatives automatically change to 0
-        bankAccount9.withdraw(40000);
-        assertEquals(0, bankAccount9.getBalance());
     }
 
     @Test
     void isEmailValidTest(){
-        //assertTrue(BankAccount.isEmailValid( "a@b.com"));
-        //assertFalse( BankAccount.isEmailValid(""));
+        assertTrue(BankAccount.isEmailValid( "a@b.com"));
+        assertFalse( BankAccount.isEmailValid(""));
 
         //Josue's invalid email prefix tests
         assertFalse((BankAccount.isEmailValid("a..@b.com")));
@@ -137,15 +116,6 @@ class BankAccountTest {
         bankAccount2.deposit(234.98);
         assertEquals(7234.98, bankAccount2.getBalance());
 
-        //Negative balance
-        BankAccount bankAccount3 = new BankAccount("a@b.com", -1000); //equivalence case is negative with the balance automatically becoming 0
-        bankAccount3.deposit(200);
-        assertEquals(200, bankAccount3.getBalance());
-
-        BankAccount bankAccount4 = new BankAccount("a@b.com", -50); //equivalence case is negative by turning -50 to 0 and then depositing 50
-        bankAccount4.deposit(50);
-        assertEquals(50, bankAccount4.getBalance());
-
         //Negative deposit amount
         BankAccount bankAccount5 = new BankAccount("a@b.com", 200); //equivalence case with withdraw being a negative and automatically adding nothing
         bankAccount5.deposit(-600);
@@ -170,27 +140,13 @@ class BankAccountTest {
     }
 
     @Test
-    void transferTest(){
+    void transferTest() throws InsufficientFundsException {
         //equivalence case with basic balances of 200 and 500 with 50 dollar transfer
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
         BankAccount bankAccount2 = new BankAccount("a@b.com", 500);
         BankAccount.transfer(bankAccount, bankAccount2, 50.00);
         assertEquals(250, bankAccount.getBalance());
         assertEquals(450, bankAccount2.getBalance());
-
-        //equivalence case with a negative balance(turns to 0) for 1st account and soon transferring decimal value of 35.76 from 2nd account
-        BankAccount bankAccount3 = new BankAccount("a@b.com", -100);
-        BankAccount bankAccount4 = new BankAccount("a@b.com", 1000);
-        BankAccount.transfer(bankAccount3, bankAccount4, 35.76);
-        assertEquals(35.76, bankAccount3.getBalance());
-        assertEquals(964.24, bankAccount4.getBalance());
-
-        //equivalence case with with 2nd account(turn to 0) but not transfer of money as there isn't anything to transfer
-        BankAccount bankAccount5 = new BankAccount("a@b.com", 549.34);
-        BankAccount bankAccount6 = new BankAccount("a@b.com", -643);
-        BankAccount.transfer(bankAccount5, bankAccount6, 48.54);
-        assertEquals(549.34, bankAccount5.getBalance());
-        assertEquals(0, bankAccount6.getBalance());
 
         //equivalence case with 2nd account is less than amount wanted to transfer, so nothing gets transferred
         BankAccount bankAccount7 = new BankAccount("a@b.com", 549.34);
@@ -207,8 +163,16 @@ class BankAccountTest {
         assertEquals("a@b.com", bankAccount.getEmail());
         assertEquals(200, bankAccount.getBalance());
         //check for exception thrown correctly
-        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", 100));
-        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("a", -100));
-        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", 100));
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", 100)); //equivalence case with no email input
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("a.cc", -100)); //equivalence case with only a letter
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("@b.cc", 100)); //equivalence case with only domain and extension
+
+        BankAccount bankAccount1 = new BankAccount("hello@barry.cc", 50);
+        assertThrows(InsufficientFundsException.class, ()-> bankAccount1.withdraw(-6000)); //equivalence case with a large (or low) negative amount value to withdraw
+        assertThrows(InsufficientFundsException.class, ()-> bankAccount1.withdraw(-60)); //equivalence case with a negative amount value to withdraw
+
+        BankAccount bankAccount2 = new BankAccount("b@a.cc", 90);
+        assertThrows(InsufficientFundsException.class, ()-> BankAccount.transfer(bankAccount1, bankAccount2, -900)); //equivalence case where the transfer amount is negative amount of money
+        assertThrows(InsufficientFundsException.class, ()-> BankAccount.transfer(bankAccount1, bankAccount2, -91)); //equivalence case of negative amount of money to transfer
     }
 }

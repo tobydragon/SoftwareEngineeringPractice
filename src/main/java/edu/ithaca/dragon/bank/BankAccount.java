@@ -34,12 +34,15 @@ public class BankAccount {
     /**
      * @post reduces the balance by amount if amount is non-negative and smaller than balance
      */
-    public void withdraw(double amount){
+    public void withdraw(double amount) throws InsufficientFundsException{
         if(balance < 0){
             balance = 0;
         }
-        if(isAmountValid(amount) == false){
+        else if(amount > balance){
             return;
+        }
+        else if(isAmountValid(amount) == false){
+            throw new InsufficientFundsException("Amount: " + amount + "is invalid");
         }
         balance -= amount;
     }
@@ -139,7 +142,7 @@ public class BankAccount {
      * Will exchange the a certain amount of money to the first account from the second account
      * Will make the wantedAmount 0 if the second account has nothing or less than money to transfer
      */
-    public static void transfer(BankAccount account1, BankAccount account2, double amountWanted){
+    public static void transfer(BankAccount account1, BankAccount account2, double amountWanted) throws InsufficientFundsException {
         if(account2.getBalance() <= 0 || account2.getBalance() < amountWanted){
             amountWanted = 0;
         }
