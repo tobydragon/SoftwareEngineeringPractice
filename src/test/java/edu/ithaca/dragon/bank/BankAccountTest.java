@@ -121,4 +121,35 @@ class BankAccountTest {
         assertTrue(BankAccount.isAmountValid(42.000000)); // valid middle case (decimal place limit, amount is chopped off to 42.0 by Java, so it becomes valid)
     }
 
+    @Test
+    void depositTest() throws InsufficientFundsException{
+        BankAccount account = new BankAccount("a@b.com", 200);
+        assertThrows(IllegalArgumentException.class, ()-> account.deposit(-100)); // invalid middle case (value)
+        assertThrows(IllegalArgumentException.class, ()-> account.deposit(-1)); // invalid border case (value)
+        assertThrows(IllegalArgumentException.class, ()-> account.deposit(100.001)); // invalid border case (decimal place limit)
+        assertThrows(IllegalArgumentException.class, ()-> account.deposit(100.00001)); // invalid middle case (decimal place limit)
+        assertThrows(IllegalArgumentException.class, ()-> account.deposit(-100.001)); // invalid case (middle value, border decimal place limit)
+        assertThrows(IllegalArgumentException.class, ()-> account.deposit(-100.00001)); // invalid middle case (value, decimal place limit)
+
+        account.deposit(0.01); // valid border case (value, decimal place limit)
+        assertEquals(200.01, account.getBalance());
+        account.withdraw(0.01);
+
+        account.deposit(0.25); // valid case (border value, middle decimal place limit)
+        assertEquals(200.25, account.getBalance());
+        account.withdraw(0.25);
+
+        account.deposit(100); // valid middle case (value)
+        assertEquals(300, account.getBalance());
+        account.withdraw(100);
+
+        account.deposit(100.25); // valid middle case (value, decimal place limit)
+        assertEquals(300.25, account.getBalance());
+    }
+
+    @Test
+    void transferTest(){
+
+    }
+
 }

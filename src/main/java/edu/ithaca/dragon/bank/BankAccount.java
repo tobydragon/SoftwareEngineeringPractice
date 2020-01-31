@@ -33,6 +33,7 @@ public class BankAccount {
 
     /**
      * @post reduces the balance by amount if amount is non-negative and smaller than balance
+     * @param amount the amount to withdraw
      * @throws IllegalArgumentException if value to withdraw is negative or value contains precision more than 0.01 (ex. 0.001, 0.0001, ...)
      * @throws InsufficientFundsException if value to withdraw is larger than the bank account balance
      */
@@ -45,6 +46,26 @@ public class BankAccount {
         }
         balance -= amount;
         balance = (double) Math.round(balance * 100.0) / 100.0;
+    }
+
+    /**
+     * @post increases the balance by amount if amount is non-negative
+     * @param amount the amount to deposit
+     * @throws IllegalArgumentException if value to withdraw is negative or value contains precision more than 0.01  (ex. 0.001, 0.0001, ...)
+     */
+    public void deposit (double amount){
+
+    }
+
+    /**
+     * transfers an amount from this bank account to another bank account
+     * @param account the account to transfer the amount to
+     * @param amount the amount being transferred
+     * @throws IllegalArgumentException if value to transfer is negative or value contains precision more than 0.01  (ex. 0.001, 0.0001, ...)
+     * @throws InsufficientFundsException if value to transfer is larger than this account's current balance
+     */
+    public void transfer(BankAccount account, double amount){
+
     }
 
     /**
