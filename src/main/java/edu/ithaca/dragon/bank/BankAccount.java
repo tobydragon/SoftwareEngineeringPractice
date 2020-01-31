@@ -12,7 +12,7 @@ public class BankAccount {
         if (isEmailValid(email)) {
             this.email = email;
             this.balance = startingBalance;
-        } else {
+        }else {
             throw new IllegalArgumentException("Email address: " + email + " is invalid, cannot create account");
         }
     }
