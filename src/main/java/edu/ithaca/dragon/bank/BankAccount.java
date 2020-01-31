@@ -35,10 +35,10 @@ public class BankAccount {
      */
     public void withdraw (double amount) throws InsufficientFundsException {
         if (amount > balance){
-            throw new IllegalArgumentException("Too small a balance");
+            throw new InsufficientFundsException("Too small a balance");
         }
         if (amount < 0) {
-            throw new InsufficientFundsException("Cannot withdraw a negative amount");
+            throw new IllegalArgumentException("Cannot withdraw a negative amount");
         }
         String amountString = "" + amount;
         if (amountString.indexOf(".") != -1) {
@@ -51,7 +51,11 @@ public class BankAccount {
         balance = (double) Math.round(balance * 100.0) / 100.0;
     }
 
-
+    /**
+     * checks if an email is valid based on a few rules and using a regular expression
+     * @param email the email (as a string) to check if it is a valid email
+     * @return true if the email is a valid email address or false if the email is not a valid email address
+     */
     public static boolean isEmailValid(String email){
         String pattern = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
                 + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
@@ -64,6 +68,14 @@ public class BankAccount {
             }
         }
         return matcher.matches();
+    }
 
+    /**
+     * determines whether an input amount is non-negative and does not have more than two decimal places
+     * @param amount the amount to validate
+     * @return true if the amount to be checked is a valid amount or false if not valid
+     */
+    public static boolean isAmountValid(double amount){
+        return false;
     }
 }

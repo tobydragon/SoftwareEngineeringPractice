@@ -88,4 +88,24 @@ class BankAccountTest {
         assertThrows(IllegalArgumentException.class, ()-> bankAccount2.withdraw(200.001));
     }
 
+    @Test
+    void isAmountValidTest(){
+        // equivalence class amount >= 0
+        assertTrue(BankAccount.isAmountValid(100)); // valid middle case (amount value)
+        assertTrue(BankAccount.isAmountValid(0.01)); // valid border case (decimal place limit)
+        assertFalse(BankAccount.isAmountValid(0.009)); // invalid border case (decimal place limit)
+        assertFalse(BankAccount.isAmountValid(0.0000093739)); // invalid middle case (decimal place limit)
+        assertTrue(BankAccount.isAmountValid(0)); // valid border case (amount value)
+        // equivalence class amount < 0
+        assertFalse(BankAccount.isAmountValid(-100)); // invalid middle case (amount value)
+        assertFalse(BankAccount.isAmountValid(-0.01)); // invalid border case (amount value invalid, decimal place limit technically valid)
+        assertFalse(BankAccount.isAmountValid(-0.009)); // invalid border case (amount value invalid, decimal place limit invalid)
+        assertFalse(BankAccount.isAmountValid(-0.0000093739)); // invalid middle case (decimal place limit)
+        // equivalence class integers converted to doubles
+        assertTrue(BankAccount.isAmountValid(42.0)); // valid middle case (decimal place limit)
+        assertTrue(BankAccount.isAmountValid(42.00)); // valid border case (decimal place limit)
+        assertFalse(BankAccount.isAmountValid(42.000)); // invalid border case (decimal place limit, amount)
+        assertFalse(BankAccount.isAmountValid(42.000000)); // invalid middle case (decimal place limit)
+    }
+
 }
