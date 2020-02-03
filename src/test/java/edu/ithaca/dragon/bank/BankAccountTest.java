@@ -22,7 +22,7 @@ class BankAccountTest {
     }
 
     @Test
-    void depositTest(){
+    void depositTest() throws InsufficientFundsException {
         BankAccount testAccount = new BankAccount("g@u.com", 1637.72);
 
         //positive number three decimals
@@ -78,7 +78,7 @@ class BankAccountTest {
     }
 
     @Test
-    void transferTest(){
+    void transferTest() throws InsufficientFundsException {
         BankAccount testAccount = new BankAccount("g@u.com", 1637.72);
         BankAccount transferHere = new BankAccount("d@k.com", 150.00);
 
@@ -137,10 +137,10 @@ class BankAccountTest {
     }
 
     @Test
-    void withdrawTest() {
+    void withdrawTest() throws InsufficientFundsException {
         BankAccount bankAccount = new BankAccount("a@f.com", 200.73);
-        bankAccount.withdraw(400);
-        assertEquals(200.73, bankAccount.getBalance(), 1e-8);//equivalence for amount greater than balance
+        //assertEquals(200.73, bankAccount.getBalance(), 1e-8);//equivalence for amount greater than balance
+        assertThrows(IllegalFundsException.class, ()-> bankAccount.withdraw(400));
 
         assertThrows(IllegalArgumentException.class, ()-> bankAccount.withdraw(-100));//equivalence for negative amount
 

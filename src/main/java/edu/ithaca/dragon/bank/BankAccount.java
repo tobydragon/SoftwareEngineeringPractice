@@ -34,10 +34,13 @@ public class BankAccount {
     /**
      * @post reduces the balance by amount if amount is non-negative and smaller than balance
      */
-    public void withdraw (double amount)  {
+    public void withdraw (double amount) throws InsufficientFundsException {
         if (isAmountValid(amount)){
             if (amount <= balance){
                 balance-=amount;
+            }
+            else{
+                throw new InsufficientFundsException("No enough funds for withdrawal amount");
             }
         }
         else{
@@ -80,7 +83,7 @@ public class BankAccount {
      * @param amount
      * @param account
      */
-    public void transfer(double amount, BankAccount account){
+    public void transfer(double amount, BankAccount account) throws InsufficientFundsException {
         if (isAmountValid(amount)){
             this.withdraw(amount);
             account.deposit(amount);
