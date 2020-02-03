@@ -168,7 +168,7 @@ class BankAccountTest {
         //tests for an invalid withdrawal that is a fraction of a penny. Should return an illegal argument exception
         BankAccount bankAccount5 = new BankAccount("abc-d@mail.com", 300.50);
         assertThrows(IllegalArgumentException.class, ()-> bankAccount4.withdraw(20.567));
-        assertEquals(300.50,bankAccount4.getBalance());
+        assertEquals(300.50,bankAccount5.getBalance());
 
     }
 

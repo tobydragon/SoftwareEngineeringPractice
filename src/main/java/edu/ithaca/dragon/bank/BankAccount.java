@@ -32,6 +32,7 @@ public class BankAccount {
      * @throws IllegalArgumentException if email is invalid
      */
     public BankAccount(String email, double startingBalance){
+
         if (isAmountValid(startingBalance) == false){
             throw new IllegalArgumentException("Starting balance is an invalid balance because it is negative or has too many decimal places");
         }
@@ -42,6 +43,7 @@ public class BankAccount {
         else {
             throw new IllegalArgumentException("Email address: " + email + " is invalid, cannot create account");
         }
+
     }
 
     public double getBalance(){
