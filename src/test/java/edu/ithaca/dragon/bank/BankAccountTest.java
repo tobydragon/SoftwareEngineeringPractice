@@ -312,10 +312,9 @@ class BankAccountTest {
         SavingsAccount savingsAccount = new SavingsAccount("a@b.com", 1000, 5, 500);
 
         //invalid interest
-        assertThrows(IllegalArgumentException.class, ()-> new SavingsAccount("a@b.com", 1000, 101, 500));
         assertThrows(IllegalArgumentException.class, ()-> new SavingsAccount("a@b.com", 1000, -0.1, 500));
-        assertThrows(IllegalArgumentException.class, ()-> new SavingsAccount("a@b.com", 1000, 150, 500));
         assertThrows(IllegalArgumentException.class, ()-> new SavingsAccount("a@b.com", 1000, -50.6, 500));
+        assertThrows(IllegalArgumentException.class, ()-> new SavingsAccount("a@b.com", 1000, -150.6, 500));
 
         //invalid maxWithdraw
         assertThrows(IllegalArgumentException.class, ()-> new SavingsAccount("a@b.com", 1000, 5.0, 0));
@@ -326,10 +325,10 @@ class BankAccountTest {
         savingsAccount.compoundInterest();
         assertEquals(1050, savingsAccount.getBalance());
         savingsAccount.compoundInterest();
-        assertEquals(1152.5, savingsAccount.getBalance());
+        assertEquals(1102.5, savingsAccount.getBalance());
 
         //Overridden Withdraw
-        savingsAccount.withdraw(152.5);
+        savingsAccount.withdraw(102.5);
         assertEquals(1000, savingsAccount.getBalance());
 
         assertThrows(IllegalArgumentException.class, () -> savingsAccount.withdraw(501));

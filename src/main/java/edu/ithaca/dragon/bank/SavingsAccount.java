@@ -2,19 +2,18 @@ package edu.ithaca.dragon.bank;
 
 public class SavingsAccount extends BankAccount {
     private double interest;
-    private double maxWithdraw;
+    private double withdrawLimit;
     /**
-     * @param email
-     * @param startingBalance
+
      * @throws IllegalArgumentException if email is invalid
      */
-    public SavingsAccount(String email, double startingBalance, double interest, double maxWithdraw) throws IllegalArgumentException {
+    public SavingsAccount(String email, double startingBalance, double interest, double withdrawLimit) throws IllegalArgumentException {
         super(email, startingBalance);
-        if(interest < 0){
-            throw new IllegalArgumentException("Interest must be at least 0%");
+        if(interest < 0 || withdrawLimit <= 0){
+            throw new IllegalArgumentException("Interest must be at least 0% and you must be able to withdraw from the account");
         }
-        this.interest = interest;
-        this.maxWithdraw = maxWithdraw;
+        this.interest = interest / 100;
+        this.withdrawLimit = withdrawLimit;
     }
 
     /**
@@ -31,17 +30,15 @@ public class SavingsAccount extends BankAccount {
      * If balance is negative or has more than 2 decimal places, throws IllegalArgumentException
      * If amount to withdraw is more than withdraw limit, it throws an InsufficientFundsException
      */
-   /*@Override
+    @Override
     public void withdraw (double amount) throws InsufficientFundsException, IllegalArgumentException  {
-        if(!isAmountValid(amount)){
-            throw new IllegalArgumentException("Amount must have 2 decimal places and must be positive ");
-        }
-        if (this.getBalance() >= amount && amount >= 0) {
-            withdraw(amount);
-        }
-        else{
-            throw new InsufficientFundsException("Amount requested is more than in your account by " + (amount - balance));
+
+        if(withdrawLimit - amount < 0)
+        {
+            throw new IllegalArgumentException("Cannot withdraw more than the daily limit");
         }
 
-    }*/
+            super.withdraw(amount);
+            withdrawLimit -= amount;
+    }
 }
