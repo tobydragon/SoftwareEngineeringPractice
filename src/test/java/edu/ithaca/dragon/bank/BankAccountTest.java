@@ -306,4 +306,22 @@ class BankAccountTest {
 
     }
 
+    @Test
+    void SavingsAccountTest(){
+        //constructor test
+        SavingsAccount bankAccount = new SavingsAccount("a@b.com", 1000, 4.9, 500);
+
+        //invalid interest
+        assertThrows(IllegalArgumentException.class, ()-> new SavingsAccount("a@b.com", 1000, 101, 500));
+        assertThrows(IllegalArgumentException.class, ()-> new SavingsAccount("a@b.com", 1000, -0.1, 500));
+        assertThrows(IllegalArgumentException.class, ()-> new SavingsAccount("a@b.com", 1000, 150, 500));
+        assertThrows(IllegalArgumentException.class, ()-> new SavingsAccount("a@b.com", 1000, -50.6, 500));
+
+        //invalid maxWithdraw
+        assertThrows(IllegalArgumentException.class, ()-> new SavingsAccount("a@b.com", 1000, 5.0, 0));
+        assertThrows(IllegalArgumentException.class, ()-> new SavingsAccount("a@b.com", 1000, 5.0, -1));
+        assertThrows(IllegalArgumentException.class, ()-> new SavingsAccount("a@b.com", 1000, 5.0, -500.495));
+    }
+
+
 }
