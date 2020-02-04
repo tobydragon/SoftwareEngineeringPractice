@@ -40,7 +40,7 @@ public class BankAccount {
                 balance-=amount;
             }
             else{
-                throw new InsufficientFundsException("No enough funds for withdrawal amount");
+                throw new InsufficientFundsException("Not enough funds for withdrawal amount");
             }
         }
         else{

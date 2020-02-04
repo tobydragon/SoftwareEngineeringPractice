@@ -104,14 +104,17 @@ class BankAccountTest {
         testAccount2.transfer(5.00, transferAccount2); //single digit equivalence class
         assertEquals(205, transferAccount2.getBalance());
         transferAccount2.withdraw(5.00);
+        testAccount.deposit(5.00);
 
         testAccount2.transfer(50.00, transferAccount2); //double digit equivalence class
         assertEquals(250, transferAccount2.getBalance());
         transferAccount2.withdraw(50.00);
+        testAccount2.deposit(50.00);
 
         testAccount2.transfer(500.00, transferAccount2);//triple digit equivalence class
         assertEquals(700, transferAccount2.getBalance());
         transferAccount2.withdraw(500.00);
+        testAccount2.deposit(500.00);
 
         testAccount2.transfer(5000.00, transferAccount2);//4 digit equivalence class
         assertEquals(5200, transferAccount2.getBalance());
@@ -140,7 +143,7 @@ class BankAccountTest {
     void withdrawTest() throws InsufficientFundsException {
         BankAccount bankAccount = new BankAccount("a@f.com", 200.73);
         //assertEquals(200.73, bankAccount.getBalance(), 1e-8);//equivalence for amount greater than balance
-        assertThrows(IllegalFundsException.class, ()-> bankAccount.withdraw(400));
+        assertThrows(InsufficientFundsException.class, ()-> bankAccount.withdraw(400));
 
         assertThrows(IllegalArgumentException.class, ()-> bankAccount.withdraw(-100));//equivalence for negative amount
 
@@ -148,13 +151,13 @@ class BankAccountTest {
         assertEquals(150.73, bankAccount.getBalance(), 1e-8);//equivalence for double digit amount
 
         BankAccount bankAccount2 = new BankAccount("a@h.com", 300.27);
-        bankAccount2.withdraw(301);
-        assertEquals(300.27, bankAccount2.getBalance(), 1e-8);//border for amount greater than balance
+        assertThrows(InsufficientFundsException.class, ()-> bankAccount2.withdraw(301));//border for amount greater than balance
 
         assertThrows(IllegalArgumentException.class, ()-> bankAccount2.withdraw(-1));//border for negative amount
 
         bankAccount2.withdraw(150);
         assertEquals(150.27, bankAccount2.getBalance(), 1e-8);//equivalence for triple digit (middle) amount
+
 
         bankAccount2.withdraw(0);
         assertEquals(150.27, bankAccount2.getBalance(), 1e-8);

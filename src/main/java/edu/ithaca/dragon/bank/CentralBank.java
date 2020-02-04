@@ -44,7 +44,7 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
 
     //------------------ AdminAPI methods -------------------------//
 
-    public double checkTotalAssets() {
+    public double calcTotalAssets() {
         return 0;
     }
 
