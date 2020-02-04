@@ -7,6 +7,14 @@ import static org.junit.jupiter.api.Assertions.*;
 class AdvancedAPITest {
 
     @Test
+    void accountExistsTest() throws AccountIdTakenException, IllegalArgumentException{
+        CentralBank bank = new CentralBank();
+        bank.createAccount("yes@yes.com", 0);
+        assertTrue(bank.accountExists("yes@yes.com"));
+        assertFalse(bank.accountExists("nope@nope.com"));
+    }
+
+    @Test
     void createAccountTest() throws AccountIdTakenException, IllegalArgumentException {
 
         CentralBank bank = new CentralBank();
@@ -25,7 +33,9 @@ class AdvancedAPITest {
         assertTrue(bank.accountExists(id2));
         assertEquals(100.5, bank.checkBalance(id2));
 
-        String id3 = "c.long.email@d-long-email.com";
+        //this project does not allow dashes in the domain
+        //String id3 = "c.long.email@d-long-email.com";
+        String id3 = "test.test.test@email.com";
         bank.createAccount(id3, 100000.86);
         assertTrue(bank.accountExists(id3));
         assertEquals(100000.86, bank.checkBalance(id3));
@@ -33,9 +43,9 @@ class AdvancedAPITest {
 
         //account not created
         //invalid id/email
-        assertThrows(IllegalArgumentException.class, ()-> bank.createAccount("#bad@email.com", 100));
+        assertThrows(IllegalArgumentException.class, ()-> bank.createAccount("#bad", 100));
         assertThrows(IllegalArgumentException.class, ()-> bank.createAccount("bad..email@bad-.com", 100));
-        assertThrows(IllegalArgumentException.class, ()-> bank.createAccount("bad", 100));
+        assertThrows(IllegalArgumentException.class, ()-> bank.createAccount("bad@bad.c", 100));
 
         //id already exists
         assertThrows(AccountIdTakenException.class, ()-> bank.createAccount(id1, 100));
