@@ -1,8 +1,12 @@
 package edu.ithaca.dragon.bank;
 
 import java.util.Collection;
+import java.util.Map;
+import java.util.HashMap;
 
 public class CentralBank implements AdvancedAPI, AdminAPI {
+
+    private Map<String, BankAccount> accounts = new HashMap<String, BankAccount>();
 
     //----------------- BasicAPI methods -------------------------//
 
@@ -11,7 +15,8 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
     }
 
     public double checkBalance(String acctId) {
-        return 0;
+        BankAccount account = accounts.get(acctId);
+        return account.getBalance();
     }
 
     public void withdraw(String acctId, double amount) throws InsufficientFundsException {
@@ -33,8 +38,13 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
 
     //----------------- AdvancedAPI methods -------------------------//
 
-    public void createAccount(String acctId, double startingBalance) {
+    public void createAccount(String acctId, double startingBalance) throws AccountIdTakenException, IllegalArgumentException {
 
+    }
+
+    //for testing createAccount function
+    public boolean accountExists(String acctId) {
+        return accounts.containsKey(acctId);
     }
 
     public void closeAccount(String acctId) {
@@ -44,7 +54,7 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
 
     //------------------ AdminAPI methods -------------------------//
 
-    public double checkTotalAssets() {
+    public double calcTotalAssets() {
         return 0;
     }
 
