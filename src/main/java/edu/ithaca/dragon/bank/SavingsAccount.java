@@ -8,8 +8,11 @@ public class SavingsAccount extends BankAccount {
      * @param startingBalance
      * @throws IllegalArgumentException if email is invalid
      */
-    public SavingsAccount(String email, double startingBalance, double interest, double maxWithdraw) {
+    public SavingsAccount(String email, double startingBalance, double interest, double maxWithdraw) throws IllegalArgumentException {
         super(email, startingBalance);
+        if(interest < 0){
+            throw new IllegalArgumentException("Interest must be at least 0%");
+        }
         this.interest = interest;
         this.maxWithdraw = maxWithdraw;
     }
