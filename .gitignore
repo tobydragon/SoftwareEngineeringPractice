@@ -7,6 +7,14 @@
 .idea/**/usage.statistics.xml
 .idea/**/dictionaries
 .idea/**/shelf
+.idea/**/compiler.xml
+.idea/**/encodings.xml
+.idea/**/misc.xml
+.idea/**/sbt.xml
+.idea/**/SoftwareEngineeringPractice.iml
+.idea/**/vcs.xml
+.idea/**/workspace.xml
+.idea/**/uiDesigner.xml
 
 # Generated files
 .idea/**/contentModel.xml
