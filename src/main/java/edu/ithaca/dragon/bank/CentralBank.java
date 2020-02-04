@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 public class CentralBank implements AdvancedAPI, AdminAPI {
 
-    private Map<String, BankAccount> accounts = new HashMap<String, BankAccount>();
+    private Map<String, BankAccount> accounts = new HashMap<>();
 
     //----------------- BasicAPI methods -------------------------//
 
@@ -39,10 +39,13 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
     //----------------- AdvancedAPI methods -------------------------//
 
     public void createAccount(String acctId, double startingBalance) throws AccountIdTakenException, IllegalArgumentException {
+        if (accounts.containsKey(acctId)) throw new AccountIdTakenException("Account with this id already exists");
 
+        BankAccount account = new BankAccount(acctId, startingBalance);
+        accounts.put(acctId, account);
     }
 
-    //for testing createAccount function
+    //for testing createAccount function - one must exist to test the other
     public boolean accountExists(String acctId) {
         return accounts.containsKey(acctId);
     }
