@@ -1,18 +1,30 @@
 package edu.ithaca.dragon.bank;
 
+import java.util.regex.Pattern;
+
 public class BankAccount {
 
     private String email;
     private double balance;
+    private String password;
+    private String acctId;
+
+
+
+    public BankAccount(String email, double startingBalance) {
+        this("", email, "", startingBalance);
+    }
 
     /**
      * @throws IllegalArgumentException if email is invalid
      */
-    public BankAccount(String email, double startingBalance){
+    public BankAccount(String acctId, String email, String password, double startingBalance){
         if (isEmailValid(email)){
             if(isAmountValid(startingBalance)){
+                this.acctId = acctId;
                 this.email = email;
                 this.balance = startingBalance;
+                this.password = password;
             }
             else{
                 throw new IllegalArgumentException("starting Balance of " + startingBalance + "is an invalid amount to add");
@@ -91,5 +103,9 @@ public class BankAccount {
 
     public static boolean isEmailValid(String email){
         return email.matches("(\\w)+((_|\\.|-)+\\w+)*@(\\w)+((-)?\\w+)*\\.\\w{2,}$");
+    }
+
+    public String getPassword() {
+        return password;
     }
 }

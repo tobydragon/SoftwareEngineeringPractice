@@ -6,6 +6,56 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class BankAccountTest {
 
+
+
+    @Test
+    void createAccountTest(){
+        CentralBank bankAccount = new CentralBank();
+        bankAccount.createAccount("1245", "a1@hello.com", "testpassword", 500);
+        assertNull( bankAccount.accountMap.get("12466"));
+        assertEquals(500, bankAccount.accountMap.get("1245").getBalance());
+        assertEquals("a1@hello.com", bankAccount.accountMap.get("1245").getEmail());
+        assertEquals("testpassword", bankAccount.accountMap.get("1245").getPassword());
+
+        CentralBank bankAccount2 = new CentralBank();
+        bankAccount2.createAccount("BH8525", "atest3@gmail.com", "funny", 1000);
+        assertNull(bankAccount2.accountMap.get("BH85425"));
+        assertEquals(1000, bankAccount2.accountMap.get("BH8525").getBalance());
+        assertEquals("atest3@gmail.com", bankAccount2.accountMap.get("BH8525").getEmail());
+        assertEquals("funny", bankAccount2.accountMap.get("BH8525").getPassword());
+
+
+
+
+
+
+
+
+
+
+    }
+
+    @Test
+    void confirmCredentialsTest(){
+
+        CentralBank  bankAccount = new CentralBank();
+        CentralBank bankAccount2 = new CentralBank();
+        bankAccount.createAccount("11212", "a@b.com", "testingPassword", 500);
+        bankAccount2.createAccount("11BFWGG", "tester@gmail.com", "singleLetter", 1000);
+
+        assertFalse(bankAccount.confirmCredentials("11212", "test"));
+        assertFalse( bankAccount.confirmCredentials("112", "testingPassword"));
+        assertTrue( bankAccount.confirmCredentials("11212", "testingPassword"));
+
+        assertFalse(bankAccount2.confirmCredentials("11bfwgg", "singleLetter"));
+        assertFalse(bankAccount2.confirmCredentials("11bfwgg", "SingleLetter"));
+        assertTrue(bankAccount2.confirmCredentials("11BFWGG", "singleLetter"));
+
+
+
+
+    }
+
     @Test
     void getBalanceTest() throws InsufficientFundsException, IllegalArgumentException {
         //classes - fresh account, after withdrawal, after unsuccessful withdrawal

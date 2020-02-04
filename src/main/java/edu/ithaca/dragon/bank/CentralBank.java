@@ -1,14 +1,29 @@
 package edu.ithaca.dragon.bank;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CentralBank implements AdvancedAPI, AdminAPI {
 
     //----------------- BasicAPI methods -------------------------//
 
-    public boolean confirmCredentials(String acctId, String password) {
+
+    public Map<String, BankAccount>accountMap = new HashMap<>();
+
+
+
+
+    public boolean confirmCredentials(String acctId, String password){
+        if(accountMap.containsKey(acctId)){
+            return accountMap.get(acctId).getPassword().equals(password);
+        }
+
+
+
         return false;
     }
+
 
     public double checkBalance(String acctId) {
         return 0;
@@ -38,10 +53,14 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
 
     //----------------- AdvancedAPI methods -------------------------//
 
-    public void createAccount(String acctId,  double startingBalance) {
-
+    public void createAccount(String acctId, String email, String password, double startingBalance) {
+        BankAccount account = new BankAccount(acctId, email, password, startingBalance);
+        accountMap.put(acctId, account);
 
     }
+
+
+
 
     public void closeAccount(String acctId) {
 
