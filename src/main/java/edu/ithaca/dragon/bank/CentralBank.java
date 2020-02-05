@@ -61,9 +61,7 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
 
 
     public void closeAccount(String acctId) {
-//        CentralBank bank = new CentralBank();
-//
-//        bank.accountMap.remove(acctId);
+        accountMap.remove(acctId);
 
 
 

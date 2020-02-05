@@ -32,7 +32,7 @@ class BankAccountTest {
         bankAccount.createAccount("1245", "a1@hello.com", "testpassword", 500);
         assertEquals("a1@hello.com", bankAccount.accountMap.get("1245").getEmail());
         bankAccount.closeAccount("1245");
-        assertEquals(null, bankAccount.accountMap.get("1245").getEmail());
+        assertEquals(null, bankAccount.accountMap.get("1245"));
 
         CentralBank bankAccount2 = new CentralBank();
         bankAccount2.createAccount("BH8525", "atest3@gmail.com", "funny", 1000);
