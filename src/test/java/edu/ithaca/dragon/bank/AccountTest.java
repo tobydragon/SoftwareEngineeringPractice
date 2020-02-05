@@ -77,8 +77,6 @@ public class AccountTest {
         Account bankAccount = new CheckingAccount( 200);
 
         assertEquals(200, bankAccount.getBalance());
-        //check for exception thrown correctly
-        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount( 100));
 
         //non-negative balance with two decimal places or less
         bankAccount = new CheckingAccount( 0);
