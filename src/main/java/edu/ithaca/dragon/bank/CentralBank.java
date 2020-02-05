@@ -4,6 +4,8 @@ import java.util.Collection;
 
 public class CentralBank implements AdvancedAPI, AdminAPI {
 
+    private BankAccount account = new BankAccount("test@email.com", 100);
+
     //----------------- BasicAPI methods -------------------------//
 
     public boolean confirmCredentials(String acctId, String password) {
