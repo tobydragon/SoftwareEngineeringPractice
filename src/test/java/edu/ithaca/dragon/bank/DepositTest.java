@@ -15,7 +15,7 @@ public class DepositTest {
 
         bank.deposit("test2@email.com",100);
         assertEquals(0, bank.checkBalance("test2@email.com"));
-        assertEquals(100, bank.checkBalance("test@email.com"));
+        assertEquals(200, bank.checkBalance("test@email.com"));
 
     }
 

@@ -13,7 +13,8 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
     }
 
     public double checkBalance(String acctId) {
-        return 0;
+        if (acctId != account.getEmail()) return 0;
+        return account.getBalance();
     }
 
     public void withdraw(String acctId, double amount) throws InsufficientFundsException {
@@ -21,7 +22,8 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
     }
 
     public void deposit(String acctId, double amount) {
-
+        if (acctId != account.getEmail()) return;
+        account.deposit(amount);
     }
 
     public void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws InsufficientFundsException {
