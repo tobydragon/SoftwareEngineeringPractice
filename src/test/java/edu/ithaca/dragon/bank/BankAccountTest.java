@@ -306,5 +306,36 @@ class BankAccountTest {
 
     }
 
+    @Test
+    void SavingsAccountTest() throws IllegalArgumentException, InsufficientFundsException{
+        //constructor test
+        SavingsAccount savingsAccount = new SavingsAccount("a@b.com", 1000, 5, 500);
+
+        //invalid interest
+        assertThrows(IllegalArgumentException.class, ()-> new SavingsAccount("a@b.com", 1000, -0.1, 500));
+        assertThrows(IllegalArgumentException.class, ()-> new SavingsAccount("a@b.com", 1000, -50.6, 500));
+        assertThrows(IllegalArgumentException.class, ()-> new SavingsAccount("a@b.com", 1000, -150.6, 500));
+
+        //invalid maxWithdraw
+        assertThrows(IllegalArgumentException.class, ()-> new SavingsAccount("a@b.com", 1000, 5.0, 0));
+        assertThrows(IllegalArgumentException.class, ()-> new SavingsAccount("a@b.com", 1000, 5.0, -1));
+        assertThrows(IllegalArgumentException.class, ()-> new SavingsAccount("a@b.com", 1000, 5.0, -500.495));
+
+        //Compound interest
+        savingsAccount.compoundInterest();
+        assertEquals(1050, savingsAccount.getBalance());
+        savingsAccount.compoundInterest();
+        assertEquals(1102.5, savingsAccount.getBalance());
+
+        //Overridden Withdraw
+        savingsAccount.withdraw(102.5);
+        assertEquals(1000, savingsAccount.getBalance());
+
+        assertThrows(IllegalArgumentException.class, () -> savingsAccount.withdraw(501));
+        assertThrows(IllegalArgumentException.class, () -> savingsAccount.withdraw(750.59));
+        assertThrows(IllegalArgumentException.class, () -> savingsAccount.withdraw(1000.75));
+    }
+
+
 
 }
