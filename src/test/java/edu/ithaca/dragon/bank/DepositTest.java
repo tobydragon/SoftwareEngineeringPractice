@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class DepositTest {
+
     @Test
     void depositTest() {
         CentralBank account = new CentralBank();
@@ -16,5 +17,7 @@ public class DepositTest {
         assertEquals(300, account.checkBalance("a@a.com"));
         account.deposit("a@a.com", 999);
         assertEquals(1299, account.checkBalance("a@a.com")); //border case
+
     }
+
 }

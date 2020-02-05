@@ -13,6 +13,8 @@ public class CentralBank implements AdvancedAPI { //add back AdminAPI
     }
 
     public double checkBalance(String acctId) {
+
+        if (acctId != account.getEmail()) return 0;
         return account.getBalance();
     }
 
@@ -21,6 +23,7 @@ public class CentralBank implements AdvancedAPI { //add back AdminAPI
     }
 
     public void deposit(String acctId, double amount) {
+        if (acctId != account.getEmail()) return;
         account.deposit(amount);
     }
 
@@ -46,7 +49,7 @@ public class CentralBank implements AdvancedAPI { //add back AdminAPI
 
     //------------------ AdminAPI methods -------------------------//
 
-    public double checkTotalAssets() {
+    public double calcTotalAssets() {
         return 0;
     }
 
