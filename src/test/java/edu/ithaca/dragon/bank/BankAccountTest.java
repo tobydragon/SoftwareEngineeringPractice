@@ -17,6 +17,9 @@ class BankAccountTest {
         assertEquals(1, bankAccount.getBalance());  //Edge case, positive
         bankAccount = new BankAccount("a@b.com", 0);
         assertEquals(0, bankAccount.getBalance());  //Edge case, 0
+
+        bankAccount = new BankAccount("a@b.com", 100);
+        assertEquals(100, bankAccount.getBalance());
     }
 
     @Test
