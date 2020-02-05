@@ -6,6 +6,27 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class BankAccountTest {
 
+
+
+    @Test
+    void createAccountTest(){
+        CentralBank bank = new CentralBank();
+
+        assertEquals(1000, bank.createAccount("ag@bgmail.com",1000).getBalance());
+
+        assertEquals(500, bank.createAccount("a@bgmail.com",500).getBalance());
+
+
+
+
+
+
+
+
+
+
+    }
+
     @Test
     void getBalanceTest() throws InsufficientFundsException, IllegalArgumentException {
         //classes - fresh account, after withdrawal, after unsuccessful withdrawal

@@ -10,7 +10,8 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
         return false;
     }
 
-    public double checkBalance(String acctId) {
+    public double checkBalance(String email) {
+
         return 0;
     }
 
@@ -38,8 +39,11 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
 
     //----------------- AdvancedAPI methods -------------------------//
 
-    public void createAccount(String acctId, double startingBalance) {
+    public BankAccount createAccount(String email, double startingBalance) {
+        BankAccount account = new BankAccount("a@b.com", startingBalance);
 
+
+        return account;
     }
 
     public void closeAccount(String acctId) {
