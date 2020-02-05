@@ -4,6 +4,14 @@ import java.util.Collection;
 
 public class CentralBank implements AdvancedAPI, AdminAPI {
 
+    private String acctId;
+    private double balance;
+    private String name;
+
+    public CentralBank(String acctId, double startingBalance, String name) throws IllegalArgumentException {
+
+    }
+
     //----------------- BasicAPI methods -------------------------//
 
     public boolean confirmCredentials(String acctId, String password) {
@@ -19,7 +27,7 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
     }
 
     public void deposit(String acctId, double amount) {
-
+        
     }
 
     public void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws InsufficientFundsException {
