@@ -4,7 +4,12 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class CentralBankTest {
 
+class CentralBankTest {
+    @Test
+    void createAccountTest(){
+        CentralBank bank = new CentralBank();
+        bank.createAccount("1234@gmail.com", 233);
+    }
 
 }
