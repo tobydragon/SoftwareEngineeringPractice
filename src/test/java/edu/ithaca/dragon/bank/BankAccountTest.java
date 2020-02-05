@@ -31,6 +31,7 @@ class BankAccountTest {
         bankAccount.withdraw(200);
         assertEquals(0, bankAccount.getBalance());  //Edge case, withdrawing all available funds
         bankAccount = new BankAccount("a@b.com", 200);
+        BankAccount bankAccount = new BankAccount("a@b.com", 200);
         bankAccount.withdraw(100);
         assertEquals(100, bankAccount.getBalance());  //Normal case, withdrawing only half of available funds
         //Invalid case (withdraws more than available)
