@@ -4,6 +4,8 @@ import java.util.Collection;
 
 public class CentralBank implements AdvancedAPI, AdminAPI {
 
+    private BankAccount account = new BankAccount("test@email.com", 100);
+
     //----------------- BasicAPI methods -------------------------//
 
     public boolean confirmCredentials(String acctId, String password) {
@@ -11,7 +13,8 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
     }
 
     public double checkBalance(String acctId) {
-        return 0;
+        if (acctId != account.getEmail()) return 0;
+        return account.getBalance();
     }
 
     public void withdraw(String acctId, double amount) throws InsufficientFundsException {
@@ -54,11 +57,6 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
 
     //------------------ AdminAPI methods -------------------------//
 
-    public double checkTotalAssets() {
-        return 0;
-    }
-
-    @Override
     public double calcTotalAssets() {
         return 0;
     }
