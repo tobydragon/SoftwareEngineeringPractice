@@ -1,10 +1,10 @@
 package edu.ithaca.dragon.bank;
 
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class BankAccountTest {
+
 
     @Test
     void getBalanceTest() throws InsufficientFundsException, IllegalArgumentException {
@@ -335,6 +335,7 @@ class BankAccountTest {
         assertThrows(IllegalArgumentException.class, () -> savingsAccount.withdraw(750.59));
         assertThrows(IllegalArgumentException.class, () -> savingsAccount.withdraw(1000.75));
     }
+
 
 
 }
