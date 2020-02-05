@@ -11,6 +11,8 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
     }
 
     public double checkBalance(String acctId) {
+        BankAccount accountToCheck = new BankAccount(acctId, 1000);
+        return accountToCheck.getBalance();
         return 0;
     }
 

@@ -1,10 +1,25 @@
 package edu.ithaca.dragon.bank;
 
+import jdk.internal.vm.annotation.ReservedStackAccess;
+import org.junit.Test;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class BankAccountTest {
+    @Test
+    CentralBank createAccount(){
+        CentralBank client = new CentralBank();
+        client.createAccount("1234",1000);
+        return client;
+    }
+    @Test
+    void checkBalanceTest(){
+        CentralBank newBank = createAccount();
+        assertEquals(1000,newBank.checkBalance());
+    }
+
+
 
     @Test
     void getBalanceTest() throws InsufficientFundsException, IllegalArgumentException {
