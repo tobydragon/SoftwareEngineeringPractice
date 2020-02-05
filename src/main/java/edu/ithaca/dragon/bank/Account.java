@@ -7,6 +7,7 @@ public abstract class Account {
     private boolean isFrozen;
     private Collection<User> users;
 
+
     public void withdraw(double amount) {
 
     }
