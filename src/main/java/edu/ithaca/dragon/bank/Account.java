@@ -9,6 +9,12 @@ public abstract class Account {
     public String getID(){return ID;}
     public boolean getFrozen(){return frozen;}
     public void toggleFrozen(){frozen = !frozen;}
+
+    public Account(String ID, double balance){
+        this.ID=ID;
+        this.balance=balance;
+        this.frozen=false;
+    }
     public abstract void deposit(double amount);
     public abstract void withdraw(double amount) throws InsufficientFundsException;
     public abstract void transfer(Account transferTo, double amount) throws InsufficientFundsException;
