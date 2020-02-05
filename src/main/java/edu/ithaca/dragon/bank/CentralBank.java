@@ -2,6 +2,7 @@ package edu.ithaca.dragon.bank;
 
 import java.util.Collection;
 
+<<<<<<< HEAD
 public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
 
     String acctId;
@@ -19,6 +20,19 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
         this.acctID = acctID;
         this.amount = amount;
     }
+||||||| merged common ancestors
+public class CentralBank implements AdvancedAPI, AdminAPI {
+=======
+public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
+
+    String acctId;
+    double balance;
+
+    public CentralBank(String accountId, double balance){
+        this.acctId = accountId;
+        this.balance = balance;
+    }
+>>>>>>> d7f2e37a069825de396abfc726be296abe5170d1
 
     //----------------- BasicAPI methods -------------------------//
 
@@ -28,7 +42,13 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
 
     public double checkBalance(String acctId) {
 <<<<<<< HEAD
+<<<<<<< HEAD
         return this.amount;
+=======
+        return this.balance;
+>>>>>>> d7f2e37a069825de396abfc726be296abe5170d1
+||||||| merged common ancestors
+        return 0;
 =======
         return this.balance;
 >>>>>>> d7f2e37a069825de396abfc726be296abe5170d1
