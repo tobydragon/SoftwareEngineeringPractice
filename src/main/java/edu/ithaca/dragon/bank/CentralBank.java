@@ -19,7 +19,17 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
     }
 
     public void deposit(String acctId, double amount) {
-
+        if(acctId == ""){
+            System.out.println("Need account");
+        }
+        else if(amount < 0){
+            System.out.println("Amount should be above 0");
+        }
+        else{
+            double balance = 0;
+            balance =+ amount;
+            System.out.println("Deposited");
+        }
     }
 
     public void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws InsufficientFundsException {
