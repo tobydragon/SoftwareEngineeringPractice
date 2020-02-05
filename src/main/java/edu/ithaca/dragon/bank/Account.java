@@ -1,6 +1,7 @@
 package edu.ithaca.dragon.bank;
 
 import java.util.Collection;
+import java.util.regex.Pattern;
 
 public abstract class Account {
     private double balance;
@@ -36,17 +37,6 @@ public abstract class Account {
 
     }
 
-    /**
-     * returns true if the amount is non-negative and has two decimal points or less, and false otherwise
-     * @param amount quantity to check
-     * @return true if the amount is non-negative and has two decimal points or less, and false otherwise
-     */
-    public static boolean isAmountValid(double amount) {
-        String amountStr = String.valueOf(amount);
-        int charsAfterDec = amountStr.length() - amountStr.indexOf('.') - 1;
-        return amount >= 0 && charsAfterDec <= 2;
-    }
-
     public String getCredentials() {
         return "";
     }
@@ -57,5 +47,16 @@ public abstract class Account {
 
     public String getHistory() {
         return "";
+    }
+
+    /**
+     * returns true if the amount is non-negative and has two decimal points or less, and false otherwise
+     * @param amount quantity to check
+     * @return true if the amount is non-negative and has two decimal points or less, and false otherwise
+     */
+    public static boolean isAmountValid(double amount) {
+        String amountStr = String.valueOf(amount);
+        int charsAfterDec = amountStr.length() - amountStr.indexOf('.') - 1;
+        return amount >= 0 && charsAfterDec <= 2;
     }
 }
