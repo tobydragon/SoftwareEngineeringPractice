@@ -1,7 +1,6 @@
 package edu.ithaca.dragon.bank;
 
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class BankAccountTest {
@@ -28,20 +27,24 @@ class BankAccountTest {
 
 
     @Test
-    void closeAccountTest(){
+    void closeAccountTest() {
         CentralBank bankAccount = new CentralBank();
         bankAccount.createAccount("1245", "a1@hello.com", "testpassword", 500);
-        assertEquals("a1@hello.com",bankAccount.accountMap.get("1245").getEmail());
+        assertEquals("a1@hello.com", bankAccount.accountMap.get("1245").getEmail());
         bankAccount.closeAccount("1245");
         assertEquals(null, bankAccount.accountMap.get("1245").getEmail());
 
         CentralBank bankAccount2 = new CentralBank();
         bankAccount2.createAccount("BH8525", "atest3@gmail.com", "funny", 1000);
-
-
-
-
     }
+
+    @Test
+    void checkBalanceTest(){
+    }
+
+
+
+
 
     @Test
     void confirmCredentialsTest(){
