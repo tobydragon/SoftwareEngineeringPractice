@@ -12,14 +12,6 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
         this.balance = balance;
     }
 
-    private String acctID;
-    private double amount;
-
-    public CentralBank(String acctID, double amount) {
-        this.acctID = acctID;
-        this.amount = amount;
-    }
-
     //----------------- BasicAPI methods -------------------------//
 
     public boolean confirmCredentials(String acctId, String password) {
@@ -27,11 +19,7 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
     }
 
     public double checkBalance(String acctId) {
-<<<<<<< HEAD
-        return this.amount;
-=======
         return this.balance;
->>>>>>> d7f2e37a069825de396abfc726be296abe5170d1
     }
 
     public void withdraw(String acctId, double amount) throws InsufficientFundsException {
