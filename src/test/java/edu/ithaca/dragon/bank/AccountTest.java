@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class AccountTest {
+
     private static final double THRESHOLD = 0.001;
 
     @Test
@@ -41,35 +42,7 @@ public class AccountTest {
         assertEquals(11, bankAccount.getBalance(), THRESHOLD);
         bankAccount.deposit(419.5);
         assertEquals(430.5, bankAccount.getBalance(), THRESHOLD);
-    }
 
-    @Test
-    void isAmountValidTest() {
-        //non-negative amount with two decimal points or less
-        assertTrue(Account.isAmountValid(0));
-        assertTrue(Account.isAmountValid(0.01));
-        assertTrue(Account.isAmountValid(0.99));
-        assertTrue(Account.isAmountValid(250));
-        assertTrue(Account.isAmountValid(1234.50));
-
-        //non-negative amount with more than two decimal points
-        assertFalse(Account.isAmountValid(0.001));
-        assertFalse(Account.isAmountValid(0.9999));
-        assertFalse(Account.isAmountValid(536.125));
-        assertFalse(Account.isAmountValid(Double.MIN_VALUE));
-        assertFalse(Account.isAmountValid(Double.MAX_VALUE));
-
-        //negative amount with two decimal points or less
-        assertFalse(Account.isAmountValid(-0.01));
-        assertFalse(Account.isAmountValid(-0.99));
-        assertFalse(Account.isAmountValid(-120));
-        assertFalse(Account.isAmountValid(-946.5));
-
-        //negative amount with more than two decimal points
-        assertFalse(Account.isAmountValid(-0.001));
-        assertFalse(Account.isAmountValid(-0.9999));
-        assertFalse(Account.isAmountValid(-Double.MIN_VALUE));
-        assertFalse(Account.isAmountValid(-Double.MAX_VALUE));
     }
 
     @Test
@@ -111,4 +84,32 @@ public class AccountTest {
         assertThrows(IllegalArgumentException.class, () -> new CheckingAccount( -Double.MIN_VALUE));
     }
 
+    @Test
+    void isAmountValidTest() {
+        //non-negative amount with two decimal points or less
+        assertTrue(Account.isAmountValid(0));
+        assertTrue(Account.isAmountValid(0.01));
+        assertTrue(Account.isAmountValid(0.99));
+        assertTrue(Account.isAmountValid(250));
+        assertTrue(Account.isAmountValid(1234.50));
+
+        //non-negative amount with more than two decimal points
+        assertFalse(Account.isAmountValid(0.001));
+        assertFalse(Account.isAmountValid(0.9999));
+        assertFalse(Account.isAmountValid(536.125));
+        assertFalse(Account.isAmountValid(Double.MIN_VALUE));
+        assertFalse(Account.isAmountValid(Double.MAX_VALUE));
+
+        //negative amount with two decimal points or less
+        assertFalse(Account.isAmountValid(-0.01));
+        assertFalse(Account.isAmountValid(-0.99));
+        assertFalse(Account.isAmountValid(-120));
+        assertFalse(Account.isAmountValid(-946.5));
+
+        //negative amount with more than two decimal points
+        assertFalse(Account.isAmountValid(-0.001));
+        assertFalse(Account.isAmountValid(-0.9999));
+        assertFalse(Account.isAmountValid(-Double.MIN_VALUE));
+        assertFalse(Account.isAmountValid(-Double.MAX_VALUE));
+    }
 }

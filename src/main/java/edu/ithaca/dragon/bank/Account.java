@@ -9,11 +9,12 @@ public abstract class Account {
     private Collection<User> users;
 
     public Account(double startingBalance) {
-        if (!isAmountValid(startingBalance))
+        if (!isAmountValid(startingBalance)) {
             throw new IllegalArgumentException("Starting balance: " + startingBalance + " is invalid, cannot create account");
-        balance = startingBalance;
+        } else {
+            this.balance = startingBalance;
+        }
     }
-
 
     public void withdraw(double amount) {
 
