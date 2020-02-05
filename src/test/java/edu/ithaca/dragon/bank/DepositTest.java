@@ -11,10 +11,10 @@ public class DepositTest {
 
         // Positive, One to Two Decimals
         account.deposit("a@a.com", 0);
-        assertEquals(0, account.checkBalance("a@a.com")); //border case
+        assertEquals(200, account.checkBalance("a@a.com")); //border case
         account.deposit("a@a.com", 100);
-        assertEquals(100, account.checkBalance("a@a.com"));
+        assertEquals(300, account.checkBalance("a@a.com"));
         account.deposit("a@a.com", 999);
-        assertEquals(1099, account.checkBalance("a@a.com")); //border case
+        assertEquals(1299, account.checkBalance("a@a.com")); //border case
     }
 }
