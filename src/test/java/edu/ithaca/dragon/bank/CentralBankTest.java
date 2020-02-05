@@ -4,10 +4,15 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class AdvancedAPITest {
+public class CentralBankTest {
 
     @Test
-    void accountExistsTest() throws AccountIdTakenException, IllegalArgumentException{
+    void depositTest(){
+        //WILL BE DONE FORE REAL SOMEDAY
+    }
+
+    @Test
+    void accountExistsTest() throws AccountAlreadyExistsException, IllegalArgumentException{
         CentralBank bank = new CentralBank();
         bank.createAccount("yes@yes.com", 0);
         assertTrue(bank.accountExists("yes@yes.com"));
@@ -15,7 +20,7 @@ class AdvancedAPITest {
     }
 
     @Test
-    void createAccountTest() throws AccountIdTakenException, IllegalArgumentException {
+    void createAccountTest() throws AccountAlreadyExistsException, IllegalArgumentException {
 
         CentralBank bank = new CentralBank();
 
@@ -48,9 +53,9 @@ class AdvancedAPITest {
         assertThrows(IllegalArgumentException.class, ()-> bank.createAccount("bad@bad.c", 100));
 
         //id already exists
-        assertThrows(AccountIdTakenException.class, ()-> bank.createAccount(id1, 100));
-        assertThrows(AccountIdTakenException.class, ()-> bank.createAccount(id2, 100));
-        assertThrows(AccountIdTakenException.class, ()-> bank.createAccount(id3, 100));
+        assertThrows(AccountAlreadyExistsException.class, ()-> bank.createAccount(id1, 100));
+        assertThrows(AccountAlreadyExistsException.class, ()-> bank.createAccount(id2, 100));
+        assertThrows(AccountAlreadyExistsException.class, ()-> bank.createAccount(id3, 100));
 
         //invalid start balance
         assertThrows(IllegalArgumentException.class, ()-> bank.createAccount("c@d.com", -0.01));
@@ -58,11 +63,10 @@ class AdvancedAPITest {
         assertThrows(IllegalArgumentException.class, ()-> bank.createAccount("e@f.com", -5.055));
 
         //invalid id and start balance
-        assertThrows(AccountIdTakenException.class, ()-> bank.createAccount(id1, -0.01));
-        assertThrows(AccountIdTakenException.class, ()-> bank.createAccount(id2, 100.999));
-        assertThrows(AccountIdTakenException.class, ()-> bank.createAccount(id3, -5.055));
+        assertThrows(AccountAlreadyExistsException.class, ()-> bank.createAccount(id1, -0.01));
+        assertThrows(AccountAlreadyExistsException.class, ()-> bank.createAccount(id2, 100.999));
+        assertThrows(AccountAlreadyExistsException.class, ()-> bank.createAccount(id3, -5.055));
 
 
     }
-
 }

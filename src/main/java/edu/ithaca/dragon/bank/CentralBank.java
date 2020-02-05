@@ -24,7 +24,7 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
     }
 
     public void deposit(String acctId, double amount) {
-
+        //WILL BE WRITTEN FOR REAL SOMEDAY
     }
 
     public void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws InsufficientFundsException {
@@ -38,8 +38,8 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
 
     //----------------- AdvancedAPI methods -------------------------//
 
-    public void createAccount(String acctId, double startingBalance) throws AccountIdTakenException, IllegalArgumentException {
-        if (accounts.containsKey(acctId)) throw new AccountIdTakenException("Account with this id already exists");
+    public void createAccount(String acctId, double startingBalance) throws AccountAlreadyExistsException, IllegalArgumentException {
+        if (accounts.containsKey(acctId)) throw new AccountAlreadyExistsException("Account with this id already exists");
 
         BankAccount account = new BankAccount(acctId, startingBalance);
         accounts.put(acctId, account);
