@@ -7,15 +7,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class BankAccountTest {
 
 
-
-
-
-
-
-
-
-
-
     @Test
     void getBalanceTest() throws InsufficientFundsException, IllegalArgumentException {
         //classes - fresh account, after withdrawal, after unsuccessful withdrawal

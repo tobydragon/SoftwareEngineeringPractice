@@ -9,6 +9,7 @@ target/
 .idea/**/dictionaries
 .idea/**/shelf
 .idea/misc.xml
+.idea/SoftwareEngineeringPractice.iml
 
 # Generated files
 .idea/**/contentModel.xml
