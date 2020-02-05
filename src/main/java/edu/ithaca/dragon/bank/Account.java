@@ -19,8 +19,17 @@ public abstract class Account {
 
     }
 
+    /**
+     * increases the balance by amount if non-negative and has 2 or fewer decimals
+     * @param amount quantity to increase balance by
+     * @throws IllegalArgumentException if amount is negative or has more than 2 decimal places
+     */
     public void deposit(double amount) {
-
+        if (!isAmountValid(amount)) {
+            throw new IllegalArgumentException("Amount: " + amount + " is invalid, cannot deposit");
+        } else {
+            balance += amount;
+        }
     }
 
     public void transfer(Account toAccount, double amount) {
