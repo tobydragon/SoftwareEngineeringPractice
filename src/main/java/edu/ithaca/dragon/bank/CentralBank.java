@@ -19,10 +19,6 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
 
     }
 
-    @Override
-    public double calcTotalAssets() {
-        return 0;
-    }
 
     public void deposit(String acctId, double amount) {
 
@@ -39,11 +35,10 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
 
     //----------------- AdvancedAPI methods -------------------------//
 
-    public BankAccount createAccount(String email, double startingBalance) {
-        BankAccount account = new BankAccount("a@b.com", startingBalance);
 
+    public BankAccount createAccount(String acctId, double startingBalance) {
+        return new BankAccount(acctId, startingBalance);
 
-        return account;
     }
 
     public void closeAccount(String acctId) {
@@ -53,7 +48,7 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
 
     //------------------ AdminAPI methods -------------------------//
 
-    public double checkTotalAssets() {
+    public double calcTotalAssets() {
         return 0;
     }
 

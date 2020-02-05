@@ -8,13 +8,6 @@ class BankAccountTest {
 
 
 
-    @Test
-    void createAccountTest(){
-        CentralBank bank = new CentralBank();
-
-        assertEquals(1000, bank.createAccount("ag@bgmail.com",1000).getBalance());
-
-        assertEquals(500, bank.createAccount("a@bgmail.com",500).getBalance());
 
 
 
@@ -22,10 +15,6 @@ class BankAccountTest {
 
 
 
-
-
-
-    }
 
     @Test
     void getBalanceTest() throws InsufficientFundsException, IllegalArgumentException {
@@ -325,6 +314,13 @@ class BankAccountTest {
         assertEquals(0, bankAccount1.getBalance());
         assertEquals(1000, bankAccount2.getBalance());
 
+    }
+
+    @Test
+    void createAccountTest(){
+        CentralBank centralBank = new CentralBank();
+        assertEquals(1000, centralBank.createAccount("a@b.com", 1000).getBalance());
+        assertEquals("a@b.com", centralBank.createAccount("a@b.com", 1000).getEmail());
     }
 
 }
