@@ -2,9 +2,9 @@ package edu.ithaca.dragon.bank;
 
 import java.util.Collection;
 
-public class CentralBank implements AdvancedAPI, AdminAPI {
+public class CentralBank implements AdvancedAPI { //add back AdminAPI
 
-    private BankAccount account = new BankAccount("test@email.com", 100);
+    private BankAccount account = new BankAccount("a@a.com", 200);
 
     //----------------- BasicAPI methods -------------------------//
 
@@ -13,6 +13,7 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
     }
 
     public double checkBalance(String acctId) {
+
         if (acctId != account.getEmail()) return 0;
         return account.getBalance();
     }
