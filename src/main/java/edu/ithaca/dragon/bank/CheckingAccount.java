@@ -8,9 +8,12 @@ public class CheckingAccount extends Account {
     public void withdraw(double amount) throws InsufficientFundsException, IllegalArgumentException{
         if(!CheckingAccount.isAmountValid(amount))throw new IllegalArgumentException("Not a valid Amount");
         if(Double.compare(amount, 0.0)==0)throw new IllegalArgumentException("Cannot Withdraw zero dollars");
+        if(Double.compare(this.balance-amount, 0.0)==-1)throw new InsufficientFundsException("Not enough Funds");
+        else this.balance -= amount;
 
     }
     public void transfer(Account transferTo, double amount) throws InsufficientFundsException{}
+
     public static boolean isAmountValid(double amountIn){
         if (amountIn < 0) return false;
         double scale = Math.pow(10, 9);
