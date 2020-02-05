@@ -2,7 +2,7 @@ package edu.ithaca.dragon.bank;
 
 import java.util.Collection;
 
-public abstract class CentralBank implements AdvancedAPI, AdminAPI {
+public class CentralBank implements AdvancedAPI, AdminAPI {
 
     //----------------- edu.ithaca.dragon.bank.BasicAPI methods -------------------------//
 
@@ -44,7 +44,7 @@ public abstract class CentralBank implements AdvancedAPI, AdminAPI {
 
     //------------------ edu.ithaca.dragon.bank.AdminAPI methods -------------------------//
 
-    public double checkTotalAssets() {
+    public double calcTotalAssets() {
         return 0;
     }
 
