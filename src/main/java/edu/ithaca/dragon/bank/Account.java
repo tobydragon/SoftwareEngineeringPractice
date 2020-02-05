@@ -13,6 +13,17 @@ public abstract class Account {
     }
 
     public void deposit(double amount) {
+        String amountStr = String.valueOf(amount);
+        int charsAfterDec = amountStr.length() - amountStr.indexOf('.') - 1;
+        if (amount < 0){
+            throw new IllegalArgumentException("Cannot deposit negative amount");
+        }
+        else if (charsAfterDec > 2){
+            throw new IllegalArgumentException("Too many decimal places");
+        }
+        else{
+            balance += amount;
+        }
 
     }
 
