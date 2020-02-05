@@ -10,4 +10,9 @@ class CentralBankTest {
     void withdrawTest() {
 
     }
+
+    @Test
+    void depositTest(){
+
+    }
 }
