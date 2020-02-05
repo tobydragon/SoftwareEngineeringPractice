@@ -5,12 +5,14 @@ public class BankAccount {
     private String email;
     private double balance;
     public  boolean acctFrozen;
+    public String acctId;
 
     /**
      * @throws IllegalArgumentException if email is invalid
      */
     public BankAccount(String email, double startingBalance) {
         this.acctFrozen = false;
+        this.acctId = "B000";
         if (isEmailValid(email) && isAmountValid(startingBalance)) {
             this.email = email;
             this.balance = startingBalance;
@@ -25,6 +27,12 @@ public class BankAccount {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getAcctId(){return acctId;}
+
+    public void setAcctId(String IDin){
+        this.acctId = IDin;
     }
 
     /**

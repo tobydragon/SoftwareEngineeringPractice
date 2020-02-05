@@ -83,6 +83,20 @@ class BankAccountTest {
     }
 
     @Test
+
+    void acctIDTest(){
+        BankAccount bankAccount = new BankAccount("a@b.com", 200);
+        assertEquals("B000", bankAccount.getAcctId());
+
+        String testString = "C123";
+        bankAccount.setAcctId(testString);
+        assertEquals(testString, bankAccount.getAcctId());
+
+
+
+    }
+
+    @Test
     void constructorTest() {
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
 
