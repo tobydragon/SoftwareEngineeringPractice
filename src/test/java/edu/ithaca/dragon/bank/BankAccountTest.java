@@ -306,4 +306,11 @@ class BankAccountTest {
 
     }
 
+    @Test
+    void createAccountTest(){
+        CentralBank centralBank = new CentralBank();
+        assertEquals(1000, centralBank.createAccount("a@b.com", 1000).getBalance());
+        assertEquals("a@b.com", centralBank.createAccount("a@b.com", 1000).getEmail());
+    }
+
 }

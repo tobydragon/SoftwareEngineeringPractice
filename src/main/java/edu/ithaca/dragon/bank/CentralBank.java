@@ -34,8 +34,8 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
 
     //----------------- AdvancedAPI methods -------------------------//
 
-    public void createAccount(String acctId, double startingBalance) {
-
+    public BankAccount createAccount(String acctId, double startingBalance) {
+        return null;
     }
 
     public void closeAccount(String acctId) {
