@@ -1,9 +1,6 @@
 package edu.ithaca.dragon.bank;
 
-import jdk.internal.vm.annotation.ReservedStackAccess;
-import org.junit.Test;
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class BankAccountTest {
@@ -18,6 +15,16 @@ class BankAccountTest {
         CentralBank newBank = createAccount();
         //assertEquals(1000,newBank.checkBalance());
     }
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -319,6 +326,13 @@ class BankAccountTest {
         assertEquals(0, bankAccount1.getBalance());
         assertEquals(1000, bankAccount2.getBalance());
 
+    }
+
+    @Test
+    void createAccountTest(){
+        CentralBank centralBank = new CentralBank();
+        assertEquals(1000, centralBank.createAccount("a@b.com", 1000).getBalance());
+        assertEquals("a@b.com", centralBank.createAccount("a@b.com", 1000).getEmail());
     }
 
 }
