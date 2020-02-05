@@ -2,7 +2,15 @@ package edu.ithaca.dragon.bank;
 
 import java.util.Collection;
 
-public class CentralBank implements AdvancedAPI, AdminAPI {
+public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
+
+    String acctId;
+    double balance;
+
+    public CentralBank(String accountId, double balance){
+        this.acctId = accountId;
+        this.balance = balance;
+    }
 
     //----------------- BasicAPI methods -------------------------//
 
@@ -11,7 +19,7 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
     }
 
     public double checkBalance(String acctId) {
-        return 0;
+        return this.balance;
     }
 
     public void withdraw(String acctId, double amount) throws InsufficientFundsException {
