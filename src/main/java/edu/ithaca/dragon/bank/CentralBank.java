@@ -1,8 +1,12 @@
 package edu.ithaca.dragon.bank;
 
 import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
 
 public class CentralBank implements AdvancedAPI, AdminAPI {
+
+    private List<BankAccount> AccountList = new LinkedList<BankAccount>();
 
     //----------------- BasicAPI methods -------------------------//
 
