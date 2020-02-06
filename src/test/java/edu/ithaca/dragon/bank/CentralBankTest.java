@@ -8,9 +8,8 @@ class CentralBankTest {
 
     @Test
     void checkBalanceTest() {
-        CentralBank newBank = new CentralBank("3428909999", 50.05, "mike");
-        assertEquals(10, newBank.checkBalance("3428909999"));
-
+        CentralBank bank = new CentralBank();
+        assertEquals(10, bank.checkBalance("1234567890"));
     }
 
     @Test
