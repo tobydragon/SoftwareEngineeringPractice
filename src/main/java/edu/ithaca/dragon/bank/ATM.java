@@ -8,7 +8,7 @@ public class ATM implements BasicAPI {
     }
 
     public double checkBalance(String acctEmail){
-        BankAccount testAcct = new BankAccount("a@b.com", 1); //TODO redo to use acct collection later
+        BankAccount testAcct = new BankAccount("a@b.com", 1,1234); //TODO redo to use acct collection later
         //test for push
         return testAcct.getBalance();
 
