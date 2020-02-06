@@ -1,6 +1,5 @@
 package edu.ithaca.dragon.bank;
 
-
 import java.util.HashSet;
 
 public class BankAccount {

@@ -1,8 +1,15 @@
 package edu.ithaca.dragon.bank;
 
+import java.lang.reflect.Array;
 import java.util.Collection;
 
 public class CentralBank implements AdvancedAPI, AdminAPI {
+
+    public CentralBank (){
+        BankAccount customerCollection[ ];
+
+
+    }
 
     //----------------- BasicAPI methods -------------------------//
 
