@@ -1,68 +1,30 @@
 package edu.ithaca.dragon.bank;
 
 import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
 
-public class CentralBank implements AdvancedAPI, AdminAPI {
+public class CentralBank {
 
-    private List<BankAccount> AccountList = new LinkedList<BankAccount>();
+    Collection<BankAccount> accounts;
+    Collection<Admin> admins;
+    Collection<ATM> atms;
+    Collection<User> users;
 
-    //----------------- BasicAPI methods -------------------------//
-
-    public boolean confirmCredentials(String acctId, String password) {
-        return false;
-    }
-
-    public double checkBalance(String acctId) {
-        return 0;
-    }
-
-    public void withdraw(String acctId, double amount) throws InsufficientFundsException {
+    public void withdraw(BankAccount account, double amount) {
 
     }
 
-    public void deposit(String acctId, double amount) {
-
-
-    }
-
-    public void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws InsufficientFundsException {
+    public void deposit(BankAccount account, double amount) {
 
     }
 
-    public String transactionHistory(String acctId) {
-        return null;
-    }
-
-
-    //----------------- AdvancedAPI methods -------------------------//
-
-    public void createAccount(String acctId, double startingBalance) {
+    public void transfer(BankAccount fromAccount, BankAccount toAccount, double amount) {
 
     }
 
-    public void closeAccount(String acctId) {
-
+    public double getBalance(BankAccount account) {
+        return account.getBalance();
     }
 
 
-    //------------------ AdminAPI methods -------------------------//
-
-    public double calcTotalAssets() {
-        return 0;
-    }
-
-    public Collection<String> findAcctIdsWithSuspiciousActivity() {
-        return null;
-    }
-
-    public void freezeAccount(String acctId) {
-
-    }
-
-    public void unfreezeAcct(String acctId) {
-
-    }
 
 }

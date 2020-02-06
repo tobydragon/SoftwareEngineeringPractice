@@ -1,26 +1,14 @@
 package edu.ithaca.dragon.bank;
 
 public class SavingsAccount extends BankAccount {
-    private String acctId;
-    private double balance;
+    private double interestRate;
+    private double maximumWithdrawal;
 
-    public SavingsAccount(String acctId, double startingBalance) {
-        if (isAmountValid(startingBalance)){
-            this.balance = startingBalance;
-            this.acctId = acctId;
-        }
 
-        else {
-            throw new IllegalArgumentException("Dollar Amount: " + startingBalance + " is invalid, cannot create account");
-        }
+    public SavingsAccount(double startingBalance, String acctId, double interestRate, double maximumWithdrawal) {
+        super(startingBalance,acctId);
+        this.interestRate = interestRate;
+        this.maximumWithdrawal = maximumWithdrawal;
     }
-
-    public double getBalance() {
-        return balance;
-    }
-
-    public String getAcctId() { return acctId; }
-
-
 
 }

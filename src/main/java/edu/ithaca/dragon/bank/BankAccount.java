@@ -4,14 +4,22 @@ public class BankAccount {
 
     private String acctId;
     private double balance;
+    private boolean frozen = false;
 
     /**
      * @post creates a bank account object
      * @throws IllegalArgumentException if email is invalid
      *
      */
-    public BankAccount() {
-        BankAccount acct = new BankAccount();
+    public BankAccount(double startingBalance, String acctId) {
+        if (isAmountValid(startingBalance)){
+        this.balance = startingBalance;
+        this.acctId = acctId;
+        }
+
+        else {
+        throw new IllegalArgumentException("Dollar Amount: " + startingBalance + " is invalid, cannot create account");
+         }
     }
 
 
