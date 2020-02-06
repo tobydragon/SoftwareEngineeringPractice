@@ -107,7 +107,7 @@ public class CentralBankTest {
     }
 
     @Test
-    void calcTotalAssetsTest() throws AccountAlreadyExistsException, IllegalArgumentException{
+    void calcTotalAssetsTest() throws AccountAlreadyExistsException, IllegalArgumentException, AccountDoesNotExistException {
         CentralBank bank = new CentralBank();
 
         //equivalence class - bank has accounts
@@ -130,11 +130,11 @@ public class CentralBankTest {
         //border
         bank = new CentralBank();
         bank.createAccount("a@b.com", 100000);
-        bank.createAccount("b@c.com", 1000000);
-        bank.createAccount("c@d.com", 10000000);
-        bank.createAccount("d@e.com", 100000000);
+        bank.createAccount("b@c.com", 500000);
+        bank.createAccount("c@d.com", 1000000);
+        bank.createAccount("d@e.com", 5000000);
 
-        assertEquals(111100000, bank.calcTotalAssets());
+        assertEquals(6600000, bank.calcTotalAssets());
 
 
         //equivalence class - bank has no accounts
