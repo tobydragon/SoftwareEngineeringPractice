@@ -70,6 +70,75 @@ public class BasicAPITest {
 
     }
 
+    @Test
+    void depositTest() throws IllegalArgumentException{
+        CentralBank bank = new CentralBank();
+        bank.createAccount("test123", "a@b.com", "testpass", 1000);
+        bank.deposit("test123", 100);
+        assertEquals(1100, bank.checkBalance("test123"));
+        bank.deposit("test123", 1000);
+        assertEquals(2100, bank.checkBalance("test123"));
+        bank.deposit("test123", .19);
+        assertEquals(2100.19, bank.checkBalance("test123"));
+
+        //account not found deposits
+        assertThrows(IllegalArgumentException.class, ()-> bank.deposit("test13", 50));
+        assertThrows(IllegalArgumentException.class, ()-> bank.deposit("tes3", 100));
+        //illegal deposits
+        assertThrows(IllegalArgumentException.class, ()-> bank.deposit("test123", 50.53894329));
+        assertThrows(IllegalArgumentException.class, ()-> bank.deposit("test123", .3894329));
+        //check balance remains the same
+        assertEquals(2100.19, bank.checkBalance("test123"));
+
+    }
+
+    @Test
+    void transferTest() throws InsufficientFundsException, IllegalArgumentException {
+        CentralBank bank = new CentralBank();
+        bank.createAccount("test1", "a@b.com", "testpass", 10000);
+        bank.createAccount("test2", "b@c.com", "testpass", 500);
+
+        assertEquals(10000, bank.checkBalance("test1"));
+        bank.transfer("test1", "test2", 500);
+        //check legal transfers both ways
+        assertEquals(9500,bank.checkBalance("test1"));
+        assertEquals(1000,bank.checkBalance("test2"));
+        bank.transfer("test1", "test2", 1500);
+        assertEquals(8000, bank.checkBalance("test1"));
+        assertEquals(2500,bank.checkBalance("test2"));
+        bank.transfer("test2", "test1", 150.02);
+        assertEquals(8150.02, bank.checkBalance("test1"));
+        assertEquals(2349.98,bank.checkBalance("test2"));
+
+        //check for illegal transfers
+        assertThrows(IllegalArgumentException.class, ()-> bank.transfer("test1", "test2", .5424506));
+        assertThrows(IllegalArgumentException.class, ()-> bank.transfer("test2", "test1", .506));
+        assertThrows(IllegalArgumentException.class, ()-> bank.transfer("test2", "test1", -.506));
+        assertThrows(IllegalArgumentException.class, ()-> bank.transfer("test1", "tt1", 100));
+        assertThrows(IllegalArgumentException.class, ()-> bank.transfer("t1", "doesntexist", 10));
+
+
+        //check for insufficient funds
+        assertThrows(InsufficientFundsException.class, ()-> bank.transfer("test1", "test2", 10000));
+        assertThrows(InsufficientFundsException.class, ()-> bank.transfer("test2", "test1", 2349.99));
+        assertThrows(InsufficientFundsException.class, ()-> bank.transfer("test1", "test2", 8150.03));
+        assertThrows(InsufficientFundsException.class, ()-> bank.transfer("test2", "test", 8150.03));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }
+
 
 
 

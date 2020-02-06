@@ -43,11 +43,32 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
     }
 
 
-    public void deposit(String acctId, double amount) {
+    public void deposit(String acctId, double amount) throws IllegalArgumentException {
+        if(!accountMap.containsKey(acctId)){
+            throw new IllegalArgumentException("Account does not exist with ID" + acctId);
+        }
+
+        accountMap.get(acctId).deposit(amount);
+
 
     }
 
-    public void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws InsufficientFundsException {
+    public void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws IllegalArgumentException, InsufficientFundsException {
+        if(!accountMap.containsKey(acctIdToWithdrawFrom) || !accountMap.containsKey(acctIdToDepositTo)){
+            throw new IllegalArgumentException("Account does not exist with IDs given");
+
+        }
+
+        if(accountMap.get(acctIdToWithdrawFrom).getBalance() < amount){
+            throw new InsufficientFundsException("Account does not have enough money");
+        }
+
+        //accountMap.get(acctIdToWithdrawFrom).transfer(amount, accountMap.get(acctIdToDepositTo));
+
+        accountMap.get(acctIdToWithdrawFrom).withdraw(amount);
+        accountMap.get(acctIdToDepositTo).deposit(amount);
+
+
 
     }
 
