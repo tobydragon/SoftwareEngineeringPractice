@@ -19,8 +19,18 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
         return account.getBalance();
     }
 
-    public void withdraw(String acctId, double amount) throws InsufficientFundsException {
-
+    public void withdraw(String acctId, double amount) throws InsufficientFundsException, AccountDoesNotExistException {
+        if (!accounts.containsKey(acctId)) throw new AccountDoesNotExistException("Account with this id does not exists");
+        BankAccount account = accounts.get(acctId);
+        if (account.isAmountValid(amount) == false) {
+            throw new IllegalArgumentException("Not a valid amount");
+        }
+        else if (amount > account.getBalance()) {
+            throw new InsufficientFundsException("Not enough money");
+        }
+        else {
+            account.withdraw(amount);
+        }
     }
 
     public void deposit(String acctId, double amount) {
