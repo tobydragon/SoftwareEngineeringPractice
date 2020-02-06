@@ -12,7 +12,9 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
     }
 
     public double checkBalance(String acctId) {
-        return 2*5;
+        int num1 = 5;
+        int num2 = 5;
+        return num1 + num2;
     }
 
     public void withdraw(String acctId, double amount) throws InsufficientFundsException {
@@ -31,7 +33,7 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
         return null;
     }
 
-
+    //comment
     //----------------- AdvancedAPI methods -------------------------//
 
     public void createAccount(String acctId, double startingBalance) {
