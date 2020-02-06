@@ -10,8 +10,8 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
         return false;
     }
 
-    public double checkBalance(String acctId) {
-        return 0;
+    public double checkBalance(String acctId){
+        return 10;
     }
 
     public void withdraw(String acctId, double amount) throws InsufficientFundsException {
