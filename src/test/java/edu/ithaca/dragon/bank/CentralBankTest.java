@@ -7,8 +7,9 @@ import static org.junit.jupiter.api.Assertions.*;
 class CentralBankTest {
 
     @Test
-    void withdrawTest() {
-
+    void checkBalanceTest() {
+        CentralBank bank = new CentralBank();
+        assertEquals(10, bank.checkBalance("1234567890"));
     }
 
     @Test

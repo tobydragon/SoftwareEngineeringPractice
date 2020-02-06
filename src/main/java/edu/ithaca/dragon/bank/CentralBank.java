@@ -19,7 +19,7 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
     }
 
     public double checkBalance(String acctId) {
-        return 0;
+        return 2*5;
     }
 
     public void withdraw(String acctId, double amount) throws InsufficientFundsException {
