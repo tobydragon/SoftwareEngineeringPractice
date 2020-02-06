@@ -9,7 +9,7 @@ class CentralBankTest {
     @Test
     void checkBalanceTest(){
         CentralBank bank = new CentralBank();
-        assertEquals(10, bank.checkBalance("11111111"));
+        assertEquals(10, bank.checkBalance("1234567890"));
     }
 
     @Test
@@ -19,6 +19,7 @@ class CentralBankTest {
 
     @Test
     void withdrawTest() {
+
     }
 
     @Test

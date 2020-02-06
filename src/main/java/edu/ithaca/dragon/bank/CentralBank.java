@@ -4,14 +4,15 @@ import java.util.Collection;
 
 public class CentralBank implements AdvancedAPI, AdminAPI {
 
+
     //----------------- BasicAPI methods -------------------------//
 
     public boolean confirmCredentials(String acctId, String password) {
         return false;
     }
 
-    public double checkBalance(String acctId){
-        return 10;
+    public double checkBalance(String acctId) {
+        return 2*5;
     }
 
     public void withdraw(String acctId, double amount) throws InsufficientFundsException {
