@@ -114,15 +114,16 @@ public class BasicAPITest {
         assertThrows(IllegalArgumentException.class, ()-> bank.transfer("test1", "test2", .5424506));
         assertThrows(IllegalArgumentException.class, ()-> bank.transfer("test2", "test1", .506));
         assertThrows(IllegalArgumentException.class, ()-> bank.transfer("test2", "test1", -.506));
-        assertThrows(IllegalArgumentException.class, ()-> bank.transfer("test1", "tt1", 100));
-        assertThrows(IllegalArgumentException.class, ()-> bank.transfer("t1", "doesntexist", 10));
+        assertThrows(IllegalArgumentException.class, ()-> bank.transfer("test1", "test2", 100.64345));
+        assertThrows(IllegalArgumentException.class, ()-> bank.transfer("test1", "test1", 10)); //transfer to same account
+        assertThrows(IllegalArgumentException.class, ()-> bank.transfer("test2", "test2", 1093)); //transfer to same account
 
 
         //check for insufficient funds
         assertThrows(InsufficientFundsException.class, ()-> bank.transfer("test1", "test2", 10000));
         assertThrows(InsufficientFundsException.class, ()-> bank.transfer("test2", "test1", 2349.99));
         assertThrows(InsufficientFundsException.class, ()-> bank.transfer("test1", "test2", 8150.03));
-        assertThrows(InsufficientFundsException.class, ()-> bank.transfer("test2", "test", 8150.03));
+        assertThrows(InsufficientFundsException.class, ()-> bank.transfer("test2", "test1", 8150.03));
 
 
 

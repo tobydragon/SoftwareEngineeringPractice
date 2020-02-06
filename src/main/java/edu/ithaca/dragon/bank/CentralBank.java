@@ -54,7 +54,7 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
     }
 
     public void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws IllegalArgumentException, InsufficientFundsException {
-        if(!accountMap.containsKey(acctIdToWithdrawFrom) || !accountMap.containsKey(acctIdToDepositTo)){
+        if(!accountMap.containsKey(acctIdToWithdrawFrom) || !accountMap.containsKey(acctIdToDepositTo) || acctIdToWithdrawFrom.equals(acctIdToDepositTo)){
             throw new IllegalArgumentException("Account does not exist with IDs given");
 
         }
@@ -63,7 +63,6 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
             throw new InsufficientFundsException("Account does not have enough money");
         }
 
-        //accountMap.get(acctIdToWithdrawFrom).transfer(amount, accountMap.get(acctIdToDepositTo));
 
         accountMap.get(acctIdToWithdrawFrom).withdraw(amount);
         accountMap.get(acctIdToDepositTo).deposit(amount);
