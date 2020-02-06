@@ -14,7 +14,9 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
 
 
 
+
     public boolean confirmCredentials(String acctId, String password){
+
         if(accountMap.containsKey(acctId)){
             return accountMap.get(acctId).getPassword().equals(password);
         }
@@ -25,13 +27,19 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
     }
 
 
-    public double checkBalance(String acctId) {
-        BankAccount accountToCheck = new BankAccount(acctId, 1000);
-        return accountToCheck.getBalance();
+    public double checkBalance(String acctId) throws IllegalArgumentException {
+        if(!accountMap.containsKey(acctId)){
+            throw new IllegalArgumentException("Account does not exist with name: " + acctId);
+        }
+        return accountMap.get(acctId).getBalance();
     }
 
-    public void withdraw(String acctId, double amount) throws InsufficientFundsException {
+    public void withdraw(String acctId, double amount) throws InsufficientFundsException, IllegalArgumentException {
+        if(!accountMap.containsKey(acctId)){
+            throw new IllegalArgumentException("Account does not exist with name: " + acctId);
+        }
 
+        accountMap.get(acctId).withdraw(amount);
     }
 
 
