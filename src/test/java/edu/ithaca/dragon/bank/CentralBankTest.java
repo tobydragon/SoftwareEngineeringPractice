@@ -40,10 +40,10 @@ public class CentralBankTest {
         assertThrows(IllegalArgumentException.class, () -> newAccount.withdraw("email@test.com",9999999.999999)); //border case
     }
 
-    @Test
-    void depositTest(){
-        //WILL BE DONE FORE REAL SOMEDAY
-    }
+//    @Test
+//    void depositTest(){
+//        //WILL BE DONE FORE REAL SOMEDAY
+//    }
 
     @Test
     void accountExistsTest() throws AccountAlreadyExistsException, IllegalArgumentException{

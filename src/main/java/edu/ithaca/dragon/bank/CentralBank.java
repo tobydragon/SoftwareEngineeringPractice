@@ -20,7 +20,16 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
     }
 
     public void withdraw(String acctId, double amount) throws InsufficientFundsException {
-
+        BankAccount account = accounts.get(acctId);
+        if (account.isAmountValid(amount) == false) {
+            throw new IllegalArgumentException("Not a valid amount");
+        }
+        else if (amount > account.getBalance()) {
+            throw new InsufficientFundsException("Not enough money");
+        }
+        else {
+            account.withdraw(amount);
+        }
     }
 
     public void deposit(String acctId, double amount) {
