@@ -18,7 +18,7 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
 
     }
 
-    public void deposit(String acctId, double amount) {
+    public void deposit(String acctId, double amount) throws IllegalArgumentException {
 
     }
 
