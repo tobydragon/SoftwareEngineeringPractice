@@ -60,7 +60,7 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
         return accounts.containsKey(acctId);
     }
 
-    public void closeAccount(String acctId) {
+    public void closeAccount(String acctId) throws AccountDoesNotExistException {
 
     }
 

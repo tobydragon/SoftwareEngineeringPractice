@@ -103,6 +103,42 @@ public class CentralBankTest {
         assertThrows(AccountAlreadyExistsException.class, ()-> bank.createAccount(id2, 100.999));
         assertThrows(AccountAlreadyExistsException.class, ()-> bank.createAccount(id3, -5.055));
 
+    }
+
+    @Test
+    void closeAccountTest() throws AccountAlreadyExistsException, AccountDoesNotExistException {
+
+        CentralBank bank = new CentralBank();
+        bank.createAccount("a@b.com", 100);
+        bank.createAccount("b@c.com", 100);
+        bank.createAccount("c@d.com", 100);
+        bank.createAccount("d@e.com", 100);
+
+        //class - account does not exist
+        assertThrows(AccountDoesNotExistException.class, ()-> bank.closeAccount("e@f.com"));
+        assertThrows(AccountDoesNotExistException.class, ()-> bank.closeAccount("acctId"));
+        assertThrows(AccountDoesNotExistException.class, ()-> bank.closeAccount(""));
+
+        //class - account exists
+        bank.closeAccount("a@b.com");
+        assertFalse(bank.accountExists("a@b.com"));
+        assertTrue(bank.accountExists("b@c.com"));
+        assertTrue(bank.accountExists("c@d.com"));
+        assertTrue(bank.accountExists("d@e.com"));
+
+        //class - removed account (does not exist)
+        assertThrows(AccountDoesNotExistException.class, ()-> bank.closeAccount("a@b.com"));
+
+        //another existing account remove test
+        bank.closeAccount("c@d.com");
+        assertFalse(bank.accountExists("a@b.com"));
+        assertTrue(bank.accountExists("b@c.com"));
+        assertFalse(bank.accountExists("c@d.com"));
+        assertTrue(bank.accountExists("d@e.com"));
+
+        assertThrows(AccountDoesNotExistException.class, ()-> bank.closeAccount("c@d.com"));
 
     }
+
+
 }
