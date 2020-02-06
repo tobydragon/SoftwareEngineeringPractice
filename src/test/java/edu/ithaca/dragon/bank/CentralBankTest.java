@@ -7,6 +7,40 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CentralBankTest {
 
     @Test
+    void withdrawTest()throws InsufficientFundsException, IllegalArgumentException, AccountAlreadyExistsException {
+        CentralBank newAccount = new CentralBank();
+        String newAccountID = "email@test.com";
+        newAccount.createAccount(newAccountID, 200);
+
+        assertThrows(InsufficientFundsException.class, () -> newAccount.withdraw("email@test.com", 201)); //border case
+        assertThrows(InsufficientFundsException.class, () -> newAccount.withdraw("email@test.com", 350));
+        assertThrows(InsufficientFundsException.class, () -> newAccount.withdraw("email@test.com", 1000)); //border case
+
+        //Withdraw equals or less than is in account
+        newAccount.withdraw("email@test.com", 1);
+        assertEquals(199, newAccount.checkBalance("email@test.com")); //border case
+        newAccount.withdraw("email@test.com",100);
+        assertEquals(99, newAccount.checkBalance("email@test.com"));
+        newAccount.withdraw("email@test.com",99);
+        assertEquals(0, newAccount.checkBalance("email@test.com")); //border case
+
+        // Negative, One to Two Decimals
+        assertThrows(IllegalArgumentException.class, () -> newAccount.withdraw("email@test.com",-1.01)); // border case
+        assertThrows(IllegalArgumentException.class, () -> newAccount.withdraw("email@test.com",-53.83));
+        assertThrows(IllegalArgumentException.class, () -> newAccount.withdraw("email@test.com",-9999999.9)); // border case
+
+        // Negative, Multiple Decimals
+        assertThrows(IllegalArgumentException.class, () -> newAccount.withdraw("email@test.com",-1.0000001)); // border case
+        assertThrows(IllegalArgumentException.class, () -> newAccount.withdraw("email@test.com",-7.48));
+        assertThrows(IllegalArgumentException.class, () -> newAccount.withdraw("email@test.com",-9999999.9999999)); // border case
+
+        // Positive, Multiple Decimals
+        assertThrows(IllegalArgumentException.class, () -> newAccount.withdraw("email@test.com",0.000001)); // border case
+        assertThrows(IllegalArgumentException.class, () -> newAccount.withdraw("email@test.com",92.498865));
+        assertThrows(IllegalArgumentException.class, () -> newAccount.withdraw("email@test.com",9999999.999999)); //border case
+    }
+
+    @Test
     void depositTest(){
         //WILL BE DONE FORE REAL SOMEDAY
     }
