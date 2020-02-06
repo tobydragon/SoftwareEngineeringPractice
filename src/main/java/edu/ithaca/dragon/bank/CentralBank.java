@@ -1,10 +1,12 @@
 package edu.ithaca.dragon.bank;
 
 import java.util.Collection;
+import java.util.Map;
+import java.util.HashMap;
 
-public class CentralBank implements AdvancedAPI { //add back AdminAPI
+public class CentralBank implements AdvancedAPI, AdminAPI {
 
-    private BankAccount account = new BankAccount("a@a.com", 200);
+    private Map<String, BankAccount> accounts = new HashMap<>();
 
     //----------------- BasicAPI methods -------------------------//
 
@@ -13,8 +15,7 @@ public class CentralBank implements AdvancedAPI { //add back AdminAPI
     }
 
     public double checkBalance(String acctId) {
-
-        if (acctId != account.getEmail()) return 0;
+        BankAccount account = accounts.get(acctId);
         return account.getBalance();
     }
 
@@ -23,17 +24,7 @@ public class CentralBank implements AdvancedAPI { //add back AdminAPI
     }
 
     public void deposit(String acctId, double amount) {
-        if(acctId == ""){
-            System.out.println("Need account");
-        }
-        else if(amount < 0){
-            System.out.println("Amount should be above 0");
-        }
-        else{
-            double balance = 0;
-            balance =+ amount;
-            System.out.println("Deposited");
-        }
+        //WILL BE WRITTEN FOR REAL SOMEDAY
     }
 
     public void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws InsufficientFundsException {
@@ -47,8 +38,16 @@ public class CentralBank implements AdvancedAPI { //add back AdminAPI
 
     //----------------- AdvancedAPI methods -------------------------//
 
-    public void createAccount(String acctId, double startingBalance) {
+    public void createAccount(String acctId, double startingBalance) throws AccountAlreadyExistsException, IllegalArgumentException {
+        if (accounts.containsKey(acctId)) throw new AccountAlreadyExistsException("Account with this id already exists");
 
+        BankAccount account = new BankAccount(acctId, startingBalance);
+        accounts.put(acctId, account);
+    }
+
+    //for testing createAccount function - one must exist to test the other
+    public boolean accountExists(String acctId) {
+        return accounts.containsKey(acctId);
     }
 
     public void closeAccount(String acctId) {
