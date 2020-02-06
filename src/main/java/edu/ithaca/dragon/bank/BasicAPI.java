@@ -7,7 +7,7 @@ public interface BasicAPI {
 
     double checkBalance(String acctId);
 
-    void withdraw(String acctId, double amount) throws InsufficientFundsException;
+    void withdraw(String acctId, double amount) throws InsufficientFundsException, AccountDoesNotExistException;
 
     void deposit(String acctId, double amount);
 

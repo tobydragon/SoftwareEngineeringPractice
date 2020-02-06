@@ -7,10 +7,12 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CentralBankTest {
 
     @Test
-    void withdrawTest()throws InsufficientFundsException, IllegalArgumentException, AccountAlreadyExistsException {
+    void withdrawTest()throws InsufficientFundsException, IllegalArgumentException, AccountAlreadyExistsException, AccountDoesNotExistException {
         CentralBank newAccount = new CentralBank();
         String newAccountID = "email@test.com";
         newAccount.createAccount(newAccountID, 200);
+
+        assertThrows(AccountDoesNotExistException.class, () -> newAccount.withdraw("notemail@test.com", 100));
 
         assertThrows(InsufficientFundsException.class, () -> newAccount.withdraw("email@test.com", 201)); //border case
         assertThrows(InsufficientFundsException.class, () -> newAccount.withdraw("email@test.com", 350));
