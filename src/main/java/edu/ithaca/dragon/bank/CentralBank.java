@@ -49,6 +49,9 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
         if (!accounts.containsKey(acctIdToDepositTo)) throw new AccountDoesNotExistException("Account with this id does not exists");
         BankAccount accountA = accounts.get(acctIdToWithdrawFrom);
         BankAccount accountB = accounts.get(acctIdToDepositTo);
+        if (accountA.isAmountValid(amount) == false) {
+            throw new IllegalArgumentException("Not a valid amount");
+        }
         accountA.withdraw(amount);
         accountB.deposit(amount);
     }

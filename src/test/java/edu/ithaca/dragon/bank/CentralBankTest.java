@@ -74,39 +74,38 @@ public class CentralBankTest {
 
     @Test
     void transferTest() throws AccountAlreadyExistsException, InsufficientFundsException, AccountDoesNotExistException {
-        CentralBank accountA = new CentralBank();
+        CentralBank account = new CentralBank();
         String accountAID = "a@test.com";
-        accountA.createAccount(accountAID, 200);
+        account.createAccount(accountAID, 200);
 
-        CentralBank accountB = new CentralBank();
         String accountBID = "b@test.com";
-        accountB.createAccount(accountBID, 400);
+        account.createAccount(accountBID, 400);
 
         // Negative, One to Two Decimals
-        assertThrows(IllegalArgumentException.class, () -> accountA.transfer(accountAID, accountBID, -1.01)); // border case
-        assertThrows(IllegalArgumentException.class, () -> accountA.transfer(accountAID, accountBID, -53.83));
-        assertThrows(IllegalArgumentException.class, () -> accountA.transfer(accountAID, accountBID, -9999999.9)); // border case
+        assertThrows(IllegalArgumentException.class, () -> account.transfer(accountAID, accountBID, -1.01)); // border case
+        assertThrows(IllegalArgumentException.class, () -> account.transfer(accountAID, accountBID, -53.83));
+        assertThrows(IllegalArgumentException.class, () -> account.transfer(accountAID, accountBID, -9999999.9)); // border case
 
         // Positive, One to Two Decimals
-        accountA.transfer(accountAID,accountBID, 0);
-        assertEquals(200, accountA.checkBalance(accountAID)); //border case
-        assertEquals(400, accountB.checkBalance(accountBID));
-        accountA.transfer(accountAID,accountBID, 20);
-        assertEquals(180, accountA.checkBalance(accountAID));
-        assertEquals(420, accountB.checkBalance(accountBID));
-        accountA.transfer(accountAID,accountBID, 180);
-        assertEquals(0, accountA.checkBalance(accountAID)); //border case
-        assertEquals(600, accountB.checkBalance(accountBID));
+        account.transfer(accountAID,accountBID, 0);
+        assertEquals(200, account.checkBalance(accountAID)); //border case
+        assertEquals(400, account.checkBalance(accountBID));
+        account.transfer(accountAID,accountBID, 20);
+        assertEquals(180, account.checkBalance(accountAID));
+        assertEquals(420, account.checkBalance(accountBID));
+        account.transfer(accountAID,accountBID, 180);
+        assertEquals(0, account.checkBalance(accountAID)); //border case
+        assertEquals(600, account.checkBalance(accountBID));
 
         // Negative, Multiple Decimals
-        assertThrows(IllegalArgumentException.class, () -> accountA.transfer(accountAID,accountBID, -1.0000001)); // border case
-        assertThrows(IllegalArgumentException.class, () -> accountA.transfer(accountAID,accountBID,-7.48));
-        assertThrows(IllegalArgumentException.class, () -> accountA.transfer(accountAID,accountBID, -9999999.9999999)); // border case
+        assertThrows(IllegalArgumentException.class, () -> account.transfer(accountAID,accountBID, -1.0000001)); // border case
+        assertThrows(IllegalArgumentException.class, () -> account.transfer(accountAID,accountBID,-7.48));
+        assertThrows(IllegalArgumentException.class, () -> account.transfer(accountAID,accountBID, -9999999.9999999)); // border case
 
         // Positive, Multiple Decimals
-        assertThrows(IllegalArgumentException.class, () -> accountA.transfer(accountAID,accountBID, 0.000001)); // border case
-        assertThrows(IllegalArgumentException.class, () -> accountA.transfer(accountAID,accountBID, 92.498865));
-        assertThrows(IllegalArgumentException.class, () -> accountA.transfer(accountAID,accountBID, 9999999.999999)); //border case
+        assertThrows(IllegalArgumentException.class, () -> account.transfer(accountAID,accountBID, 0.000001)); // border case
+        assertThrows(IllegalArgumentException.class, () -> account.transfer(accountAID,accountBID, 92.498865));
+        assertThrows(IllegalArgumentException.class, () -> account.transfer(accountAID,accountBID, 9999999.999999)); //border case
     }
 
     @Test
