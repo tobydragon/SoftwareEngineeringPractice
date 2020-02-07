@@ -37,6 +37,10 @@ public class BankAccount {
         return email;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
     /**
      * @post reduces the balance by amount if amount is non-negative and smaller than balance
      */
