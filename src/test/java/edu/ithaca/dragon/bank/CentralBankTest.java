@@ -131,20 +131,25 @@ public class CentralBankTest {
     }
 
     @Test
-    void closeAccountTest() throws AccountAlreadyExistsException, AccountDoesNotExistException {
+    void closeAccountTest() throws AccountAlreadyExistsException, AccountDoesNotExistException, InsufficientFundsException {
 
         CentralBank bank = new CentralBank();
         bank.createAccount("a@b.com", 100);
         bank.createAccount("b@c.com", 100);
-        bank.createAccount("c@d.com", 100);
-        bank.createAccount("d@e.com", 100);
+        bank.createAccount("c@d.com", 0.01);
+        bank.createAccount("d@e.com", 0);
 
         //class - account does not exist
         assertThrows(AccountDoesNotExistException.class, ()-> bank.closeAccount("e@f.com"));
         assertThrows(AccountDoesNotExistException.class, ()-> bank.closeAccount("acctId"));
         assertThrows(AccountDoesNotExistException.class, ()-> bank.closeAccount(""));
 
-        //class - account exists
+        //class - account exists and has money
+        assertThrows(BalanceRemainingException.class, ()-> bank.closeAccount("a@b.com"));
+        assertThrows(BalanceRemainingException.class, ()-> bank.closeAccount("c@d.com"));
+
+        //class - account exists and does not have money
+        bank.withdraw("a@b.com", bank.checkBalance("a@b.com"));
         bank.closeAccount("a@b.com");
         assertFalse(bank.accountExists("a@b.com"));
         assertTrue(bank.accountExists("b@c.com"));
@@ -154,13 +159,14 @@ public class CentralBankTest {
         //class - removed account (does not exist)
         assertThrows(AccountDoesNotExistException.class, ()-> bank.closeAccount("a@b.com"));
 
-        //another existing account remove test
+
+        //just another test
+        bank.withdraw("c@d.com", bank.checkBalance("c@d.com"));
         bank.closeAccount("c@d.com");
         assertFalse(bank.accountExists("a@b.com"));
         assertTrue(bank.accountExists("b@c.com"));
         assertFalse(bank.accountExists("c@d.com"));
         assertTrue(bank.accountExists("d@e.com"));
-
         assertThrows(AccountDoesNotExistException.class, ()-> bank.closeAccount("c@d.com"));
 
     }
