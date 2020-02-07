@@ -52,6 +52,9 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
         if (accountA.isAmountValid(amount) == false) {
             throw new IllegalArgumentException("Not a valid amount");
         }
+        else if (amount > accountA.getBalance()) {
+            throw new InsufficientFundsException("Not enough money");
+        }
         accountA.withdraw(amount);
         accountB.deposit(amount);
     }

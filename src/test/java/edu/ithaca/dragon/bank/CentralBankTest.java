@@ -96,6 +96,7 @@ public class CentralBankTest {
         account.transfer(accountAID,accountBID, 180);
         assertEquals(0, account.checkBalance(accountAID)); //border case
         assertEquals(600, account.checkBalance(accountBID));
+        assertThrows(InsufficientFundsException.class, () -> account.transfer(accountAID, accountBID, 900));
 
         // Negative, Multiple Decimals
         assertThrows(IllegalArgumentException.class, () -> account.transfer(accountAID,accountBID, -1.0000001)); // border case
