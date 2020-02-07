@@ -73,6 +73,38 @@ public class CentralBankTest {
     }
 
     @Test
+    void checkBalanceTest() throws AccountAlreadyExistsException {
+
+        // No decimals
+        CentralBank accountA = new CentralBank();
+        String accountAID = "a@test.com";
+        accountA.createAccount(accountAID, 0);
+        assertEquals(0, accountA.checkBalance("a@test.com")); //border case
+        CentralBank accountB = new CentralBank();
+        String accountBID = "a@test.com";
+        accountA.createAccount(accountBID, 200);
+        assertEquals(200, accountB.checkBalance("a@test.com"));
+        CentralBank accountC = new CentralBank();
+        String accountCID = "a@test.com";
+        accountA.createAccount(accountCID, 9999);
+        assertEquals(9999, accountC.checkBalance("a@test.com")); //border case
+
+        // One to two decimals
+        CentralBank accountD = new CentralBank();
+        String accountDID = "a@test.com";
+        accountA.createAccount(accountAID, 0.01);
+        assertEquals(0.01, accountA.checkBalance("a@test.com")); //border case
+        CentralBank accountE = new CentralBank();
+        String accountEID = "a@test.com";
+        accountA.createAccount(accountEID, 200.4);
+        assertEquals(200.4, accountE.checkBalance("a@test.com"));
+        CentralBank accountF = new CentralBank();
+        String accountFID = "a@test.com";
+        accountA.createAccount(accountFID, 9999.99);
+        assertEquals(9999.99, accountF.checkBalance("a@test.com")); //border case
+    }
+
+    @Test
     void accountExistsTest() throws AccountAlreadyExistsException, IllegalArgumentException{
         CentralBank bank = new CentralBank();
         bank.createAccount("yes@yes.com", 0);
