@@ -42,10 +42,35 @@ public class CentralBankTest {
         assertThrows(IllegalArgumentException.class, () -> newAccount.withdraw("email@test.com",9999999.999999)); //border case
     }
 
-//    @Test
-//    void depositTest(){
-//        //WILL BE DONE FORE REAL SOMEDAY
-//    }
+    @Test
+    void depositTest() throws AccountAlreadyExistsException, AccountDoesNotExistException {
+        CentralBank newAccount = new CentralBank();
+        String newAccountID = "email@test.com";
+        newAccount.createAccount(newAccountID, 200);
+
+        // Negative, One to Two Decimals
+        assertThrows(IllegalArgumentException.class, () -> newAccount.deposit("email@test.com",-1.01)); // border case
+        assertThrows(IllegalArgumentException.class, () -> newAccount.deposit("email@test.com",-53.83));
+        assertThrows(IllegalArgumentException.class, () -> newAccount.deposit("email@test.com",-9999999.9)); // border case
+
+        // Positive, One to Two Decimals
+        newAccount.deposit("email@test.com",0);
+        assertEquals(200, newAccount.checkBalance("email@test.com")); //border case
+        newAccount.deposit("email@test.com",100);
+        assertEquals(300, newAccount.checkBalance("email@test.com"));
+        newAccount.deposit("email@test.com",999);
+        assertEquals(1299, newAccount.checkBalance("email@test.com")); //border case
+
+        // Negative, Multiple Decimals
+        assertThrows(IllegalArgumentException.class, () -> newAccount.deposit("email@test.com",-1.0000001)); // border case
+        assertThrows(IllegalArgumentException.class, () -> newAccount.deposit("email@test.com",-7.48));
+        assertThrows(IllegalArgumentException.class, () -> newAccount.deposit("email@test.com",-9999999.9999999)); // border case
+
+        // Positive, Multiple Decimals
+        assertThrows(IllegalArgumentException.class, () -> newAccount.deposit("email@test.com",0.000001)); // border case
+        assertThrows(IllegalArgumentException.class, () -> newAccount.deposit("email@test.com",92.498865));
+        assertThrows(IllegalArgumentException.class, () -> newAccount.deposit("email@test.com",9999999.999999)); //border case
+    }
 
     @Test
     void accountExistsTest() throws AccountAlreadyExistsException, IllegalArgumentException{

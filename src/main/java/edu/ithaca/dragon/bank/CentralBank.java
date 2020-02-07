@@ -33,8 +33,15 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
         }
     }
 
-    public void deposit(String acctId, double amount) {
-        //WILL BE WRITTEN FOR REAL SOMEDAY
+    public void deposit(String acctId, double amount) throws AccountDoesNotExistException{
+        if (!accounts.containsKey(acctId)) throw new AccountDoesNotExistException("Account with this id does not exists");
+        BankAccount account = accounts.get(acctId);
+        if (account.isAmountValid(amount) == false) {
+            throw new IllegalArgumentException("Not a valid amount");
+        }
+        else {
+            account.deposit(amount);
+        }
     }
 
     public void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws InsufficientFundsException {
