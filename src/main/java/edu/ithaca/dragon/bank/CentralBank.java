@@ -10,8 +10,11 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
 
     //----------------- BasicAPI methods -------------------------//
 
-    public boolean confirmCredentials(String acctId, String password) {
-        return false;
+    public boolean confirmCredentials(String acctId, String password) throws AccountDoesNotExistException{
+        if (!accounts.containsKey(acctId)) throw new AccountDoesNotExistException("Account with this id does not exists");
+        BankAccount account = accounts.get(acctId);
+        if (account.getPassword() == password) return true;
+        else return false;
     }
 
     public double checkBalance(String acctId) throws AccountDoesNotExistException {
@@ -56,10 +59,10 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
 
     //----------------- AdvancedAPI methods -------------------------//
 
-    public void createAccount(String acctId, double startingBalance) throws AccountAlreadyExistsException, IllegalArgumentException {
+    public void createAccount(String acctId, String password, double startingBalance) throws AccountAlreadyExistsException, IllegalArgumentException {
         if (accounts.containsKey(acctId)) throw new AccountAlreadyExistsException("Account with this id already exists");
 
-        BankAccount account = new BankAccount(acctId, startingBalance);
+        BankAccount account = new BankAccount(acctId, password, startingBalance);
         accounts.put(acctId, account);
     }
 
