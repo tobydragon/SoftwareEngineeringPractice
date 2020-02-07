@@ -7,8 +7,17 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CentralBankTest {
 
     @Test
-    void confirmCredentialsTest() throws AccountDoesNotExistException {
+    void confirmCredentialsTest() throws AccountDoesNotExistException, AccountAlreadyExistsException {
+        CentralBank bank = new CentralBank();
+        bank.createAccount("a@b.com", "mysupersecurepassword", 100);
 
+        //incorrect password
+        assertFalse(bank.confirmCredentials("a@b.com", ""));
+        assertFalse(bank.confirmCredentials("a@b.com", "iambreakingin"));
+        assertFalse(bank.confirmCredentials("a@b.com", "supersecurepassword"));
+
+        //correct password
+        assertTrue(bank.confirmCredentials("a@b.com", "mysupersecurepassword"));
 
     }
 
