@@ -9,7 +9,7 @@ public interface BasicAPI {
 
     void withdraw(String acctId, double amount) throws InsufficientFundsException, AccountDoesNotExistException;
 
-    void deposit(String acctId, double amount);
+    void deposit(String acctId, double amount) throws AccountDoesNotExistException;
 
     void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws InsufficientFundsException;
 
