@@ -11,7 +11,7 @@ public interface BasicAPI {
 
     void deposit(String acctId, double amount) throws AccountDoesNotExistException;
 
-    void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws InsufficientFundsException;
+    void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws InsufficientFundsException, AccountDoesNotExistException;
 
     String transactionHistory(String acctId);
 

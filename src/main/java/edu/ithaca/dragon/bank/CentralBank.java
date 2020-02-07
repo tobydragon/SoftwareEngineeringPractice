@@ -37,7 +37,7 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
         }
     }
 
-    public void deposit(String acctId, double amount) throws AccountDoesNotExistException{
+    public void deposit(String acctId, double amount) throws AccountDoesNotExistException {
         if (!accounts.containsKey(acctId)) throw new AccountDoesNotExistException("Account with this id does not exists");
         BankAccount account = accounts.get(acctId);
         if (account.isAmountValid(amount) == false) {
@@ -48,8 +48,19 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
         }
     }
 
-    public void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws InsufficientFundsException {
-
+    public void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws InsufficientFundsException, AccountDoesNotExistException {
+        if (!accounts.containsKey(acctIdToWithdrawFrom)) throw new AccountDoesNotExistException("Account with this id does not exists");
+        if (!accounts.containsKey(acctIdToDepositTo)) throw new AccountDoesNotExistException("Account with this id does not exists");
+        BankAccount accountA = accounts.get(acctIdToWithdrawFrom);
+        BankAccount accountB = accounts.get(acctIdToDepositTo);
+        if (accountA.isAmountValid(amount) == false) {
+            throw new IllegalArgumentException("Not a valid amount");
+        }
+        else if (amount > accountA.getBalance()) {
+            throw new InsufficientFundsException("Not enough money");
+        }
+        accountA.withdraw(amount);
+        accountB.deposit(amount);
     }
 
     public String transactionHistory(String acctId) {

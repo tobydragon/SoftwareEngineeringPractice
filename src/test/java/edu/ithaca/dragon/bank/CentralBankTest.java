@@ -88,6 +88,43 @@ public class CentralBankTest {
     }
 
     @Test
+    void transferTest() throws AccountAlreadyExistsException, InsufficientFundsException, AccountDoesNotExistException {
+        CentralBank account = new CentralBank();
+        String accountAID = "a@test.com";
+        account.createAccount(accountAID, "password", 200);
+
+        String accountBID = "b@test.com";
+        account.createAccount(accountBID, "password", 400);
+
+        // Negative, One to Two Decimals
+        assertThrows(IllegalArgumentException.class, () -> account.transfer(accountAID, accountBID, -1.01)); // border case
+        assertThrows(IllegalArgumentException.class, () -> account.transfer(accountAID, accountBID, -53.83));
+        assertThrows(IllegalArgumentException.class, () -> account.transfer(accountAID, accountBID, -9999999.9)); // border case
+
+        // Positive, One to Two Decimals
+        account.transfer(accountAID, accountBID, 0);
+        assertEquals(200, account.checkBalance(accountAID)); //border case
+        assertEquals(400, account.checkBalance(accountBID));
+        account.transfer(accountAID, accountBID, 20);
+        assertEquals(180, account.checkBalance(accountAID));
+        assertEquals(420, account.checkBalance(accountBID));
+        account.transfer(accountAID, accountBID, 180);
+        assertEquals(0, account.checkBalance(accountAID)); //border case
+        assertEquals(600, account.checkBalance(accountBID));
+        assertThrows(InsufficientFundsException.class, () -> account.transfer(accountAID, accountBID, 900));
+
+        // Negative, Multiple Decimals
+        assertThrows(IllegalArgumentException.class, () -> account.transfer(accountAID, accountBID, -1.0000001)); // border case
+        assertThrows(IllegalArgumentException.class, () -> account.transfer(accountAID, accountBID, -7.48));
+        assertThrows(IllegalArgumentException.class, () -> account.transfer(accountAID, accountBID, -9999999.9999999)); // border case
+
+        // Positive, Multiple Decimals
+        assertThrows(IllegalArgumentException.class, () -> account.transfer(accountAID, accountBID, 0.000001)); // border case
+        assertThrows(IllegalArgumentException.class, () -> account.transfer(accountAID, accountBID, 92.498865));
+        assertThrows(IllegalArgumentException.class, () -> account.transfer(accountAID, accountBID, 9999999.999999)); //border case
+    }
+    
+    @Test
     void checkBalanceTest() throws AccountDoesNotExistException, AccountAlreadyExistsException {
 
         // No decimals
