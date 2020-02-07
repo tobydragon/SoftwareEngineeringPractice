@@ -52,6 +52,36 @@ public class AdminTest {
 
     }
 
+    @Test
+    void unFreezeAccountTest() {
+        Account abcAcc = new CheckingAccount(500, "abc");
+        Account xyzAcc = new CheckingAccount(500, "xyz");
+        Collection<Account>  collection = new ArrayList<Account>();
+        collection.add(abcAcc);
+        collection.add(xyzAcc);
+        Admin admin = new Admin(collection);
+        //Checking true frozen status after change
+        abcAcc.setFrozen(true);
+        xyzAcc.setFrozen(true);
+        assertEquals(true, abcAcc.getFrozenStatus());
+        assertEquals(true, xyzAcc.getFrozenStatus());
+        //Checking only one acc gets changed
+        admin.unfreezeAcct("abc");
+        assertEquals(false, abcAcc.getFrozenStatus());
+        assertEquals(true, xyzAcc.getFrozenStatus());
+        //Checking can unfreeze other acc
+        admin.unfreezeAcct("xyz");
+        assertEquals(false, xyzAcc.getFrozenStatus());
+        //Checking that unfreezing an unfrozen account remains false
+        admin.unfreezeAcct("xyz");
+        assertEquals(false, xyzAcc.getFrozenStatus());
+        //Checking with IDs not present in collection
+        assertThrows(IllegalArgumentException.class, () -> admin.unfreezeAcct("123"));
+        assertThrows(IllegalArgumentException.class, () -> admin.unfreezeAcct(""));
+        assertThrows(IllegalArgumentException.class, () -> admin.unfreezeAcct("abcd"));
+
+    }
+
 
 
 }
