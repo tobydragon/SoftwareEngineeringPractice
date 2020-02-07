@@ -73,6 +73,38 @@ public class CentralBankTest {
     }
 
     @Test
+    void checkBalanceTest() throws AccountDoesNotExistException, AccountAlreadyExistsException {
+
+        // No decimals
+        CentralBank accountA = new CentralBank();
+        String accountAID = "a@test.com";
+        accountA.createAccount(accountAID, 0);
+        assertEquals(0, accountA.checkBalance("a@test.com")); //border case
+        CentralBank accountB = new CentralBank();
+        String accountBID = "b@test.com";
+        accountB.createAccount(accountBID, 200);
+        assertEquals(200, accountB.checkBalance("b@test.com"));
+        CentralBank accountC = new CentralBank();
+        String accountCID = "c@test.com";
+        accountC.createAccount(accountCID, 9999);
+        assertEquals(9999, accountC.checkBalance("c@test.com")); //border case
+
+        // One to two decimals
+        CentralBank accountD = new CentralBank();
+        String accountDID = "d@test.com";
+        accountD.createAccount(accountDID, 0.01);
+        assertEquals(0.01, accountD.checkBalance("d@test.com")); //border case
+        CentralBank accountE = new CentralBank();
+        String accountEID = "e@test.com";
+        accountE.createAccount(accountEID, 200.4);
+        assertEquals(200.4, accountE.checkBalance("e@test.com"));
+        CentralBank accountF = new CentralBank();
+        String accountFID = "f@test.com";
+        accountF.createAccount(accountFID, 9999.99);
+        assertEquals(9999.99, accountF.checkBalance("f@test.com")); //border case
+    }
+
+    @Test
     void accountExistsTest() throws AccountAlreadyExistsException, IllegalArgumentException{
         CentralBank bank = new CentralBank();
         bank.createAccount("yes@yes.com", 0);
@@ -81,7 +113,7 @@ public class CentralBankTest {
     }
 
     @Test
-    void createAccountTest() throws AccountAlreadyExistsException, IllegalArgumentException {
+    void createAccountTest() throws AccountAlreadyExistsException, IllegalArgumentException, AccountDoesNotExistException {
 
         CentralBank bank = new CentralBank();
 

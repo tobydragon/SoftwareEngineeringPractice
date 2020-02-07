@@ -14,7 +14,8 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
         return false;
     }
 
-    public double checkBalance(String acctId) {
+    public double checkBalance(String acctId) throws AccountDoesNotExistException {
+        if (!accounts.containsKey(acctId)) throw new AccountDoesNotExistException("Account with this id does not exists");
         BankAccount account = accounts.get(acctId);
         return account.getBalance();
     }
