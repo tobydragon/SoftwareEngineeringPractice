@@ -74,8 +74,15 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
 
     //------------------ AdminAPI methods -------------------------//
 
-    public double calcTotalAssets() {
-        return 0;
+    public double calcTotalAssets() throws AccountDoesNotExistException {
+        if (accounts.keySet().size() == 0) throw new AccountDoesNotExistException("Bank does not contain accounts");
+
+        double total = 0;
+        for (BankAccount account:accounts.values()) {
+            total += account.getBalance();
+        }
+
+        return total;
     }
 
     public Collection<String> findAcctIdsWithSuspiciousActivity() {

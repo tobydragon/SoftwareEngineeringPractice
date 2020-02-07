@@ -130,4 +130,43 @@ public class CentralBankTest {
 
 
     }
+
+    @Test
+    void calcTotalAssetsTest() throws AccountAlreadyExistsException, IllegalArgumentException, AccountDoesNotExistException {
+        CentralBank bank = new CentralBank();
+
+        //equivalence class - bank has accounts
+        //border
+        bank.createAccount("a@b.com", 0);
+        bank.createAccount("b@c.com", 0);
+        bank.createAccount("c@d.com", 0);
+        bank.createAccount("d@e.com", 0);
+
+        assertEquals(0, bank.calcTotalAssets());
+
+        bank = new CentralBank();
+        bank.createAccount("a@b.com", 100.50);
+        bank.createAccount("b@c.com", 150.05);
+        bank.createAccount("c@d.com", 200.50);
+        bank.createAccount("d@e.com", 250.05);
+
+        assertEquals(701.10, bank.calcTotalAssets());
+
+        //border
+        bank = new CentralBank();
+        bank.createAccount("a@b.com", 100000);
+        bank.createAccount("b@c.com", 500000);
+        bank.createAccount("c@d.com", 1000000);
+        bank.createAccount("d@e.com", 5000000);
+
+        assertEquals(6600000, bank.calcTotalAssets());
+
+
+        //equivalence class - bank has no accounts
+        CentralBank bank2 = new CentralBank();
+        assertThrows(AccountDoesNotExistException.class, ()-> bank2.calcTotalAssets());
+
+    }
+
+
 }
