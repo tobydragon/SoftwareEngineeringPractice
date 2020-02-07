@@ -12,9 +12,9 @@ public class CentralBankTest {
         bank.createAccount("a@b.com", "mysupersecurepassword", 100);
 
         //incorrect password
-        assertFalse(bank.confirmCredentials("a@b.com", ""));
-        assertFalse(bank.confirmCredentials("a@b.com", "iambreakingin"));
-        assertFalse(bank.confirmCredentials("a@b.com", "supersecurepassword"));
+        assertFalse(bank.confirmCredentials("a@b.com", "")); //border - nothing
+        assertFalse(bank.confirmCredentials("a@b.com", "iambreakingin")); //middle - just something else
+        assertFalse(bank.confirmCredentials("a@b.com", "ysupersecurepassword")); //border - close to password
 
         //correct password
         assertTrue(bank.confirmCredentials("a@b.com", "mysupersecurepassword"));
