@@ -13,9 +13,14 @@ public abstract class Account {
     public Account(double startingBalance, String id) {
         if (!isAmountValid(startingBalance)) {
             throw new IllegalArgumentException("Starting balance: " + startingBalance + " is invalid, cannot create account");
-        } else {
+        }
+        else if (id == ""){
+            throw new IllegalArgumentException("ID cannot be an empty string");
+        }
+        else {
             this.balance = startingBalance;
             this.isFrozen = false;
+            this.id = id;
         }
     }
 
