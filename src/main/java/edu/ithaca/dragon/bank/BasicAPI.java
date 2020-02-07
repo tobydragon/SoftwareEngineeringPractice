@@ -5,7 +5,7 @@ public interface BasicAPI {
 
     boolean confirmCredentials(String acctId, String password);
 
-    double checkBalance(String acctId);
+    double checkBalance(String acctId) throws AccountDoesNotExistException;
 
     void withdraw(String acctId, double amount) throws InsufficientFundsException, AccountDoesNotExistException;
 
