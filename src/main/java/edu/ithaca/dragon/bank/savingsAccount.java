@@ -4,12 +4,23 @@ package edu.ithaca.dragon.bank;
 public class savingsAccount extends BankAccount {
     double maxWithdraw;
     double withdrawCurrent;
+
+    /**
+     * @param email
+     * @param startingBalance
+     * @throws IllegalArgumentException if email is invalid
+     */
+    public savingsAccount(String email, double startingBalance, double maxWithdraw) {
+        super(email, startingBalance);
+        this.maxWithdraw = maxWithdraw;
+    }
+
     /**
      * this method calculates the interest on a savings account
      * @return
      */
     public double calcInterest(){
-
+        return 0;
     }
 
     /**
