@@ -43,6 +43,18 @@ public class Admin implements AdminAPI {
 
     @Override
     public void unfreezeAcct(String acctId) throws IllegalArgumentException {
+        boolean accountFound = false;
+        Iterator<Account> itr = this.accounts.iterator();
+        while (itr.hasNext()){
+            Account current = itr.next();
+            if (current.getID()== acctId){
+                accountFound = true;
+                current.setFrozen(false);
+            }
+        }
+        if (accountFound == false){
+            throw new IllegalArgumentException("String not in collection");
+        }
 
     }
 
