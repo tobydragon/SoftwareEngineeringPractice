@@ -5,5 +5,5 @@ public interface AdvancedAPI extends BasicAPI {
 
     public void createAccount(String acctId, double startingBalance) throws AccountAlreadyExistsException, IllegalArgumentException;
 
-    public void closeAccount(String acctId);
+    public void closeAccount(String acctId) throws AccountDoesNotExistException, BalanceRemainingException;
 }
