@@ -3,14 +3,16 @@ package edu.ithaca.dragon.bank;
 public class BankAccount {
 
     private String email;
+    private String password;
     private double balance;
 
     /**
      * @throws IllegalArgumentException if email is invalid
      */
-    public BankAccount(String email, double startingBalance){
+    public BankAccount(String email, String password, double startingBalance){
         if (isEmailValid(email)){
             this.email = email;
+            this.password = password;
             if(isAmountValid(startingBalance)){
                 this.balance = startingBalance;
             }
