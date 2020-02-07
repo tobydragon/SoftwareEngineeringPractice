@@ -25,15 +25,30 @@ public class AdminTest {
     }
 
     @Test
-    //Incomplete, have to make Account use ID first
     void freezeAccountTest() {
-        Account testAcc = new CheckingAccount(500, "abc");
+        Account abcAcc = new CheckingAccount(500, "abc");
+        Account xyzAcc = new CheckingAccount(500, "xyz");
         Collection<Account>  collection = new ArrayList<Account>();
-        collection.add(testAcc);
+        collection.add(abcAcc);
+        collection.add(xyzAcc);
         Admin admin = new Admin(collection);
-        assertEquals(false, testAcc.getFrozenStatus());
-        admin.freezeAccount("id");
-
+        //Checking false frozen status after no change
+        assertEquals(false, abcAcc.getFrozenStatus());
+        assertEquals(false, xyzAcc.getFrozenStatus());
+        admin.freezeAccount("abc");
+        //Checking for true after frozen, and that other account unaffected
+        assertEquals(true, abcAcc.getFrozenStatus());
+        assertEquals(false, xyzAcc.getFrozenStatus());
+        admin.freezeAccount("abc");
+        //Checking still true if you attempt to freeze a frozen account
+        assertEquals(true, abcAcc.getFrozenStatus());
+        //Checking freezing other account
+        admin.freezeAccount("xyz");
+        assertEquals(true, xyzAcc.getFrozenStatus());
+        //Checking with IDs not present in collection
+        assertThrows(IllegalArgumentException.class, () -> admin.freezeAccount("123"));
+        assertThrows(IllegalArgumentException.class, () -> admin.freezeAccount(""));
+        assertThrows(IllegalArgumentException.class, () -> admin.freezeAccount("abcd"));
 
     }
 

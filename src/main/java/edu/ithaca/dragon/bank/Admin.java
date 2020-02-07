@@ -24,12 +24,12 @@ public class Admin implements AdminAPI {
     }
 
     @Override
-    public void freezeAccount(String acctId) {
+    public void freezeAccount(String acctId) throws IllegalArgumentException {
 
     }
 
     @Override
-    public void unfreezeAcct(String acctId) {
+    public void unfreezeAcct(String acctId) throws IllegalArgumentException {
 
     }
 
