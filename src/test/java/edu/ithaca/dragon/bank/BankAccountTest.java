@@ -174,5 +174,24 @@ class BankAccountTest {
         BankAccount bankAccount2 = new BankAccount("b@a.cc", "password", 90);
         assertThrows(InsufficientFundsException.class, ()-> BankAccount.transfer(bankAccount1, bankAccount2, -900)); //equivalence case where the transfer amount is negative amount of money
         assertThrows(InsufficientFundsException.class, ()-> BankAccount.transfer(bankAccount1, bankAccount2, -91)); //equivalence case of negative amount of money to transfer
+
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("bank@email.com", "", 100));
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("bank@email.com", "1234", 100));
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("bank@email.com", "passwrd", 100));
+
     }
+
+    @Test
+    void isPasswordValidTest() {
+        //too short
+        assertFalse(BankAccount.isPasswordValid(""));
+        assertFalse(BankAccount.isPasswordValid("pw123"));
+        assertFalse(BankAccount.isPasswordValid("passwrd"));
+
+        //okay
+        assertTrue(BankAccount.isPasswordValid("password"));
+        assertTrue(BankAccount.isPasswordValid("supersecretpassword123"));
+        assertTrue(BankAccount.isPasswordValid("#thebestpasswordever!!12345"));
+    }
+
 }

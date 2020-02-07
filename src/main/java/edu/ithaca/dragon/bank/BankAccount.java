@@ -12,7 +12,11 @@ public class BankAccount {
     public BankAccount(String email, String password, double startingBalance){
         if (isEmailValid(email)){
             this.email = email;
-            this.password = password;
+            if (isPasswordValid(password)) {
+                this.password = password;
+            } else {
+                throw new IllegalArgumentException("Password must be at least 8 characters");
+            }
             if(isAmountValid(startingBalance)){
                 this.balance = startingBalance;
             }
@@ -49,7 +53,12 @@ public class BankAccount {
         balance -= amount;
     }
 
-    private  static  boolean isExtensionValid(String extension){ //Private method to check if extension is valid
+    public static boolean isPasswordValid(String password) {
+        if (password.length() >= 8) return true;
+        else return false;
+    }
+
+    private static boolean isExtensionValid(String extension){ //Private method to check if extension is valid
         if (extension.indexOf('.') != -1) { //Check if a period is in the extension
             return false;
         }
