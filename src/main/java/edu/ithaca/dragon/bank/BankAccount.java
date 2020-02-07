@@ -3,14 +3,20 @@ package edu.ithaca.dragon.bank;
 public class BankAccount {
 
     private String email;
+    private String password;
     private double balance;
 
     /**
      * @throws IllegalArgumentException if email is invalid
      */
-    public BankAccount(String email, double startingBalance){
+    public BankAccount(String email, String password, double startingBalance){
         if (isEmailValid(email)){
             this.email = email;
+            if (isPasswordValid(password)) {
+                this.password = password;
+            } else {
+                throw new IllegalArgumentException("Password must be at least 8 characters");
+            }
             if(isAmountValid(startingBalance)){
                 this.balance = startingBalance;
             }
@@ -31,6 +37,10 @@ public class BankAccount {
         return email;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
     /**
      * @post reduces the balance by amount if amount is non-negative and smaller than balance
      */
@@ -47,7 +57,12 @@ public class BankAccount {
         balance -= amount;
     }
 
-    private  static  boolean isExtensionValid(String extension){ //Private method to check if extension is valid
+    public static boolean isPasswordValid(String password) {
+        if (password.length() >= 8) return true;
+        else return false;
+    }
+
+    private static boolean isExtensionValid(String extension){ //Private method to check if extension is valid
         if (extension.indexOf('.') != -1) { //Check if a period is in the extension
             return false;
         }
