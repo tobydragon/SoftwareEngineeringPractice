@@ -131,7 +131,8 @@ public class CentralBankTest {
     }
 
     @Test
-    void closeAccountTest() throws AccountAlreadyExistsException, AccountDoesNotExistException, InsufficientFundsException {
+    void closeAccountTest() throws AccountAlreadyExistsException,
+            AccountDoesNotExistException, InsufficientFundsException, BalanceRemainingException {
 
         CentralBank bank = new CentralBank();
         bank.createAccount("a@b.com", 100);

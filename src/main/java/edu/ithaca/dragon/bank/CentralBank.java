@@ -67,8 +67,12 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
         return accounts.containsKey(acctId);
     }
 
-    public void closeAccount(String acctId) throws AccountDoesNotExistException {
+    public void closeAccount(String acctId) throws AccountDoesNotExistException, BalanceRemainingException {
         if (!accounts.containsKey(acctId)) throw new AccountDoesNotExistException("Account does not exist");
+
+        BankAccount account = accounts.get(acctId);
+        if (account.getBalance() != 0) throw new BalanceRemainingException("Only empty accounts may be closed");
+
         accounts.remove(acctId);
     }
 
