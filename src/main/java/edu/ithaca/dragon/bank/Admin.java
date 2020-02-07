@@ -10,6 +10,7 @@ public class Admin implements AdminAPI {
      * @param accounts the accounts that Admin must act on
      */
     public Admin(Collection<Account> accounts){
+        this.accounts = accounts;
     }
 
     @Override
