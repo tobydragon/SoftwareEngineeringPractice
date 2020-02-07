@@ -14,6 +14,7 @@ public abstract class Account {
             throw new IllegalArgumentException("Starting balance: " + startingBalance + " is invalid, cannot create account");
         } else {
             this.balance = startingBalance;
+            this.isFrozen = false;
         }
     }
 
@@ -50,6 +51,10 @@ public abstract class Account {
 
     public String getHistory() {
         return "";
+    }
+
+    public boolean getFrozenStatus(){
+        return isFrozen;
     }
 
     /**
