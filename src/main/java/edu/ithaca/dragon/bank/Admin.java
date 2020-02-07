@@ -1,6 +1,7 @@
 package edu.ithaca.dragon.bank;
 
 import java.util.Collection;
+import java.util.Iterator;
 
 public class Admin implements AdminAPI {
     Collection<Account> accounts;
@@ -25,6 +26,18 @@ public class Admin implements AdminAPI {
 
     @Override
     public void freezeAccount(String acctId) throws IllegalArgumentException {
+        boolean accountFound = false;
+        Iterator<Account> itr = this.accounts.iterator();
+        while (itr.hasNext()){
+            Account current = itr.next();
+            if (current.getID()== acctId){
+                accountFound = true;
+                current.setFrozen(true);
+            }
+        }
+        if (accountFound == false){
+            throw new IllegalArgumentException("String not in collection");
+        }
 
     }
 

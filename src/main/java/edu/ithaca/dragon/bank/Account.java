@@ -63,6 +63,10 @@ public abstract class Account {
         return isFrozen;
     }
 
+    public  void setFrozen(boolean frozenStatus){
+        isFrozen = frozenStatus;
+    }
+
     public String getID(){
         return id;
     }
