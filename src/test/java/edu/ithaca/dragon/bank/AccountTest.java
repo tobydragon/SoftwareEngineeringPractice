@@ -12,7 +12,7 @@ public class AccountTest {
     @Test
     void depositTest() {
 
-        Account bankAccount = new CheckingAccount( 0);
+        Account bankAccount = new CheckingAccount( 0, "1");
 
         //non-negative amount with more than two decimal places
         assertThrows(IllegalArgumentException.class, () -> bankAccount.deposit(0.001));
@@ -50,41 +50,52 @@ public class AccountTest {
 
     @Test
     void constructorTest() {
-        Account bankAccount = new CheckingAccount( 200);
+        Account bankAccount = new CheckingAccount( 200, "1");
 
         assertEquals(200, bankAccount.getBalance());
 
         //non-negative balance with two decimal places or less
-        bankAccount = new CheckingAccount( 0);
+        bankAccount = new CheckingAccount( 0, "1");
         assertEquals(0, bankAccount.getBalance(), THRESHOLD);
-        bankAccount = new CheckingAccount( 0.01);
+        bankAccount = new CheckingAccount( 0.01, "1");
         assertEquals(0.01, bankAccount.getBalance(), THRESHOLD);
-        bankAccount = new CheckingAccount( 0.99);
+        bankAccount = new CheckingAccount( 0.99, "1");
         assertEquals(0.99, bankAccount.getBalance(), THRESHOLD);
-        bankAccount = new CheckingAccount( 9876.5);
+        bankAccount = new CheckingAccount( 9876.5, "1");
         assertEquals(9876.5, bankAccount.getBalance(), THRESHOLD);
-        bankAccount = new CheckingAccount(248);
+        bankAccount = new CheckingAccount(248, "1");
         assertEquals(248, bankAccount.getBalance(), THRESHOLD);
 
         //non-negative balance with more than two decimal places
-        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount(0.001));
-        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount(0.9999));
-        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount( 369.333));
-        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount( Double.MAX_VALUE));
-        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount( Double.MIN_VALUE));
+        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount(0.001, "1"));
+        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount(0.9999, "1"));
+        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount( 369.333, "1"));
+        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount( Double.MAX_VALUE, "1"));
+        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount( Double.MIN_VALUE, "1"));
 
         //negative balance with two decimal places or less
-        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount( -0.01));
-        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount( -0.99));
-        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount( -10.2));
-        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount( -125));
+        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount( -0.01, "1"));
+        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount( -0.99, "1"));
+        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount( -10.2, "1"));
+        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount( -125, "1"));
 
         //negative balance with more than two decimal places
-        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount( -0.001));
-        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount( -0.9999));
-        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount( -369.333));
-        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount( -Double.MAX_VALUE));
-        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount( -Double.MIN_VALUE));
+        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount( -0.001, "1"));
+        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount( -0.9999, "1"));
+        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount( -369.333, "1"));
+        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount( -Double.MAX_VALUE, "1"));
+        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount( -Double.MIN_VALUE, "1"));
+
+        //for now assuming any non-empty string is a valid id, may have to update these tests later
+        bankAccount = new CheckingAccount(50, "1");
+        assertEquals("1", bankAccount.getID());
+        bankAccount = new CheckingAccount(50, "abc");
+        assertEquals("abc", bankAccount.getID());
+
+        //checking with emptyString, illegal argument for balance takes precedence
+        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount( -0.001, ""));//Bad balance takes precedence
+        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount( 50, ""));
+
     }
 
     @Test

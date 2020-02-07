@@ -7,9 +7,10 @@ public abstract class Account {
     private double balance;
     private boolean isFrozen;
     private Collection<User> users;
+    private String id;
 
 
-    public Account(double startingBalance) {
+    public Account(double startingBalance, String id) {
         if (!isAmountValid(startingBalance)) {
             throw new IllegalArgumentException("Starting balance: " + startingBalance + " is invalid, cannot create account");
         } else {
@@ -55,6 +56,10 @@ public abstract class Account {
 
     public boolean getFrozenStatus(){
         return isFrozen;
+    }
+
+    public String getID(){
+        return id;
     }
 
     /**
