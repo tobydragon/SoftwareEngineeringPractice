@@ -127,15 +127,29 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
     }
 
     /**
-     * C
+     *
      * @param acctID
+     * @return if account exists or not
      */
     public boolean checkAccountExists(String acctID) {
-        return false;
+        if (bankAccounts.containsKey(acctID)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
+    /**
+     *
+     * @param acctID
+     * @return if frozen account exists or not
+     */
     public boolean checkFrozenAccountExists(String acctID) {
-        return false;
+        if (frozenAccounts.containsKey(acctID)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

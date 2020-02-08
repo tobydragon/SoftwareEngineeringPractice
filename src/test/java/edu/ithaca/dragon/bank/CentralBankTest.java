@@ -105,12 +105,11 @@ public class CentralBankTest {
 
     @Test
     void checkFrozenAccountExists() {
-        HashMap<String, Double> frozenAccountsTest = new HashMap<String, Double>();
-        frozenAccountsTest.put("123", 500.0);
-        frozenAccountsTest.put("456", 570.0);
-        frozenAccountsTest.put("313", 189.11);
 
-        CentralBank centralBank1 = new CentralBank("Bank1", null, frozenAccountsTest);
+        CentralBank centralBank1 = new CentralBank("Bank1", null, null);
+        centralBank1.freezeAccount("123");
+        centralBank1.freezeAccount("456");
+        centralBank1.freezeAccount("313");
 
         //Check frozen accounts that exist
         assertTrue(centralBank1.checkFrozenAccountExists("123"));
