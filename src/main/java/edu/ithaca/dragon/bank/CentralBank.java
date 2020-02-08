@@ -1,6 +1,7 @@
 package edu.ithaca.dragon.bank;
 
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.HashMap;
 
@@ -85,7 +86,17 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
      * @return sum of all account balances of the bank, 0 if none
      */
     public double calcTotalAssets() {
-        return 0;
+        double sum = 0;
+        if (bankAccounts.isEmpty()) {
+            return 0;
+        } else {
+            Iterator<Map.Entry<String, Double>> accIterator = bankAccounts.entrySet().iterator();
+            while (accIterator.hasNext()) {
+                Map.Entry<String, Double> amount = accIterator.next();
+                sum+=amount.getValue();
+            }
+            return sum;
+        }
     }
 
 

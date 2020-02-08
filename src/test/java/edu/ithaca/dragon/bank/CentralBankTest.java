@@ -59,12 +59,12 @@ public class CentralBankTest {
         centralBank1.createAccount("689", 9.10);
 
         CentralBank centralBank2 = new CentralBank("Bank2", null);
-        centralBank2.createAccount("001", 4589.57);
-        centralBank2.createAccount("002", 1004.9);
+        centralBank2.createAccount("001", 589.57);
+        centralBank2.createAccount("002", 4.9);
 
         assertEquals(0, centralBank0.calcTotalAssets()); //Check for balance of no accounts
         assertEquals(1000, centralBank1.calcTotalAssets()); //Check for balance
-        assertEquals(5594.47, centralBank2.calcTotalAssets()); //Check for balance
+        assertEquals(594.47, centralBank2.calcTotalAssets()); //Check for balance
     }
 
 }
