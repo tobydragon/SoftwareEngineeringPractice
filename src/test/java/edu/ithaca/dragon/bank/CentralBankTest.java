@@ -19,6 +19,15 @@ public class CentralBankTest {
         //correct password
         assertTrue(bank.confirmCredentials("a@b.com", "mysupersecurepassword"));
 
+
+        //and with savings
+        bank.createAccount("b@c.com", "mysupersecurepassword", 100, true);
+        //incorrect password
+        assertFalse(bank.confirmCredentials("b@c.com", "")); //border - nothing
+        assertFalse(bank.confirmCredentials("b@c.com", "iambreakingin")); //middle - just something else
+        assertFalse(bank.confirmCredentials("b@c.com", "ysupersecurepassword")); //border - close to password
+        //correct password
+        assertTrue(bank.confirmCredentials("b@c.com", "mysupersecurepassword"));
     }
 
     @Test
@@ -33,6 +42,11 @@ public class CentralBankTest {
         assertThrows(InsufficientFundsException.class, () -> newAccount.withdraw("email@test.com", 201)); //border case
         assertThrows(InsufficientFundsException.class, () -> newAccount.withdraw("email@test.com", 350));
         assertThrows(InsufficientFundsException.class, () -> newAccount.withdraw("email@test.com", 1000)); //border case
+
+        newAccount.createAccount("try@savings.com", "password", 100, true);
+        assertThrows(ExceedsMaxWithdrawalException.class, () -> newAccount.withdraw("try@savings.com", 501)); //border case
+        assertThrows(ExceedsMaxWithdrawalException.class, () -> newAccount.withdraw("try@savings.com", 750));
+        assertThrows(ExceedsMaxWithdrawalException.class, () -> newAccount.withdraw("try@savings.com", 1000)); //border case
 
         //Withdraw equals or less than is in account
         newAccount.withdraw("email@test.com", 1);
@@ -96,7 +110,7 @@ public class CentralBankTest {
         account.createAccount(accountAID, "password", 200, false);
 
         String accountBID = "b@test.com";
-        account.createAccount(accountBID, "password", 400, false);
+        account.createAccount(accountBID, "password", 400, true);
 
         // Negative, One to Two Decimals
         assertThrows(IllegalArgumentException.class, () -> account.transfer(accountAID, accountBID, -1.01)); // border case
@@ -136,7 +150,7 @@ public class CentralBankTest {
         assertEquals(0, accountA.checkBalance("a@test.com")); //border case
         CentralBank accountB = new CentralBank();
         String accountBID = "b@test.com";
-        accountB.createAccount(accountBID, "password", 200, false);
+        accountB.createAccount(accountBID, "password", 200, true);
         assertEquals(200, accountB.checkBalance("b@test.com"));
         CentralBank accountC = new CentralBank();
         String accountCID = "c@test.com";
@@ -150,7 +164,7 @@ public class CentralBankTest {
         assertEquals(0.01, accountD.checkBalance("d@test.com")); //border case
         CentralBank accountE = new CentralBank();
         String accountEID = "e@test.com";
-        accountE.createAccount(accountEID, "password", 200.4, false);
+        accountE.createAccount(accountEID, "password", 200.4, true);
         assertEquals(200.4, accountE.checkBalance("e@test.com"));
         CentralBank accountF = new CentralBank();
         String accountFID = "f@test.com";
@@ -181,7 +195,7 @@ public class CentralBankTest {
         assertEquals(0, bank.checkBalance(id1));
 
         String id2 = "b@c.com";
-        bank.createAccount(id2, "password", 100.5, false);
+        bank.createAccount(id2, "password", 100.5, true);
         assertTrue(bank.accountExists(id2));
         assertEquals(100.5, bank.checkBalance(id2));
 
@@ -266,25 +280,25 @@ public class CentralBankTest {
         //equivalence class - bank has accounts
         //border
         bank.createAccount("a@b.com", "password", 0, false);
-        bank.createAccount("b@c.com", "password", 0, false);
+        bank.createAccount("b@c.com", "password", 0, true);
         bank.createAccount("c@d.com", "password", 0, false);
-        bank.createAccount("d@e.com", "password", 0, false);
+        bank.createAccount("d@e.com", "password", 0, true);
 
         assertEquals(0, bank.calcTotalAssets());
 
         bank = new CentralBank();
-        bank.createAccount("a@b.com", "password", 100.50, false);
+        bank.createAccount("a@b.com", "password", 100.50, true);
         bank.createAccount("b@c.com", "password", 150.05, false);
-        bank.createAccount("c@d.com", "password", 200.50, false);
+        bank.createAccount("c@d.com", "password", 200.50, true);
         bank.createAccount("d@e.com", "password", 250.05, false);
 
         assertEquals(701.10, bank.calcTotalAssets());
 
         //border
         bank = new CentralBank();
-        bank.createAccount("a@b.com", "password", 100000, false);
+        bank.createAccount("a@b.com", "password", 100000, true);
         bank.createAccount("b@c.com", "password", 500000, false);
-        bank.createAccount("c@d.com", "password", 1000000, false);
+        bank.createAccount("c@d.com", "password", 1000000, true);
         bank.createAccount("d@e.com", "password", 5000000, false);
 
         assertEquals(6600000, bank.calcTotalAssets());
