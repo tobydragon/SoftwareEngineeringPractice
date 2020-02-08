@@ -20,19 +20,34 @@ public class CentralBankTest {
         //check for exception thrown correctly. All test cases for negatives and decimal places not required since isAmountValid()
         //already does so. Also, it wasn't specified that ID's only had to be numbers (can change if need be).
         assertThrows(IllegalArgumentException.class, ()-> centralBank1.createAccount("", 200));
+        assertThrows(IllegalArgumentException.class, ()-> centralBank1.createAccount("001", 200));  //check for ID already exists
+        assertThrows(IllegalArgumentException.class, ()-> centralBank1.createAccount("123", 75.899)); //positive number three decimals
+        assertThrows(IllegalArgumentException.class, ()-> centralBank1.createAccount("678", -450)); //negative number
+        assertThrows(IllegalArgumentException.class, ()-> centralBank1.createAccount("491", -500.671)); //negative number three decimals
+    }
 
-        //check for ID already exists
-        assertThrows(IllegalArgumentException.class, ()-> centralBank1.createAccount("001", 200));
+    @Test
+    void checkBalanceTest() {
 
-        //positive number three decimals
-        assertThrows(IllegalArgumentException.class, ()-> centralBank1.createAccount("123", 75.899));
+        CentralBank centralBank1 = new CentralBank("Keybank", null);
+        centralBank1.createAccount("123", 1);
+        centralBank1.createAccount("456", 2000);
+        centralBank1.createAccount("789", 0);
+        centralBank1.createAccount("024", 15.8);
+        centralBank1.createAccount("689", 679.99);
 
-        //negative number
-        assertThrows(IllegalArgumentException.class, ()-> centralBank1.createAccount("678", -450));
+        //Checking that it returns correct balance
+        assertEquals(1, centralBank1.checkBalance("123")); //equivalence test with positive balance
+        assertEquals(2000, centralBank1.checkBalance("456")); //equivalence test with positive balance
+        assertEquals(0, centralBank1.checkBalance("789")); //equivalence test with zero balance
+        assertEquals(15.80, centralBank1.checkBalance("024")); //equivalence test with positive balance and one decimal
+        assertEquals(679.99, centralBank1.checkBalance("689")); //equivalence test with positive balance and two decimals
+
+        //Checking that it throws if ID isn't found
+        assertThrows(IllegalArgumentException.class, ()-> centralBank1.checkBalance("123456789"));
 
 
-        //negative number three decimals
-        assertThrows(IllegalArgumentException.class, ()-> centralBank1.createAccount("491", -500.671));
+
     }
 
 }

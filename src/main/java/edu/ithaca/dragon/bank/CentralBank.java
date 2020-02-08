@@ -22,6 +22,12 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
         return false;
     }
 
+    /**
+     * Returns balance associated with ID if it exists
+     * @param acctId
+     * @return balance in account if it exists
+     * @throws IllegalArgumentException if ID does not exist
+     */
     public double checkBalance(String acctId) {
         return 0;
     }
@@ -50,7 +56,7 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
      * Creates account and adds it to central bank's hash map of accounts if account is valid
      * @param acctId
      * @param startingBalance
-     * @Throws IllegalArgumentException if ID already exists or balance isn't valid
+     * @throws IllegalArgumentException if ID already exists or balance isn't valid
      */
     public void createAccount(String acctId, double startingBalance) {
 
