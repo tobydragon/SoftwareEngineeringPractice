@@ -4,7 +4,7 @@ public abstract class BankAccount {
 
     private String email;
     private String password;
-    private double balance;
+    protected double balance;
 
     /**
      * @throws IllegalArgumentException if email is invalid

@@ -40,7 +40,7 @@ public class SavingsAccountTest {
         assertEquals(101.5, savings.getBalance());
 
         BankAccount savings2 = new SavingsAccount("savings@bank.com", "password", 1000);
-        ((SavingsAccount) savings).compoundInterest();
+        ((SavingsAccount) savings2).compoundInterest();
         assertEquals(1015.00, savings2.getBalance());
     }
 

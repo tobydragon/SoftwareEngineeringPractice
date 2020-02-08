@@ -16,11 +16,16 @@ public class SavingsAccount extends BankAccount {
 
     @Override
     public void withdraw(double amount) throws IllegalArgumentException, InsufficientFundsException, ExceedsMaxWithdrawalException {
+        if (!isAmountValid(amount)) throw new IllegalArgumentException("Amount is not valid");
+        if (amount > maxWithdraw) throw new ExceedsMaxWithdrawalException("Amount exceeds withdrawal allowance");
+        if (amount > balance) throw new InsufficientFundsException("Not enough money in account");
 
+        balance -= amount;
     }
 
     public void compoundInterest() {
-
+        double interest = balance * interestRate;
+        balance += interest;
     }
 
 }

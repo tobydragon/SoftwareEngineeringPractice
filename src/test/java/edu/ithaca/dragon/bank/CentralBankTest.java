@@ -22,7 +22,8 @@ public class CentralBankTest {
     }
 
     @Test
-    void withdrawTest()throws InsufficientFundsException, IllegalArgumentException, AccountAlreadyExistsException, AccountDoesNotExistException {
+    void withdrawTest()throws InsufficientFundsException, IllegalArgumentException, ExceedsMaxWithdrawalException,
+            AccountAlreadyExistsException, AccountDoesNotExistException {
         CentralBank newAccount = new CentralBank();
         String newAccountID = "email@test.com";
         newAccount.createAccount(newAccountID, "password", 200, false);
@@ -88,7 +89,8 @@ public class CentralBankTest {
     }
 
     @Test
-    void transferTest() throws AccountAlreadyExistsException, InsufficientFundsException, AccountDoesNotExistException {
+    void transferTest() throws AccountAlreadyExistsException, InsufficientFundsException, AccountDoesNotExistException,
+            ExceedsMaxWithdrawalException {
         CentralBank account = new CentralBank();
         String accountAID = "a@test.com";
         account.createAccount(accountAID, "password", 200, false);
@@ -216,7 +218,8 @@ public class CentralBankTest {
 
     @Test
     void closeAccountTest() throws AccountAlreadyExistsException,
-            AccountDoesNotExistException, InsufficientFundsException, BalanceRemainingException {
+            AccountDoesNotExistException, InsufficientFundsException, BalanceRemainingException,
+            ExceedsMaxWithdrawalException {
 
         CentralBank bank = new CentralBank();
         bank.createAccount("a@b.com", "password", 100, false);
