@@ -28,8 +28,12 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
      * @return balance in account if it exists
      * @throws IllegalArgumentException if ID does not exist
      */
-    public double checkBalance(String acctId) {
-        return 0;
+    public double checkBalance(String acctId) throws IllegalArgumentException{
+        if (!bankAccounts.containsKey(acctId)) {
+            throw new IllegalArgumentException("Account not found");
+        } else {
+            return bankAccounts.get(acctId);
+        }
     }
 
 
@@ -58,8 +62,16 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
      * @param startingBalance
      * @throws IllegalArgumentException if ID already exists or balance isn't valid
      */
-    public void createAccount(String acctId, double startingBalance) {
-
+    public void createAccount(String acctId, double startingBalance) throws IllegalArgumentException{
+        if (bankAccounts.containsKey(acctId)) {
+            throw new IllegalArgumentException("Account ID already exists");
+        } else if (!BankAccount.isAmountValid(startingBalance)) {
+            throw new IllegalArgumentException("Balance specified is not a valid amount");
+        } else if (acctId.equals("") || acctId.contains(" ")) {
+            throw new IllegalArgumentException("Must enter an ID");
+        } else {
+            bankAccounts.put(acctId, startingBalance);
+        }
     }
 
     public void closeAccount(String acctId) {
