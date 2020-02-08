@@ -11,7 +11,7 @@ public class CentralBankTest {
 
     @Test
     void createAccountTest() {
-        CentralBank centralBank1 = new CentralBank("Keybank", null);
+        CentralBank centralBank1 = new CentralBank("Keybank", null, null);
         centralBank1.createAccount("001", 500);
 
         //Check for correct creation of account
@@ -29,12 +29,13 @@ public class CentralBankTest {
     @Test
     void checkBalanceTest() {
 
-        CentralBank centralBank1 = new CentralBank("Keybank", null);
+        CentralBank centralBank1 = new CentralBank("Keybank", null, null);
         centralBank1.createAccount("123", 1);
         centralBank1.createAccount("456", 2000);
         centralBank1.createAccount("789", 0);
         centralBank1.createAccount("024", 15.8);
         centralBank1.createAccount("689", 679.99);
+
 
         //Checking that it returns correct balance
         assertEquals(1, centralBank1.checkBalance("123")); //equivalence test with positive balance
@@ -49,16 +50,16 @@ public class CentralBankTest {
 
     @Test
     void calcTotalAssetsTest() {
-        CentralBank centralBank0 = new CentralBank("Bank0", null);
+        CentralBank centralBank0 = new CentralBank("Bank0", null, null);
 
-        CentralBank centralBank1 = new CentralBank("Bank1", null);
+        CentralBank centralBank1 = new CentralBank("Bank1", null, null);
         centralBank1.createAccount("123", 100);
         centralBank1.createAccount("456", 100);
         centralBank1.createAccount("789", 300);
         centralBank1.createAccount("024", 490.90);
         centralBank1.createAccount("689", 9.10);
 
-        CentralBank centralBank2 = new CentralBank("Bank2", null);
+        CentralBank centralBank2 = new CentralBank("Bank2", null, null);
         centralBank2.createAccount("001", 589.57);
         centralBank2.createAccount("002", 4.9);
 
@@ -67,4 +68,58 @@ public class CentralBankTest {
         assertEquals(594.47, centralBank2.calcTotalAssets()); //Check for balance
     }
 
+    @Test
+    void freezeAccountTest() {
+        /**CentralBank centralBank0 = new CentralBank("Bank0", null, null);
+        centralBank0.createAccount("123", 500);
+        centralBank0.freezeAccount("123");
+
+        assert
+
+        assertThrows(IllegalArgumentException.class, ()-> centralBank0.freezeAccount("9001"));
+         **/
+    }
+
+    @Test
+    void unfreezeAccountTest() {
+
+    }
+
+    @Test
+    void checkAccountExistsTest() {
+        CentralBank centralBank1 = new CentralBank("Bank1", null, null);
+        centralBank1.createAccount("123", 100);
+        centralBank1.createAccount("024", 490.90);
+        centralBank1.createAccount("689", 9.10);
+
+        //Check accounts that exist
+        assertTrue(centralBank1.checkAccountExists("123"));
+        assertTrue(centralBank1.checkAccountExists("024"));
+        assertTrue(centralBank1.checkAccountExists("689"));
+
+        //Check accounts that do not exist
+        assertFalse(centralBank1.checkAccountExists("333"));
+        assertFalse(centralBank1.checkAccountExists("1"));
+        assertFalse(centralBank1.checkAccountExists("987651234"));
+    }
+
+    @Test
+    void checkFrozenAccountExists() {
+        HashMap<String, Double> frozenAccountsTest = new HashMap<String, Double>();
+        frozenAccountsTest.put("123", 500.0);
+        frozenAccountsTest.put("456", 570.0);
+        frozenAccountsTest.put("313", 189.11);
+
+        CentralBank centralBank1 = new CentralBank("Bank1", null, frozenAccountsTest);
+
+        //Check frozen accounts that exist
+        assertTrue(centralBank1.checkFrozenAccountExists("123"));
+        assertTrue(centralBank1.checkFrozenAccountExists("456"));
+        assertTrue(centralBank1.checkFrozenAccountExists("313"));
+
+        //Check frozen accounts that don't exist
+        assertFalse(centralBank1.checkFrozenAccountExists("999"));
+        assertFalse(centralBank1.checkFrozenAccountExists("6"));
+        assertFalse(centralBank1.checkFrozenAccountExists("999111333"));
+    }
 }

@@ -9,10 +9,12 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
 
     private String bankName;
     private HashMap<String, Double> bankAccounts;
+    private HashMap<String, Double> frozenAccounts;
 
-    public CentralBank(String bankName, HashMap<String, Double> bankAccounts){
+    public CentralBank(String bankName, HashMap<String, Double> bankAccounts, HashMap<String, Double> frozenAccounts){
        this.bankName = bankName;
        this.bankAccounts = new HashMap<String, Double>();
+       this.frozenAccounts= new HashMap<String, Double>();
     }
 
 
@@ -66,6 +68,8 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
     public void createAccount(String acctId, double startingBalance) throws IllegalArgumentException{
         if (bankAccounts.containsKey(acctId)) {
             throw new IllegalArgumentException("Account ID already exists");
+        } else if (frozenAccounts.containsKey(acctId)) {
+            throw new IllegalArgumentException("ID exists on a frozen account");
         } else if (!BankAccount.isAmountValid(startingBalance)) {
             throw new IllegalArgumentException("Balance specified is not a valid amount");
         } else if (acctId.equals("") || acctId.contains(" ")) {
@@ -104,12 +108,34 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
         return null;
     }
 
+    /**
+     * freezes specified ID if exists and not already frozen
+     * @param acctId
+     * @throws IllegalArgumentException if ID doesn't exist
+     */
     public void freezeAccount(String acctId) {
 
     }
 
+    /**
+     * unfreezes specified ID if exists and frozen
+     * @param acctId
+     * @throws IllegalArgumentException if ID doesn't exist or not currently frozen
+     */
     public void unfreezeAcct(String acctId) {
 
+    }
+
+    /**
+     * C
+     * @param acctID
+     */
+    public boolean checkAccountExists(String acctID) {
+        return false;
+    }
+
+    public boolean checkFrozenAccountExists(String acctID) {
+        return false;
     }
 
 }
