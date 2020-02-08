@@ -108,23 +108,45 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
         return null;
     }
 
+
+
     /**
      * freezes specified ID if exists and not already frozen
      * @param acctId
      * @throws IllegalArgumentException if ID doesn't exist or already frozen
      */
-    public void freezeAccount(String acctId) {
-
+    public void freezeAccount(String acctId) throws IllegalArgumentException {
+        if (frozenAccounts.containsKey(acctId)) {
+            throw new IllegalArgumentException("Account already frozen");
+        } else if (bankAccounts.containsKey(acctId)) {
+            Double balance = bankAccounts.get(acctId);
+            bankAccounts.remove(acctId);
+            frozenAccounts.put(acctId, balance);
+        } else {
+            throw new IllegalArgumentException("Account does not exist");
+        }
     }
+
+
 
     /**
      * unfreezes specified ID if exists and frozen
      * @param acctId
      * @throws IllegalArgumentException if ID doesn't exist or not currently frozen
      */
-    public void unfreezeAcct(String acctId) {
-
+    public void unfreezeAcct(String acctId) throws IllegalArgumentException{
+        if (bankAccounts.containsKey(acctId)) {
+            throw new IllegalArgumentException("Account not frozen");
+        } else if (frozenAccounts.containsKey(acctId)) {
+            Double balance = frozenAccounts.get(acctId);
+            frozenAccounts.remove(acctId);
+            bankAccounts.put(acctId, balance);
+        } else {
+            throw new IllegalArgumentException("Account does not exist");
+        }
     }
+
+
 
     /**
      *

@@ -137,6 +137,9 @@ public class CentralBankTest {
     void checkFrozenAccountExists() {
 
         CentralBank centralBank1 = new CentralBank("Bank1", null, null);
+        centralBank1.createAccount("123", 1);
+        centralBank1.createAccount("456", .01);
+        centralBank1.createAccount("313", 678.9);
         centralBank1.freezeAccount("123");
         centralBank1.freezeAccount("456");
         centralBank1.freezeAccount("313");
