@@ -111,7 +111,7 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
     /**
      * freezes specified ID if exists and not already frozen
      * @param acctId
-     * @throws IllegalArgumentException if ID doesn't exist
+     * @throws IllegalArgumentException if ID doesn't exist or already frozen
      */
     public void freezeAccount(String acctId) {
 

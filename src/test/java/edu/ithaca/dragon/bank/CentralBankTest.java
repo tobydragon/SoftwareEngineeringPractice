@@ -70,18 +70,48 @@ public class CentralBankTest {
 
     @Test
     void freezeAccountTest() {
-        /**CentralBank centralBank0 = new CentralBank("Bank0", null, null);
+        CentralBank centralBank0 = new CentralBank("Bank0", null, null);
         centralBank0.createAccount("123", 500);
+        centralBank0.createAccount("003", 1000.3);
         centralBank0.freezeAccount("123");
+        centralBank0.freezeAccount("003");
 
-        assert
+        //Check that frozen accounts exist under frozen accounts, but not normal accounts
+        assertTrue(centralBank0.checkFrozenAccountExists("123"));
+        assertFalse(centralBank0.checkAccountExists("123"));
+        assertTrue(centralBank0.checkFrozenAccountExists("003"));
+        assertFalse(centralBank0.checkAccountExists("003"));
 
+        //If account doesn't exist throw exception
         assertThrows(IllegalArgumentException.class, ()-> centralBank0.freezeAccount("9001"));
-         **/
+
+        //If already froze throw exception
+        assertThrows(IllegalArgumentException.class, ()-> centralBank0.freezeAccount("123"));
+
     }
 
     @Test
     void unfreezeAccountTest() {
+        CentralBank centralBank0 = new CentralBank("Bank0", null, null);
+        centralBank0.createAccount("345", 310);
+        centralBank0.createAccount("007", 21.38);
+        centralBank0.freezeAccount("345");
+        centralBank0.freezeAccount("007");
+        centralBank0.unfreezeAcct("345");
+        centralBank0.unfreezeAcct("007");
+
+
+        //Check that unfrozen accounts exist under accounts, but not frozen accounts
+        assertFalse(centralBank0.checkFrozenAccountExists("345"));
+        assertTrue(centralBank0.checkAccountExists("345"));
+        assertFalse(centralBank0.checkFrozenAccountExists("007"));
+        assertTrue(centralBank0.checkAccountExists("007"));
+
+        //If account doesn't exist throw exception
+        assertThrows(IllegalArgumentException.class, ()-> centralBank0.unfreezeAcct("9001"));
+
+        //If already unfrozen throw exception
+        assertThrows(IllegalArgumentException.class, ()-> centralBank0.unfreezeAcct("007"));
 
     }
 
