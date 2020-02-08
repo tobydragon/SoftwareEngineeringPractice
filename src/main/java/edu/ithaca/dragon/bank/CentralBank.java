@@ -2,7 +2,7 @@ package edu.ithaca.dragon.bank;
 
 import java.util.Collection;
 
-public class CentralBank implements AdvancedAPI, AdminAPI {
+public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
 
     //----------------- edu.ithaca.dragon.bank.BasicAPI methods -------------------------//
 
