@@ -1,6 +1,6 @@
 package edu.ithaca.dragon.bank;
 
-public class BankAccount {
+public abstract class BankAccount {
 
     private String email;
     private String password;
@@ -12,20 +12,20 @@ public class BankAccount {
     public BankAccount(String email, String password, double startingBalance){
         if (isEmailValid(email)){
             this.email = email;
-            if (isPasswordValid(password)) {
-                this.password = password;
-            } else {
-                throw new IllegalArgumentException("Password must be at least 8 characters");
-            }
-            if(isAmountValid(startingBalance)){
-                this.balance = startingBalance;
-            }
-            else{
-                throw new IllegalArgumentException("Starting Balance: " + startingBalance + " is invalid, cannot create account");
-            }
         }
         else {
             throw new IllegalArgumentException("Email address: " + email + " is invalid, cannot create account");
+        }
+        if (isPasswordValid(password)) {
+            this.password = password;
+        } else {
+            throw new IllegalArgumentException("Password must be at least 8 characters");
+        }
+        if(isAmountValid(startingBalance)){
+            this.balance = startingBalance;
+        }
+        else{
+            throw new IllegalArgumentException("Starting Balance: " + startingBalance + " is invalid, cannot create account");
         }
     }
 
@@ -44,22 +44,74 @@ public class BankAccount {
     /**
      * @post reduces the balance by amount if amount is non-negative and smaller than balance
      */
-    public void withdraw(double amount) throws InsufficientFundsException{
-        if(balance < 0){
-            balance = 0;
+    public void withdraw(double amount) throws InsufficientFundsException, IllegalArgumentException {
+        if(isAmountValid(amount) == false){
+            throw new IllegalArgumentException("Amount: " + amount + "is invalid");
         }
-        else if(amount > balance){
-            return;
-        }
-        else if(isAmountValid(amount) == false){
-            throw new InsufficientFundsException("Amount: " + amount + "is invalid");
+        if(amount > balance){
+            throw new InsufficientFundsException("Not enough money in account");
         }
         balance -= amount;
     }
 
+    /**
+     *
+     * @param amount
+     * Changes the balance by adding a positive amount of money as a double
+     * Will change balance to 0 if balance is under 0 - this should never happen though???
+     * Will not change the balance amount if the amount is under 0
+     */
+    public void deposit(double amount) throws IllegalArgumentException {
+        if(isAmountValid(amount) == false){
+            throw new IllegalArgumentException("Amount: " + amount + "is invalid");
+        }
+        balance += amount;
+    }
+
+    /**
+     *
+     * @param accountWithdraw
+     * @param accountDeposit
+     * @param amount
+     *
+     */
+    public static void transfer(BankAccount accountDeposit, BankAccount accountWithdraw, double amount) throws IllegalArgumentException, InsufficientFundsException {
+        if (!isAmountValid(amount)) throw new IllegalArgumentException("Amount: " + amount + "is invalid");
+        if(accountWithdraw.getBalance() < amount){
+            throw new InsufficientFundsException("Not enough money in account");
+        }
+        accountWithdraw.withdraw(amount);
+        accountDeposit.deposit(amount);
+    }
+
+    /**
+     * valid password must be at least 8 characters
+     * @param password
+     * @return
+     */
     public static boolean isPasswordValid(String password) {
         if (password.length() >= 8) return true;
         else return false;
+    }
+
+    /**
+     *
+     * @param amount
+     * should return false if the amount has more than 2 decimal points or is not positive
+     * @return
+     */
+    public static boolean isAmountValid(double amount){
+        if(amount >= 0){
+            String stAmount = "" +amount;
+            String decimalPoints = stAmount.substring(stAmount.indexOf(".")+1);
+            if(decimalPoints.length() > 2){
+                return false;
+            }
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     private static boolean isExtensionValid(String extension){ //Private method to check if extension is valid
@@ -112,58 +164,9 @@ public class BankAccount {
         }
     }
 
-    /**
-     *
-     * @param amount
-     * should return false if the amount has more than 2 decimal points or is not positive
-     * @return
-     */
-    public static boolean isAmountValid(double amount){
-        if(amount >= 0){
-            String stAmount = "" +amount;
-            String decimalPoints = stAmount.substring(stAmount.indexOf(".")+1);
-            if(decimalPoints.length() > 2){
-                return false;
-            }
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
 
-    /**
-     *
-     * @param amount
-     * Changes the balance by adding a positive amount of money as a double
-     * Will change balance to 0 if balance is under 0
-     * Will not change the balance amount if the amount is under 0
-     */
-    public void deposit(double amount){
-        if(balance < 0){
-            balance = 0;
-        }
-        if(amount < 0){
-            return;
-        }
-        balance += amount;
-    }
 
-    /**
-     *
-     * @param account1
-     * @param account2
-     * @param amountWanted
-     * Will exchange the a certain amount of money to the first account from the second account
-     * Will make the wantedAmount 0 if the second account has nothing or less than money to transfer
-     */
-    public static void transfer(BankAccount account1, BankAccount account2, double amountWanted) throws InsufficientFundsException {
-        if(account2.getBalance() <= 0 || account2.getBalance() < amountWanted){
-            amountWanted = 0;
-        }
-        account1.deposit(amountWanted);
-        account2.withdraw(amountWanted);
-    }
+
 
 }
 
