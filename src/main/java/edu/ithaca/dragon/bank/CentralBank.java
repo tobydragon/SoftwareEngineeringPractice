@@ -1,38 +1,20 @@
 package edu.ithaca.dragon.bank;
 
 import java.util.Collection;
+import java.util.Map;
+import java.util.HashMap;
 
-<<<<<<< HEAD
 public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
 
-    String acctId;
-    double balance;
+    private String bankName;
+    private HashMap<String, Double> bankAccounts;
 
-    public CentralBank(String accountId, double balance){
-        this.acctId = accountId;
-        this.balance = balance;
+    public CentralBank(String bankName, HashMap<String, Double> bankAccounts){
+       this.bankName = bankName;
+       this.bankAccounts = new HashMap<String, Double>();
     }
 
-    private String acctID;
-    private double amount;
 
-    public CentralBank(String acctID, double amount) {
-        this.acctID = acctID;
-        this.amount = amount;
-    }
-||||||| merged common ancestors
-public class CentralBank implements AdvancedAPI, AdminAPI {
-=======
-public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
-
-    String acctId;
-    double balance;
-
-    public CentralBank(String accountId, double balance){
-        this.acctId = accountId;
-        this.balance = balance;
-    }
->>>>>>> d7f2e37a069825de396abfc726be296abe5170d1
 
     //----------------- BasicAPI methods -------------------------//
 
@@ -41,18 +23,9 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
     }
 
     public double checkBalance(String acctId) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-        return this.amount;
-=======
-        return this.balance;
->>>>>>> d7f2e37a069825de396abfc726be296abe5170d1
-||||||| merged common ancestors
         return 0;
-=======
-        return this.balance;
->>>>>>> d7f2e37a069825de396abfc726be296abe5170d1
     }
+
 
     public void withdraw(String acctId, double amount) throws InsufficientFundsException {
 
@@ -73,6 +46,12 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
 
     //----------------- AdvancedAPI methods -------------------------//
 
+    /**
+     * Creates account and adds it to central bank's hash map of accounts if account is valid
+     * @param acctId
+     * @param startingBalance
+     * @Throws IllegalArgumentException if ID already exists or balance isn't valid
+     */
     public void createAccount(String acctId, double startingBalance) {
 
     }
