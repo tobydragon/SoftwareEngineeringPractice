@@ -44,7 +44,7 @@ public abstract class BankAccount {
     /**
      * @post reduces the balance by amount if amount is non-negative and smaller than balance
      */
-    public void withdraw(double amount) throws InsufficientFundsException, IllegalArgumentException {
+    public void withdraw(double amount) throws InsufficientFundsException, IllegalArgumentException, ExceedsMaxWithdrawalException {
         if(isAmountValid(amount) == false){
             throw new IllegalArgumentException("Amount: " + amount + "is invalid");
         }
@@ -75,7 +75,8 @@ public abstract class BankAccount {
      * @param amount
      *
      */
-    public static void transfer(BankAccount accountDeposit, BankAccount accountWithdraw, double amount) throws IllegalArgumentException, InsufficientFundsException {
+    public static void transfer(BankAccount accountDeposit, BankAccount accountWithdraw, double amount)
+            throws IllegalArgumentException, InsufficientFundsException, ExceedsMaxWithdrawalException {
         if (!isAmountValid(amount)) throw new IllegalArgumentException("Amount: " + amount + "is invalid");
         if(accountWithdraw.getBalance() < amount){
             throw new InsufficientFundsException("Not enough money in account");

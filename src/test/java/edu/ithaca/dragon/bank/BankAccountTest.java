@@ -25,7 +25,7 @@ class BankAccountTest {
     }
 
     @Test
-    void withdrawTest() throws InsufficientFundsException{
+    void withdrawTest() throws InsufficientFundsException, ExceedsMaxWithdrawalException{
         BankAccount bankAccount = new CheckingAccount("a@b.com", "password", 200);
         bankAccount.withdraw(100);
 
@@ -137,7 +137,7 @@ class BankAccountTest {
     }
 
     @Test
-    void transferTest() throws InsufficientFundsException {
+    void transferTest() throws InsufficientFundsException, ExceedsMaxWithdrawalException {
         //equivalence case with basic balances of 200 and 500 with 50 dollar transfer
         BankAccount bankAccount = new CheckingAccount("a@b.com", "password", 200);
         BankAccount bankAccount2 = new CheckingAccount("a@b.com", "password", 500);

@@ -23,7 +23,8 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
         return account.getBalance();
     }
 
-    public void withdraw(String acctId, double amount) throws InsufficientFundsException, AccountDoesNotExistException {
+    public void withdraw(String acctId, double amount) throws InsufficientFundsException,
+            AccountDoesNotExistException, ExceedsMaxWithdrawalException {
         if (!accounts.containsKey(acctId)) throw new AccountDoesNotExistException("Account with this id does not exists");
         BankAccount account = accounts.get(acctId);
         account.withdraw(amount);
@@ -35,7 +36,8 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
         account.deposit(amount);
     }
 
-    public void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws InsufficientFundsException, AccountDoesNotExistException {
+    public void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount)
+            throws InsufficientFundsException, AccountDoesNotExistException, ExceedsMaxWithdrawalException {
         if (!accounts.containsKey(acctIdToWithdrawFrom)) throw new AccountDoesNotExistException("Account with this id does not exists");
         if (!accounts.containsKey(acctIdToDepositTo)) throw new AccountDoesNotExistException("Account with this id does not exists");
         BankAccount accountW = accounts.get(acctIdToWithdrawFrom);
