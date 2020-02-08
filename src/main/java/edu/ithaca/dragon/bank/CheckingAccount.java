@@ -20,12 +20,4 @@ public class CheckingAccount extends Account {
         this.withdraw(amount);
         transferTo.deposit(amount);
     }
-
-    public static boolean isAmountValid(double amountIn){
-        if (amountIn < 0) return false;
-        double scale = Math.pow(10, 9);
-        amountIn = Math.round(amountIn*scale)/scale;
-        if(Double.compare(amountIn, Math.round(amountIn*100)/100.0)!= 0) return false;
-        else return true;
-    }
 }
