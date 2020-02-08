@@ -45,9 +45,26 @@ public class CentralBankTest {
 
         //Checking that it throws if ID isn't found
         assertThrows(IllegalArgumentException.class, ()-> centralBank1.checkBalance("123456789"));
+    }
 
+    @Test
+    void calcTotalAssetsTest() {
+        CentralBank centralBank0 = new CentralBank("Bank0", null);
 
+        CentralBank centralBank1 = new CentralBank("Bank1", null);
+        centralBank1.createAccount("123", 100);
+        centralBank1.createAccount("456", 100);
+        centralBank1.createAccount("789", 300);
+        centralBank1.createAccount("024", 490.90);
+        centralBank1.createAccount("689", 9.10);
 
+        CentralBank centralBank2 = new CentralBank("Bank2", null);
+        centralBank2.createAccount("001", 4589.57);
+        centralBank2.createAccount("002", 1004.9);
+
+        assertEquals(0, centralBank0.calcTotalAssets()); //Check for balance of no accounts
+        assertEquals(1000, centralBank1.calcTotalAssets()); //Check for balance
+        assertEquals(5594.47, centralBank2.calcTotalAssets()); //Check for balance
     }
 
 }

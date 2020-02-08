@@ -80,10 +80,14 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
 
 
     //------------------ AdminAPI methods -------------------------//
-
+    /**
+     * Adds up all money in all accounts for a specific bank
+     * @return sum of all account balances of the bank, 0 if none
+     */
     public double calcTotalAssets() {
         return 0;
     }
+
 
     public Collection<String> findAcctIdsWithSuspiciousActivity() {
         return null;
