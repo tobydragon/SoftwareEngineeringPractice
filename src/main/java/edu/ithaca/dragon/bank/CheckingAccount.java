@@ -16,7 +16,10 @@ public class CheckingAccount extends Account {
         else this.balance -= amount;
 
     }
-    public void transfer(Account transferTo, double amount) throws InsufficientFundsException{}
+    public void transfer(Account transferTo, double amount) throws InsufficientFundsException, IllegalArgumentException{
+        this.withdraw(amount);
+        transferTo.deposit(amount);
+    }
 
     public static boolean isAmountValid(double amountIn){
         if (amountIn < 0) return false;
