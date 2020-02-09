@@ -4,6 +4,7 @@ package edu.ithaca.dragon.bank;
 public class savingsAccount extends BankAccount {
     double maxWithdraw;
     double withdrawCurrent;
+    double interestRate;
 
     /**
      * @param email

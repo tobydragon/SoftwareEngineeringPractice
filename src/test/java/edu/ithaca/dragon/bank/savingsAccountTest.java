@@ -29,4 +29,9 @@ public class savingsAccountTest {
         assertTrue(savings1.getBalance() - 49.00 < .1);
 
     }
+
+    @Test
+    void calcSavingsInterestTest(){
+
+    }
 }
