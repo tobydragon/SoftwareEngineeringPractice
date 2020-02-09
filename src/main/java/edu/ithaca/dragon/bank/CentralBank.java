@@ -106,6 +106,15 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
 
     }
 
+    /**
+     *
+     * @param acctId
+     *
+     * Have an outside object to hole bank account, meant to be the account and balance when frozen
+     * If the account is frozen, the outside object would replace any changes, keeping account same
+     * Follow a boolean, having another method to check if account is frozen
+     * if frozen == true, replace account
+     */
     public void freezeAccount(String acctId) {
         // Object.Freeze = freezes object and stops any changes
         for(int i = 0; i < accounts.size(); i++){
@@ -115,6 +124,13 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
         }
     }
 
+    /**
+     *
+     * @param acctId
+     *
+     * Change boolean method input of account to be false in frozen
+     * If called on frozen account, have outside object = null and change frozen to false
+     */
     public void unfreezeAcct(String acctId) {
 
     }
