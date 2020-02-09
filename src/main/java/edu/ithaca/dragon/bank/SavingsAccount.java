@@ -11,6 +11,15 @@ public class SavingsAccount extends Account {
         this.maximumWithdrawal = maximumWithdrawal;
     }
 
+    @Override
+    public void withdraw(double amount) throws InsufficientFundsException {
+        if(amount <= maximumWithdrawal) {
+            super.withdraw(amount);
+        } else {
+            throw new IllegalArgumentException("Amount is greater than maximum withdrawal amount");
+        }
+    }
+
     public void calculateInterest() {
 
     }
