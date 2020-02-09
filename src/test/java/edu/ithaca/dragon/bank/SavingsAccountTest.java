@@ -20,4 +20,12 @@ public class SavingsAccountTest {
 
     }
 
+    @Test
+    void calcInterestTest() {
+        SavingsAccount a = new SavingsAccount(100, 0.5, 20, "a@b.com");
+
+        a.calculateInterest();
+        assertEquals(150, a.getBalance());
+    }
+
 }

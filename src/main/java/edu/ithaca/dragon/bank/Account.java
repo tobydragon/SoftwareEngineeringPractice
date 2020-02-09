@@ -4,10 +4,10 @@ import java.util.Collection;
 import java.util.regex.Pattern;
 
 public abstract class Account {
-    private double balance;
-    private boolean isFrozen;
-    private Collection<User> users;
-    private String id;
+    protected double balance;
+    protected boolean isFrozen;
+    protected Collection<User> users;
+    protected String id;
 
 
     public Account(double startingBalance, String id) {
