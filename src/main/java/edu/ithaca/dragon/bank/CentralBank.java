@@ -6,9 +6,8 @@ import java.util.Collection;
 public class CentralBank implements AdvancedAPI, AdminAPI {
 
     public CentralBank (){
-        BankAccount customerCollection[ ];
-
-
+        BankAccount customerCollection[]= new BankAccount[1];
+        customerCollection[0] = new BankAccount("a@b.com",305);
     }
 
     //----------------- BasicAPI methods -------------------------//
@@ -17,8 +16,14 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
         return false;
     }
 
-    public double checkBalance(String acctId) {
-        return 0;
+
+    public double checkBalance(String acctId, BankAccount[] customerCollection) throws IllegalArgumentException {
+        int length = customerCollection.length;
+        for(int i =0; i < length; i++){
+            if (acctId == customerCollection[i].email)
+                return customerCollection[i].getBalance();
+        }
+        throw new IllegalArgumentException("The account ID you entered is not in the system");
     }
 
     public void withdraw(String acctId, double amount) throws InsufficientFundsException {
@@ -52,6 +57,10 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
     //------------------ AdminAPI methods -------------------------//
 
     public double checkTotalAssets() {
+        return 0;
+    }
+
+    public double calcTotalAssets() {
         return 0;
     }
 

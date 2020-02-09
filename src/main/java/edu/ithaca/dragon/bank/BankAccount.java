@@ -4,8 +4,8 @@ import java.util.HashSet;
 
 public class BankAccount {
 
-    private String email;
-    private double balance;
+    public String email;
+    public double balance;
 
     /**
      * @throws IllegalArgumentException if amount to be withdrawn is invalid
