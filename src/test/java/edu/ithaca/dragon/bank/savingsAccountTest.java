@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class savingsAccountTest {
     @Test
-    void withdrawSavingsTest(double amount){
+    void withdrawSavingsTest(){
         //positive, negative, zero, test above withdraw max
 
         savingsAccount savings1 = new savingsAccount("a@b.com", 200.00, 150.00);

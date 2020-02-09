@@ -30,6 +30,13 @@ public class savingsAccount extends BankAccount {
      * @param amount
      */
     public void withdraw(double amount) {
-
+        if (amount < .01){
+            throw new IllegalArgumentException("withdraw amount: " + amount + " is invalid, amount cannot be withdrawn");
+        }
+        if (withdrawCurrent < maxWithdraw && (withdrawCurrent+ amount) <= maxWithdraw){
+            super.withdraw(amount);
+        }else{
+            throw new IllegalArgumentException("withdraw amount: " + amount + " is invalid because it exceeds withdraw limit.");
+        }
     }
 }
