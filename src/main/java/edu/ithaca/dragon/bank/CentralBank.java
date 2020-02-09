@@ -46,8 +46,8 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
         BankAccount.transfer(accountD, accountW, amount);
     }
 
-    public String transactionHistory(String acctId) {
-        return null;
+    public String transactionHistory(String acctId) throws AccountDoesNotExistException {
+        if (!accounts.containsKey(acctId)) throw new AccountDoesNotExistException("Account with this id does not exists");
     }
 
 
