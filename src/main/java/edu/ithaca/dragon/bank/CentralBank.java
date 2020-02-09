@@ -4,6 +4,34 @@ import java.util.Collection;
 
 public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
 
+    private User[] users;
+    private BankAccount[] accounts;
+    private double netWorth;
+    private int time;
+    private String[] admins;
+    private String[] allHistory;
+    private String[] atmHistory;
+    private String[] tellerHistory;
+    private String[] adminHistory;
+    private int numAccounts;
+
+    public CentralBank(String[] admins) {
+
+        int defaultArraySize = 10; //this may change
+
+        users = new User[defaultArraySize];
+        accounts = new BankAccount[defaultArraySize];
+        this.admins = admins;
+        allHistory = new String[defaultArraySize];
+        atmHistory = new String[defaultArraySize];
+        tellerHistory = new String[defaultArraySize];
+        adminHistory = new String[defaultArraySize];
+
+        numAccounts = 0;
+        time = 0;
+        netWorth = 0;
+    }
+
     //----------------- edu.ithaca.dragon.bank.BasicAPI methods -------------------------//
 
     public boolean confirmCredentials(String acctId, String password) {
@@ -18,6 +46,11 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
 
     }
 
+    /**
+     * Deposits money to an account
+     * @param acctId Account Identifier
+     * @param amount Amount to be deposited
+     */
     public void deposit(String acctId, double amount) {
 
     }
