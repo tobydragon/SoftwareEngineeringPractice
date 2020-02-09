@@ -1,12 +1,15 @@
 package edu.ithaca.dragon.bank;
 
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.HashMap;
 
 public class CentralBank implements AdvancedAPI, AdminAPI {
 
     private Map<String, BankAccount> accounts = new HashMap<>();
+    //Added
+    private Map<String, BankAccount> transactionHist = new HashMap<>();
 
     //----------------- BasicAPI methods -------------------------//
 
@@ -27,13 +30,16 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
             AccountDoesNotExistException, ExceedsMaxWithdrawalException {
         if (!accounts.containsKey(acctId)) throw new AccountDoesNotExistException("Account with this id does not exists");
         BankAccount account = accounts.get(acctId);
-        account.withdraw(amount);
+        // Added
+        transactionHist.put(acctId, account);
     }
 
     public void deposit(String acctId, double amount) throws AccountDoesNotExistException {
         if (!accounts.containsKey(acctId)) throw new AccountDoesNotExistException("Account with this id does not exists");
         BankAccount account = accounts.get(acctId);
         account.deposit(amount);
+        // Added
+        transactionHist.put(acctId, account);
     }
 
     public void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount)
@@ -44,12 +50,14 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
         BankAccount accountD = accounts.get(acctIdToDepositTo);
 
         BankAccount.transfer(accountD, accountW, amount);
+        // Added
+        transactionHist.put(acctIdToWithdrawFrom, accountW);
+        transactionHist.put(acctIdToDepositTo, accountD);
     }
 
     public String transactionHistory(String acctId) throws AccountDoesNotExistException, AccountAlreadyExistsException, InsufficientFundsException, ExceedsMaxWithdrawalException {
         if (!accounts.containsKey(acctId)) throw new AccountDoesNotExistException("Account with this id does not exists");
-
-        return null;
+        return transactionHist.get(acctId, );
     }
 
 
@@ -94,14 +102,25 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
     }
 
     public Collection<String> findAcctIdsWithSuspiciousActivity() {
+        BankAccount suspiciousAct;
 
     }
 
     public void freezeAccount(String acctId) {
-
+        // Object.Freeze = freezes object and stops any changes
+        for(int i = 0; i < accounts.size(); i++){
+            if(accounts[i].equals(acctId)){
+                accounts[i].freeze();
+            }
+        }
     }
 
     public void unfreezeAcct(String acctId) {
 
+        for(int i = 0; i < accounts.size(); i++){
+            if(accounts[i].equals(acctId)){
+                accounts[i].freeze();
+            }
+        }
     }
 }
