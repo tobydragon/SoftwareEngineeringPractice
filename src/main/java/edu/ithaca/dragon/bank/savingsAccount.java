@@ -13,6 +13,7 @@ public class savingsAccount extends BankAccount {
     public savingsAccount(String email, double startingBalance, double maxWithdraw) {
         super(email, startingBalance);
         this.maxWithdraw = maxWithdraw;
+        this.withdrawCurrent = 0;
     }
 
     /**
