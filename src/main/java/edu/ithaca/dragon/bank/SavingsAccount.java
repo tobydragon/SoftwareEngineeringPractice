@@ -21,6 +21,6 @@ public class SavingsAccount extends Account {
     }
 
     public void calculateInterest() {
-
+        balance += balance * interestRate;
     }
 }
