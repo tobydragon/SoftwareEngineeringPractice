@@ -14,7 +14,7 @@ public abstract class Account {
         if (!isAmountValid(startingBalance)) {
             throw new IllegalArgumentException("Starting balance: " + startingBalance + " is invalid, cannot create account");
         }
-        else if (id == ""){
+        else if (id.equals("")){
             throw new IllegalArgumentException("ID cannot be an empty string");
         }
         else {

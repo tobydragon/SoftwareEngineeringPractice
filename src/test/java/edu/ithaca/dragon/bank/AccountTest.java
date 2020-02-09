@@ -10,6 +10,51 @@ public class AccountTest {
     private static final double THRESHOLD = 0.001;
 
     @Test
+    void withdrawTest() {
+        Account bankAccount = new CheckingAccount(1000, "a@b.com");
+
+        //non-negative amount less than or equal to balance with more than two decimal places
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(0.001));
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(0.9999));
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(3141.592));
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(Double.MIN_VALUE));
+
+        //non-negative amount greater than balance with two decimal places or less
+        assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(1000.01));
+        assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(5432));
+        assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(3216.8));
+
+        //non-negative amount greater than balance with more than two decimal places
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(1000.001));
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(9876.543));
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(Double.MAX_VALUE));
+
+        //negative amount with two decimal places or less
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(-0.01));
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(-0.99));
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(-2718.2));
+
+        //negative amount with more than two decimal places
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(-0.001));
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(-0.9999));
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(-14850.607));
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(-Double.MIN_VALUE));
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(-Double.MAX_VALUE));
+
+        //non-negative amount less than or equal to balance with two decimal places or less
+        bankAccount.withdraw(0);
+        assertEquals(1000, bankAccount.getBalance(), THRESHOLD);
+        bankAccount.withdraw(100);
+        assertEquals(900, bankAccount.getBalance(), THRESHOLD);
+        bankAccount.withdraw(0.01);
+        assertEquals(899.99, bankAccount.getBalance(), THRESHOLD);
+        bankAccount.withdraw(898.99);
+        assertEquals(1, bankAccount.getBalance(), THRESHOLD);
+        bankAccount.withdraw(1);
+        assertEquals(0, bankAccount.getBalance(), THRESHOLD);
+    }
+
+    @Test
     void depositTest() {
 
         Account bankAccount = new CheckingAccount( 0, "1");
