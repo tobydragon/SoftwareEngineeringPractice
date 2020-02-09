@@ -10,7 +10,7 @@ public class AccountTest {
     private static final double THRESHOLD = 0.001;
 
     @Test
-    void withdrawTest() {
+    void withdrawTest() throws InsufficientFundsException{
         Account bankAccount = new CheckingAccount(1000, "a@b.com");
 
         //non-negative amount less than or equal to balance with more than two decimal places

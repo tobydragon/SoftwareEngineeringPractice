@@ -24,9 +24,20 @@ public abstract class Account {
         }
     }
 
-
-    public void withdraw(double amount) {
-
+    /**
+     * reduces the balance by amount if amount is non-negative, has 2 or fewer decimals and is smaller or equal to balance
+     * @param amount quantity to reduce balance by
+     * @throws IllegalArgumentException if amount is negative or has more than 2 decimals
+     * @throws InsufficientFundsException if amount is larger than balance
+     */
+    public void withdraw(double amount) throws InsufficientFundsException{
+        if (!isAmountValid(amount)) {
+            throw new IllegalArgumentException("Amount: " + amount + " is invalid, cannot withdraw");
+        } else if (amount > balance) {
+            throw new InsufficientFundsException("Not enough money");
+        } else {
+            balance -= amount;
+        }
     }
 
     /**
