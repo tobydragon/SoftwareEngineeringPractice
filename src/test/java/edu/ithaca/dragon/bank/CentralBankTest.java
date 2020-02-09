@@ -7,8 +7,8 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CentralBankTest {
     @Test
     void depositTest(){
-        BankAccount account = new BankAccount("a@b.com", 200);
-        BasicAPI atm = new CentralBank();
+        BankAccount account = new BankAccount("a@b.com", 200, "1c");
+        BasicAPI atm = new CentralBank(new String[] {"",""});
         String acctId = account.acctId;
 
         assertThrows(IllegalArgumentException.class, ()-> atm.deposit(acctId, -100)); // invalid middle case (value)
