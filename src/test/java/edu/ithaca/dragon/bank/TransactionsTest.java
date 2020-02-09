@@ -37,11 +37,51 @@ public class TransactionsTest {
 
         newAccount.transfer(testAccountID,transferActID, 50.34);
         newAccount.transfer(testAccountID,transferActID, 34.34);
-        newAccount.transfer(testAccountID,transferActID, -2.34);
-        newAccount.transfer(testAccountID,transferActID, -10);
+        newAccount.transfer(testAccountID,transferActID, 2.45);
+        newAccount.transfer(testAccountID,transferActID, 10.13);
         newAccount.transfer(testAccountID,transferActID, 190);
 
         newAccount.transactionHistory(testAccountID);
         newAccount.transactionHistory(transferActID);
+    }
+
+    @Test
+    void findAcctIdsWithSuspiciousActivity() throws AccountAlreadyExistsException, InsufficientFundsException, ExceedsMaxWithdrawalException, AccountDoesNotExistException {
+        CentralBank newAccount = new CentralBank();
+        String testAccountID = "a@b.com";
+        newAccount.createAccount(testAccountID, "password", 1500, false);
+
+        // With multiple withdraws
+        newAccount.withdraw("a@b.com",50);
+        newAccount.withdraw("a@b.com",170);
+        newAccount.withdraw("a@b.com",213.54);
+        newAccount.withdraw("a@b.com",130.43);
+
+
+        // With multiple transfers
+        String transferActID = "m@v.com";
+        newAccount.createAccount(testAccountID, "password", 2000, true);
+
+        newAccount.transfer(testAccountID,transferActID, 80);
+        newAccount.transfer(testAccountID,transferActID, 44.84);
+        newAccount.transfer(testAccountID,transferActID, 123.34);
+        newAccount.transfer(testAccountID,transferActID, 22.97);
+        newAccount.transfer(testAccountID,transferActID, 190);
+    }
+
+    @Test
+    void freezeAccount() throws AccountAlreadyExistsException {
+        CentralBank newAccount = new CentralBank();
+        String testAccountID = "a@b.com";
+        newAccount.createAccount(testAccountID, "password", 200, false);
+
+    }
+
+    @Test
+    void unfreezeAcct() throws AccountAlreadyExistsException {
+        CentralBank newAccount = new CentralBank();
+        String testAccountID = "a@b.com";
+        newAccount.createAccount(testAccountID, "password", 200, false);
+
     }
 }

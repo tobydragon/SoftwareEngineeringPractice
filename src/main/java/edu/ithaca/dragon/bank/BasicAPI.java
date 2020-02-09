@@ -13,6 +13,6 @@ public interface BasicAPI {
 
     void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws InsufficientFundsException, AccountDoesNotExistException, ExceedsMaxWithdrawalException;
 
-    String transactionHistory(String acctId) throws AccountDoesNotExistException;
+    String transactionHistory(String acctId) throws AccountDoesNotExistException, AccountAlreadyExistsException, InsufficientFundsException, ExceedsMaxWithdrawalException;
 
 }

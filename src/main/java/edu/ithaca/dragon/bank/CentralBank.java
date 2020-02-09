@@ -46,8 +46,10 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
         BankAccount.transfer(accountD, accountW, amount);
     }
 
-    public String transactionHistory(String acctId) throws AccountDoesNotExistException {
+    public String transactionHistory(String acctId) throws AccountDoesNotExistException, AccountAlreadyExistsException, InsufficientFundsException, ExceedsMaxWithdrawalException {
         if (!accounts.containsKey(acctId)) throw new AccountDoesNotExistException("Account with this id does not exists");
+
+        return null;
     }
 
 
@@ -92,7 +94,7 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
     }
 
     public Collection<String> findAcctIdsWithSuspiciousActivity() {
-        return null;
+
     }
 
     public void freezeAccount(String acctId) {
@@ -102,5 +104,4 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
     public void unfreezeAcct(String acctId) {
 
     }
-
 }
