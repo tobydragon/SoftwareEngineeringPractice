@@ -7,12 +7,22 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
 
     public CentralBank (){
         BankAccount customerCollection[]= new BankAccount[1];
-        customerCollection[0] = new BankAccount("a@b.com",305);
+        customerCollection[0] = new BankAccount("a@b.com",305, "abcdefg1234");
     }
 
     //----------------- BasicAPI methods -------------------------//
 
-    public boolean confirmCredentials(String acctId, String password) {
+    public boolean confirmCredentials(String acctId, String password, BankAccount[] customerCollection) {
+        for (int i = 0; i < customerCollection.length; i++) {
+            if (customerCollection[i].email == acctId){
+                if (customerCollection[i].getPassword() != password){
+                    return false;
+                }
+                else{
+                    return true;
+                }
+            }
+        }
         return false;
     }
 

@@ -3,7 +3,7 @@ package edu.ithaca.dragon.bank;
 //API to be used by ATMs
 public interface BasicAPI {
 
-    boolean confirmCredentials(String acctId, String password);
+    boolean confirmCredentials(String acctId, String password, BankAccount[] customerCollection);
 
     double checkBalance(String acctId,  BankAccount[] customerCollection);
 

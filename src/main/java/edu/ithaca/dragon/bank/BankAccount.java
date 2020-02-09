@@ -6,6 +6,7 @@ public class BankAccount {
 
     public String email;
     public double balance;
+    private String password;
 
     /**
      * @throws IllegalArgumentException if amount to be withdrawn is invalid
@@ -30,7 +31,7 @@ public class BankAccount {
     /**
      * @throws IllegalArgumentException if email is invalid
      */
-    public BankAccount(String email, double startingBalance){
+    public BankAccount(String email, double startingBalance, String password){
 
         if (isAmountValid(startingBalance) == false){
             throw new IllegalArgumentException("Starting balance is an invalid balance because it is negative or has too many decimal places");
@@ -38,6 +39,7 @@ public class BankAccount {
         if (isEmailValid(email)){
             this.email = email;
             this.balance = startingBalance;
+            this.password = password;
         }
         else {
             throw new IllegalArgumentException("Email address: " + email + " is invalid, cannot create account");
@@ -48,6 +50,8 @@ public class BankAccount {
     public double getBalance(){
         return balance;
     }
+
+    public String getPassword(){ return password; }
 
     public String getEmail(){
         return email;
