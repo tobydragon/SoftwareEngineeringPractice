@@ -117,10 +117,5 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
 
     public void unfreezeAcct(String acctId) {
 
-        for(int i = 0; i < accounts.size(); i++){
-            if(accounts[i].equals(acctId)){
-                accounts[i].freeze();
-            }
-        }
     }
 }
