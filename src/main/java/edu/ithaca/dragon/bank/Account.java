@@ -54,8 +54,22 @@ public abstract class Account {
         }
     }
 
-    public void transfer(Account toAccount, double amount) {
-
+    /**
+     * withdraws amount from balance and deposits it into to's balance
+     * @param toAccount BankAccount who's balance will be deposited into
+     * @param amount quantity to withdraw from balance and deposit into to's balance
+     * @throws IllegalArgumentException if amount is negative or has more than 2 decimals
+     * @throws InsufficientFundsException if amount is larger than balance
+     */
+    public void transfer(Account toAccount, double amount) throws InsufficientFundsException {
+        if (!isAmountValid(amount)) {
+            throw new IllegalArgumentException("Amount: " + amount + " is invalid, cannot transfer");
+        } else if (amount > balance) {
+            throw new InsufficientFundsException("Not enough money");
+        } else {
+            withdraw(amount);
+            toAccount.deposit(amount);
+        }
     }
 
     public String getCredentials() {
