@@ -13,7 +13,7 @@ public class TransactionsTest {
         //refactored this to "bank" because newAccount makes it sound like it's just one account and not all of them @Vera
         CentralBank bank = new CentralBank();
         String testAccountID = "a@b.com";
-        bank.createAccount(testAccountID, "password", 2000, false);
+        bank.createAccount(testAccountID, "password", 2000, false, false);
 
         // Account has wrong accountID
         assertThrows(AccountDoesNotExistException.class, () -> bank.transactionHistory("like@comment.subscribe"));
@@ -42,7 +42,7 @@ public class TransactionsTest {
 
         // Account has multiple transfers
         String transferActID = "m@v.com";
-        bank.createAccount(transferActID, "password", 350, true);
+        bank.createAccount(transferActID, "password", 350, true, false);
 
         bank.transfer(testAccountID,transferActID, 50.34);
         bank.transfer(testAccountID,transferActID, 34.34);
@@ -61,7 +61,7 @@ public class TransactionsTest {
             ExceedsMaxWithdrawalException, AccountDoesNotExistException, AccountFrozenException {
         CentralBank bank = new CentralBank();
         String testAccountID = "a@b.com";
-        bank.createAccount(testAccountID, "password", 1500, false);
+        bank.createAccount(testAccountID, "password", 1500, false, false);
 
         // With multiple withdraws
         bank.withdraw("a@b.com",50);
@@ -70,9 +70,10 @@ public class TransactionsTest {
         bank.withdraw("a@b.com",130.43);
 
 
+
         // With multiple transfers
         String transferActID = "m@v.com";
-        bank.createAccount(testAccountID, "password", 2000, true);
+        bank.createAccount(testAccountID, "password", 2000, true, false);
 
         bank.transfer(testAccountID,transferActID, 80);
         bank.transfer(testAccountID,transferActID, 44.84);
@@ -85,8 +86,9 @@ public class TransactionsTest {
     void freezeAccount() throws AccountAlreadyExistsException, AccountDoesNotExistException {
         CentralBank bank = new CentralBank();
         String testAccountID = "a@b.com";
-        bank.createAccount(testAccountID, "password", 200, false);
+        bank.createAccount(testAccountID, "password", 200, false, false);
 
+        testAccountID.isFrozen();
         //use bank account.isFrozen in the test assertion
     }
 
@@ -94,7 +96,7 @@ public class TransactionsTest {
     void unfreezeAcct() throws AccountAlreadyExistsException, AccountDoesNotExistException {
         CentralBank bank = new CentralBank();
         String testAccountID = "a@b.com";
-        bank.createAccount(testAccountID, "password", 200, false);
+        bank.createAccount(testAccountID, "password", 200, false, false);
 
     }
 }

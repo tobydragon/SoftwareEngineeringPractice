@@ -120,7 +120,11 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
         //I recommend using the first character in each transaction string - it will be t, d, or w
         //You'll have to split the string by the comma delimiter
         //you can compare items in the list and see if there are too many withdraws/deposits together
+        for(int i = 0; i < accounts.size(); i++) {
+            if (transactionHistory(accounts.get(i)) == "w"){
 
+            }
+        }
         return suspiciousAccts;
 
     }
