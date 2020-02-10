@@ -23,7 +23,12 @@ public class savingsAccount extends BankAccount {
      * @return
      */
     public double calcInterest(){
-        return 0;
+        if (interestRate >= 0) {
+            balance += balance * interestRate;
+            return this.balance;
+        }else{
+            throw new IllegalArgumentException("interest rate: " + interestRate + " is not a valid interest rate.");
+        }
     }
 
     /**

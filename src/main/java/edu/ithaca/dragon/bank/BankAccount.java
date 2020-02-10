@@ -3,7 +3,7 @@ package edu.ithaca.dragon.bank;
 public class BankAccount {
 
     private String email;
-    private double balance;
+    public double balance;
 
     /**
      * @throws IllegalArgumentException if email is invalid

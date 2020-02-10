@@ -49,6 +49,10 @@ public class savingsAccountTest {
         assertTrue(savingsAccount4.getBalance() - 200 < .1);
 
         //negative interest rate
+        savingsAccount savingsAccount5 = new savingsAccount("a@b.com", 200.00, 150.00, -.15);
+        assertThrows(IllegalArgumentException.class, ()->savingsAccount5.calcInterest());
+        savingsAccount savingsAccount6 = new savingsAccount("a@b.com", 200.00, 150.00, -.30);
+        assertThrows(IllegalArgumentException.class, ()->savingsAccount6.calcInterest());
 
 
 
