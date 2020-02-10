@@ -17,6 +17,13 @@ public class CentralBankTest {
 
 
     @Test
+    void createAccountTest(){
+        AdvancedAPI teller = new CentralBank((new String[] {"",""}));
+        teller.createAccount("a@b.com", 200,"Checking");
+        assertEquals(200, teller.checkBalance(teller.getAccountId("a@b.com", "Checking")));
+    }
+
+    @Test
     void depositTest(){
         BankAccount acct = new BankAccount("a@b.com", 200, "1c");
         BasicAPI atm = new CentralBank(new String[] {"",""});
