@@ -1,24 +1,26 @@
 package edu.ithaca.dragon.bank;
 
 public class CheckingAccount extends Account {
-    public CheckingAccount(String email, double startingBalance){
-        super(email, startingBalance);
+
+    public CheckingAccount(String ID, double balance){
+        super(ID, balance);
     }
     public void deposit(double amount){}
-    public void withdraw(double amount) throws InsufficientFundsException{
-        if((amount * 100) % 1 != 0)
-            throw new IllegalArgumentException("invalid input");
+    public void withdraw(double amount) throws InsufficientFundsException, IllegalArgumentException{
+        if(!CheckingAccount.isAmountValid(amount))throw new IllegalArgumentException("Not a valid Amount");
+        if(Double.compare(amount, 0.0)==0)throw new IllegalArgumentException("Cannot Withdraw zero dollars");
+        if(Double.compare(this.balance-amount, 0.0)==-1)throw new InsufficientFundsException("Not enough Funds");
+        else this.balance -= amount;
 
-        else if (balance >= amount && amount > 0)
-            balance -= amount;
-
-        else if(balance < amount)
-            throw new InsufficientFundsException("Amount requested is more than in your account by " + (amount - balance));
-
-        else if(amount<=0)
-            throw new IllegalArgumentException("Enter some amount to withdraw");
     }
 
-
     public void transfer(Account transferTo, double amount) throws InsufficientFundsException{}
+
+    public static boolean isAmountValid(double amountIn){
+        if (amountIn < 0) return false;
+        double scale = Math.pow(10, 9);
+        amountIn = Math.round(amountIn*scale)/scale;
+        if(Double.compare(amountIn, Math.round(amountIn*100)/100.0)!= 0) return false;
+        else return true;
+    }
 }
