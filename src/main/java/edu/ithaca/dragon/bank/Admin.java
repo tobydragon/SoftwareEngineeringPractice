@@ -16,7 +16,13 @@ public class Admin implements AdminAPI {
 
     @Override
     public double calcTotalAssets() {
-        return 0;
+        double total = 0;
+        Iterator<Account> itr = this.bank.accounts.iterator();
+        while (itr.hasNext()){
+            Account current = itr.next();
+            total += current.getBalance();
+        }
+        return total;
     }
 
     @Override
