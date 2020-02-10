@@ -2,14 +2,11 @@ package edu.ithaca.dragon.bank;
 
 import java.util.Collection;
 
-public class Admin implements AdminAPI {
-    Collection<BankAccount> accounts;
+public class Admin extends CentralBank implements AdminAPI {
 
-
-    public Admin(Collection<BankAccount> accounts){
-        this.accounts=accounts;
+    public Admin(Collection<BankAccount> accounts, Collection<User>users){
+        super(accounts,users);
     }
-
 
     public double calcTotalAssets() {
         return 0;
