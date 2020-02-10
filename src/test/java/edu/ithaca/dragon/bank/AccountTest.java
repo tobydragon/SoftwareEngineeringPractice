@@ -105,6 +105,18 @@ public class AccountTest {
         bankAccount.deposit(419.5);
         assertEquals(430.5, bankAccount.getBalance(), THRESHOLD);
 
+        bankAccount.setFrozen(true);
+        //Checking that account frozen gets thrown with basic deposits
+        assertThrows(AccountFrozenException.class, () -> bankAccount.deposit(0));
+        assertThrows(AccountFrozenException.class, () -> bankAccount.deposit(100));
+        assertThrows(AccountFrozenException.class, () -> bankAccount.deposit(50.53));
+
+        //Checking that account frozen has higher priority than IllegalArgument
+        assertThrows(AccountFrozenException.class, () -> bankAccount.deposit(-2));
+        assertThrows(AccountFrozenException.class, () -> bankAccount.deposit(100.1234));
+        assertThrows(AccountFrozenException.class, () -> bankAccount.deposit(-25.087));
+
+
 
     }
 
