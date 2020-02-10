@@ -4,9 +4,10 @@ import java.util.regex.Pattern;
 
 public class BankAccount {
 
-    public String acctId;
-    private String email;
-    private double balance;
+    protected String acctId;
+    protected String email;
+    protected double balance;
+    protected String type;
 
     /**
      * @param email same as user email
@@ -18,6 +19,7 @@ public class BankAccount {
             this.email = email;
             this.balance = startingBalance;
             this.acctId = "testAccount";
+            this.type = "Checking"; //TODO This should be moved down to savings and checkings
         }
         else if(!isEmailValid(email)) {
             throw new IllegalArgumentException("Email address: " + email + " is invalid, cannot create account");

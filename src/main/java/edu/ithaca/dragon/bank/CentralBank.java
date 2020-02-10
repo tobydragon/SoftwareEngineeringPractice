@@ -1,5 +1,6 @@
 package edu.ithaca.dragon.bank;
 
+import java.security.PublicKey;
 import java.util.Collection;
 
 public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
@@ -63,10 +64,25 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
         return null;
     }
 
+    public String getAccountId(String email, String accountType){
+        for (int i = 0; i < accounts.length; i++){
+            if(accounts[i].getEmail() == email && accounts[i].type == accountType){
+                return accounts[i].acctId;
+            }
+        }
+        throw new IllegalArgumentException("Account not found");
+    }
+
 
     //----------------- edu.ithaca.dragon.bank.AdvancedAPI methods -------------------------//
 
-    public void createAccount(String acctId, double startingBalance) {
+    /**
+     * Creates an acct of type defined and adds acct to acct list
+     * @param email
+     * @param startingBalance
+     * @param acctType
+     */
+    public void createAccount(String email, double startingBalance, String acctType) {
 
     }
 

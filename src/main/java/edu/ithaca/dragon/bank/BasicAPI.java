@@ -15,4 +15,5 @@ public interface BasicAPI {
 
     String transactionHistory(String acctId);
 
+    String getAccountId(String email, String accountType);
 }
