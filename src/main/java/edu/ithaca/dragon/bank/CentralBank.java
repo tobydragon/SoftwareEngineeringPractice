@@ -48,11 +48,6 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
         return 0;
     }
 
-    @Override
-    public double calcTotalAssets() {
-        return 0;
-    }
-
     public Collection<String> findAcctIdsWithSuspiciousActivity() {
         return null;
     }
