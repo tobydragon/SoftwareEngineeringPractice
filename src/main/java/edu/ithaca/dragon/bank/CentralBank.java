@@ -9,20 +9,20 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
     private BankAccount[] accounts;
     private double netWorth;
     private int time;
-    private String[] admins;
+    private String adminPassoword;
     private String[] allHistory;
     private String[] atmHistory;
     private String[] tellerHistory;
     private String[] adminHistory;
     private int numAccounts;
 
-    public CentralBank(String[] admins) {
+    public CentralBank() {
 
         int defaultArraySize = 10; //this may change
 
         users = new User[defaultArraySize];
         accounts = new BankAccount[defaultArraySize];
-        this.admins = admins;
+        adminPassoword = "NotRobert";
         allHistory = new String[defaultArraySize];
         atmHistory = new String[defaultArraySize];
         tellerHistory = new String[defaultArraySize];
@@ -156,10 +156,6 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
 
     public int getTime() {
         return time;
-    }
-
-    public String[] getAdmins() {
-        return admins;
     }
 
     public String[] getAllHistory() {

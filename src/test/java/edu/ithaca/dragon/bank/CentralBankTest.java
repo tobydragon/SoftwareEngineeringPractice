@@ -8,7 +8,7 @@ public class CentralBankTest {
 
     @Test
     void checkBalanceTest(){
-        AdvancedAPI teller = new CentralBank(new String[] {"",""});
+        AdvancedAPI teller = new CentralBank();
         teller.createAccount("a@b.com", 200,"Checking");
         String acctId = teller.getAccountId("a@b.com", "Checking");
 
@@ -17,7 +17,7 @@ public class CentralBankTest {
 
     @Test
     void getAccountIdTest(){
-        AdvancedAPI teller = new CentralBank(new String[]{""});
+        AdvancedAPI teller = new CentralBank();
 
         String[] emails = new String[]{"a@b.com", "a@b.com", "e@f.com", "g@h.com"};
         int[] balances = new int[]{100,200,300,400};
@@ -33,14 +33,14 @@ public class CentralBankTest {
 
     @Test
     void createAccountTest(){
-        AdvancedAPI teller = new CentralBank((new String[] {"",""}));
+        AdvancedAPI teller = new CentralBank();
         teller.createAccount("a@b.com", 200,"Checking");
         assertEquals(200, teller.checkBalance(teller.getAccountId("a@b.com", "Checking")));
     }
 
     @Test
     void depositTest(){
-        AdvancedAPI teller = new CentralBank(new String[] {"",""});
+        AdvancedAPI teller = new CentralBank();
         teller.createAccount("a@b.com", 200,"Checking");
         String acctId = teller.getAccountId("a@b.com","Checking");
 
