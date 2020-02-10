@@ -4,11 +4,15 @@ public class BankAccount {
 
     private String email;
     public double balance;
+    public  boolean acctFrozen;
+    public String acctId;
 
     /**
      * @throws IllegalArgumentException if email is invalid
      */
     public BankAccount(String email, double startingBalance) {
+        this.acctFrozen = false;
+        this.acctId = "B000";
         if (isEmailValid(email) && isAmountValid(startingBalance)) {
             this.email = email;
             this.balance = startingBalance;
@@ -25,6 +29,12 @@ public class BankAccount {
         return email;
     }
 
+    public String getAcctId(){return acctId;}
+
+    public void setAcctId(String IDin){
+        this.acctId = IDin;
+    }
+
     /**
      * @post reduces the balance by amount if amount is non-negative and smaller than balance
      * if amount is negative or larger than balance, balance stays the same
@@ -38,6 +48,12 @@ public class BankAccount {
             throw new IllegalArgumentException("withdraw amount: " + amount + " is invalid, amount cannot be withdrawn");
         }
     }
+
+    public void setAcctFrozen(boolean status){
+        this.acctFrozen = status;
+    }
+
+    public boolean getAcctFrozen(){return acctFrozen;}
 
 
     public static boolean isEmailValid(String email) {
