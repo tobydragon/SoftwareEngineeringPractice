@@ -77,12 +77,27 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
     //----------------- edu.ithaca.dragon.bank.AdvancedAPI methods -------------------------//
 
     /**
-     * Creates an acct of type defined and adds acct to acct list
-     * @param email
-     * @param startingBalance
-     * @param acctType
+     * Creates an acct of type defined, adds acct to acct list, updates num accts
+     * @param email email associated with acct
+     * @param startingBalance starting balance
+     * @param acctType type of account
      */
     public void createAccount(String email, double startingBalance, String acctType) {
+        String id = (this.numAccounts + 1) + acctType.substring(0,1);
+        if (acctType.equals("Checking")){
+            CheckingAccount account = new CheckingAccount(email, startingBalance, id);
+            accounts[numAccounts] = account;
+            numAccounts++;
+
+        }
+        else if(acctType.equals("Savings")){
+            SavingsAccount account = new SavingsAccount(email, startingBalance, id);
+            accounts[numAccounts] = account;
+            numAccounts++;
+        }
+        else{
+            throw new IllegalArgumentException("AcctType must be either Savings or Checking");
+        }
 
     }
 
