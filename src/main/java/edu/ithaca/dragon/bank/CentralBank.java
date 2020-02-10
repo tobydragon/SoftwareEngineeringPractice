@@ -93,4 +93,46 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
 
     }
 
+    //------------------ CentralBank Getters -------------------------//
+
+
+    public User[] getUsers() {
+        return users;
+    }
+
+    public BankAccount[] getAccounts() {
+        return accounts;
+    }
+
+    public double getNetWorth() {
+        return netWorth;
+    }
+
+    public int getTime() {
+        return time;
+    }
+
+    public String[] getAdmins() {
+        return admins;
+    }
+
+    public String[] getAllHistory() {
+        return allHistory;
+    }
+
+    public String[] getAtmHistory() {
+        return atmHistory;
+    }
+
+    public String[] getTellerHistory() {
+        return tellerHistory;
+    }
+
+    public String[] getAdminHistory() {
+        return adminHistory;
+    }
+
+    public int getNumAccounts() {
+        return numAccounts;
+    }
 }
