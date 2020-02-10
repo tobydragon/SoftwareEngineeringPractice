@@ -168,6 +168,29 @@ public class AccountTest {
         a.transfer(b, 1);
         assertEquals(0, a.getBalance(), THRESHOLD);
         assertEquals(1000, b.getBalance(), THRESHOLD);
+
+        //Setting a's balance back to 1000, and b's to 0
+        b.transfer(a, 1000);
+        //checking with the sender frozen
+        a.setFrozen(true);
+        assertThrows(AccountFrozenException.class, () -> a.transfer(b, 5));
+        assertThrows(AccountFrozenException.class, () -> a.transfer(b, 10.45));
+        //checking with both frozen
+        b.setFrozen(true);
+        assertThrows(AccountFrozenException.class, () -> a.transfer(b, 0));
+        assertThrows(AccountFrozenException.class, () -> a.transfer(b, 6.34));
+        //checking with only the receiver frozen
+        a.setFrozen(false);
+        assertThrows(AccountFrozenException.class, () -> a.transfer(b, 20));
+        assertThrows(AccountFrozenException.class, () -> a.transfer(b, 50.85));
+        //Checking that Account Frozen has higher priority than other errors
+        assertThrows(AccountFrozenException.class, () -> a.transfer(b, 1000.01));
+        assertThrows(AccountFrozenException.class, () -> a.transfer(b, 50000));
+        assertThrows(AccountFrozenException.class, () -> a.transfer(b, -30));
+        assertThrows(AccountFrozenException.class, () -> a.transfer(b, 0.12345));
+
+
+
     }
 
     @Test
