@@ -3,9 +3,10 @@ package edu.ithaca.dragon.bank;
 public class BankAccount {
 
     private String email;
-    private double balance;
+    public double balance;
     public  boolean acctFrozen;
     public String acctId;
+
 
     /**
      * @throws IllegalArgumentException if email is invalid
