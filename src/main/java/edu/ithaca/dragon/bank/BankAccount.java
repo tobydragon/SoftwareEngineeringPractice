@@ -63,7 +63,7 @@ public class BankAccount {
      * @throws IllegalArgumentException if deposit amount is invalid
      *
      */
-    public void transfer ( BankAccount bankAccountTrasferringTo, double amount) throws InsufficientFundsException, IllegalArgumentException{
+    public void transfer ( BankAccount bankAccountTranferringTo, double amount) throws InsufficientFundsException, IllegalArgumentException{
         if (isAmountValid(amount) != true){
             throw new IllegalArgumentException ("The amount you entered: "+ amount + " is not a valid amount");
         }
@@ -77,7 +77,7 @@ public class BankAccount {
 
         else {
             balance -= amount;
-            bankAccountTrasferringTo.balance += amount;
+            bankAccountTranferringTo.balance += amount;
         }
     }
 

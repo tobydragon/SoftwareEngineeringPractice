@@ -1,7 +1,8 @@
 package edu.ithaca.dragon.bank;
-
 import java.lang.reflect.Array;
-import java.util.Collection;
+import java.util.*;
+import java.awt.*;
+
 
 public class CentralBank implements AdvancedAPI, AdminAPI {
 
@@ -100,8 +101,27 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
 
     //----------------- AdvancedAPI methods -------------------------//
 
+    // I/O not working... need to fix in order for function to work
     public void createAccount(String acctId, double startingBalance) {
+        System.out.println("Is this a checking or savings account? (c/s): ");
+        String A = scan.nextLine();
+        System.out.println("Create Password: ");
+        String X = scan.nextLine();
+        System.out.println("Please Re-type Password: ");
+        String Y = scan.nextLine();
 
+        while (X != Y){
+            System.out.println("Please try again to re-type Password: ");
+            Y = scan.nextLine();
+        }
+        BankAccount newAcct = new BankAccount(acctId,startingBalance,X);
+        if (A == "c" || A == "C"){
+            //add to checking collection
+        }
+        else if (A == "s" || A == "S"){
+            //add to saving collection
+        }
+        //add to customer collection
     }
 
     public void closeAccount(String acctId) {
