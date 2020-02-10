@@ -11,24 +11,24 @@ class BankAccountTest {
         /*
          * Checks for a bank account with a perfectly valid amount of money. Equivalence case.
          */
-        BankAccount bankAccount = new BankAccount("a@b.com", 200);
+        BankAccount bankAccount = new BankAccount("a@b.com", 200, 1234);
         assertEquals(200.00, bankAccount.getBalance());
         /*
          * Checks for bank account with no money at all. Border case.
          */
-        bankAccount = new BankAccount("a@b.com", 0);
+        bankAccount = new BankAccount("a@b.com", 0,1234);
         assertEquals(0, bankAccount.getBalance());
         /*
          * Checks for a bank account with negative amount of money. Equivalence case. No longer valid since
          * this test is covered by the constructor test.
          */
-        assertThrows(IllegalArgumentException.class, () -> new BankAccount("a@b.com", -200));
+        assertThrows(IllegalArgumentException.class, () -> new BankAccount("a@b.com", -200,1234));
         //assertEquals(0, bankAccount.getBalance());
     }
 
     @Test
     void withdrawTest() throws InsufficientFundsException{
-        BankAccount bankAccount = new BankAccount("a@b.com", 200);
+        BankAccount bankAccount = new BankAccount("a@b.com", 200,1234);
         /*
          * Check for proper withdrawal use. Equivalence test.
          */
@@ -145,7 +145,7 @@ class BankAccountTest {
 
     @Test
     void isAmountValidTest(){
-        BankAccount bankAccount = new BankAccount("a@b.com", 200);
+        BankAccount bankAccount = new BankAccount("a@b.com", 200,1234);
         /**
          * Equivalence test checking a valid positive mid-value.
          */
@@ -183,8 +183,8 @@ class BankAccountTest {
 
     @Test
     void transferTest() throws IllegalArgumentException, InsufficientFundsException{
-        BankAccount bankAccountA = new BankAccount("a@b.com", 200);
-        BankAccount bankAccountB = new BankAccount("a@b.com", 200);
+        BankAccount bankAccountA = new BankAccount("a@b.com", 200,1234);
+        BankAccount bankAccountB = new BankAccount("a@b.com", 200,1234);
 
         /**
          * Equivalence test for a valid positive mid-value.
@@ -246,7 +246,7 @@ class BankAccountTest {
 
     @Test
     void depositTest(){
-        BankAccount bankAccount = new BankAccount("a@b.com", 200);
+        BankAccount bankAccount = new BankAccount("a@b.com", 200,1234);
         bankAccount.deposit(100);
 
         /**
@@ -302,14 +302,15 @@ class BankAccountTest {
 
     @Test
     void constructorTest() {
-        BankAccount bankAccount = new BankAccount("a@b.com", 200);
+        BankAccount bankAccount = new BankAccount("a@b.com", 200,1234);
 
         assertEquals("a@b.com", bankAccount.getEmail());
         assertEquals(200, bankAccount.getBalance());
+        assertEquals(1234, bankAccount.getUserID());
         //check for exception thrown correctly
-        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", 100));
-        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("a@b.com", -100));
-        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("a@b.com", 100.123));
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", 100,1234));
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("a@b.com", -100,1234));
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("a@b.com", 100.123,1234));
 
     }
 
