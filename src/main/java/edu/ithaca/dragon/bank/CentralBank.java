@@ -17,6 +17,10 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
         return accountCount;
     }
 
+    /**
+     * Searches account list for BankAccount with ID (String)
+     * @return Bank Account object**/
+
     public BankAccount findAccountWithId(String id){
         for(int i  = 0; i<accountList.size(); i++){
             if(accountList.get(i).getAcctId().compareTo(id) == 0){
@@ -78,7 +82,19 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
     }
 
     public Collection<String> findAcctIdsWithSuspiciousActivity() {
-        return null;
+        Collection<String> susActCollection = new ArrayList<>();
+
+        for(int i  = 0; i<accountList.size(); i++){
+            if(accountList.get(i).getSusAct() == true){
+                susActCollection.add(accountList.get(i).getAcctId()) ;
+            }
+        }
+
+        if(susActCollection.size()>0){
+            return susActCollection;
+        }
+        else{
+        return null;}
     }
 
     public void freezeAccount(String acctId) {

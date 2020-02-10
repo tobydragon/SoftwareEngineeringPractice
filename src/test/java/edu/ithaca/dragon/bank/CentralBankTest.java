@@ -38,10 +38,28 @@ import static org.junit.jupiter.api.Assertions.*;
      }
 
      @Test
+     void findAccountStringTest(){
+         CentralBank c1 = new CentralBank();
+         c1.createAccount("b123", 200, "jim@gmail.com");
+         assertEquals("b123", c1.findAccountWithId("b123").getAcctId());
+
+
+     }
+
+     @Test
      void suspActTest(){
          CentralBank c1 = new CentralBank();
-         assertNotNull(c1.findAcctIdsWithSuspiciousActivity());
+         c1.createAccount("b123", 200, "jim@gmail.com");
 
+         //sus activity should be true for singular account
+         BankAccount b1 = c1.findAccountWithId("b123");
+         assertFalse(b1.getSusAct());
+
+         b1.setSusAct(true);
+         assertTrue(b1.getSusAct());
+
+         //appear on sus activity collection; list.
+         assertNotNull(c1.findAcctIdsWithSuspiciousActivity());
          assertEquals(1, c1.findAcctIdsWithSuspiciousActivity().size());
      }
 
