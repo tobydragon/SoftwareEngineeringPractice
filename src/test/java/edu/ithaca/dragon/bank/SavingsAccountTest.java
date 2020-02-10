@@ -8,7 +8,7 @@ public class SavingsAccountTest {
 
 
     @Test
-    void withdrawTest() throws InsufficientFundsException{
+    void withdrawTest() throws InsufficientFundsException, AccountFrozenException{
         Account a = new SavingsAccount(30, 0.5, 20, "a@b.com");
 
         a.withdraw(10);

@@ -12,7 +12,7 @@ public class SavingsAccount extends Account {
     }
 
     @Override
-    public void withdraw(double amount) throws InsufficientFundsException {
+    public void withdraw(double amount) throws InsufficientFundsException, AccountFrozenException {
         if(amount <= maximumWithdrawal) {
             super.withdraw(amount);
         } else {

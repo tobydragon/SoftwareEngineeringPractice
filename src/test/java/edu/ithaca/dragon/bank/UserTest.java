@@ -46,7 +46,7 @@ public class UserTest {
 
     //Tests adding account, getting account, and calling account methods by id
     @Test
-    void IntegrationTest() throws InsufficientFundsException{
+    void IntegrationTest() throws InsufficientFundsException, AccountFrozenException{
         String idA = "a@c.com";
         String idB = "b@c.com";
         Account a = new CheckingAccount(100, idA);
