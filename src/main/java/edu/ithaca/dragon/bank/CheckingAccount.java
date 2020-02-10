@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 
 public class CheckingAccount extends Account {
 
-
     public CheckingAccount(String ID, double balance){
         super(ID, balance);
     }
@@ -17,6 +16,7 @@ public class CheckingAccount extends Account {
 
 
     }
+
     public void transfer(Account transferTo, double amount) throws InsufficientFundsException{}
 
     public static boolean isAmountValid(double amountIn){
