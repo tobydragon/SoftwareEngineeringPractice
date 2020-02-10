@@ -1,38 +1,20 @@
 package edu.ithaca.dragon.bank;
 
 import java.util.Collection;
+import java.util.Map;
+import java.util.HashMap;
 
-<<<<<<< HEAD
 public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
 
-    String acctId;
-    double balance;
+    private String bankName;
+    private HashMap<String, Double> bankAccounts;
 
-    public CentralBank(String accountId, double balance){
-        this.acctId = accountId;
-        this.balance = balance;
+    public CentralBank(String bankName, HashMap<String, Double> bankAccounts){
+       this.bankName = bankName;
+       this.bankAccounts = new HashMap<String, Double>();
     }
 
-    private String acctID;
-    private double amount;
 
-    public CentralBank(String acctID, double amount) {
-        this.acctID = acctID;
-        this.amount = amount;
-    }
-||||||| merged common ancestors
-public class CentralBank implements AdvancedAPI, AdminAPI {
-=======
-public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
-
-    String acctId;
-    double balance;
-
-    public CentralBank(String accountId, double balance){
-        this.acctId = accountId;
-        this.balance = balance;
-    }
->>>>>>> d7f2e37a069825de396abfc726be296abe5170d1
 
     //----------------- BasicAPI methods -------------------------//
 
@@ -40,19 +22,20 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
         return false;
     }
 
-    public double checkBalance(String acctId) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-        return this.amount;
-=======
-        return this.balance;
->>>>>>> d7f2e37a069825de396abfc726be296abe5170d1
-||||||| merged common ancestors
-        return 0;
-=======
-        return this.balance;
->>>>>>> d7f2e37a069825de396abfc726be296abe5170d1
+    /**
+     * Returns balance associated with ID if it exists
+     * @param acctId
+     * @return balance in account if it exists
+     * @throws IllegalArgumentException if ID does not exist
+     */
+    public double checkBalance(String acctId) throws IllegalArgumentException{
+        if (!bankAccounts.containsKey(acctId)) {
+            throw new IllegalArgumentException("Account not found");
+        } else {
+            return bankAccounts.get(acctId);
+        }
     }
+
 
     public void withdraw(String acctId, double amount) throws InsufficientFundsException {
 
@@ -73,8 +56,22 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
 
     //----------------- AdvancedAPI methods -------------------------//
 
-    public void createAccount(String acctId, double startingBalance) {
-
+    /**
+     * Creates account and adds it to central bank's hash map of accounts if account is valid
+     * @param acctId
+     * @param startingBalance
+     * @throws IllegalArgumentException if ID already exists or balance isn't valid
+     */
+    public void createAccount(String acctId, double startingBalance) throws IllegalArgumentException{
+        if (bankAccounts.containsKey(acctId)) {
+            throw new IllegalArgumentException("Account ID already exists");
+        } else if (!BankAccount.isAmountValid(startingBalance)) {
+            throw new IllegalArgumentException("Balance specified is not a valid amount");
+        } else if (acctId.equals("") || acctId.contains(" ")) {
+            throw new IllegalArgumentException("Must enter an ID");
+        } else {
+            bankAccounts.put(acctId, startingBalance);
+        }
     }
 
     public void closeAccount(String acctId) {
