@@ -50,5 +50,24 @@ public class CentralBankTest {
 
 
         }
-    }
+
+        @Test
+        void withdrawTest() throws InsufficientFundsException {
+            BankAccount customerCollection[]= new BankAccount[1];
+            customerCollection[0] = new BankAccount("a@b.com",400);
+            CentralBank cb = new CentralBank();
+
+            //withdraws a valid amount with sufficient funds
+            cb.withdraw("a@b.com",200,customerCollection);
+            assertEquals(200,cb.checkBalance("a@b.com",customerCollection));
+
+            //withdraws an invalid amount with sufficient funds
+            assertThrows(IllegalArgumentException.class, ()-> cb.withdraw("a@b.com",-20.9088,customerCollection));
+
+            //withdraws a valid amount with insufficient funds
+            assertThrows(InsufficientFundsException.class, ()-> cb.withdraw("a@b.com",560,customerCollection));
+
+
+        }
+}
 
