@@ -5,7 +5,8 @@ public class BankAccount {
     private String email;
     public double balance;
     public  boolean acctFrozen;
-    public String acctId;
+    private String acctId;
+    private boolean susAct;
 
 
     /**
@@ -13,6 +14,7 @@ public class BankAccount {
      */
     public BankAccount(String email, double startingBalance) {
         this.acctFrozen = false;
+        this.susAct= false;
         this.acctId = "B000";
         if (isEmailValid(email) && isAmountValid(startingBalance)) {
             this.email = email;
@@ -34,6 +36,14 @@ public class BankAccount {
 
     public void setAcctId(String IDin){
         this.acctId = IDin;
+    }
+
+    public void setSusAct(Boolean in){
+        this.susAct = in;
+    }
+
+    public boolean getSusAct(){
+        return this.susAct;
     }
 
     /**
