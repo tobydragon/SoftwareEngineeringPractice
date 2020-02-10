@@ -31,7 +31,10 @@ public abstract class Account {
      * @throws InsufficientFundsException if amount is larger than balance
      */
     public void withdraw(double amount) throws InsufficientFundsException, AccountFrozenException{
-        if (!isAmountValid(amount)) {
+        if (isFrozen){
+            throw new AccountFrozenException("Account is frozen");
+        }
+        else if (!isAmountValid(amount)) {
             throw new IllegalArgumentException("Amount: " + amount + " is invalid, cannot withdraw");
         } else if (amount > balance) {
             throw new InsufficientFundsException("Not enough money");

@@ -46,7 +46,7 @@ public class AccountTest {
         assertThrows(AccountFrozenException.class, () -> bankAccount.withdraw(0));
         assertThrows(AccountFrozenException.class, () -> bankAccount.withdraw(100));
 
-        //Check that AccountFrozen hsa higher priority than illegal argument and insufficient funds
+        //Check that AccountFrozen has higher priority than illegal argument and insufficient funds
         assertThrows(AccountFrozenException.class, () -> bankAccount.withdraw(5.1234));
         assertThrows(AccountFrozenException.class, () -> bankAccount.withdraw(-50));
         assertThrows(AccountFrozenException.class, () -> bankAccount.withdraw(1000.01));
@@ -54,7 +54,7 @@ public class AccountTest {
 
 
 
-
+        bankAccount.setFrozen(false);
 
         //non-negative amount less than or equal to balance with two decimal places or less
         bankAccount.withdraw(0);
