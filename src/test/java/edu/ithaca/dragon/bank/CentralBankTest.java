@@ -15,6 +15,21 @@ public class CentralBankTest {
         assertEquals(200, teller.checkBalance(acctId));
     }
 
+    @Test
+    void getAccountIdTest(){
+        AdvancedAPI teller = new CentralBank(new String[]{""});
+
+        String[] emails = new String[]{"a@b.com", "c@d.com", "e@f.com", "g@h.com"};
+        int[] balances = new int[]{100,200,300,400};
+        String[] expectedIds = new String[]{"1C", "2S", "3C", "4S"};
+        String[] acctTypes = new String[]{"Checking","Savings"};
+
+        for(int i=0; i< emails.length; i++) {
+            teller.createAccount(emails[i], balances[i], acctTypes[i%2]);
+            assertEquals(expectedIds[i], teller.getAccountId(emails[i],acctTypes[i%2]));
+        }
+    }
+
 
     @Test
     void createAccountTest(){
