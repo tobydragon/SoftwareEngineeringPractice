@@ -11,10 +11,11 @@ public class savingsAccount extends BankAccount {
      * @param startingBalance
      * @throws IllegalArgumentException if email is invalid
      */
-    public savingsAccount(String email, double startingBalance, double maxWithdraw) {
+    public savingsAccount(String email, double startingBalance, double maxWithdraw, double interestRate) {
         super(email, startingBalance);
         this.maxWithdraw = maxWithdraw;
         this.withdrawCurrent = 0;
+        this.interestRate = interestRate;
     }
 
     /**

@@ -10,7 +10,7 @@ public class savingsAccountTest {
     void withdrawSavingsTest(){
         //positive, negative, zero, test above withdraw max
 
-        savingsAccount savings1 = new savingsAccount("a@b.com", 200.00, 150.00);
+        savingsAccount savings1 = new savingsAccount("a@b.com", 200.00, 150.00, .15);
 
         //withdraw more than limit
         assertThrows(IllegalArgumentException.class, ()->savings1.withdraw(200.00));
@@ -32,6 +32,25 @@ public class savingsAccountTest {
 
     @Test
     void calcSavingsInterestTest(){
+        //postive, negative, zero interest rates
+
+        //positive interest rate
+        savingsAccount savingsAccount2 = new savingsAccount("a@b.com", 200.00, 150.00, .15);
+        savingsAccount2.calcInterest();
+        assertTrue(savingsAccount2.getBalance() - 230 < .1);
+
+        savingsAccount savingsAccount3 = new savingsAccount("a@b.com", 200.00, 150.00, .30);
+        savingsAccount3.calcInterest();
+        assertTrue(savingsAccount3.getBalance() - 260 < .1);
+
+        //zero interest rate
+        savingsAccount savingsAccount4 = new savingsAccount("a@b.com", 200.00, 150.00, 0.0);
+        savingsAccount4.calcInterest();
+        assertTrue(savingsAccount4.getBalance() - 200 < .1);
+
+        //negative interest rate
+
+
 
     }
 }
