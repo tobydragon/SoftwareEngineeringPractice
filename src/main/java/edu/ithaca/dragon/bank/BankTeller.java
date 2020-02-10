@@ -1,6 +1,16 @@
 package edu.ithaca.dragon.bank;
 
 public class BankTeller implements AdvancedAPI {
+    private CustomerCollection customers;
+
+    public BankTeller(){
+        customers = new CustomerCollection();
+    }
+
+    public CustomerCollection getCustomers() {
+        return customers;
+    }
+
     public boolean confirmCredentials(String acctId, String password) {
         return false;
     }

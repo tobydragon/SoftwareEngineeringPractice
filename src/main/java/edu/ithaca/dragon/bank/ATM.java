@@ -1,6 +1,12 @@
 package edu.ithaca.dragon.bank;
 
 public class ATM implements BasicAPI {
+    private CustomerCollection customers;
+
+    public ATM(CustomerCollection customersIn){
+        customers = customersIn;
+    }
+
     public boolean confirmCredentials(String acctId, String password) {
         return false;
     }
