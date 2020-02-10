@@ -2,24 +2,18 @@ package edu.ithaca.dragon.bank;
 
 public class BankAccount {
 
-    private String email;
+    private String id;
     private double balance;
+    private String transHist;
 
     /**
      * @throws IllegalArgumentException if email is invalid
      */
-    public BankAccount(String email, double startingBalance){
-        if (isEmailValid(email) && isAmountValid(startingBalance)){
-            this.email = email;
+    public BankAccount(String id, double startingBalance){
+        if (isAmountValid(startingBalance)){
+            this.id = id;
             this.balance = startingBalance;
-        }
-        else {
-            if (!isEmailValid(email)){
-                throw new IllegalArgumentException("Email address: " + email + " is invalid, cannot create account");
-            }
-            else if(!isAmountValid(startingBalance)){
-                throw new IllegalArgumentException("Starting Balance: " + startingBalance + " is invalid, cannot create account");
-            }
+            this.transHist = "";
         }
     }
 
@@ -27,8 +21,12 @@ public class BankAccount {
         return balance;
     }
 
+    public String getTransHist(){
+        return transHist;
+    }
+
     public String getEmail(){
-        return email;
+        return id;
     }
 
     /**
