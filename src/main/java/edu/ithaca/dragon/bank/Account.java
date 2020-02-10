@@ -1,9 +1,9 @@
 package edu.ithaca.dragon.bank;
 
 public abstract class Account {
-    private String ID;
-    private double balance;
-    private boolean frozen;
+    protected String ID;
+    protected double balance;
+    protected boolean frozen;
 
     public double getBalance(){return balance;}
     public String getID(){return ID;}
