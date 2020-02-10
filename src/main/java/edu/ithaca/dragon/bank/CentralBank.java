@@ -9,10 +9,12 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
 
     private String bankName;
     private HashMap<String, Double> bankAccounts;
+    private HashMap<String, Double> frozenAccounts;
 
-    public CentralBank(String bankName, HashMap<String, Double> bankAccounts){
+    public CentralBank(String bankName, HashMap<String, Double> bankAccounts, HashMap<String, Double> frozenAccounts){
        this.bankName = bankName;
        this.bankAccounts = new HashMap<String, Double>();
+       this.frozenAccounts= new HashMap<String, Double>();
     }
 
 
@@ -66,6 +68,8 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
     public void createAccount(String acctId, double startingBalance) throws IllegalArgumentException{
         if (bankAccounts.containsKey(acctId)) {
             throw new IllegalArgumentException("Account ID already exists");
+        } else if (frozenAccounts.containsKey(acctId)) {
+            throw new IllegalArgumentException("ID exists on a frozen account");
         } else if (!BankAccount.isAmountValid(startingBalance)) {
             throw new IllegalArgumentException("Balance specified is not a valid amount");
         } else if (acctId.equals("") || acctId.contains(" ")) {
@@ -104,12 +108,70 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
         return null;
     }
 
-    public void freezeAccount(String acctId) {
 
+
+    /**
+     * freezes specified ID if exists and not already frozen
+     * @param acctId
+     * @throws IllegalArgumentException if ID doesn't exist or already frozen
+     */
+    public void freezeAccount(String acctId) throws IllegalArgumentException {
+        if (frozenAccounts.containsKey(acctId)) {
+            throw new IllegalArgumentException("Account already frozen");
+        } else if (bankAccounts.containsKey(acctId)) {
+            Double balance = bankAccounts.get(acctId);
+            bankAccounts.remove(acctId);
+            frozenAccounts.put(acctId, balance);
+        } else {
+            throw new IllegalArgumentException("Account does not exist");
+        }
     }
 
-    public void unfreezeAcct(String acctId) {
 
+
+    /**
+     * unfreezes specified ID if exists and frozen
+     * @param acctId
+     * @throws IllegalArgumentException if ID doesn't exist or not currently frozen
+     */
+    public void unfreezeAcct(String acctId) throws IllegalArgumentException{
+        if (bankAccounts.containsKey(acctId)) {
+            throw new IllegalArgumentException("Account not frozen");
+        } else if (frozenAccounts.containsKey(acctId)) {
+            Double balance = frozenAccounts.get(acctId);
+            frozenAccounts.remove(acctId);
+            bankAccounts.put(acctId, balance);
+        } else {
+            throw new IllegalArgumentException("Account does not exist");
+        }
+    }
+
+
+
+    /**
+     *
+     * @param acctID
+     * @return if account exists or not
+     */
+    public boolean checkAccountExists(String acctID) {
+        if (bankAccounts.containsKey(acctID)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     *
+     * @param acctID
+     * @return if frozen account exists or not
+     */
+    public boolean checkFrozenAccountExists(String acctID) {
+        if (frozenAccounts.containsKey(acctID)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

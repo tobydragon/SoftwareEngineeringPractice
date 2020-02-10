@@ -12,4 +12,8 @@ public interface AdminAPI { //sure
 
     public void unfreezeAcct(String acctId);
 
+    public boolean checkAccountExists(String acctID);
+
+    public boolean checkFrozenAccountExists(String acctID);
+
 }
