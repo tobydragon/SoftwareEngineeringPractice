@@ -106,6 +106,34 @@ public class AdminTest {
         assertEquals(306.65, admin.calcTotalAssets());
     }
 
+    @Test
+    void integrationTest() throws InsufficientFundsException, AccountFrozenException{
+        //Meant to test that freeze/unfreeze can work in conjunction, as well as calcTotalAssets working with the Account methods
+        Account abcAcc = new CheckingAccount(500, "abc");
+        Account xyzAcc = new CheckingAccount(500, "xyz");
+        Collection<Account>  collection = new ArrayList<Account>();
+        collection.add(abcAcc);
+        collection.add(xyzAcc);
+        CentralBank testBank = new CentralBank();
+        testBank.accounts = collection;
+        Admin admin = new Admin(testBank);
+        assertEquals(1000, admin.calcTotalAssets());
+        abcAcc.transfer(xyzAcc, 300);
+        assertEquals(1000, admin.calcTotalAssets());
+        abcAcc.deposit(300);
+        assertEquals(1300, admin.calcTotalAssets());
+        xyzAcc.withdraw(100.55);
+        assertEquals(1199.45, admin.calcTotalAssets());
+
+        admin.freezeAccount("abc");
+        assertThrows(AccountFrozenException.class, ()->abcAcc.deposit(50));
+        admin.unfreezeAcct("abc");
+        abcAcc.deposit(50);
+        assertEquals(1249.45, admin.calcTotalAssets());
+
+
+    }
+
 
 
 
