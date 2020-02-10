@@ -49,8 +49,10 @@ public abstract class Account {
      * @throws IllegalArgumentException if amount is negative or has more than 2 decimal places
      */
     public void deposit(double amount) throws AccountFrozenException{
-
-        if (!isAmountValid(amount)) {
+        if (isFrozen){
+            throw new AccountFrozenException("Account is frozen");
+        }
+        else if (!isAmountValid(amount)) {
             throw new IllegalArgumentException("Amount: " + amount + " is invalid, cannot deposit");
         } else {
             balance += amount;
