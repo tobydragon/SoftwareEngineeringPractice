@@ -45,7 +45,12 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
      * @return current account balance
      */
     public double checkBalance(String acctId) {
-        return 0;
+        for (int i = 0; i < accounts.length; i++){
+            if(accounts[i].acctId == acctId){
+                return accounts[i].getBalance();
+            }
+        }
+        throw new IllegalArgumentException("Account not found");
     }
 
     public void withdraw(String acctId, double amount) throws InsufficientFundsException {
