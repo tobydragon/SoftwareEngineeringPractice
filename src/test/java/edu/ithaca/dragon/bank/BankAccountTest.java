@@ -83,11 +83,26 @@ class BankAccountTest {
     }
 
     @Test
+
+    void acctIDTest(){
+        BankAccount bankAccount = new BankAccount("a@b.com", 200);
+        assertEquals("B000", bankAccount.getAcctId());
+
+        String testString = "C123";
+        bankAccount.setAcctId(testString);
+        assertEquals(testString, bankAccount.getAcctId());
+
+
+
+    }
+
+    @Test
     void constructorTest() {
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
 
         assertEquals("a@b.com", bankAccount.getEmail());
         assertEquals(200, bankAccount.getBalance());
+        assertFalse(bankAccount.getAcctFrozen());
         //check for exception thrown correctly
         assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", 100));
 
@@ -101,6 +116,29 @@ class BankAccountTest {
         assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", -.99));
         assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", -.001));
         assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", -.999));
+    }
+
+    @Test
+    void acctFrozenTest(){
+        BankAccount bankAccount = new BankAccount("a@b.com", 200);
+        assertFalse(bankAccount.getAcctFrozen());
+
+        bankAccount.setAcctFrozen(true); //freeze
+        assertTrue(bankAccount.getAcctFrozen());
+
+
+    }
+
+    @Test
+    void acctUnfrozenTest(){
+        BankAccount bankAccount = new BankAccount("a@b.com", 200);
+        assertFalse(bankAccount.getAcctFrozen());
+
+        bankAccount.setAcctFrozen(true); //freeze
+        assertTrue(bankAccount.getAcctFrozen());
+
+        bankAccount.setAcctFrozen(false); //unfreeze
+        assertFalse(bankAccount.getAcctFrozen());
     }
 
     @Test

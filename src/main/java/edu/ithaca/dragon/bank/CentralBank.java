@@ -2,7 +2,7 @@ package edu.ithaca.dragon.bank;
 
 import java.util.Collection;
 
-public class CentralBank implements AdvancedAPI, AdminAPI {
+public class CentralBank implements AdvancedAPI, AdminAPI, BasicAPI {
 
     //----------------- BasicAPI methods -------------------------//
 
@@ -59,5 +59,7 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
     public void unfreezeAcct(String acctId) {
 
     }
+
+
 
 }
