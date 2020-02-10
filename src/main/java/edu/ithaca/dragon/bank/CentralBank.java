@@ -148,6 +148,12 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
         return suspiciousAccts;
     }
 
+    public boolean isFrozen(String acctId) throws AccountDoesNotExistException{
+        if (!accounts.containsKey(acctId)) throw new AccountDoesNotExistException("Account does not exist");
+        BankAccount account = accounts.get(acctId);
+        return account.isFrozen();
+    }
+
     /**
      *
      * @param acctId
@@ -168,7 +174,9 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
         */
         if (!accounts.containsKey(acctId)) throw new AccountDoesNotExistException("Account does not exist");
         BankAccount account = accounts.get(acctId);
-        account.freeze();
+        if(account.isFrozen() == false) {
+            account.freeze();
+        }
     }
 
     /**
@@ -181,6 +189,8 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
     public void unfreezeAcct(String acctId) throws AccountDoesNotExistException {
         if (!accounts.containsKey(acctId)) throw new AccountDoesNotExistException("Account does not exist");
         BankAccount account = accounts.get(acctId);
-        account.unfreeze();
+        if(account.isFrozen() == true) {
+            account.unfreeze();
+        }
     }
 }
