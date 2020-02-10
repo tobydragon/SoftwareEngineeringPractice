@@ -54,7 +54,7 @@ public class CentralBankTest {
         @Test
         void withdrawTest() throws InsufficientFundsException {
             BankAccount customerCollection[]= new BankAccount[1];
-            customerCollection[0] = new BankAccount("a@b.com",400);
+            customerCollection[0] = new BankAccount("a@b.com",400, "ABCD1234");
             CentralBank cb = new CentralBank();
 
             //withdraws a valid amount with sufficient funds
