@@ -7,6 +7,7 @@ public class CentralBank {
     Collection<BankAccount> accounts;
     Collection<Admin> admins;
     Collection<ATM> atms;
+    Collection<Teller> tellers;
     Collection<User> users;
 
     public void withdraw(BankAccount account, double amount) {

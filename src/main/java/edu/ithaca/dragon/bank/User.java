@@ -14,5 +14,10 @@ public class User {
         this.password=password;
     }
 
+    public BankAccount getAccount(String acctiD){
+        return null;
+
+    }
+
 
 }
