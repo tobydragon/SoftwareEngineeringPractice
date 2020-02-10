@@ -67,7 +67,10 @@ public abstract class Account {
      * @throws InsufficientFundsException if amount is larger than balance
      */
     public void transfer(Account toAccount, double amount) throws InsufficientFundsException, AccountFrozenException {
-        if (!isAmountValid(amount)) {
+        if (this.isFrozen || toAccount.isFrozen){
+            throw new AccountFrozenException("Account is frozen");
+        }
+        else if (!isAmountValid(amount)) {
             throw new IllegalArgumentException("Amount: " + amount + " is invalid, cannot transfer");
         } else if (amount > balance) {
             throw new InsufficientFundsException("Not enough money");
