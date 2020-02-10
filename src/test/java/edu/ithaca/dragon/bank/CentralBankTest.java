@@ -5,11 +5,22 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CentralBankTest {
+
+    @Test
+    void checkBalanceTest(){
+        BankAccount acct = new BankAccount("a@b.com", 200, "1c");
+        BasicAPI atm = new CentralBank(new String[] {"",""});
+        String acctId = acct.acctId;
+
+        assertEquals(200, atm.checkBalance(acctId));
+    }
+
+
     @Test
     void depositTest(){
-        BankAccount account = new BankAccount("a@b.com", 200, "1c");
+        BankAccount acct = new BankAccount("a@b.com", 200, "1c");
         BasicAPI atm = new CentralBank(new String[] {"",""});
-        String acctId = account.acctId;
+        String acctId = acct.acctId;
 
         assertThrows(IllegalArgumentException.class, ()-> atm.deposit(acctId, -100)); // invalid middle case (value)
         assertThrows(IllegalArgumentException.class, ()-> atm.deposit(acctId,-1)); // invalid border case (value)

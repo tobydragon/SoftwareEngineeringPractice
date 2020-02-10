@@ -38,6 +38,11 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
         return false;
     }
 
+    /**
+     * Checks an accounts balance
+     * @param acctId Account Identifier
+     * @return current account balance
+     */
     public double checkBalance(String acctId) {
         return 0;
     }
