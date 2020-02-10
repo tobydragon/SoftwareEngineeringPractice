@@ -59,14 +59,9 @@ public class CustomerTest {
 
     @Test
     void constructorTest(){
-        Customer c1 = new Customer("bob", "asdfasdf", "asd@as.com", "1234", "1624 rd");
-        assertEquals("bob", c1.getName());
-        assertEquals("asdfasdf", c1.getId());
-        assertEquals("asd@as.com", c1.getEmail());
-        assertEquals("1234", c1.getPassword());
-        assertEquals("1624 rd", c1.getAddress());
-
-        assertThrows(IllegalArgumentException.class, ()-> new Customer("bob", "asdfasdf", "asd@as.c", "1234", "1624 rd"));
+        Customer c1 = new Customer("bob", "asdfasdf");
+        assertEquals("bob", c1.getId());
+        assertEquals("asdfasdf", c1.getPassword());
     }
 
 }

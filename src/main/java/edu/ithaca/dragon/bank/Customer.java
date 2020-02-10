@@ -3,20 +3,13 @@ package edu.ithaca.dragon.bank;
 import java.util.ArrayList;
 
 public class Customer {
-    private String name;
     private String id;
-    private String email;
     private String password;
-    private String address;
     private Account checking;
 
-    public Customer(String nameIn, String idIn, String emailIn, String passwordIn, String addressIn){
-        name = nameIn;
+    public Customer( String idIn,  String passwordIn){
         id = idIn;
-        if(!isEmailValid(emailIn)) throw new IllegalArgumentException("Non valid email");
-        email = emailIn;
         password = passwordIn;
-        address = addressIn;
         checking = null;
     }
 
@@ -29,21 +22,10 @@ public class Customer {
         return false;
     }
 
-
-    public String getAddress() {
-        return address;
-    }
-
-    public String getEmail() {
-        return email;
-    }
+    public void createAccount(double startingBalance){}
 
     public String getId() {
         return id;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public String getPassword() {
