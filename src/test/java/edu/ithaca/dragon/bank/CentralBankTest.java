@@ -8,11 +8,11 @@ public class CentralBankTest {
 
     @Test
     void checkBalanceTest(){
-        BankAccount acct = new BankAccount("a@b.com", 200, "1c");
-        BasicAPI atm = new CentralBank(new String[] {"",""});
-        String acctId = acct.acctId;
+        AdvancedAPI teller = new CentralBank(new String[] {"",""});
+        teller.createAccount("a@b.com", 200,"Checking");
+        String acctId = teller.getAccountId("a@b.com", "Checking");
 
-        assertEquals(200, atm.checkBalance(acctId));
+        assertEquals(200, teller.checkBalance(acctId));
     }
 
 
