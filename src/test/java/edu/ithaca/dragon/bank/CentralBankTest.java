@@ -34,4 +34,52 @@ import static org.junit.jupiter.api.Assertions.*;
 
      }
 
+
+     //Basic Tests
+
+     @Test
+     void confirmCredentialsTest(){
+
+
+     }
+
+     @Test
+     void checkBalanceTest(){
+
+         //unfreeze account
+     }
+
+     @Test
+     void withdrawTest(){
+         //sus activity test
+     }
+
+
+     @Test
+     void depositTest(){
+         //total assets test
+
+
+
+     }
+
+     @Test
+     void transferTest(){
+         //total assets test
+
+
+
+     }
+     @Test
+     void transactionHistoryTest(){
+         //total assets test
+
+
+
+     }
+
+
+
+
+>>>>>>> cd03c0870f2e92e0a423b9e6f22fa953782c1019
 }

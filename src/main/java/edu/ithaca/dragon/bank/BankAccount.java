@@ -7,6 +7,7 @@ public class BankAccount {
     public  boolean acctFrozen;
     public String acctId;
 
+
     /**
      * @throws IllegalArgumentException if email is invalid
      */
