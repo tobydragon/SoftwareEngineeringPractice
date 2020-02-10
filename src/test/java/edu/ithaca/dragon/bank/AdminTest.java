@@ -88,6 +88,24 @@ public class AdminTest {
 
     }
 
+    @Test
+    void calcTotalAssetsTest(){
+        CentralBank testBank = new CentralBank();
+        Admin admin = new Admin(testBank);
+        //Checking with no accounts
+        assertEquals(0, admin.calcTotalAssets());
+        //Checking with one account
+        testBank.accounts.add(new CheckingAccount(100, "abc"));
+        assertEquals(100, admin.calcTotalAssets());
+        //Checking with multiple accounts
+        testBank.accounts.add(new CheckingAccount(50.65, "xyz"));
+        testBank.accounts.add(new CheckingAccount(156, "def"));
+        assertEquals(306.65, admin.calcTotalAssets());
+        //Check when there is an account with 0 assets
+        testBank.accounts.add(new CheckingAccount(0, "ghi"));
+        assertEquals(306.65, admin.calcTotalAssets());
+    }
+
 
 
 
