@@ -9,7 +9,7 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
 
     private Map<String, BankAccount> accounts = new HashMap<>();
     //Added
-    private Map<String, BankAccount> transactionHist = new HashMap<>();
+    private Map<String, String> transactionHist = new HashMap<>();
 
     //----------------- BasicAPI methods -------------------------//
 
@@ -41,7 +41,7 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
         if (!accounts.containsKey(acctId)) throw new AccountDoesNotExistException("Account with this id does not exists");
         BankAccount account = accounts.get(acctId);
         // Added
-        transactionHist.put(acctId, account);
+        transactionHist.put("w", acctId);
     }
 
     public void deposit(String acctId, double amount) throws AccountDoesNotExistException {
@@ -49,7 +49,7 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
         BankAccount account = accounts.get(acctId);
         account.deposit(amount);
         // Added
-        transactionHist.put(acctId, account);
+        transactionHist.put("d", acctId);
     }
 
     public void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount)
@@ -61,8 +61,8 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
 
         BankAccount.transfer(accountD, accountW, amount);
         // Added
-        transactionHist.put(acctIdToWithdrawFrom, accountW);
-        transactionHist.put(acctIdToDepositTo, accountD);
+        transactionHist.put("t", acctIdToWithdrawFrom);
+        transactionHist.put("t", acctIdToDepositTo);
     }
 
     public String transactionHistory(String acctId) throws AccountDoesNotExistException, AccountAlreadyExistsException, InsufficientFundsException, ExceedsMaxWithdrawalException {
