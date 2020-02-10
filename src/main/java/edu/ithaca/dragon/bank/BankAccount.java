@@ -11,7 +11,7 @@ public abstract class BankAccount {
     /**
      * @throws IllegalArgumentException if email is invalid
      */
-    public BankAccount(String email, String password, double startingBalance){
+    public BankAccount(String email, String password, double startingBalance, boolean frozen){
         if (isEmailValid(email)){
             this.email = email;
         }
@@ -28,6 +28,9 @@ public abstract class BankAccount {
         }
         else{
             throw new IllegalArgumentException("Starting Balance: " + startingBalance + " is invalid, cannot create account");
+        }
+        if(isFrozen()){
+            this.frozen = frozen;
         }
     }
 

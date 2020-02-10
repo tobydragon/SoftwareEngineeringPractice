@@ -87,12 +87,12 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
 
     //----------------- AdvancedAPI methods -------------------------//
 
-    public void createAccount(String acctId, String password, double startingBalance, boolean savings) throws AccountAlreadyExistsException, IllegalArgumentException {
+    public void createAccount(String acctId, String password, double startingBalance, boolean savings, boolean frozen) throws AccountAlreadyExistsException, IllegalArgumentException {
         if (accounts.containsKey(acctId)) throw new AccountAlreadyExistsException("Account with this id already exists");
 
         BankAccount account;
-        if (savings) account = new SavingsAccount(acctId, password, startingBalance);
-        else account = new CheckingAccount(acctId, password, startingBalance);
+        if (savings) account = new SavingsAccount(acctId, password, startingBalance, frozen);
+        else account = new CheckingAccount(acctId, password, startingBalance, frozen);
 
         accounts.put(acctId, account);
     }
