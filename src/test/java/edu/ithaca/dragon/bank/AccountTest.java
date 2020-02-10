@@ -10,7 +10,7 @@ public class AccountTest {
     private static final double THRESHOLD = 0.001;
 
     @Test
-    void withdrawTest() throws InsufficientFundsException{
+    void withdrawTest() throws InsufficientFundsException, AccountFrozenException{
         Account bankAccount = new CheckingAccount(1000, "a@b.com");
 
         //non-negative amount less than or equal to balance with more than two decimal places
@@ -55,7 +55,7 @@ public class AccountTest {
     }
 
     @Test
-    void depositTest() {
+    void depositTest() throws AccountFrozenException {
 
         Account bankAccount = new CheckingAccount( 0, "1");
 
@@ -94,7 +94,7 @@ public class AccountTest {
     }
 
     @Test
-    void transferTest() throws InsufficientFundsException {
+    void transferTest() throws InsufficientFundsException, AccountFrozenException {
         Account a = new CheckingAccount(1000, "a@b.com");
         Account b = new CheckingAccount(0, "a@b.com");
 

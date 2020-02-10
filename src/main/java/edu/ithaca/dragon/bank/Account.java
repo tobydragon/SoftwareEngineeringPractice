@@ -30,7 +30,7 @@ public abstract class Account {
      * @throws IllegalArgumentException if amount is negative or has more than 2 decimals
      * @throws InsufficientFundsException if amount is larger than balance
      */
-    public void withdraw(double amount) throws InsufficientFundsException{
+    public void withdraw(double amount) throws InsufficientFundsException, AccountFrozenException{
         if (!isAmountValid(amount)) {
             throw new IllegalArgumentException("Amount: " + amount + " is invalid, cannot withdraw");
         } else if (amount > balance) {
@@ -45,7 +45,7 @@ public abstract class Account {
      * @param amount quantity to increase balance by
      * @throws IllegalArgumentException if amount is negative or has more than 2 decimal places
      */
-    public void deposit(double amount) {
+    public void deposit(double amount) throws AccountFrozenException{
 
         if (!isAmountValid(amount)) {
             throw new IllegalArgumentException("Amount: " + amount + " is invalid, cannot deposit");
@@ -61,7 +61,7 @@ public abstract class Account {
      * @throws IllegalArgumentException if amount is negative or has more than 2 decimals
      * @throws InsufficientFundsException if amount is larger than balance
      */
-    public void transfer(Account toAccount, double amount) throws InsufficientFundsException {
+    public void transfer(Account toAccount, double amount) throws InsufficientFundsException, AccountFrozenException {
         if (!isAmountValid(amount)) {
             throw new IllegalArgumentException("Amount: " + amount + " is invalid, cannot transfer");
         } else if (amount > balance) {
