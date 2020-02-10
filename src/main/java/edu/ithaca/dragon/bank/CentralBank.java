@@ -1,9 +1,6 @@
 package edu.ithaca.dragon.bank;
 
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.HashMap;
+import java.util.*;
 
 public class CentralBank implements AdvancedAPI, AdminAPI {
 
@@ -41,7 +38,7 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
         if (!accounts.containsKey(acctId)) throw new AccountDoesNotExistException("Account with this id does not exists");
         BankAccount account = accounts.get(acctId);
         // Added
-        transactionHist.put("w", acctId);
+        addToHistory("w", acctId);
     }
 
     public void deposit(String acctId, double amount) throws AccountDoesNotExistException {
@@ -49,7 +46,7 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
         BankAccount account = accounts.get(acctId);
         account.deposit(amount);
         // Added
-        transactionHist.put("d", acctId);
+        addToHistory("d", acctId);
     }
 
     public void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount)
@@ -61,8 +58,8 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
 
         BankAccount.transfer(accountD, accountW, amount);
         // Added
-        transactionHist.put("t", acctIdToWithdrawFrom);
-        transactionHist.put("t", acctIdToDepositTo);
+        addToHistory("t", acctIdToWithdrawFrom);
+        addToHistory("t", acctIdToDepositTo);
     }
 
     public String transactionHistory(String acctId) throws AccountDoesNotExistException, AccountAlreadyExistsException, InsufficientFundsException, ExceedsMaxWithdrawalException {
@@ -120,13 +117,35 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
         //I recommend using the first character in each transaction string - it will be t, d, or w
         //You'll have to split the string by the comma delimiter
         //you can compare items in the list and see if there are too many withdraws/deposits together
-        for(int i = 0; i < accounts.size(); i++) {
-            if (transactionHistory(accounts.get(i)) == "w"){
+        Iterator<Map.Entry<String, String>> iterator = transactionHist.entrySet().iterator();
+        int wCount = 0;
+        int dCount = 0;
+        int tCount = 0;
 
+        while(iterator.hasNext()){
+            if (transactionHist.equals("w")){
+                wCount++;
+            }
+            else if(transactionHist.equals("d")){
+                dCount++;
+            }
+            else if(transactionHist.equals("t")){
+                tCount++;
+            }
+            else{
+                iterator.next();
             }
         }
+        if(wCount >= 5 && tCount >= 5){
+            System.out.println("You account has done" + wCount + " Withdraws" + tCount + " Transfers");
+        }
+        else if(wCount >= 5){
+            System.out.println("You account has done" + wCount + " Withdraws");
+        }
+        else{
+            System.out.println("You account has done" + tCount + " Transfers");
+        }
         return suspiciousAccts;
-
     }
 
     /**
