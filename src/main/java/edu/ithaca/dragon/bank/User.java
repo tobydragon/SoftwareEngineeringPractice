@@ -23,18 +23,6 @@ public class User {
         }
     }
 
-    public void withdraw(Account account, double amount) {
-
-    }
-
-    public void deposit(Account account, double amount) {
-
-    }
-
-    public void transfer(Account accountTo, Account accountFrom, double amount) {
-
-    }
-
     public Account getAccount(String id) {
         if(accounts.containsKey(id)) {
             return accounts.get(id);
