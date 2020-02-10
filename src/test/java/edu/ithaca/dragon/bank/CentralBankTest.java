@@ -27,14 +27,30 @@ import static org.junit.jupiter.api.Assertions.*;
 
      @Test
      void freezeAccountTest(){
+         CentralBank c1 = new CentralBank();
+         c1.createAccount("BA1234", 10000, "candace@gmail.com");
+         BankAccount b1 = c1.findAccountWithId("BA1234");
+         assertFalse(b1.getAcctFrozen());
+
+         c1.freezeAccount("BA1234");
+         assertTrue(b1.getAcctFrozen());
 
 
      }
 
      @Test
      void unfreezeAccountTest(){
+         CentralBank c1 = new CentralBank();
+         c1.createAccount("BA1234", 10000, "candace@gmail.com");
+         BankAccount b1 = c1.findAccountWithId("BA1234");
+         assertFalse(b1.getAcctFrozen());
 
-         //unfreeze account
+         c1.freezeAccount("BA1234");
+         assertTrue(b1.getAcctFrozen());
+
+         c1.unfreezeAcct("BA1234");
+         assertFalse(b1.getAcctFrozen());
+
      }
 
      @Test
