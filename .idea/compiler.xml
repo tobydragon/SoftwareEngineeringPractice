@@ -6,9 +6,10 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="SoftwareEngineering2-1" />
+        <module name="SoftwareEngineering2-1 - Copy" />
         <module name="EugeneSoftwareEngineeringcode" />
         <module name="SoftwareEngineeringPractice" />
+        <module name="SoftwareEngineering2-1" />
       </profile>
     </annotationProcessing>
   </component>
