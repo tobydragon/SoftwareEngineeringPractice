@@ -22,6 +22,13 @@ public class Customer {
 
     public void deposit(double amount){}
     public void withdraw(double amount){}
+    public double getBalance(){
+        return 0.0;
+    }
+    public boolean checkCredentials(String idIn, String passwordIn){
+        return false;
+    }
+
 
     public String getAddress() {
         return address;
