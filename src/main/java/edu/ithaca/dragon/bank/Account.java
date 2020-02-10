@@ -1,9 +1,11 @@
 package edu.ithaca.dragon.bank;
 
+
 public abstract class Account {
     protected String ID;
     protected double balance;
     protected boolean frozen;
+
 
 
     public Account(String IDIn, double startingBalance){
