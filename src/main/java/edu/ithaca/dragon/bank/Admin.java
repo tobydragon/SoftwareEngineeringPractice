@@ -4,14 +4,14 @@ import java.util.Collection;
 import java.util.Iterator;
 
 public class Admin implements AdminAPI {
-    Collection<Account> accounts;
+    CentralBank bank;
 
     /**
      * creates an Admin account that knows what accounts it controls
-     * @param accounts the accounts that Admin must act on
+     * @param bank the CentralBank that Admin must act on
      */
-    public Admin(Collection<Account> accounts){
-        this.accounts = accounts;
+    public Admin(CentralBank bank){
+        this.bank = bank;
     }
 
     @Override
@@ -27,7 +27,7 @@ public class Admin implements AdminAPI {
     @Override
     public void freezeAccount(String acctId) throws IllegalArgumentException {
         boolean accountFound = false;
-        Iterator<Account> itr = this.accounts.iterator();
+        Iterator<Account> itr = this.bank.accounts.iterator();
         while (itr.hasNext()){
             Account current = itr.next();
             if (current.getID()== acctId){
@@ -44,7 +44,7 @@ public class Admin implements AdminAPI {
     @Override
     public void unfreezeAcct(String acctId) throws IllegalArgumentException {
         boolean accountFound = false;
-        Iterator<Account> itr = this.accounts.iterator();
+        Iterator<Account> itr = this.bank.accounts.iterator();
         while (itr.hasNext()){
             Account current = itr.next();
             if (current.getID()== acctId){
@@ -58,7 +58,7 @@ public class Admin implements AdminAPI {
 
     }
 
-    public Collection<Account> getAccounts(){
-        return this.accounts;
+    public CentralBank getBank(){
+        return this.bank;
     }
 }

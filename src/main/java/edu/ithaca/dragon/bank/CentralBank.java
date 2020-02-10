@@ -1,5 +1,6 @@
 package edu.ithaca.dragon.bank;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 public class CentralBank {
@@ -8,6 +9,14 @@ public class CentralBank {
     Collection<Account> accounts;
     Collection<Admin> admins;
     Collection<User> users;
+
+    public CentralBank(){
+        atms = new ArrayList<ATM>();
+        accounts = new ArrayList<Account>();
+        admins = new ArrayList<Admin>();
+        users = new ArrayList<User>();
+    }
+
 
     public void withdraw(Account account, double amount) {
 

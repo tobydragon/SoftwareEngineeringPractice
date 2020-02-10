@@ -15,12 +15,14 @@ public class AdminTest {
     @Test
     void constructorTest() {
         Admin admin = new Admin(null);
-        assertEquals(null, admin.getAccounts());
+        assertEquals(null, admin.getBank());
         Collection <Account> testCollection = new ArrayList<Account>();
         testCollection.add(new CheckingAccount(50, "1234"));
         testCollection.add(new CheckingAccount(100,"123"));
-        admin = new Admin(testCollection);
-        assertEquals(testCollection,admin.getAccounts());
+        CentralBank testBank = new CentralBank();
+        testBank.accounts = testCollection;
+        admin = new Admin(testBank);
+        assertEquals(testBank, admin.getBank());
 
     }
 
@@ -31,7 +33,9 @@ public class AdminTest {
         Collection<Account>  collection = new ArrayList<Account>();
         collection.add(abcAcc);
         collection.add(xyzAcc);
-        Admin admin = new Admin(collection);
+        CentralBank testBank = new CentralBank();
+        testBank.accounts = collection;
+        Admin admin = new Admin(testBank);
         //Checking false frozen status after no change
         assertEquals(false, abcAcc.getFrozenStatus());
         assertEquals(false, xyzAcc.getFrozenStatus());
@@ -59,7 +63,9 @@ public class AdminTest {
         Collection<Account>  collection = new ArrayList<Account>();
         collection.add(abcAcc);
         collection.add(xyzAcc);
-        Admin admin = new Admin(collection);
+        CentralBank testBank = new CentralBank();
+        testBank.accounts = collection;
+        Admin admin = new Admin(testBank);
         //Checking true frozen status after change
         abcAcc.setFrozen(true);
         xyzAcc.setFrozen(true);
@@ -81,6 +87,7 @@ public class AdminTest {
         assertThrows(IllegalArgumentException.class, () -> admin.unfreezeAcct("abcd"));
 
     }
+
 
 
 
