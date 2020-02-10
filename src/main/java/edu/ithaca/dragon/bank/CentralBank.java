@@ -7,7 +7,7 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
     //----------------- BasicAPI methods -------------------------//
 
     public boolean confirmCredentials(String acctId, String password) {
-        return false;
+        return true;
     }
 
     public double checkBalance(String acctId) {
