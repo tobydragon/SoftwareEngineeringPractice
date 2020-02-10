@@ -19,7 +19,7 @@ public class CentralBankTest {
     void getAccountIdTest(){
         AdvancedAPI teller = new CentralBank(new String[]{""});
 
-        String[] emails = new String[]{"a@b.com", "c@d.com", "e@f.com", "g@h.com"};
+        String[] emails = new String[]{"a@b.com", "a@b.com", "e@f.com", "g@h.com"};
         int[] balances = new int[]{100,200,300,400};
         String[] expectedIds = new String[]{"1C", "2S", "3C", "4S"};
         String[] acctTypes = new String[]{"Checking","Savings"};
@@ -40,16 +40,18 @@ public class CentralBankTest {
 
     @Test
     void depositTest(){
-        BankAccount acct = new BankAccount("a@b.com", 200, "1c");
-        BasicAPI atm = new CentralBank(new String[] {"",""});
-        String acctId = acct.acctId;
+        AdvancedAPI teller = new CentralBank(new String[] {"",""});
+        teller.createAccount("a@b.com", 200,"Checking");
+        String acctId = teller.getAccountId("a@b.com","Checking");
 
-        assertThrows(IllegalArgumentException.class, ()-> atm.deposit(acctId, -100)); // invalid middle case (value)
-        assertThrows(IllegalArgumentException.class, ()-> atm.deposit(acctId,-1)); // invalid border case (value)
-        assertThrows(IllegalArgumentException.class, ()-> atm.deposit(acctId,100.001)); // invalid border case (decimal place limit)
-        assertThrows(IllegalArgumentException.class, ()-> atm.deposit(acctId,100.00001)); // invalid middle case (decimal place limit)
-        assertThrows(IllegalArgumentException.class, ()-> atm.deposit(acctId, -100.001)); // invalid case (middle value, border decimal place limit)
-        assertThrows(IllegalArgumentException.class, ()-> atm.deposit(acctId, -100.00001)); // invalid middle case (value, decimal place limit)
+        assertThrows(IllegalArgumentException.class, ()-> teller.deposit(acctId,-100)); // invalid middle case (value)
+        assertThrows(IllegalArgumentException.class, ()-> teller.deposit(acctId,-1)); // invalid border case (value)
+        assertThrows(IllegalArgumentException.class, ()-> teller.deposit(acctId,100.001)); // invalid border case (decimal place limit)
+        assertThrows(IllegalArgumentException.class, ()-> teller.deposit(acctId,100.00001)); // invalid middle case (decimal place limit)
+        assertThrows(IllegalArgumentException.class, ()-> teller.deposit(acctId,-100.001)); // invalid case (middle value, border decimal place limit)
+        assertThrows(IllegalArgumentException.class, ()-> teller.deposit(acctId,-100.00001)); // invalid middle case (value, decimal place limit)
+
+        assertThrows(IllegalArgumentException.class, ()-> teller.deposit("YOLO",100)); //Checks incorrect acctId
 
 
     }

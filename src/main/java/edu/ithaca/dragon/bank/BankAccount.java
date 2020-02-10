@@ -19,7 +19,6 @@ public class BankAccount {
             this.email = email;
             this.balance = startingBalance;
             this.acctId = "testAccount";
-            this.type = "Checking"; //TODO This should be moved down to savings and checkings
         }
         else if(!isEmailValid(email)) {
             throw new IllegalArgumentException("Email address: " + email + " is invalid, cannot create account");
