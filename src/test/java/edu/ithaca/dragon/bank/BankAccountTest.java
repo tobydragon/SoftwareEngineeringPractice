@@ -91,8 +91,15 @@ class BankAccountTest {
         String testString = "C123";
         bankAccount.setAcctId(testString);
         assertEquals(testString, bankAccount.getAcctId());
+    }
 
+    @Test
+    void suspActivityTest(){
+        BankAccount b1 = new BankAccount("a@b.com", 200);
+        assertFalse(b1.getSusAct());
 
+        b1.setSusAct(true);
+        assertTrue(b1.getSusAct());
 
     }
 

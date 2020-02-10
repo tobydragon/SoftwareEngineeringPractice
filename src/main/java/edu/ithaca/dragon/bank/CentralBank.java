@@ -1,8 +1,37 @@
 package edu.ithaca.dragon.bank;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
-public class CentralBank implements AdvancedAPI, AdminAPI, BasicAPI {
+public class CentralBank implements AdvancedAPI, AdminAPI {
+    List<BankAccount> accountList;
+    int accountCount;
+
+    public CentralBank(){
+        accountList = new ArrayList<>();
+
+    }
+
+    public int accountCount(){
+        return accountCount;
+    }
+
+    /**
+     * Searches account list for BankAccount with ID (String)
+     * @return Bank Account object**/
+
+    public BankAccount findAccountWithId(String id){
+        for(int i  = 0; i<accountList.size(); i++){
+            if(accountList.get(i).getAcctId().compareTo(id) == 0){
+                return accountList.get(i);
+            }
+        }
+
+        return null;
+
+    }
+
 
     //----------------- BasicAPI methods -------------------------//
 
@@ -33,7 +62,12 @@ public class CentralBank implements AdvancedAPI, AdminAPI, BasicAPI {
 
     //----------------- AdvancedAPI methods -------------------------//
 
-    public void createAccount(String acctId, double startingBalance) {
+    public void createAccount(String acctId, double startingBalance, String emailIn) {
+        accountCount +=1;
+        BankAccount b = new BankAccount(emailIn, startingBalance);
+        b.setAcctId(acctId);
+        accountList.add(b);
+
 
     }
 
@@ -49,7 +83,19 @@ public class CentralBank implements AdvancedAPI, AdminAPI, BasicAPI {
     }
 
     public Collection<String> findAcctIdsWithSuspiciousActivity() {
-        return null;
+        Collection<String> susActCollection = new ArrayList<>();
+
+        for(int i  = 0; i<accountList.size(); i++){
+            if(accountList.get(i).getSusAct() == true){
+                susActCollection.add(accountList.get(i).getAcctId()) ;
+            }
+        }
+
+        if(susActCollection.size()>0){
+            return susActCollection;
+        }
+        else{
+        return null;}
     }
 
     public void freezeAccount(String acctId) {
