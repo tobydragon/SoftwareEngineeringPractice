@@ -9,7 +9,7 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
 
     private Map<String, BankAccount> accounts = new HashMap<>();
     //Added
-    private Map<String, BankAccount> transactionHist = new HashMap<>();
+    private Map<String, String> transactionHist = new HashMap<>();
 
     //----------------- BasicAPI methods -------------------------//
 
@@ -68,7 +68,7 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
     public String transactionHistory(String acctId) throws AccountDoesNotExistException, AccountAlreadyExistsException, InsufficientFundsException, ExceedsMaxWithdrawalException {
         if (!accounts.containsKey(acctId)) throw new AccountDoesNotExistException("Account with this id does not exists");
         BankAccount account = accounts.get(acctId);
-        return transactionHist;
+        return transactionHist.get(acctId);
     }
 
 
