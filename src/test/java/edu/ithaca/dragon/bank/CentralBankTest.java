@@ -32,7 +32,7 @@ public class CentralBankTest {
 
     @Test
     void withdrawTest()throws InsufficientFundsException, IllegalArgumentException, ExceedsMaxWithdrawalException,
-            AccountAlreadyExistsException, AccountDoesNotExistException {
+            AccountAlreadyExistsException, AccountDoesNotExistException, AccountFrozenException {
         CentralBank newAccount = new CentralBank();
         String newAccountID = "email@test.com";
         newAccount.createAccount(newAccountID, "password", 200, false);
@@ -73,7 +73,7 @@ public class CentralBankTest {
     }
 
     @Test
-    void depositTest() throws AccountAlreadyExistsException, AccountDoesNotExistException {
+    void depositTest() throws AccountAlreadyExistsException, AccountDoesNotExistException, AccountFrozenException {
         CentralBank newAccount = new CentralBank();
         String newAccountID = "email@test.com";
         newAccount.createAccount(newAccountID, "password", 200, false);
@@ -104,7 +104,7 @@ public class CentralBankTest {
 
     @Test
     void transferTest() throws AccountAlreadyExistsException, InsufficientFundsException, AccountDoesNotExistException,
-            ExceedsMaxWithdrawalException {
+            ExceedsMaxWithdrawalException, AccountFrozenException {
         CentralBank account = new CentralBank();
         String accountAID = "a@test.com";
         account.createAccount(accountAID, "password", 200, false);
@@ -233,7 +233,7 @@ public class CentralBankTest {
     @Test
     void closeAccountTest() throws AccountAlreadyExistsException,
             AccountDoesNotExistException, InsufficientFundsException, BalanceRemainingException,
-            ExceedsMaxWithdrawalException {
+            ExceedsMaxWithdrawalException, AccountFrozenException {
 
         CentralBank bank = new CentralBank();
         bank.createAccount("a@b.com", "password", 100, false);

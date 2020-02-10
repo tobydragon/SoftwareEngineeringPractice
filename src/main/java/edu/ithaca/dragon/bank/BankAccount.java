@@ -6,6 +6,8 @@ public abstract class BankAccount {
     private String password;
     protected double balance;
 
+    private boolean frozen = false;
+
     /**
      * @throws IllegalArgumentException if email is invalid
      */
@@ -40,6 +42,10 @@ public abstract class BankAccount {
     public String getPassword() {
         return password;
     }
+
+    public void freeze() {frozen = true;}
+    public void unfreeze() {frozen = false;}
+    public boolean isFrozen() {return frozen;}
 
     /**
      * @post reduces the balance by amount if amount is non-negative and smaller than balance

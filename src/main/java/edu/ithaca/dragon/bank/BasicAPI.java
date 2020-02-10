@@ -7,11 +7,11 @@ public interface BasicAPI {
 
     double checkBalance(String acctId) throws AccountDoesNotExistException;
 
-    void withdraw(String acctId, double amount) throws InsufficientFundsException, AccountDoesNotExistException, ExceedsMaxWithdrawalException;
+    void withdraw(String acctId, double amount) throws InsufficientFundsException, AccountDoesNotExistException, ExceedsMaxWithdrawalException, AccountFrozenException;
 
-    void deposit(String acctId, double amount) throws AccountDoesNotExistException;
+    void deposit(String acctId, double amount) throws AccountDoesNotExistException, AccountFrozenException;
 
-    void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws InsufficientFundsException, AccountDoesNotExistException, ExceedsMaxWithdrawalException;
+    void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws InsufficientFundsException, AccountDoesNotExistException, ExceedsMaxWithdrawalException, AccountFrozenException;
 
     String transactionHistory(String acctId) throws AccountDoesNotExistException, AccountAlreadyExistsException, InsufficientFundsException, ExceedsMaxWithdrawalException;
 
