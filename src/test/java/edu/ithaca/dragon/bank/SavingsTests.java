@@ -30,8 +30,24 @@ public class SavingsTests {
     }
 
     @Test
-    void withdrawTests(){
-
+    void withdrawTests() throws InsufficientFundsException {
+        Savings newSavings = new Savings("1234567890", "Mike", "dg38g8qw", 100, 5, 30);
+        newSavings.withdraw("1234567890", 20);
+        assertEquals(80, newSavings.checkBalance("1234567890"), 0.0001);
+        newSavings.withdraw("1234567890", 30);
+        assertEquals(50, newSavings.checkBalance("1234567890"), 0.0001);
+        assertThrows(IllegalArgumentException.class, ()-> newSavings.withdraw("1234567890", 30.01));
+        assertEquals(50, newSavings.checkBalance("1234567890"), 0.0001);
+        assertThrows(IllegalArgumentException.class, ()-> newSavings.withdraw("1234567880", 25));
+        assertEquals(50, newSavings.checkBalance("1234567890"), 0.0001);
+        assertThrows(IllegalArgumentException.class, ()-> newSavings.withdraw("1234567890", 0));
+        assertEquals(50, newSavings.checkBalance("1234567890"), 0.0001);
+        assertThrows(IllegalArgumentException.class, ()-> newSavings.withdraw("1234567880", -25));
+        assertEquals(50, newSavings.checkBalance("1234567890"), 0.0001);
+        newSavings.withdraw("1234567890", 30);
+        assertEquals(20, newSavings.checkBalance("1234567890"));
+        assertThrows(InsufficientFundsException.class, ()-> newSavings.withdraw("1234567880", 20.01));
+        assertEquals(20, newSavings.checkBalance("1234567890"), 0.0001);
     }
 
     @Test
