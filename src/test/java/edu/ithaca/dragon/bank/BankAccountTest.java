@@ -319,9 +319,9 @@ class BankAccountTest {
         CentralBank CentralBank1 = new CentralBank();
         CentralBank CentralBank2 = new CentralBank();
         CentralBank CentralBank3 = new CentralBank();
-        CentralBank1.createAccount(1,100);
-        CentralBank2.createAccount(2,0);
-        CentralBank3.createAccount(3,-100);
+        CentralBank1.createBankAccount(1,100);
+        CentralBank2.createBankAccount(2,0);
+        CentralBank3.createBankAccount(3,-100);
       //CheckBalanceTest
         //Testing the CheckBalance Method for a a standard return of a positive balance
         assertEquals(100, CentralBank1.checkBalance(1));
