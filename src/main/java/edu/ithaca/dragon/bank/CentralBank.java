@@ -51,6 +51,7 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
             if (amount <= balance){
                 balance -= amount;
                 bankAccounts.get(acctId).setBalance(balance);
+                bankAccounts.get(acctId).newTransaction("Withdraw: " + amount + "\n");
             }
             else{
                 throw new InsufficientFundsException("Not enough funds for withdrawal.");
