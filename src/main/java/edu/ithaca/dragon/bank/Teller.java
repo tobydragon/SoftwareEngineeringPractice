@@ -11,7 +11,7 @@ public class Teller extends ATM {
         userAccounts.addAccount(newAccount);
     }
 
-    public void closeUserAccount(int userId) throws IllegalArgumentException{
+    public void closeUserAccount(int userId) throws IllegalArgumentException, NonExistentAccountException{
         UserAccount removedAccount = userAccounts.findAccount(userId);
         userAccounts.removeAccount(removedAccount);
 

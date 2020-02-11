@@ -5,13 +5,13 @@ public interface BasicAPI {
 
     boolean confirmCredentials(int acctId, String password);
 
-    double checkBalance(int acctId);
+    double checkBalance(int userID) throws NonExistentAccountException;
 
-    void withdraw(int acctId, double amount) throws InsufficientFundsException;
+    void withdraw(int acctId, double amount) throws InsufficientFundsException, NonExistentAccountException;
 
     void deposit(int acctId, double amount);
 
-    void transfer(int acctIdToWithdrawFrom, int acctIdToDepositTo, double amount) throws InsufficientFundsException;
+    void transfer(int userIDFrom, int acctIdToWithdrawFrom, int userIDTo, int acctIdToDepositTo, double amount) throws InsufficientFundsException;
 
     String transactionHistory(int acctId);
 

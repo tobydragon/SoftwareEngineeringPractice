@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TellerTests {
 
     @Test
-    public void userAccountTests(){
+    public void userAccountTests() throws NonExistentAccountException{
         //tests opening/closing user accounts (not bank accounts)
         UserArrayList testList = new UserArrayList();
         UserAccount testAcct1 = new UserAccount("user1","pass1","a@b.com",1);
@@ -18,7 +18,7 @@ public class TellerTests {
 
         testTeller.createUserAccount("user1","pass1","a@b.com",1);
         testTeller.closeUserAccount(1);
-        assertThrows(IllegalArgumentException.class, () -> testTeller.closeUserAccount(1));
+        assertThrows(NonExistentAccountException.class, () -> testTeller.closeUserAccount(1));
         //A little basic but not much else to cover with current plans
     }
 

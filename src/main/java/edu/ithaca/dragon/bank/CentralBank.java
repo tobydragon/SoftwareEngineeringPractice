@@ -9,6 +9,7 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
 
     public CentralBank(){
         userAccounts = new UserArrayList();
+        bankAccountCollection = new BankAccountCollection();
     }
 
     //----------------- BasicAPI methods -------------------------//
@@ -17,34 +18,52 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
         return false;
     }
 
-    public double checkBalance(int acctId) {
+    public double checkBalance(int userID) throws NonExistentAccountException{
+        return bankAccountCollection.retrieveAccount(userID, 0).getBalance();
+    }
+
+    public double checkBalance(int userID, int acctId) {
         return 0;
     }
 
-    public void withdraw(int acctId, double amount) throws InsufficientFundsException {
-        //userAccounts.findAccount(acctId).
+    public void withdraw(int userId, double amount) throws InsufficientFundsException, NonExistentAccountException{
+        bankAccountCollection.retrieveAccount(userId, 0).withdraw(amount);
     }
 
-    public void deposit(int acctId, double amount) {
-
-    }
-
-    public void transfer(int acctIdToWithdrawFrom, int acctIdToDepositTo, double amount) throws InsufficientFundsException {
+    public void withdraw(int userId, int bankAccID, double amount) throws InsufficientFundsException {
 
     }
 
-    public String transactionHistory(int acctId) {
+    public void deposit(int userId, double amount) {
+
+    }
+
+    public void deposit(int userId, int bankAccID, double amount) throws InsufficientFundsException {
+        //TODO
+    }
+
+    public void transfer(int userIDFrom, int acctIdToWithdrawFrom, int userIDTo, int acctIdToDepositTo, double amount) throws InsufficientFundsException {
+        //TODO
+    }
+
+    public String transactionHistory(int userId) {
         return null;
     }
 
 
     //----------------- AdvancedAPI methods -------------------------//
 
-    public void createAccount(int acctId, double startingBalance) {
-
+    public void createUser(String userName, String password, String email, int userID){
+        userAccounts.addAccount(new UserAccount(userName, password, email, userID));
     }
 
-    public void closeAccount(int acctId) {
+    public void createAccount(int userId, double startingBalance) throws NonExistentAccountException{
+        UserAccount currentAccount = userAccounts.findAccount(userId);
+        BankAccount newAccount = new BankAccount(currentAccount.getEmail(), startingBalance, userId);
+        bankAccountCollection.addBankAccount(newAccount);
+    }
+
+    public void closeAccount(int userId) {
 
     }
 
@@ -59,11 +78,11 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
         return null;
     }
 
-    public void freezeAccount(int acctId) {
+    public void freezeAccount(int userId) {
 
     }
 
-    public void unfreezeAcct(int acctId) {
+    public void unfreezeAcct(int userId) {
 
     }
 
