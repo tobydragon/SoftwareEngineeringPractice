@@ -55,6 +55,7 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
                 BigDecimal bd = new BigDecimal(balance).setScale(2, RoundingMode.HALF_UP);
                 double roundedBalance = bd.doubleValue();
                 bankAccounts.get(acctId).setBalance(roundedBalance);
+                bankAccounts.get(acctId).newTransaction("Withdraw: " + amount + "\n");
             }
             else{
                 throw new InsufficientFundsException("Not enough funds for withdrawal.");
@@ -69,9 +70,7 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
         if (BankAccount.isAmountValid(amount)){
             double balance = bankAccounts.get(acctId).getBalance();
             balance += amount;
-            BigDecimal bd = new BigDecimal(balance).setScale(2, RoundingMode.HALF_UP);
-            double roundedBalance = bd.doubleValue();
-            bankAccounts.get(acctId).setBalance(roundedBalance);
+            bankAccounts.get(acctId).setBalance(balance);
         }
         else{
             throw new IllegalArgumentException("Invalid amount entry.");

@@ -7,6 +7,7 @@ import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
 public class CentralBankTest {
 
     @Test
@@ -213,7 +214,6 @@ public class CentralBankTest {
         assertThrows(IllegalArgumentException.class, () -> testBank.deposit("4321", -1000));
         assertThrows(IllegalArgumentException.class, () -> testBank.deposit("4321", -10.101));
     }
-
 
     @Test
     void transferTest() throws InsufficientFundsException {
