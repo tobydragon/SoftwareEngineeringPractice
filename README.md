@@ -17,6 +17,8 @@ https://drive.google.com/file/d/1TXZWUqjglYdvIWnGJZOIDj6Fb4FZD_c_/view?usp=shari
 https://drive.google.com/file/d/16lHSGfDYQlHVK_10XreqgZmCrnBut1gM/view?usp=sharing
 
 ## Sequence diagrams
+### create account
+https://drive.google.com/file/d/1GzlWZ6Q9iZ3HpFglwY2Fd-WMW3m2XFee/view?usp=sharing
 ### calc total assets
 https://drive.google.com/file/d/1UQ951-QOAXUB3L6VCaTwM_A_k3yx8vQB/view?usp=sharing
 ### confirm credentials
