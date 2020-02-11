@@ -17,11 +17,11 @@ public class Teller extends ATM {
 
     }
 
-    public void createBankAccount(String acctId, double startingBalance){
+    public void createBankAccount(int acctId, double startingBalance){
 
     }
 
-    public void closeBankAccount(String acctId){
+    public void closeBankAccount(int acctId){
 
     }
 }

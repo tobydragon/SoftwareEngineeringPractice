@@ -57,13 +57,13 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
         userAccounts.addAccount(new UserAccount(userName, password, email, userID));
     }
 
-    public void createAccount(int userId, double startingBalance) throws NonExistentAccountException{
+    public void createBankAccount(int userId, double startingBalance) throws NonExistentAccountException{
         UserAccount currentAccount = userAccounts.findAccount(userId);
         BankAccount newAccount = new BankAccount(currentAccount.getEmail(), startingBalance, userId);
         bankAccountCollection.addBankAccount(newAccount);
     }
 
-    public void closeAccount(int userId) {
+    public void closeBankAccount(int userId) {
 
     }
 
