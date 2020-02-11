@@ -27,6 +27,7 @@ import static org.junit.jupiter.api.Assertions.*;
      @Test
 
      void overAllBalanceTest(){
+         //formerly calcTotalAssetsTest()
          CentralBank c1 = new CentralBank();
          assertEquals(0, c1.calcTotalAssets());
          c1.createAccount("b123", 200, "jim@gmail.com");
@@ -93,12 +94,7 @@ import static org.junit.jupiter.api.Assertions.*;
      }
 
 
-     @Test
-      void calcTotalAssetsTest(){
-         //total assets test
 
-
-     }
 
 
      //Basic Tests
