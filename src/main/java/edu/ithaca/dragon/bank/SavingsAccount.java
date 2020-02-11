@@ -1,6 +1,10 @@
 package edu.ithaca.dragon.bank;
 
-public class giSavingsAccount extends BankAccount {
+public class SavingsAccount extends BankAccount {
+    public SavingsAccount(double startingBalance, String acctId){
+        super(startingBalance, acctId);
+    }
+/**
     private double interestRate;
     private double maximumWithdrawal;
 
@@ -10,5 +14,5 @@ public class giSavingsAccount extends BankAccount {
         this.interestRate = interestRate;
         this.maximumWithdrawal = maximumWithdrawal;
     }
-
+ **/
 }

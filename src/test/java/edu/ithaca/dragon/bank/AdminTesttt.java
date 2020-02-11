@@ -62,7 +62,7 @@ public class AdminTesttt {
     void calcTotalAssetsTest() {
         BankAccount acc1 = new CheckingAccount(1000, "acc1");
         BankAccount acc2 = new CheckingAccount(1500, "acc2");
-        BankAccount acc3 = new SavingsAccount(3000, "acc3", .1, 3000);
+        BankAccount acc3 = new SavingsAccount(3000, "acc3");
         CentralBank bank = new CentralBank();
         bank.accounts.add(acc1);
         bank.accounts.add(acc2);
@@ -75,7 +75,7 @@ public class AdminTesttt {
     void findAcctIdsWithSuspiciousActivityTest() throws InsufficientFundsException {
         BankAccount acc1 = new CheckingAccount(1000, "acc1");
         BankAccount acc2 = new CheckingAccount(1500, "acc2");
-        BankAccount acc3 = new SavingsAccount(3000, "acc3", .1, 3000);
+        BankAccount acc3 = new SavingsAccount(3000, "acc3");
         BankAccount acc4 = new CheckingAccount(10000, "acc4");
         BankAccount acc5 = new CheckingAccount(1000, "acc5");
         CentralBank bank = new CentralBank();
