@@ -17,6 +17,7 @@ public class Admin implements AdminAPI {
         return null;
     }
 
+    //freeze accounts
     public void freezeAccount(String acctId) {
         boolean accountpresent = false;
         Iterator<BankAccount> itr = this.bank.accounts.iterator();
