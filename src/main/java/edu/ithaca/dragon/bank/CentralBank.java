@@ -23,9 +23,10 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
         return account.getBalance();
     }
 
-    private void addToHistory(String transaction, String acctId) {
+    private void addToHistory(String transaction, String acctId, Double amount) {
+        String amountStr = " " + amount.toString();
         if (transactionHist.containsKey(acctId)) {
-            String history = transactionHist.get(acctId);
+            String history = transactionHist.get(acctId) + amountStr;
             history += "," + transaction;
             transactionHist.put(acctId, history);
         } else {
@@ -39,7 +40,7 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
         BankAccount account = accounts.get(acctId);
         account.withdraw(amount);
         // Added
-        addToHistory("w", acctId);
+        addToHistory("withdraw", acctId, amount);
     }
 
     public void deposit(String acctId, double amount) throws AccountDoesNotExistException {
@@ -47,7 +48,7 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
         BankAccount account = accounts.get(acctId);
         account.deposit(amount);
         // Added
-        addToHistory("d", acctId);
+        addToHistory("deposit", acctId, amount);
     }
 
     public void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount)
@@ -59,8 +60,8 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
 
         BankAccount.transfer(accountD, accountW, amount);
         // Added
-        addToHistory("t", acctIdToWithdrawFrom);
-        addToHistory("t", acctIdToDepositTo);
+        addToHistory("transfer", acctIdToWithdrawFrom, amount);
+        addToHistory("transfer", acctIdToDepositTo, amount);
     }
 
     public String transactionHistory(String acctId) throws AccountDoesNotExistException, AccountAlreadyExistsException, InsufficientFundsException, ExceedsMaxWithdrawalException {

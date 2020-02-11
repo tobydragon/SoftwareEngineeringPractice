@@ -257,6 +257,7 @@ public class CentralBankTest {
 
         //class - account exists and does not have money
         bank.withdraw("a@b.com", bank.checkBalance("a@b.com"));
+        assertEquals(0, bank.checkBalance("a@b.com"));
         bank.closeAccount("a@b.com");
         assertFalse(bank.accountExists("a@b.com"));
         assertTrue(bank.accountExists("b@c.com"));
@@ -266,9 +267,9 @@ public class CentralBankTest {
         //class - removed account (does not exist)
         assertThrows(AccountDoesNotExistException.class, () -> bank.closeAccount("a@b.com"));
 
-
         //just another test
         bank.withdraw("c@d.com", bank.checkBalance("c@d.com"));
+        assertEquals(0, bank.checkBalance("c@d.com"));
         bank.closeAccount("c@d.com");
         assertFalse(bank.accountExists("a@b.com"));
         assertTrue(bank.accountExists("b@c.com"));

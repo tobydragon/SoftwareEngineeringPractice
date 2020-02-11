@@ -60,8 +60,8 @@ public class TransactionsTest {
     void findAcctIdsWithSuspiciousActivity() throws AccountAlreadyExistsException, InsufficientFundsException,
             ExceedsMaxWithdrawalException, AccountDoesNotExistException, AccountFrozenException {
         CentralBank bank = new CentralBank();
-        String testAccountID = "a@b.com";
-        bank.createAccount(testAccountID, "password", 1500, false, false);
+        String testAccountID2 = "a@b.com";
+        bank.createAccount(testAccountID2, "password", 1500, false, false);
 
         // With multiple withdraws
         bank.withdraw("a@b.com",50);
@@ -69,50 +69,50 @@ public class TransactionsTest {
         bank.withdraw("a@b.com",213.54);
         bank.withdraw("a@b.com",130.43);
         bank.withdraw("a@b.com",400);
-                bank.transactionHistory(testAccountID);
+                bank.transactionHistory(testAccountID2);
 
 
         // With multiple transfers
         String transferActID = "m@v.com";
-        bank.createAccount(testAccountID, "password", 2000, true, false);
+        bank.createAccount(transferActID, "password", 2000, true, false);
 
-        bank.transfer(testAccountID,transferActID, 80);
-        bank.transfer(testAccountID,transferActID, 44.84);
-        bank.transfer(testAccountID,transferActID, 123.34);
-        bank.transfer(testAccountID,transferActID, 22.97);
-        bank.transfer(testAccountID,transferActID, 190);
-                bank.transactionHistory(testAccountID);
+        bank.transfer(testAccountID2,transferActID, 80);
+        bank.transfer(testAccountID2,transferActID, 44.84);
+        bank.transfer(testAccountID2,transferActID, 123.34);
+        bank.transfer(testAccountID2,transferActID, 22.97);
+        bank.transfer(testAccountID2,transferActID, 190);
+                bank.transactionHistory(testAccountID2);
                 bank.transactionHistory(transferActID);
     }
 
     @Test
     void freezeAccount() throws AccountAlreadyExistsException, AccountDoesNotExistException {
         CentralBank bank = new CentralBank();
-        String testAccountID = "a@b.com";
-        bank.createAccount(testAccountID, "password", 200, false, false);
+        String testAccountID3 = "a@b.com";
+        bank.createAccount(testAccountID3, "password", 200, false, false);
 
-        assertEquals(false, bank.isFrozen(testAccountID));
-                bank.freezeAccount(testAccountID);
-        assertEquals(true, testAccountID);
+        assertEquals(false, bank.isFrozen(testAccountID3));
+                bank.freezeAccount(testAccountID3);
+        assertEquals(true, bank.isFrozen(testAccountID3));
         //use bank account.isFrozen in the test assertion
     }
 
     @Test
     void unfreezeAcct() throws AccountAlreadyExistsException, AccountDoesNotExistException {
         CentralBank bank = new CentralBank();
-        String testAccountID = "a@b.com";
-        bank.createAccount(testAccountID, "password", 200, false, true);
+        String testAccountID4 = "r@g.com";
+        bank.createAccount(testAccountID4, "password", 200, false, true);
 
-        assertEquals(true, bank.isFrozen(testAccountID));
-                bank.unfreezeAcct(testAccountID);
-        assertEquals(false, bank.isFrozen(testAccountID));
+        //assertEquals(true, bank.isFrozen(testAccountID));
+        bank.unfreezeAcct(testAccountID4);
+        assertEquals(false, bank.isFrozen(testAccountID4));
 
-        String frozeAccountID = "a@b.com";
+        String frozeAccountID = "y@t.com";
         bank.createAccount(frozeAccountID, "password", 200, false, false);
 
         assertEquals(false, bank.isFrozen(frozeAccountID));
                 bank.freezeAccount(frozeAccountID);
-        assertEquals(true, frozeAccountID);
+        assertEquals(true, bank.isFrozen(frozeAccountID));
                 bank.unfreezeAcct(frozeAccountID);
     }
 }
