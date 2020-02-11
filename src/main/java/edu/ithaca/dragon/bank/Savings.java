@@ -10,11 +10,10 @@ public class Savings implements Account{
     private double balance;
     private boolean frozen;
     private List<String []> history;
-    private double compoundedInterest;
     private double interestRate;
     private double maxWithdrawal;
 
-    public Savings(int acctIdIn, String nameIn, String passwordIn, double startingBalance, double interestRateIn, double maxWithdrawalIn){
+    public Savings(String acctIdIn, String nameIn, String passwordIn, double startingBalance, double interestRateIn, double maxWithdrawalIn){
         //todo
     }
 
