@@ -20,28 +20,28 @@ public class CentralBank {
     }
 
 
-    public void withdraw(Account account, double amount) {
+    public void withdraw(String account, double amount) {
 
     }
 
-    public void deposit(Account account, double amount) {
+    public void deposit(String account, double amount) {
 
     }
 
-    public void transfer(Account fromAccount, Account toAccount, double amount) {
+    public void transfer(String fromAccount, String toAccount, double amount) {
 
     }
 
-    public String getCredentials(Account account) {
-        return account.getCredentials();
+    public String getCredentials(String account) {
+        return accounts.get(account).getCredentials();
     }
 
-    public double getBalance(Account account) {
-        return account.getBalance();
+    public double checkBalance(String account) {
+        return accounts.get(account).getBalance();
     }
 
-    public String getHistory(Account account) {
-        return account.getHistory();
+    public String getHistory(String account) {
+        return accounts.get(account).getHistory();
     }
 
     public void setAccounts(Map<String, Account> newAccounts) {

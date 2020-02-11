@@ -15,7 +15,8 @@ public class ATM implements BasicAPI {
 
     @Override
     public double checkBalance(String acctId) {
-        return 0;
+
+        return centralBank.checkBalance(acctId);
     }
 
     @Override
