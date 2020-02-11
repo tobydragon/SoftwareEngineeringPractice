@@ -13,9 +13,18 @@ public class CustomerCollection {
 
     public void deposit(String ID, double amount){}
 
-    public void withdraw(String ID, double amount){}
+    public void withdraw(String ID, double amount) throws IllegalArgumentException {
+        for(int i=0;i< customers.size();i++){
+            if (customers.get(i).getId()==ID){
+                customers.get(i).withdraw(amount);
+                return;
+            }
+        }
+        //throw new IllegalArgumentException("No such Account");
+    }
 
     public double getBalance(String ID){
+
         return -1234.00;
     }
 

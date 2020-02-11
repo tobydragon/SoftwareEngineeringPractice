@@ -3,9 +3,7 @@ package edu.ithaca.dragon.bank;
 public class BankTeller implements AdvancedAPI {
     private CustomerCollection customers;
 
-    public BankTeller(){
-        customers = new CustomerCollection();
-    }
+    public BankTeller(){ customers = new CustomerCollection(); }
 
     public CustomerCollection getCustomers() {
         return customers;
@@ -20,6 +18,7 @@ public class BankTeller implements AdvancedAPI {
     }
 
     public void withdraw(String acctId, double amount) throws InsufficientFundsException {
+        customers.withdraw(acctId, amount);
 
     }
 
