@@ -4,7 +4,7 @@ public class Teller extends ATM implements AdvancedAPI {
 
     @Override
     public void createAccount(String acctId, double startingBalance) {
-        new CheckingAccount(startingBalance, acctId);
+        centralBank.accounts.add(new CheckingAccount(startingBalance, acctId));
     }
 
     @Override

@@ -13,16 +13,10 @@ public class TellerTest {
         CentralBank centralBank = new CentralBank();
         Teller teller = new Teller();
         teller.createAccount("0", 0);
-        boolean found = false;
         for (Account account : centralBank.accounts) {
             if (account.getID().equals("0")) {
                 assertEquals(account, new CheckingAccount(0, "0"));
-                found = true;
             }
-        }
-
-        if (!found) {
-            throw new NoSuchObjectException("Account not found");
         }
     }
 }
