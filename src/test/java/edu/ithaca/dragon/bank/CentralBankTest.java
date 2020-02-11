@@ -40,7 +40,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
      @Test
-     void freezeAccountTest(){
+     void freezeAccountTest() throws IllegalAccessException {
          CentralBank c1 = new CentralBank();
          c1.createAccount("BA1234", 10000, "candace@gmail.com");
          BankAccount b1 = c1.findAccountWithId("BA1234");
@@ -48,6 +48,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
          c1.freezeAccount("BA1234");
          assertTrue(b1.getAcctFrozen());
+         assertThrows(IllegalAccessException.class,()-> b1.deposit(200));
+         assertThrows(IllegalAccessException.class,()-> b1.withdraw(200));
+
+
 
 
      }
