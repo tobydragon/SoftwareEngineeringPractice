@@ -41,6 +41,10 @@ public class Checking implements Account {
         return this.balance;
     }
 
+    public boolean getFrozenStatus(){
+        return frozen;
+    }
+
     public void withdraw(String acctId, double amount) throws InsufficientFundsException, AcctFrozenException{
         if(frozen) {
             throw new AcctFrozenException("Cannot deposit into a forzen account");

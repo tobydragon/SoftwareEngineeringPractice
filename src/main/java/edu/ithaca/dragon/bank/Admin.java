@@ -6,6 +6,28 @@ import java.util.HashMap;
 public class Admin implements AdminAPI {
     private HashMap<String, Account> accounts;
 
+    public Admin(){
+        this.accounts = new HashMap<>();
+    }
+
+    public Account getAccount (String acctId) throws IllegalArgumentException {
+        Account toReturn = accounts.get(acctId);
+
+        if (toReturn != null){
+            return toReturn;
+        } else {
+            throw new IllegalArgumentException("Account not found in bank. Invalid Account ID");
+        }
+    }
+
+    public void createCheckingForTeller(String acctIdIn, String nameIn, String passwordIn, double startingBalance) throws IllegalArgumentException {
+
+    }
+
+    public void createSavingsForTeller(String acctIdIn, String nameIn, String passwordIn, double startingBalance, double interestRateIn, double maxWithdrawalIn) throws IllegalArgumentException {
+
+    }
+
     /**
      * Calculates total balance of all accounts held by accounts HashMap
      * @return double of balance in the bank
@@ -37,7 +59,7 @@ public class Admin implements AdminAPI {
     /**
      * Unfreezes account so its methods can be used
      * @param acctId string ID of account that needs to be unfrozen
-     * @throws IllegalArgumentException if acctId is in the list
+     * @throws IllegalArgumentException if acctId is not in the list
      */
     @Override
     public void unfreezeAcct(String acctId) throws IllegalArgumentException {

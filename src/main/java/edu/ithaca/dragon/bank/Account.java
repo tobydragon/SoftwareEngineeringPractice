@@ -10,4 +10,6 @@ public interface Account {
 
     String transactionHistory(String acctId);
 
+    String getAcctId();
+
 }
