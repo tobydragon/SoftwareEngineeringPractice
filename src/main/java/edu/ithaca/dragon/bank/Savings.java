@@ -10,7 +10,7 @@ public class Savings implements Account{
     private String password;
     private double balance;
     private boolean frozen;
-    private List<String []> history;
+    private List<String> history;
     private double interestRate;
     private double maxWithdrawal;
 
@@ -34,7 +34,7 @@ public class Savings implements Account{
         interestRate = interestRateIn;
         maxWithdrawal = maxWithdrawalIn;
         frozen = false;
-        history = new ArrayList<String[]>();
+        history = new ArrayList<String>();
     }
 
     public String getAcctId(){
@@ -45,6 +45,10 @@ public class Savings implements Account{
         return name;
     }
 
+    public boolean getFrozenStatus(){
+        return frozen;
+    }
+
     public double checkBalance(String acctId){
         if (acctId != this.acctId){
             throw new IllegalArgumentException("This is not the correct account");
@@ -53,23 +57,55 @@ public class Savings implements Account{
     }
 
     public void withdraw(String acctId, double amount) throws InsufficientFundsException{
-        //todo
+        if (acctId != this.acctId){
+            throw new IllegalArgumentException("This is not the correct account");
+        }
+        if (amount > balance){
+            throw new InsufficientFundsException("Insufficient funds for withdrawal");
+        }
+        if (amount <= 0){
+            throw new IllegalArgumentException("Cannot withdraw 0 or less");
+        }
+        if (amount > maxWithdrawal){
+            throw new IllegalArgumentException("Amount exceeds daily maximum withdrawal amount");
+        }
+        balance -= amount;
+        history.add("withdrawal of " + amount);
     }
 
     public void deposit(String acctId, double amount){
+        if (acctId != this.acctId){
+            throw new IllegalArgumentException("This is not the correct account");
+        }
+        if (amount <= 0){
+            throw new IllegalArgumentException("Cannot deposit 0 or less");
+        }        
         balance += amount;
+        history.add("deposit of " + amount);
     }
 
-    public void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws InsufficientFundsException{
-        //todo
-    }
 
     public String transactionHistory(String acctId){
-        return null;
+        if (acctId != this.acctId){
+            throw new IllegalArgumentException("This is not the correct account");
+        }
+        String acctHistory = "";
+        for (int i = 0; i < history.size()-1; i++){
+            acctHistory += history.get(i) + "; ";
+        }
+        acctHistory += history.get(history.size()-1);
+        return acctHistory;
     }
 
     public void compoundInterest(String acctId){
-        //todo
+        if (acctId != this.acctId){
+            throw new IllegalArgumentException("This is not the correct account");
+        }
+        balance += (balance * (interestRate/100));
+    }
+
+    public void setFrozen(boolean value){
+        this.frozen = value;
     }
 
 }
