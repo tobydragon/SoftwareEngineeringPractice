@@ -46,6 +46,9 @@ public class Savings implements Account{
     }
 
     public double checkBalance(String acctId){
+        if (acctId != this.acctId){
+            throw new IllegalArgumentException("This is not the correct account");
+        }
         return balance;
     }
 

@@ -19,9 +19,14 @@ public class SavingsTests {
     }
 
     @Test
-    void checkBalanceTests() throws InsufficientFundsException {
-
-
+    void checkBalanceTests() {
+        Savings newSavings = new Savings("1234567890", "Mike", "jdsakjh23u329", 100, 3, 50);
+        assertEquals(100, newSavings.checkBalance("1234567890"), 0.0001);
+        newSavings.deposit("1234567890", 20);
+        assertEquals(120, newSavings.checkBalance("1234567890"),0.0001);
+        newSavings.deposit("1234567890", 40.05);
+        assertEquals(160.05, newSavings.checkBalance("1234567890"),0.0001);
+        assertThrows(IllegalArgumentException.class, ()-> newSavings.checkBalance("1234567899"));
     }
 
     @Test
