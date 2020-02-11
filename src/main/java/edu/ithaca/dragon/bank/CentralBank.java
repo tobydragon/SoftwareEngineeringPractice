@@ -48,17 +48,14 @@ public class CentralBank implements AdvancedAPI, AdminAPI, BasicAPI {
         return findAccountWithId(acctId).getBalance();
     }
 
-    //can't throw IllegalArgument
     public void withdraw(String acctId, double amount) throws IllegalArgumentException, IllegalAccessException {
         findAccountWithId(acctId).withdraw(amount);
     }
 
-    //can't throw IllegalArgument
     public void deposit(String acctId, double amount) throws IllegalAccessException {
         findAccountWithId(acctId).deposit(amount);
     }
 
-    //can't throw IllegalArgument
     public void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws  IllegalAccessException {
         findAccountWithId(acctIdToWithdrawFrom).transfer(amount,findAccountWithId(acctIdToDepositTo));
     }
