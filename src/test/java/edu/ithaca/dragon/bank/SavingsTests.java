@@ -77,9 +77,8 @@ public class SavingsTests {
         newSavings.compoundInterest("1234567890");
         assertEquals(212.18, newSavings.checkBalance("1234567890"),0.001);
         newSavings.compoundInterest("1234567890");
-        assertEquals(218.54, newSavings.checkBalance("1234567890"),0.001);
+        assertEquals(218.54, newSavings.checkBalance("1234567890"),0.009);
         assertThrows(IllegalArgumentException.class, ()-> newSavings.compoundInterest("1234567899"));
-
     }
 
 

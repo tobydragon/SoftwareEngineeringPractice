@@ -87,7 +87,10 @@ public class Savings implements Account{
     }
 
     public void compoundInterest(String acctId){
-        //todo
+        if (acctId != this.acctId){
+            throw new IllegalArgumentException("This is not the correct account");
+        }
+        balance += (balance * (interestRate/100));
     }
 
 }
