@@ -17,7 +17,7 @@ public class AdminTesttt {
         BankAccount christian = new CheckingAccount(1000, "christian");
         CentralBank myBank = new CentralBank();
         myBank.accounts.add(christian);
-        Admin admin = new Admin();
+        Admin admin = new Admin(myBank);
         //no change
         assertEquals(false, christian.isFrozen());
 
@@ -40,7 +40,7 @@ public class AdminTesttt {
         BankAccount christian = new CheckingAccount(1000, "christian");
         CentralBank myBank = new CentralBank();
         myBank.accounts.add(christian);
-        Admin admin = new Admin();
+        Admin admin = new Admin(myBank);
         //no change
         assertEquals(false, christian.isFrozen());
 

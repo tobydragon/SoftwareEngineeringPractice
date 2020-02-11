@@ -2,11 +2,11 @@ package edu.ithaca.dragon.bank;
 
 import java.util.Collection;
 
-public class ATM extends CentralBank implements BasicAPI{
+public class ATM implements BasicAPI{
+    CentralBank bank;
 
-
-    public ATM(Collection<BankAccount> accounts, Collection<User> users) {
-        super(accounts, users);
+    public ATM(CentralBank bank){
+        this.bank=bank;
     }
 
     public boolean confirmCredentials(String username, String password) {
