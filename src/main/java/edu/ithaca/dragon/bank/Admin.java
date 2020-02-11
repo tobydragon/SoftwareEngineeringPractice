@@ -29,7 +29,11 @@ public class Admin implements AdminAPI {
     }
 
     public void createSavingsForTeller(String acctIdIn, String nameIn, String passwordIn, double startingBalance, double interestRateIn, double maxWithdrawalIn) throws IllegalArgumentException {
-
+        if(accounts.containsKey(acctIdIn)){
+            throw new IllegalArgumentException("Cannot create account; account ID already exists.");
+        } else {
+            accounts.put(acctIdIn, new Savings(acctIdIn, nameIn, passwordIn, startingBalance, interestRateIn, maxWithdrawalIn));
+        }
     }
 
     /**
