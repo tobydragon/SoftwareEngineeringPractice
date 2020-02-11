@@ -1,6 +1,6 @@
 package edu.ithaca.dragon.bank;
 import java.io.*;
-x
+import java.util.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collection;
@@ -16,12 +16,19 @@ public class TellerTest {
         Collection<User> users = new ArrayList<User>();
         Teller acct= new Teller(accounts, users);
         acct.createAccount("Charles", 100, true);
-        if( accounts.size()>0) {
-            assertEquals(accounts.
-        }
+        assertTrue(accounts.contains("Charles"));
 
+    }
 
+    @Test
+    void CloseAccountTest() {
+        Collection<BankAccount> accounts = new ArrayList<BankAccount>();
 
+        Collection<User> users = new ArrayList<User>();
+        Teller acct= new Teller(accounts, users);
+        acct.createAccount("Charles", 100, true);
+        acct.closeAccount("Charles");
+        assertFalse(accounts.contains("Charles"));
 
     }
 }
