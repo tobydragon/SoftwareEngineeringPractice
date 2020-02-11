@@ -45,4 +45,31 @@ public class CheckingTest {
         checkingAcct = new Checking("1234567890", "Bob Lob", "dog123", 0);
         assertEquals(0, checkingAcct.checkBalance("1234567890"));
     }
+
+    @Test
+    void withdrawTest() throws InsufficientFundsException{
+        //zero balance
+        Checking checkingAcct = new Checking("1234567890", "Bob Lob", "dog123", 75.24);
+        checkingAcct.withdraw("1234567890", 75.24);
+        assertEquals(0, checkingAcct.checkBalance("1234567890"));
+
+        //normal positive case
+        checkingAcct = new Checking("1234567890", "Bob Lob", "dog123", 100);
+        checkingAcct.withdraw("1234567890", 50);
+        assertEquals(50, checkingAcct.checkBalance("1234567890"));
+
+        //two in a row
+        checkingAcct.withdraw("1234567890", 30.25);
+        assertEquals(19.75, checkingAcct.checkBalance("1234567890"));
+
+        //check overdraw
+        Checking finalCheckingAcct = new Checking("1234567890", "Bobby J", "dog", 200);
+        assertThrows(InsufficientFundsException.class, ()-> finalCheckingAcct.withdraw("1234567890", 200.25));
+
+        //check negative amount
+        assertThrows(IllegalArgumentException.class, ()-> finalCheckingAcct.withdraw("1234567890", -130));
+
+        //check amount with more than 2 decimal places
+        assertThrows(IllegalArgumentException.class, ()-> finalCheckingAcct.withdraw("1234567890", 2.4422));
+    }
 }
