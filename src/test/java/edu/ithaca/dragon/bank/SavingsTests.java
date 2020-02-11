@@ -19,7 +19,7 @@ public class SavingsTests {
     }
 
     @Test
-    void checkBalanceTests() {
+    void checkBalanceTests() throws AcctFrozenException {
         Savings newSavings = new Savings("1234567890", "Mike", "jdsakjh23u329", 100, 3, 50);
         assertEquals(100, newSavings.checkBalance("1234567890"), 0.009);
         newSavings.deposit("1234567890", 20);
@@ -27,10 +27,12 @@ public class SavingsTests {
         newSavings.deposit("1234567890", 40.05);
         assertEquals(160.05, newSavings.checkBalance("1234567890"),0.009);
         assertThrows(IllegalArgumentException.class, ()-> newSavings.checkBalance("1234567899"));
+        newSavings.setFrozen(true);
+        assertThrows(AcctFrozenException.class, ()-> newSavings.checkBalance("1234567890"));
     }
 
     @Test
-    void withdrawTests() throws InsufficientFundsException {
+    void withdrawTests() throws InsufficientFundsException, AcctFrozenException {
         Savings newSavings = new Savings("1234567890", "Mike", "dg38g8qw", 100, 5, 30);
         newSavings.withdraw("1234567890", 20);
         assertEquals(80, newSavings.checkBalance("1234567890"), 0.009);
@@ -48,10 +50,12 @@ public class SavingsTests {
         assertEquals(20, newSavings.checkBalance("1234567890"));
         assertThrows(InsufficientFundsException.class, ()-> newSavings.withdraw("1234567890", 20.01));
         assertEquals(20, newSavings.checkBalance("1234567890"), 0.009);
+        newSavings.setFrozen(true);
+        assertThrows(AcctFrozenException.class, ()-> newSavings.withdraw("1234567890", 5));
     }
 
     @Test
-    void depositTests(){
+    void depositTests() throws AcctFrozenException {
         Savings newSavings = new Savings("1234567890", "Mike", "jdsakjh23u329", 100, 3, 50);
         assertEquals(100, newSavings.checkBalance("1234567890"), 0.009);
         newSavings.deposit("1234567890", 20);
@@ -61,11 +65,13 @@ public class SavingsTests {
         assertThrows(IllegalArgumentException.class, ()-> newSavings.deposit("1234567899", 10));
         assertThrows(IllegalArgumentException.class, ()-> newSavings.deposit("1234567890", 0));
         assertThrows(IllegalArgumentException.class, ()-> newSavings.deposit("1234567890", -10));
+        newSavings.setFrozen(true);
+        assertThrows(AcctFrozenException.class, ()-> newSavings.deposit("1234567890", 40.05));
     }
 
 
     @Test
-    void transactionHistoryTests() throws InsufficientFundsException {
+    void transactionHistoryTests() throws InsufficientFundsException, AcctFrozenException {
         //this also acts as an integration test
         Savings newSavings = new Savings("1234567890", "Mike", "bfuid3b", 300, 2, 120);
         newSavings.deposit("1234567890", 20);
@@ -75,10 +81,12 @@ public class SavingsTests {
         assertEquals("deposit of 20.0; deposit of 40.0; withdrawal of 90.0", newSavings.transactionHistory("1234567890"));
         newSavings.deposit("1234567890", 80);
         assertEquals("deposit of 20.0; deposit of 40.0; withdrawal of 90.0; deposit of 80.0", newSavings.transactionHistory("1234567890"));
+        newSavings.setFrozen(true);
+        assertThrows(AcctFrozenException.class, ()-> newSavings.transactionHistory("1234567890"));
     }
 
     @Test
-    void compoundInterestTests(){
+    void compoundInterestTests() throws AcctFrozenException {
         Savings newSavings = new Savings("1234567890", "Mike", "fduiewh9uf", 200, 3, 40);
         newSavings.compoundInterest("1234567890");
         assertEquals(206, newSavings.checkBalance("1234567890"), 0.009);
@@ -87,22 +95,22 @@ public class SavingsTests {
         newSavings.compoundInterest("1234567890");
         assertEquals(218.54, newSavings.checkBalance("1234567890"),0.009);
         assertThrows(IllegalArgumentException.class, ()-> newSavings.compoundInterest("1234567899"));
+        newSavings.setFrozen(true);
+        assertThrows(AcctFrozenException.class, ()-> newSavings.compoundInterest("1234567890"));
     }
 
-//    @Test
-//    void freezeOrUnfreezeAccountTests(){
-//        Savings newSavings = new Savings("1234567890", "Mike", "fduiewh9uf", 200, 3, 40);
-//        newSavings.freezeOrUnfreezeAccount("1234567890");
-//        assertEquals(true, newSavings.getFrozenStatus());
-//        assertThrows(IllegalArgumentException.class, ()-> newSavings.freezeOrUnfreezeAccount("1234567899"));
-//        assertEquals(true, newSavings.getFrozenStatus());
-//        newSavings.freezeOrUnfreezeAccount("1234567890");
-//        assertEquals(false, newSavings.getFrozenStatus());
-//        newSavings.freezeOrUnfreezeAccount("1234567890");
-//        newSavings.freezeOrUnfreezeAccount("1234567890");
-//        newSavings.freezeOrUnfreezeAccount("1234567890");
-//        assertEquals(true, newSavings.getFrozenStatus());
-//    }
+    @Test
+    void setFrozenTests(){
+        Savings newSavings = new Savings("1234567890", "Mike", "fduiewh9uf", 200, 3, 40);
+        newSavings.setFrozen(true);
+        assertEquals(true, newSavings.getFrozenStatus());
+        newSavings.setFrozen(false);
+        assertEquals(false, newSavings.getFrozenStatus());
+        newSavings.setFrozen(true);
+        newSavings.setFrozen(false);
+        newSavings.setFrozen(false);
+        assertEquals(false, newSavings.getFrozenStatus());
+    }
 
 
 

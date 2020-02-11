@@ -11,5 +11,4 @@ public interface AdminAPI {
     public void freezeAccount(String acctId);
 
     public void unfreezeAcct(String acctId);
-
 }

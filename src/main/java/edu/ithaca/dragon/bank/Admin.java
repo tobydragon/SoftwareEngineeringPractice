@@ -36,6 +36,10 @@ public class Admin implements AdminAPI {
         }
     }
 
+    public void closeAccount(String acctId) throws IllegalArgumentException, AcctFrozenException {
+
+    }
+
     /**
      * Calculates total balance of all accounts held by accounts HashMap
      * @return double of balance in the bank
