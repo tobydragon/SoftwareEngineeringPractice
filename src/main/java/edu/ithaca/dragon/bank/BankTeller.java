@@ -36,7 +36,9 @@ public class BankTeller implements AdvancedAPI {
     }
     
 
-    public void createAccount(String acctId, String password, double startingBalance) {
+    public void createAccount(String acctId, String password, double startingBalance) throws Exception {
+        customers.addCustomer(acctId, password);
+        customers.createAccount(acctId, startingBalance);
 
     }
 

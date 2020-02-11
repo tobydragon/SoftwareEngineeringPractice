@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class BankTellerTest {
     @Test
-    void testCreateAccount(){
+    void testCreateAccount() throws Exception{
         BankTeller b1 = new BankTeller();
         assertEquals(0, b1.getNumCustomers());
         b1.createAccount("bob","password", 100);
