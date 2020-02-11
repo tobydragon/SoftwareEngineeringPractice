@@ -41,4 +41,8 @@ public class BankTeller implements AdvancedAPI {
     }
 
     public void closeAccount(String acctId) {}
+
+    public int getNumCustomers(){
+        return customers.getNumCustomers();
+    }
 }
