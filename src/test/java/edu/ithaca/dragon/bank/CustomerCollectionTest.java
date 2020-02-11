@@ -22,11 +22,24 @@ public class CustomerCollectionTest {
         CustomerCollection c1 = new CustomerCollection();
         c1.addCustomer("bob", "password");
         c1.createAccount("bob", 100);
-        //assertEquals(100, c1.getBalance("bob"));
+        assertEquals(100, c1.getBalance("bob"));
         c1.addCustomer("bb", "password");
         assertThrows(IllegalArgumentException.class, ()->c1.createAccount("bb", -100));
         assertThrows(IllegalArgumentException.class, ()->c1.createAccount("bb", 100.001));
         assertThrows(Exception.class, ()->c1.createAccount("bob", 100));
         assertThrows(IllegalArgumentException.class, ()->c1.createAccount("b", 100));
+    }
+
+    @Test
+    void getBalanceTest() throws Exception{
+        CustomerCollection c1 = new CustomerCollection();
+        c1.addCustomer("bob", "password");
+        c1.createAccount("bob", 100);
+        assertEquals(100, c1.getBalance("bob"));
+        c1.addCustomer("bb", "password");
+        c1.createAccount("bb", 100);
+        assertEquals(100, c1.getBalance("bob"));
+
+        assertThrows(IllegalArgumentException.class, ()-> c1.getBalance("b"));
     }
 }
