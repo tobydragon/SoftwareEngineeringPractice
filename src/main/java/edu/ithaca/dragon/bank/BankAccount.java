@@ -1,10 +1,13 @@
 package edu.ithaca.dragon.bank;
 
+import java.util.ArrayList;
+
 public class BankAccount {
 
     private String id;
     private double balance;
-    private String transHist;
+    private ArrayList<String> tranHist;
+    private int tranCount;
 
     /**
      * @throws IllegalArgumentException if email is invalid
@@ -13,20 +16,25 @@ public class BankAccount {
         if (isAmountValid(startingBalance)){
             this.id = id;
             this.balance = startingBalance;
-            this.transHist = "";
+            this.tranHist = new ArrayList<String>();
+            this.tranCount = 0;
         }
     }
 
     public void newTransaction(String tran){
-        transHist += tran;
+        tranHist.add(tran);
     }
 
     public double getBalance(){
         return balance;
     }
 
-    public String getTransHist(){
-        return transHist;
+    public String getTranHist(){
+        String transactions = "";
+        for(int i = 0; i < tranHist.size(); i++){
+            transactions += tranHist.get(i);
+        }
+        return transactions;
     }
 
     public String getEmail(){
