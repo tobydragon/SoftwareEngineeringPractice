@@ -84,9 +84,6 @@ public class Savings implements Account{
         history.add("deposit of " + amount);
     }
 
-    public void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws InsufficientFundsException{
-        //todo
-    }
 
     public String transactionHistory(String acctId){
         if (acctId != this.acctId){

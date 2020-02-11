@@ -66,6 +66,7 @@ public class SavingsTests {
 
     @Test
     void transactionHistoryTests() throws InsufficientFundsException {
+        //this also acts as an integration test
         Savings newSavings = new Savings("1234567890", "Mike", "bfuid3b", 300, 2, 120);
         newSavings.deposit("1234567890", 20);
         newSavings.deposit("1234567890", 40);
@@ -102,6 +103,7 @@ public class SavingsTests {
         newSavings.freezeOrUnfreezeAccount("1234567890");
         assertEquals(true, newSavings.getFrozenStatus());
     }
+
 
 
 }
