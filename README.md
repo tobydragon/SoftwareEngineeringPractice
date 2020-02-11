@@ -4,6 +4,6 @@ Use Case Diagram: https://drive.google.com/file/d/1mQPoJrk448VQrnWcDUUmM017RHZNL
 
 CreateAccount Sequence Diagram : https://drive.google.com/file/d/17_fjRoPPmLSFtNEhx62D5JeDLVHGVAaf/view?usp=sharing
 
-Withdraw Sequence diagram BankTeller: https://www.draw.io/#G1V51DPsffUscqPMyOBybJN9zhZhDqYtIu
+Withdraw Sequence diagram BankTeller: https://drive.google.com/file/d/1V51DPsffUscqPMyOBybJN9zhZhDqYtIu/view?usp=sharing
 
-Withdraw Sequence diagram ATM: https://www.draw.io/#G1A6ZFq9g-vcnZ75FzZpjcJTqST8WIMkaQ
+Withdraw Sequence diagram ATM: https://drive.google.com/file/d/1A6ZFq9g-vcnZ75FzZpjcJTqST8WIMkaQ/view?usp=sharing
