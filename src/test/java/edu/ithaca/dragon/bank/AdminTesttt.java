@@ -77,11 +77,13 @@ public class AdminTesttt {
         BankAccount acc2 = new CheckingAccount(1500, "acc2");
         BankAccount acc3 = new SavingsAccount(3000, "acc3", .1, 3000);
         BankAccount acc4 = new CheckingAccount(10000, "acc4");
+        BankAccount acc5 = new CheckingAccount(1000, "acc5");
         CentralBank bank = new CentralBank();
         bank.accounts.add(acc1);
         bank.accounts.add(acc2);
         bank.accounts.add(acc3);
         bank.accounts.add(acc4);
+        bank.accounts.add(acc5);
         Admin admin = new Admin(bank);
 
         //should flag as suspicious - withdrawing more than 50% of balance
@@ -92,8 +94,14 @@ public class AdminTesttt {
         acc3.Deposit(1000000);
         //should not flag as suspicious - depositing less than 200% of balance
         acc4.Deposit(15000);
+        //should flag as suspicious - depositing more than 200% of balance
+        acc5.Deposit(3000);
 
-        assertEquals("acc1 acc3 ", admin.findAcctIdsWithSuspiciousActivity());
+        Collection<String> expectedStr = new ArrayList<String>();
+        expectedStr.add("acc1");
+        expectedStr.add("acc3");
+        expectedStr.add("acc5");
+        assertEquals(expectedStr, admin.findAcctIdsWithSuspiciousActivity());
 
     }
 }

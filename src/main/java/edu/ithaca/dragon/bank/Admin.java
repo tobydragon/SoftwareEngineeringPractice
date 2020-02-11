@@ -1,5 +1,6 @@
 package edu.ithaca.dragon.bank;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 public class Admin implements AdminAPI {
@@ -20,7 +21,23 @@ public class Admin implements AdminAPI {
     }
 
     public Collection<String> findAcctIdsWithSuspiciousActivity() {
-        return null;
+        Collection<String> ids = new ArrayList<String>();
+        double depositThreshold = 2;
+        double withdrawThreshold = .5;
+
+        Iterator<BankAccount> itr = this.bank.accounts.iterator();
+        while(itr.hasNext()) {
+            BankAccount curr = itr.next();
+            Iterator<Transaction> itr2 = curr.transactionHistory.iterator();
+            while(itr2.hasNext()) {
+                Transaction curr2 = itr2.next();
+                if(curr2.getFlagSuspicious()) {
+                    ids.add(curr.getAcctId());
+                    break;
+                }
+            }
+        }
+        return ids;
     }
 
     //freeze accounts

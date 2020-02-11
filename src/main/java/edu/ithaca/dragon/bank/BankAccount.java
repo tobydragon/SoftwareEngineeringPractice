@@ -7,7 +7,7 @@ public class BankAccount {
     private String acctId;
     private double balance;
     private boolean frozen = false;
-    private ArrayList<Double> transactionHistory = new ArrayList<Double>();
+    public ArrayList<Transaction> transactionHistory = new ArrayList<Transaction>();
     //.
 
     /**
@@ -86,10 +86,14 @@ public class BankAccount {
         }
 
         else{
+            boolean flag = false;
+            if(amount > balance/2) {
+                flag = true;
+            }
+            transactionHistory.add(new Transaction(this.balance, -amount, flag));
+
             balance -= amount;
         }
-
-        transactionHistory.add(-amount);
     }
 
 
@@ -107,9 +111,14 @@ public class BankAccount {
         }
 
         else {
+            boolean flag = false;
+            if(amount > (balance*2)) {
+                flag = true;
+            }
+            transactionHistory.add(new Transaction(this.balance, amount, flag));
+
             balance += amount;
         }
-        transactionHistory.add(amount);
     }
 
 
