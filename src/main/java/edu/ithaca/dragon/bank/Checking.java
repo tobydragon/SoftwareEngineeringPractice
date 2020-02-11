@@ -9,7 +9,7 @@ public class Checking implements Account {
     private String password;
     private double balance;
     private boolean frozen;
-    private List<String> history;
+    private List<String[]> history;
 
     public Checking(String acctIdIn, String nameIn, String passwordIn, double startingBalance) throws IllegalArgumentException {
         if (acctIdIn.length() == 10) {
@@ -26,7 +26,7 @@ public class Checking implements Account {
 
         this.password = passwordIn;
         frozen = false;
-        history = new ArrayList<String>();
+        history = new ArrayList<String[]>();
     }
 
     public String getAcctId(){

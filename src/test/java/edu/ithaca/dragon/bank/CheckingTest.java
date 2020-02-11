@@ -97,4 +97,36 @@ public class CheckingTest {
         assertThrows(IllegalArgumentException.class, ()-> finalCheckingAcct.withdraw("1234567890", 2.4422));
     }
 
+    @Test
+    void transferTest() throws InsufficientFundsException{
+        Checking checkingAcctA = new Checking("1234567890", "Jim Bean", "dogog", 100);
+        Checking checkingAcctB = new Checking("0987654321", "John Bon", "froggs", 100);
+
+        // check positive
+        checkingAcctA.transfer("1234567890", "01234567890", 50);
+        assertEquals(50, checkingAcctA.checkBalance("1234567890"));
+        assertEquals(150, checkingAcctB.checkBalance("0987654321"));
+
+        //check two in a row
+        checkingAcctA.transfer("1234567890", "0987654321", 25);
+        assertEquals(25, checkingAcctA.checkBalance("1234567890"));
+        assertEquals(175, checkingAcctB.checkBalance("0987654321"));
+
+        //check swapped roles
+        checkingAcctB.transfer("0987654321", "1234567890", 30.75);
+        assertEquals(55.75, checkingAcctA.checkBalance("1234567890"));
+        assertEquals(144.25, checkingAcctB.checkBalance("0987654321"));
+
+        Checking finalCheckingAcctA = new Checking("1234567890", "Jim Bean", "dogog", 100);
+        Checking finalCheckingAcctB = new Checking("0987654321", "John Bon", "froggs", 100);
+        // check negative
+        assertThrows(IllegalArgumentException.class, () -> finalCheckingAcctA.transfer("1234567890", "0987654321", -50));
+
+        //check more than 2 decimal points
+        assertThrows(IllegalArgumentException.class, ()-> finalCheckingAcctB.transfer("0987654321", "1234567890", 30.4222));
+
+        // check overdraw
+        assertThrows(InsufficientFundsException.class, () -> finalCheckingAcctA.transfer("1234567890", "0987654321", 101));
+    }
+
 }
