@@ -45,6 +45,10 @@ public class Savings implements Account{
         return name;
     }
 
+    public boolean getFrozenStatus(){
+        return frozen;
+    }
+
     public double checkBalance(String acctId){
         if (acctId != this.acctId){
             throw new IllegalArgumentException("This is not the correct account");
@@ -101,6 +105,10 @@ public class Savings implements Account{
             throw new IllegalArgumentException("This is not the correct account");
         }
         balance += (balance * (interestRate/100));
+    }
+
+    public void freezeOrUnfreezeAccount(String acctId){
+        //todo
     }
 
 }

@@ -88,5 +88,20 @@ public class SavingsTests {
         assertThrows(IllegalArgumentException.class, ()-> newSavings.compoundInterest("1234567899"));
     }
 
+    @Test
+    void freezeOrUnfreezeAccountTests(){
+        Savings newSavings = new Savings("1234567890", "Mike", "fduiewh9uf", 200, 3, 40);
+        newSavings.freezeOrUnfreezeAccount("1234567890");
+        assertEquals(true, newSavings.getFrozenStatus());
+        assertThrows(IllegalArgumentException.class, ()-> newSavings.freezeOrUnfreezeAccount("1234567899"));
+        assertEquals(true, newSavings.getFrozenStatus());
+        newSavings.freezeOrUnfreezeAccount("1234567890");
+        assertEquals(false, newSavings.getFrozenStatus());
+        newSavings.freezeOrUnfreezeAccount("1234567890");
+        newSavings.freezeOrUnfreezeAccount("1234567890");
+        newSavings.freezeOrUnfreezeAccount("1234567890");
+        assertEquals(false, newSavings.getFrozenStatus());
+    }
+
 
 }
