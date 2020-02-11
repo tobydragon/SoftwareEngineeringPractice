@@ -5,6 +5,7 @@ import java.util.Collection;
 public class CentralBank implements AdvancedAPI, AdminAPI {
 
     private UserArrayList userAccounts;
+    private BankAccountCollection bankAccountCollection;
 
     public CentralBank(){
         userAccounts = new UserArrayList();
@@ -39,7 +40,7 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
 
     //----------------- AdvancedAPI methods -------------------------//
 
-    public void createAccount(String acctId, double startingBalance, UserArrayList userAccounts) {
+    public void createAccount(String acctId, double startingBalance) {
 
     }
 
