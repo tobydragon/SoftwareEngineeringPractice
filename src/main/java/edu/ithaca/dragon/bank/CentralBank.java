@@ -8,13 +8,13 @@ import java.util.HashMap;
 public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
 
     private String bankName;
-    private HashMap<String, Double> bankAccounts;
-    private HashMap<String, Double> frozenAccounts;
+    private HashMap<String, BankAccount> bankAccounts;
+    private HashMap<String, BankAccount> frozenAccounts;
 
-    public CentralBank(String bankName, HashMap<String, Double> bankAccounts, HashMap<String, Double> frozenAccounts){
+    public CentralBank(String bankName){
        this.bankName = bankName;
-       this.bankAccounts = new HashMap<String, Double>();
-       this.frozenAccounts= new HashMap<String, Double>();
+       this.bankAccounts = new HashMap<String, BankAccount>();
+       this.frozenAccounts= new HashMap<String, BankAccount>();
     }
 
 
@@ -35,7 +35,7 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
         if (!bankAccounts.containsKey(acctId)) {
             throw new IllegalArgumentException("Account not found");
         } else {
-            return bankAccounts.get(acctId);
+            return bankAccounts.get(acctId).getBalance();
         }
     }
 
@@ -71,7 +71,8 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
     }
 
     public String transactionHistory(String acctId) {
-        return null;
+        String transactions = bankAccounts.get(acctId).getTransHist();
+        return transactions;
     }
 
 
@@ -93,12 +94,18 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
         } else if (acctId.equals("") || acctId.contains(" ")) {
             throw new IllegalArgumentException("Must enter an ID");
         } else {
-            bankAccounts.put(acctId, startingBalance);
+            BankAccount newAccount = new BankAccount(acctId,startingBalance);
+            bankAccounts.put(acctId, newAccount);
         }
     }
 
     public void closeAccount(String acctId) {
-
+        if(bankAccounts.containsKey(acctId)){
+            bankAccounts.remove(acctId);
+        }
+        else{
+            throw new IllegalArgumentException("Account with that ID does not exist");
+        }
     }
 
 
@@ -112,10 +119,10 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
         if (bankAccounts.isEmpty()) {
             return 0;
         } else {
-            Iterator<Map.Entry<String, Double>> accIterator = bankAccounts.entrySet().iterator();
+            Iterator<Map.Entry<String, BankAccount>> accIterator = bankAccounts.entrySet().iterator();
             while (accIterator.hasNext()) {
-                Map.Entry<String, Double> amount = accIterator.next();
-                sum+=amount.getValue();
+                Map.Entry<String, BankAccount> amount = accIterator.next();
+                sum+=amount.getValue().getBalance();
             }
             return sum;
         }
@@ -137,9 +144,9 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
         if (frozenAccounts.containsKey(acctId)) {
             throw new IllegalArgumentException("Account already frozen");
         } else if (bankAccounts.containsKey(acctId)) {
-            Double balance = bankAccounts.get(acctId);
+            BankAccount account = bankAccounts.get(acctId);
             bankAccounts.remove(acctId);
-            frozenAccounts.put(acctId, balance);
+            frozenAccounts.put(acctId, account);
         } else {
             throw new IllegalArgumentException("Account does not exist");
         }
@@ -156,9 +163,9 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
         if (bankAccounts.containsKey(acctId)) {
             throw new IllegalArgumentException("Account not frozen");
         } else if (frozenAccounts.containsKey(acctId)) {
-            Double balance = frozenAccounts.get(acctId);
+            BankAccount account =  frozenAccounts.get(acctId);
             frozenAccounts.remove(acctId);
-            bankAccounts.put(acctId, balance);
+            bankAccounts.put(acctId, account);
         } else {
             throw new IllegalArgumentException("Account does not exist");
         }
