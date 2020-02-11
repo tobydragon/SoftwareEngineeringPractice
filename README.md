@@ -12,3 +12,13 @@ Questions for Toby:
 TODO:
  - API documentation
  - Sequence Diagrams for all use cases that are implemented
+
+Orion's list:
+ - History
+ - Suspicious Activity
+ - General Cleanup + Documentation
+
+Gabe's list:
+ - Freeze/Unfreeze
+ - Check Overall Money
+ - Account Types
