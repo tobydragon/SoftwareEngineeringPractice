@@ -31,8 +31,16 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
      * @return if password is valid
      * @throws IllegalArgumentException if account ID does not exist
      */
-    public boolean confirmCredentials(String acctId, String password) {
-        return false;
+    public boolean confirmCredentials(String acctId, String password) throws IllegalArgumentException{
+        if (!bankAccounts.containsKey(acctId)) {
+            throw new IllegalArgumentException("Account ID does not exist");
+        } else {
+            if (password.equals(bankAccounts.get(acctId).getPassword())) {
+                return true;
+            } else {
+                return false;
+            }
+        }
     }
 
     /**
