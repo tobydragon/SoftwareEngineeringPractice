@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+
 public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
 
     private String bankName;
@@ -70,9 +71,14 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
         if (BankAccount.isAmountValid(amount)){
             double balance = bankAccounts.get(acctId).getBalance();
             balance += amount;
+
             BigDecimal bd = new BigDecimal(balance).setScale(2, RoundingMode.HALF_UP);
             double roundedBalance = bd.doubleValue();
             bankAccounts.get(acctId).setBalance(roundedBalance);
+
+            bankAccounts.get(acctId).setBalance(balance);
+            bankAccounts.get(acctId).newTransaction("Deposit: " + amount + "\n");
+
         }
         else{
             throw new IllegalArgumentException("Invalid amount entry.");
@@ -91,7 +97,12 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
 
     public String transactionHistory(String acctId) {
         String transactions = bankAccounts.get(acctId).getTransHist();
-        return transactions;
+        if (transactions == ""){
+            throw new IllegalArgumentException("There are no transactions logged");
+        }
+        else{
+            return transactions;
+        }
     }
 
 
