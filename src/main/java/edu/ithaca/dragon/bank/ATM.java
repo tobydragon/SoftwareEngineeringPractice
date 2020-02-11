@@ -20,8 +20,8 @@ public class ATM implements BasicAPI {
 
     }
 
-    public void withdraw(String acctId, double amount) throws InsufficientFundsException {
-
+    public void withdraw(String acctId, double amount) throws InsufficientFundsException, IllegalArgumentException {
+        customers.withdraw(acctId, amount);
     }
 
     public void deposit(String acctId, double amount) {

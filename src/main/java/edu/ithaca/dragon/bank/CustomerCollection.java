@@ -30,11 +30,20 @@ public class CustomerCollection {
         throw new IllegalArgumentException("Account doesn't exist");
     }
 
-    public void withdraw(String ID, double amount){}
+    public void withdraw(String ID, double amount) throws IllegalArgumentException {
+        for(int i=0;i< customers.size();i++){
+            if (customers.get(i).getId()==ID){
+                customers.get(i).withdraw(amount);
+                return;
+            }
+        }
+        //throw new IllegalArgumentException("No such Account");
+    }
 
     public double getBalance(String ID){
         for(int x=0; x < customers.size(); x++)if(customers.get(x).getId()==ID)return customers.get(x).getBalance();
         throw new IllegalArgumentException("No such Account");
+
     }
 
     public boolean checkCredentials(String ID, String password){
