@@ -10,7 +10,7 @@ public class Teller extends ATM {
 
     }
 
-    public void closeUserAccount(String userId){
+    public void closeUserAccount(int userId) throws IllegalArgumentException{
 
     }
 
