@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class CentralBank implements AdvancedAPI, AdminAPI {
+public class CentralBank implements AdvancedAPI, AdminAPI, BasicAPI {
     List<BankAccount> accountList;
     int accountCount;
 
@@ -36,38 +36,47 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
     //----------------- BasicAPI methods -------------------------//
 
     public boolean confirmCredentials(String acctId, String password) {
-        return true;
+        if(findAccountWithId(acctId)!= null && findAccountWithId(acctId).getAcctPass()==password){
+            return true;
+        }else{
+            return false;
+        }
+
     }
 
     public double checkBalance(String acctId) {
-        return 0;
+        return findAccountWithId(acctId).getBalance();
     }
 
-    public void withdraw(String acctId, double amount) throws InsufficientFundsException {
-
+    //can't throw IllegalArgument
+    public void withdraw(String acctId, double amount) throws IllegalArgumentException, IllegalAccessException {
+        findAccountWithId(acctId).withdraw(amount);
     }
 
-    public void deposit(String acctId, double amount) {
-
+    //can't throw IllegalArgument
+    public void deposit(String acctId, double amount) throws IllegalAccessException {
+        findAccountWithId(acctId).deposit(amount);
     }
 
-    public void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws InsufficientFundsException {
-
+    //can't throw IllegalArgument
+    public void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws  IllegalAccessException {
+        findAccountWithId(acctIdToWithdrawFrom).transfer(amount,findAccountWithId(acctIdToDepositTo));
     }
 
     public String transactionHistory(String acctId) {
-        return null;
+        String history = findAccountWithId(acctId).getHistory().toString().replace(", ","\n").replace("[","").replace("]","");
+        return history;
     }
 
 
     //----------------- AdvancedAPI methods -------------------------//
 
-    public void createAccount(String acctId, double startingBalance, String emailIn) {
+    public void createAccount(String acctId, double startingBalance, String emailIn, String accPassword) {
         accountCount +=1;
         BankAccount b = new BankAccount(emailIn, startingBalance);
         b.setAcctId(acctId);
+        b.setAcctPass(accPassword);
         accountList.add(b);
-
 
     }
 

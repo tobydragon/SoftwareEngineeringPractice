@@ -10,13 +10,13 @@ import static org.junit.jupiter.api.Assertions.*;
      @Test
      void centralBankConstuctor(){
          CentralBank c1 = new CentralBank();
-         c1.createAccount("b123", 200, "jim@gmail.com");
+         c1.createAccount("b123", 200, "jim@gmail.com","centralBankConstuctorTest1");
          assertEquals(1,c1.accountCount());
 
          //create multiple accounts
          //CE: Multiple account test can also go in the add/delete account tests
-         c1.createAccount("b00", 200, "pam@gmail.com");
-         c1.createAccount("b13", 200, "kelly@gmail.com");
+         c1.createAccount("b00", 200, "pam@gmail.com","centralBankConstuctorTest2");
+         c1.createAccount("b13", 200, "kelly@gmail.com","centralBankConstuctorTest3");
          assertEquals(3,c1.accountCount());
 
 
@@ -30,9 +30,9 @@ import static org.junit.jupiter.api.Assertions.*;
          //formerly calcTotalAssetsTest()
          CentralBank c1 = new CentralBank();
          assertEquals(0, c1.calcTotalAssets());
-         c1.createAccount("b123", 200, "jim@gmail.com");
-         c1.createAccount("b00", 200, "pam@gmail.com");
-         c1.createAccount("b13", 200, "kelly@gmail.com");
+         c1.createAccount("b123", 200, "jim@gmail.com","overAllBalanceTest1");
+         c1.createAccount("b00", 200, "pam@gmail.com","overAllBalanceTest2");
+         c1.createAccount("b13", 200, "kelly@gmail.com","overAllBalanceTest3");
 
          assertEquals(600, c1.calcTotalAssets());
 
@@ -42,7 +42,7 @@ import static org.junit.jupiter.api.Assertions.*;
      @Test
      void freezeAccountTest() throws IllegalAccessException {
          CentralBank c1 = new CentralBank();
-         c1.createAccount("BA1234", 10000, "candace@gmail.com");
+         c1.createAccount("BA1234", 10000, "candace@gmail.com","freezeAccountTest1");
          BankAccount b1 = c1.findAccountWithId("BA1234");
          assertFalse(b1.getAcctFrozen());
 
@@ -59,7 +59,7 @@ import static org.junit.jupiter.api.Assertions.*;
      @Test
      void unfreezeAccountTest(){
          CentralBank c1 = new CentralBank();
-         c1.createAccount("BA1234", 10000, "candace@gmail.com");
+         c1.createAccount("BA1234", 10000, "candace@gmail.com","UNfreezeAccountTest1");
          BankAccount b1 = c1.findAccountWithId("BA1234");
          assertFalse(b1.getAcctFrozen());
 
@@ -74,7 +74,7 @@ import static org.junit.jupiter.api.Assertions.*;
      @Test
      void findAccountStringTest(){
          CentralBank c1 = new CentralBank();
-         c1.createAccount("b123", 200, "jim@gmail.com");
+         c1.createAccount("b123", 200, "jim@gmail.com","findAccountStringTest1");
          assertEquals("b123", c1.findAccountWithId("b123").getAcctId());
 
 
@@ -83,7 +83,7 @@ import static org.junit.jupiter.api.Assertions.*;
      @Test
      void suspActTest(){
          CentralBank c1 = new CentralBank();
-         c1.createAccount("b123", 200, "jim@gmail.com");
+         c1.createAccount("b123", 200, "jim@gmail.com","suspActTest");
 
          //sus activity should be true for singular account
          BankAccount b1 = c1.findAccountWithId("b123");
@@ -105,41 +105,82 @@ import static org.junit.jupiter.api.Assertions.*;
 
      @Test
      void confirmCredentialsTest(){
-
+         CentralBank c1 = new CentralBank();
+         c1.createAccount("b123",200,"1234@gmail.com","confirmCredentialsTest");
+         assertFalse(c1.confirmCredentials("123","122"));
+         assertFalse(c1.confirmCredentials("b123","123"));
+         assertTrue(c1.confirmCredentials("b123","confirmCredentialsTest"));
 
      }
 
      @Test
      void checkBalanceTest(){
+         CentralBank c1 = new CentralBank();
+         c1.createAccount("b123",200,"1234@gmail.com","checkBalanceTest");
+         assertEquals(200,c1.checkBalance("b123"));
 
-         //unfreeze account
+         CentralBank c2 = new CentralBank();
+         c1.createAccount("b100",1,"123@ithaca.com","checkBalanceTest2");
+         assertEquals(1,c1.checkBalance("b100"));
      }
 
      @Test
-     void withdrawTest(){
-         //sus activity test
+     void withdrawTest() throws IllegalAccessException {
+         CentralBank c1 = new CentralBank();
+         c1.createAccount("b123",200,"1234@gmail.com","withdrawTest");
+//         assertThrows(IllegalAccessException.class,()-> c1.deposit("b123",300));
+//         assertThrows(IllegalAccessException.class,()-> c1.deposit("b123",-300));
+         c1.withdraw("b123",100);
+         assertEquals(100,c1.checkBalance("b123"));
+         c1.withdraw("b123",50.55);
+         assertEquals(49.45,c1.checkBalance("b123"));
      }
 
 
      @Test
-     void depositTest(){
+     void depositTest() throws IllegalAccessException {
+         CentralBank c1 = new CentralBank();
+         c1.createAccount("b123",200,"1234@gmail.com","depositTest");
+//         assertThrows(IllegalAccessException.class,()-> c1.deposit("b123",300));
+//         assertThrows(IllegalAccessException.class,()-> c1.deposit("b123",100.1018244));
+//         assertThrows(IllegalAccessException.class,()-> c1.deposit("b123",-300));
+         c1.deposit("b123",100);
+         assertEquals(300,c1.checkBalance("b123"));
+         c1.deposit("b123",50.55);
+         assertEquals(350.55,c1.checkBalance("b123"));
+
+     }
+
+     @Test
+     void transferTest() throws IllegalAccessException {
          //total assets test
+         CentralBank c1 = new CentralBank();
+         c1.createAccount("b123",200,"1234@gmail.com","depositTest");
+         c1.createAccount("c321",150,"12@gmail.com","depositTest1");
+//         assertThrows(IllegalAccessException.class,()-> c1.deposit("b123",300));
+//         assertThrows(IllegalAccessException.class,()-> c1.deposit("b123",100.1018244));
+//         assertThrows(IllegalAccessException.class,()-> c1.deposit("b123",-300));
+         c1.transfer("b123","c321",100);
+         assertEquals(100,c1.checkBalance("b123"));
+         assertEquals(250,c1.checkBalance("c321"));
+
+         c1.transfer("c321", "b123",10.10);
+         assertEquals(110.1,c1.checkBalance("b123"));
+         assertEquals(239.9,c1.checkBalance("c321"));
 
 
 
      }
-
      @Test
-     void transferTest(){
-         //total assets test
+     void transactionHistoryTest() throws IllegalAccessException {
+         CentralBank c1 = new CentralBank();
+         c1.createAccount("b123",200,"1234@gmail.com","depositTest");
+         c1.createAccount("c321",150,"12@gmail.com","depositTest1");
 
-
-
-     }
-     @Test
-     void transactionHistoryTest(){
-         //total assets test
-
+         c1.withdraw("b123",10);
+         c1.deposit("b123",100);
+         c1.checkBalance("b123");
+         assertEquals("Withdraw: 10.0\nDeposit: 100.0\nCheck balance: 290.0",c1.transactionHistory("b123"));
 
 
      }

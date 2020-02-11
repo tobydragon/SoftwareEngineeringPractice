@@ -1,4 +1,6 @@
 package edu.ithaca.dragon.bank;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BankAccount {
 
@@ -6,7 +8,9 @@ public class BankAccount {
     public double balance;
     public  boolean acctFrozen;
     private String acctId;
+    private String acctPass;
     private boolean susAct;
+    List<String> history = new ArrayList<>();
 
 
     /**
@@ -16,6 +20,7 @@ public class BankAccount {
         this.acctFrozen = false;
         this.susAct= false;
         this.acctId = "B000";
+        this.acctPass = "000000";
         if (isEmailValid(email) && isAmountValid(startingBalance)) {
             this.email = email;
             this.balance = startingBalance;
@@ -25,6 +30,7 @@ public class BankAccount {
     }
 
     public double getBalance() {
+        history.add("Check balance: " + balance);
         return balance;
     }
 
@@ -36,6 +42,14 @@ public class BankAccount {
 
     public void setAcctId(String IDin){
         this.acctId = IDin;
+    }
+
+    public void setAcctPass(String passwordIn){
+        this.acctPass = passwordIn;
+    }
+
+    public String getAcctPass() {
+        return acctPass;
     }
 
     public void setSusAct(Boolean in){
@@ -56,12 +70,15 @@ public class BankAccount {
         if (isAmountValid(amount)) {
             if (!(balance < amount) && amount > 0) {
                 balance -= amount;
+                history.add("Withdraw: " + amount);
             }
         }else{
             throw new IllegalArgumentException("withdraw amount: " + amount + " is invalid, amount cannot be withdrawn");
         }
     }
-
+    public List<String> getHistory(){
+        return history;
+    }
     public void setAcctFrozen(boolean status){
         this.acctFrozen = status;
     }
@@ -97,13 +114,7 @@ public class BankAccount {
         if(email.contains("##")){
             return false;
         }
-        if(!email.substring(email.length()-4,email.length()-1).contains("c")){
-            return false;
-        }
-
-        else {
-            return true;
-        }
+        return email.substring(email.length() - 4, email.length() - 1).contains("c");
     }
 
     /**
@@ -136,6 +147,7 @@ public class BankAccount {
         if (isAmountValid(amount)) {
             if (!(balance < amount) && amount > 0) {
                 balance += amount;
+                history.add("Deposit: " + amount);
             }
         }else{
             throw new IllegalArgumentException("deposit amount: " + amount + " is invalid, amount cannot be deposited");
@@ -151,6 +163,7 @@ public class BankAccount {
         bankAccountFrozenCheck();
 
         if (isAmountValid(amount) && amount < this.balance){
+            history.add("Transfer: " + amount + "To" + bankAccounta.getAcctId());
             this.withdraw(amount);
             bankAccounta.balance = bankAccounta.balance + amount;
         }else{
