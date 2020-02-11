@@ -42,8 +42,9 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
         //TODO
     }
 
-    public void transfer(int userIDFrom, int acctIdToWithdrawFrom, int userIDTo, int acctIdToDepositTo, double amount) throws InsufficientFundsException {
+    public void transfer(int userIDFrom, int acctIdToWithdrawFrom, int userIDTo, int acctIdToDepositTo, double amount) throws InsufficientFundsException, NonExistentAccountException {
         //TODO
+        bankAccountCollection.retrieveAccount(userIDFrom, acctIdToWithdrawFrom).transfer(amount,bankAccountCollection.retrieveAccount(userIDTo,acctIdToDepositTo));
     }
 
     public String transactionHistory(int userId) {
