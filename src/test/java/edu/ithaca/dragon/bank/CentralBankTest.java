@@ -24,6 +24,19 @@ import static org.junit.jupiter.api.Assertions.*;
 
      //Admin Tests
 
+     @Test
+
+     void overAllBalanceTest(){
+         CentralBank c1 = new CentralBank();
+         assertEquals(0, c1.calcTotalAssets());
+         c1.createAccount("b123", 200, "jim@gmail.com");
+         c1.createAccount("b00", 200, "pam@gmail.com");
+         c1.createAccount("b13", 200, "kelly@gmail.com");
+
+         assertEquals(600, c1.calcTotalAssets());
+
+     }
+
 
      @Test
      void freezeAccountTest(){
