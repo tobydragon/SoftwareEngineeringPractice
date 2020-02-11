@@ -17,6 +17,10 @@ public class BankAccount {
         }
     }
 
+    public void newTransaction(String tran){
+        transHist += tran;
+    }
+
     public double getBalance(){
         return balance;
     }
