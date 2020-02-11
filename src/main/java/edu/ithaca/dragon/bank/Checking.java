@@ -10,8 +10,16 @@ public class Checking implements Account {
     private boolean frozen;
     private List<String []> history;
 
-    public Checking(String acctIdIn, String nameIn, String passwordIn, double startingBalance){
+    public Checking(String acctIdIn, String nameIn, String passwordIn, double startingBalance) throws IllegalArgumentException{
 
+    }
+
+    public String getAcctId(){
+        return acctId;
+    }
+
+    public String getName(){
+        return name;
     }
 
     public double checkBalance(String acctId){
