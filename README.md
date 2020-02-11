@@ -1,7 +1,7 @@
-Use Case Diagram - https://www.draw.io/#G1mm69UnMLOChM1I6GwP_UQAsC30CEIrnG
+Use Case Diagram - https://drive.google.com/file/d/11ch06mbAXsOw9mxAsrNhW0LnR51nakwB/view?usp=sharing
 
 
-Conceptual Class Diagram - https://www.draw.io/#G11ch06mbAXsOw9mxAsrNhW0LnR51nakwB
+Conceptual Class Diagram - https://drive.google.com/file/d/11ch06mbAXsOw9mxAsrNhW0LnR51nakwB/view?usp=sharing
 
 
 Aidan Sequence Diagrams:
