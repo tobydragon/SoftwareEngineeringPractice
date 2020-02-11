@@ -10,7 +10,13 @@ public class Admin implements AdminAPI {
     }
 
     public double calcTotalAssets() {
-        return 0;
+        double totalAssets = 0;
+        Iterator<BankAccount> itr = this.bank.accounts.iterator();
+        while(itr.hasNext()) {
+            BankAccount curr = itr.next();
+            totalAssets += curr.getBalance();
+        }
+        return totalAssets;
     }
 
     public Collection<String> findAcctIdsWithSuspiciousActivity() {
