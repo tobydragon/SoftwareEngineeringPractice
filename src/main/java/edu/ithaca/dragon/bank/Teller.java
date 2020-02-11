@@ -5,6 +5,10 @@ import java.util.NoSuchElementException;
 
 public class Teller extends ATM implements AdvancedAPI {
 
+    public Teller(CentralBank bank) {
+        super(bank);
+    }
+
     @Override
     public void createAccount(String acctId, double startingBalance) {
         centralBank.getAccounts().put(acctId, new CheckingAccount(startingBalance, acctId));

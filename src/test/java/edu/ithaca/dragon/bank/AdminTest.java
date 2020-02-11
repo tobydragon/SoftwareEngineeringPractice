@@ -137,8 +137,9 @@ public class AdminTest {
     @Test
     void systemTest() throws InsufficientFundsException,  AccountFrozenException{
         //Going to test that teller and admin are working properly, use teller to create new accounts and admin to find the total balance
-        Teller teller = new Teller();
-        Admin admin = new Admin(teller.centralBank);
+        CentralBank bank = new CentralBank();
+        Teller teller = new Teller(bank);
+        Admin admin = new Admin(bank);
         assertEquals(0, admin.calcTotalAssets());
         teller.createAccount("abc", 150);
         assertEquals(150, admin.calcTotalAssets());

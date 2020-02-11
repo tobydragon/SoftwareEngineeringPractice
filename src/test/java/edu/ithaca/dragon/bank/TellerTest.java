@@ -9,8 +9,10 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TellerTest {
 
     @Test
-    void createAccountTest()  {
-        Teller teller = new Teller();
+    void createAccountTest() {
+        CentralBank centralBank = new CentralBank();
+        Teller teller = new Teller(centralBank);
+
         teller.createAccount("0", 0);
 
         assertNotNull(teller.centralBank.getAccounts().get("0"));
@@ -24,7 +26,8 @@ public class TellerTest {
 
     @Test
     void closeAccountTest() {
-        Teller teller = new Teller();
+        CentralBank centralBank = new CentralBank();
+        Teller teller = new Teller(centralBank);
 
         assertThrows(NoSuchElementException.class, () -> teller.closeAccount("0"));
 
