@@ -7,6 +7,7 @@ import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
 public class CentralBankTest {
 
     @Test
@@ -213,33 +214,6 @@ public class CentralBankTest {
         assertThrows(IllegalArgumentException.class, () -> testBank.deposit("4321", -1000));
         assertThrows(IllegalArgumentException.class, () -> testBank.deposit("4321", -10.101));
     }
-
-
-    @Test
-    void transferTest() throws InsufficientFundsException {
-        CentralBank testBank = new CentralBank("Test Bank");
-
-        //normal cases
-        testBank.createAccount("1234", 386.76);
-        testBank.createAccount("4321", 125.73);
-        testBank.transfer("1234", "4321", 100);
-        assertEquals(286.76, testBank.checkBalance("1234"));
-        assertEquals(225.73,testBank.checkBalance("4321"));
-
-        testBank.createAccount("5678", 4826.67);
-        testBank.createAccount("8765", 263.82);
-        testBank.transfer("5678", "8765", 2500);
-        assertEquals(2326.67, testBank.checkBalance("5678"));
-        assertEquals(2763.82,testBank.checkBalance("8765"));
-
-
-        //negative amount/three decimals
-        assertThrows(IllegalArgumentException.class, () -> testBank.transfer("1234", "4321",-100));
-        assertThrows(IllegalArgumentException.class, () -> testBank.transfer("1234", "4321", -1000));
-        assertThrows(IllegalArgumentException.class, () -> testBank.transfer("1234", "4321", -10));
-        assertThrows(IllegalArgumentException.class, () -> testBank.transfer("1234", "4321", -1.502));
-    }
-
 
     @Test
     //Integration tests on code that Cobi wrote
