@@ -8,7 +8,10 @@ public class ATMTest {
 
     @Test
     void checkBalanceTest(){
-        ATM atm = new ATM(); //TODO redo these tests later
+        UserArrayList userAccounts = new UserArrayList();
+        UserAccount testAccount = new UserAccount("username","password","a@b.com",123);
+        userAccounts.addAccount(testAccount);
+        ATM atm = new ATM(userAccounts); //TODO redo these tests later
         assertEquals(1, atm.checkBalance("a@b.com"));
     }
 

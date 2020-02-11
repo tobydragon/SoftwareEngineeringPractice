@@ -4,6 +4,12 @@ import java.util.Collection;
 
 public class CentralBank implements AdvancedAPI, AdminAPI {
 
+    private UserArrayList userAccounts;
+
+    public CentralBank(){
+        userAccounts = new UserArrayList();
+    }
+
     //----------------- BasicAPI methods -------------------------//
 
     public boolean confirmCredentials(String acctId, String password) {
@@ -33,7 +39,7 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
 
     //----------------- AdvancedAPI methods -------------------------//
 
-    public void createAccount(String acctId, double startingBalance) {
+    public void createAccount(String acctId, double startingBalance, UserArrayList userAccounts) {
 
     }
 

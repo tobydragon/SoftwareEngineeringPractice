@@ -3,6 +3,12 @@ package edu.ithaca.dragon.bank;
 
 public class ATM implements BasicAPI {
 
+    UserArrayList userAccounts;
+
+    public ATM(UserArrayList userAccounts){
+        this.userAccounts = userAccounts;
+    }
+
     public boolean confirmCredentials(String acctId, String password){
         return false;
     }
