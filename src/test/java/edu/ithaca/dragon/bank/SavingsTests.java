@@ -71,9 +71,9 @@ public class SavingsTests {
         newSavings.deposit("1234567890", 40);
         newSavings.withdraw("1234567890", 90);
         assertThrows(IllegalArgumentException.class, ()-> newSavings.transactionHistory("1238456789"));
-        assertEquals("deposit of 20; deposit of 40; withdrawal of 90", newSavings.transactionHistory("1234567890"));
+        assertEquals("deposit of 20.0; deposit of 40.0; withdrawal of 90.0", newSavings.transactionHistory("1234567890"));
         newSavings.deposit("1234567890", 80);
-        assertEquals("deposit of 20; deposit of 40; withdrawal of 90; deposit of 80", newSavings.transactionHistory("1234567890"));
+        assertEquals("deposit of 20.0; deposit of 40.0; withdrawal of 90.0; deposit of 80.0", newSavings.transactionHistory("1234567890"));
     }
 
     @Test

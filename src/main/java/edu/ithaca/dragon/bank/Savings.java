@@ -66,7 +66,7 @@ public class Savings implements Account{
             throw new IllegalArgumentException("Amount exceeds daily maximum withdrawal amount");
         }
         balance -= amount;
-        history.add("withdrawal of" + amount);
+        history.add("withdrawal of " + amount);
     }
 
     public void deposit(String acctId, double amount){
@@ -77,7 +77,7 @@ public class Savings implements Account{
             throw new IllegalArgumentException("Cannot deposit 0 or less");
         }        
         balance += amount;
-        history.add("deposit of" + amount);
+        history.add("deposit of " + amount);
     }
 
     public void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws InsufficientFundsException{
@@ -85,7 +85,15 @@ public class Savings implements Account{
     }
 
     public String transactionHistory(String acctId){
-        return null;
+        if (acctId != this.acctId){
+            throw new IllegalArgumentException("This is not the correct account");
+        }
+        String acctHistory = "";
+        for (int i = 0; i < history.size()-1; i++){
+            acctHistory += history.get(i) + "; ";
+        }
+        acctHistory += history.get(history.size()-1);
+        return acctHistory;
     }
 
     public void compoundInterest(String acctId){
