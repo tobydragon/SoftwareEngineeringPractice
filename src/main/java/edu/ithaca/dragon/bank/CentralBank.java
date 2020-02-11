@@ -67,6 +67,7 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
             double balance = bankAccounts.get(acctId).getBalance();
             balance += amount;
             bankAccounts.get(acctId).setBalance(balance);
+            bankAccounts.get(acctId).newTransaction("Deposit: " + amount + "\n");
         }
         else{
             throw new IllegalArgumentException("Invalid amount entry.");
