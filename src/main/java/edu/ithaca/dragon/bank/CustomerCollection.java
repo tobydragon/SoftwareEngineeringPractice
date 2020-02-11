@@ -9,7 +9,12 @@ public class CustomerCollection {
         customers = new ArrayList<Customer>();
     }
 
-    public void addCustomer(String idIn, String passwordIn){}
+    public void addCustomer(String idIn, String passwordIn){
+        for(int x = 0; x < customers.size(); x++){
+            if(customers.get(x).getId() == idIn)throw new IllegalArgumentException("Account Already Exists");
+        }
+        customers.add(new Customer(idIn, passwordIn));
+    }
 
     public void deposit(String ID, double amount){}
 
