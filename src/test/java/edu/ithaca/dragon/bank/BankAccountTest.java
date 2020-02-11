@@ -332,7 +332,7 @@ class BankAccountTest {
 
         //Testing the deposit Method for a a standard return of a positive amount
         CentralBank1.deposit("CB1",25);
-        assertEquals(25,CentralBank1.checkBalance("CB1"));
+        assertEquals(125,CentralBank1.checkBalance("CB1"));
 
         //Testing the Deposit Method for a a standard return of a IllegalArugumentExcept since a negative amount is not possible
         assertThrows(IllegalArgumentException.class, ()-> CentralBank1.deposit("CB1",-25));
