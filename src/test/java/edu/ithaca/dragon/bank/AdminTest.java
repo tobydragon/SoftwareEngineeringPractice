@@ -108,34 +108,10 @@ public class AdminTest {
         assertEquals(306.65, admin.calcTotalAssets());
     }
 
-    @Test
-    void integrationTest() throws InsufficientFundsException, AccountFrozenException{
-        //Meant to test that freeze/unfreeze can work in conjunction, as well as calcTotalAssets working with the Account methods
-        Account abcAcc = new CheckingAccount(500, "abc");
-        Account xyzAcc = new CheckingAccount(500, "xyz");
-        Map<String, Account>  collection = new HashMap<>();
-        collection.put(abcAcc.getID(), abcAcc);
-        collection.put(xyzAcc.getID(), xyzAcc);
-        CentralBank testBank = new CentralBank();
-        testBank.setAccounts(collection);
-        Admin admin = new Admin(testBank);
-        assertEquals(1000, admin.calcTotalAssets());
-        abcAcc.transfer(xyzAcc, 300);
-        assertEquals(1000, admin.calcTotalAssets());
-        abcAcc.deposit(300);
-        assertEquals(1300, admin.calcTotalAssets());
-        xyzAcc.withdraw(100.55);
-        assertEquals(1199.45, admin.calcTotalAssets());
 
-        admin.freezeAccount("abc");
-        assertThrows(AccountFrozenException.class, ()->abcAcc.deposit(50));
-        admin.unfreezeAcct("abc");
-        abcAcc.deposit(50);
-        assertEquals(1249.45, admin.calcTotalAssets());
-    }
 
     @Test
-    void systemTest() throws InsufficientFundsException,  AccountFrozenException{
+    void integrationTest() throws InsufficientFundsException,  AccountFrozenException{
         //Going to test that teller and admin are working properly, use teller to create new accounts and admin to find the total balance
         CentralBank bank = new CentralBank();
         Teller teller = new Teller(bank);
@@ -151,6 +127,34 @@ public class AdminTest {
         assertEquals(170.59, admin.calcTotalAssets());
         assertThrows(IllegalArgumentException.class, ()->teller.createAccount("account", -50));
         assertThrows(IllegalArgumentException.class, ()->teller.createAccount("ghi", 100.505));
+
+    }
+
+    @Test
+    void systemTest() throws InsufficientFundsException, AccountFrozenException{
+        //Meant to test that freeze/unfreeze can work in conjunction, as well as calcTotalAssets working with the Account methods
+        CentralBank testBank = new CentralBank();
+        Teller teller = new Teller(testBank);
+        teller.createAccount("abc", 500);
+        teller.createAccount("xyz", 500);
+        Admin admin = new Admin(testBank);
+        assertEquals(1000, admin.calcTotalAssets());
+        teller.transfer("abc", "xyz", 200);
+        assertEquals(1000, admin.calcTotalAssets());
+        teller.deposit("abc",300);
+        assertEquals(1300, admin.calcTotalAssets());
+        teller.withdraw("xyz",100.55);
+        assertEquals(1199.45, admin.calcTotalAssets());
+
+        admin.freezeAccount("abc");
+        assertThrows(AccountFrozenException.class, ()->teller.deposit("abc", 50));
+        //Checking that a frozen account is still counted in banks assets
+        assertEquals(1199.45, admin.calcTotalAssets());
+        assertThrows(AccountFrozenException.class, ()->teller.withdraw("abc", 50));
+        assertThrows(AccountFrozenException.class, ()->teller.transfer("abc", "xyz",50));
+        assertThrows(AccountFrozenException.class, ()->teller.transfer("xyz", "abc",50));
+        teller.deposit("xyz", 0.13);
+        assertEquals(1199.58, admin.calcTotalAssets());
 
     }
 
