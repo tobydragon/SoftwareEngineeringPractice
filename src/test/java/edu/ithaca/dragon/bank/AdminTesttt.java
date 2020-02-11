@@ -57,4 +57,17 @@ public class AdminTesttt {
         assertThrows(IllegalArgumentException.class, () -> admin.freezeAccount("abcd"));
 
     }
+
+    @Test
+    void calcTotalAssetsTest() {
+        BankAccount acc1 = new CheckingAccount(1000, "acc1");
+        BankAccount acc2 = new CheckingAccount(1500, "acc2");
+        BankAccount acc3 = new SavingsAccount(3000, "acc3", .1, 3000);
+        CentralBank bank = new CentralBank();
+        bank.accounts.add(acc1);
+        bank.accounts.add(acc2);
+        bank.accounts.add(acc3);
+        Admin admin = new Admin(bank);
+        assertEquals(5500, admin.calcTotalAssets());
+    }
 }
