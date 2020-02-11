@@ -37,6 +37,7 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
             AccountDoesNotExistException, ExceedsMaxWithdrawalException {
         if (!accounts.containsKey(acctId)) throw new AccountDoesNotExistException("Account with this id does not exists");
         BankAccount account = accounts.get(acctId);
+        account.withdraw(amount);
         // Added
         addToHistory("w", acctId);
     }

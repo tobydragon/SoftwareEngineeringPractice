@@ -310,6 +310,35 @@ public class CentralBankTest {
 
     }
 
+    @Test
+    void veraIntegrationTest() throws AccountAlreadyExistsException, AccountDoesNotExistException, BalanceRemainingException, InsufficientFundsException, ExceedsMaxWithdrawalException {
+        CentralBank test = new CentralBank();
+        String testID = "test@email.com";
+        test.createAccount(testID, "password", 200, false, false);
+        assertTrue(test.confirmCredentials("test@email.com", "password"));
+
+        test.deposit(testID,45);
+        assertEquals(245, test.checkBalance(testID));
+        test.withdraw(testID, 25);
+        assertEquals(220, test.checkBalance(testID));
+
+        String test2ID = "test2@email.com";
+        test.createAccount(test2ID, "password2", 350, false, false);
+        assertTrue(test.confirmCredentials(test2ID, "password2"));
+
+        test.transfer(testID, test2ID, 100);
+        assertEquals(120, test.checkBalance(testID));
+        assertEquals(450, test.checkBalance(test2ID));
+
+        test.withdraw("test@email.com", 120);
+        assertEquals(0, test.checkBalance(testID));
+        test.withdraw("test2@email.com", 450);
+        assertEquals(0, test.checkBalance(test2ID));
+
+        test.closeAccount(testID);
+        test.closeAccount(test2ID);
+    }
+
 
 
 }
