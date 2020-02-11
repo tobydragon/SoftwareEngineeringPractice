@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.HashMap;
 
+
 public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
 
     private String bankName;
@@ -80,7 +81,12 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
 
     public String transactionHistory(String acctId) {
         String transactions = bankAccounts.get(acctId).getTransHist();
-        return transactions;
+        if (transactions == ""){
+            throw new IllegalArgumentException("There are no transactions logged");
+        }
+        else{
+            return transactions;
+        }
     }
 
 
