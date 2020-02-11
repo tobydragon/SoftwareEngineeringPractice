@@ -314,4 +314,49 @@ class BankAccountTest {
 
     }
 
+    @Test
+    void CentralBankTest() throws InsufficientFundsException {
+        CentralBank CentralBank1 = new CentralBank();
+        CentralBank CentralBank2 = new CentralBank();
+        CentralBank CentralBank3 = new CentralBank();
+        CentralBank1.createAccount("CB1",100);
+        CentralBank2.createAccount("CB2",0);
+        CentralBank3.createAccount("CB3",-100);
+      //CheckBalanceTest
+        //Testing the CheckBalance Method for a a standard return of a positive balance
+        assertEquals(100, CentralBank1.checkBalance("CB1"));
+        //Testing the CheckBalance Method for a a standard return of a 0 balance
+        assertEquals(0, CentralBank2.checkBalance("CB2"));
+
+        //AssertDepositTest
+
+        //Testing the deposit Method for a a standard return of a positive amount
+        CentralBank1.deposit("CB1",25);
+        assertEquals(125,CentralBank1.checkBalance("CB1"));
+
+        //Testing the Deposit Method for a a standard return of a IllegalArugumentExcept since a negative amount is not possible
+        assertThrows(IllegalArgumentException.class, ()-> CentralBank1.deposit("CB1",-25));
+        //Testing the Deposit Method for a a standard return of a IllegalArugumentExcept since an amount with more than 2 decimal points shouldn't be possible.
+        assertThrows(IllegalArgumentException.class, ()-> CentralBank1.deposit("CB1",25.503));
+
+        //Testing the Deposit Method for a return of the balance since it should be okay to deposit 0
+        CentralBank1.deposit("CB1",0);
+        assertEquals(125,CentralBank1.checkBalance("CB1"));
+
+
+
+        //AssertWithdrawTest
+        //Testing the withdraw Method for a a standard withdraw of a positive amount
+        CentralBank1.withdraw("CB1",25);
+        assertEquals(75,CentralBank1.checkBalance("CB1"));
+        //Testing the Withdraw Method for a a standard return of a IllegalArugumentExcept since a negative amount is not possible
+        assertThrows(IllegalArgumentException.class, ()-> CentralBank1.withdraw("CB1",-25));
+        //Testing the Withdraw Method for a a standard return of a IllegalArugumentExcept since an amount with more than 2 decimal points shouldn't be possible.
+        assertThrows(IllegalArgumentException.class, ()-> CentralBank1.withdraw("CB1",25.503));
+        //Testing the Withdraw Method for a return of the balance since it should be okay to withdraw 0
+        CentralBank1.withdraw("CB1",0);
+        assertEquals(75,CentralBank1.checkBalance("CB1"));
+
+    }
+
 }
