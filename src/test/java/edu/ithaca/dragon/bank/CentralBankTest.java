@@ -166,4 +166,56 @@ public class CentralBankTest {
         assertFalse(centralBank1.checkFrozenAccountExists("6"));
         assertFalse(centralBank1.checkFrozenAccountExists("999111333"));
     }
+
+    @Test
+    //Integration tests on code that Cobi wrote
+    void cobiIntegrationTest() {
+        CentralBank centralBank1 = new CentralBank("Bank1");
+        centralBank1.createAccount("123", 300);
+
+        centralBank1.createAccount("345", 900);
+        centralBank1.createAccount("999", 360.18);
+
+
+        assertEquals(centralBank1.checkBalance("123"), 300); //checking integration between createAccount and checkBalance
+        assertEquals(centralBank1.calcTotalAssets(), 1560.18); //checking integration between createAccount and calcTotalAssets
+
+        centralBank1.freezeAccount("999");
+        assertFalse(centralBank1.checkAccountExists("999")); //integration test between createAccount and freezeAccount
+        assertTrue(centralBank1.checkFrozenAccountExists("999"));
+
+        centralBank1.unfreezeAcct("999");
+        assertTrue(centralBank1.checkAccountExists("999")); //integration test between createAccount, freezeAccount, unfreezeAccount
+        assertFalse(centralBank1.checkFrozenAccountExists("999"));
+
+
+
+    }
+
+    @Test
+    //System tests on code that Cobi wrote
+    void cobiSystemTests() {
+        CentralBank centralBank1 = new CentralBank("Test Bank");
+        centralBank1.createAccount("001", 18.79);
+        centralBank1.createAccount("002", 400.2);
+        centralBank1.createAccount("003", 60);
+
+        assertEquals(centralBank1.calcTotalAssets(), 478.99); //test calcTotalAssets after creating accounts
+
+        centralBank1.freezeAccount("002");
+        assertThrows(IllegalArgumentException.class, ()-> centralBank1.checkBalance("002")); //Make sure you cant checkBalance of frozen account
+
+        centralBank1.unfreezeAcct("002");
+        assertEquals(centralBank1.checkBalance("002"), 400.2); //test that you can checkBalance after frozen and unfrozen
+        assertEquals(centralBank1.calcTotalAssets(), 478.99); //test that you can calcTotalAssets with an account that was frozen and unfrozen
+
+        centralBank1.freezeAccount("001");
+        assertEquals(centralBank1.calcTotalAssets(), 460.2); //test that calcTotalAssets does not include a frozen account
+
+        assertThrows(IllegalArgumentException.class, ()-> centralBank1.freezeAccount("001")); //test that you can't freeze a frozen account
+        assertThrows(IllegalArgumentException.class, ()-> centralBank1.createAccount("001", 2)); //check that you can't create an account with same ID as a frozen account
+
+        centralBank1.createAccount("004", 50.60);
+        assertEquals(centralBank1.calcTotalAssets(), 510.80); //check that you can create another account later and still test calcTotalAssets
+    }
 }
