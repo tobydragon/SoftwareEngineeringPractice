@@ -29,4 +29,8 @@ public class CustomerCollection {
 
     public void closeCustomer(String actID){}
 
+    public int getNumCustomers(){
+        return customers.size();
+    }
+
 }
