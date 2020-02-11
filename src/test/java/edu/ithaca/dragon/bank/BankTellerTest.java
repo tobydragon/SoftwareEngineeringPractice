@@ -17,10 +17,10 @@ public class BankTellerTest {
         assertEquals(201, bt1.checkBalance("Mari"));
 
         bt1.deposit("Mari", 1.01);
-        assertEquals(101, bt1.checkBalance("Mari"));
+        assertEquals(202.01, bt1.checkBalance("Mari"));
 
         bt1.deposit("Mari", 5000);
-        assertEquals(5101, bt1.checkBalance("Mari"));
+        assertEquals(5202.01, bt1.checkBalance("Mari"));
 
         //Equivalence Class-IllegalArgumentException negative amount
         assertThrows(IllegalArgumentException.class, () -> bt1.deposit("Mari", -1));

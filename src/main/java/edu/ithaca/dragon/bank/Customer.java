@@ -13,7 +13,9 @@ public class Customer {
         checking = null;
     }
 
-    public void deposit(double amount){}
+    public void deposit(double amount){
+        checking.deposit(amount);
+    }
     public void withdraw(double amount){}
     public double getBalance(){
         if(checking == null)throw new IllegalArgumentException("No account");

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class CustomerCollection {
     private ArrayList<Customer> customers;
 
+
     public CustomerCollection(){
         customers = new ArrayList<Customer>();
     }
@@ -16,7 +17,17 @@ public class CustomerCollection {
         customers.add(new Customer(idIn, passwordIn));
     }
 
-    public void deposit(String ID, double amount){}
+    public void deposit(String ID, double amount){
+        for (Customer customer : customers) {
+            if (customer.getId().equals(ID)) {
+                customer.deposit(amount);
+
+            }
+            else{
+                throw new IllegalArgumentException("Account doesn't exist");
+            }
+        }
+    }
 
     public void withdraw(String ID, double amount){}
 
