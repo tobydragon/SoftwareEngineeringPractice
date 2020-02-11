@@ -3,6 +3,7 @@ package edu.ithaca.dragon.bank;
 import javax.swing.plaf.basic.BasicLookAndFeel;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 
 public class CentralBank {
 
@@ -22,5 +23,22 @@ public class CentralBank {
 
     public Collection<User> getUsers() {
         return users;
+    }
+
+    public BankAccount getBankAccount(String acctID){
+        boolean accountpresent = false;
+        Iterator<BankAccount> itr = this.accounts.iterator();
+        while (itr.hasNext()){
+            BankAccount current = itr.next();
+            if (current.getAcctId()== acctID){
+                return current;
+            }
+        }
+        if (accountpresent ==false){
+            throw new IllegalArgumentException("invalid account id");
+        }
+
+        throw new IllegalArgumentException("invalid account id");
+
     }
 }
