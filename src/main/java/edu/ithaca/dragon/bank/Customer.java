@@ -16,13 +16,17 @@ public class Customer {
     public void deposit(double amount){}
     public void withdraw(double amount){}
     public double getBalance(){
-        return 0.0;
+        return checking.getBalance();
     }
     public boolean checkCredentials(String idIn, String passwordIn){
         return false;
     }
 
-    public void createAccount(double startingBalance){}
+    public void createAccount(double startingBalance) throws Exception{
+        if(checking != null)throw new Exception("Account already Exists");
+        if(!CheckingAccount.isAmountValid(startingBalance)) throw new IllegalArgumentException("Invalid Starting balance");
+        checking = new CheckingAccount(id, startingBalance);
+    }
 
     public String getId() {
         return id;
