@@ -154,4 +154,31 @@ public class CentralBankTest {
         assertFalse(centralBank1.checkFrozenAccountExists("6"));
         assertFalse(centralBank1.checkFrozenAccountExists("999111333"));
     }
+
+    @Test
+    void withdrawTest() throws InsufficientFundsException {
+        CentralBank testBank = new CentralBank("Test Bank", null, null);
+
+        //normal withdraw functions
+        testBank.createAccount("1234", 1000);
+        testBank.withdraw("1234", 350);
+        assertEquals(650, testBank.checkBalance("1234"));
+        testBank.withdraw("1234", 500);
+        assertEquals(200, testBank.checkBalance("1234"));
+        testBank.withdraw("1234", 5);
+        assertEquals(195, testBank.checkBalance("1234"));
+
+        //withdraw more than balance
+        testBank.createAccount("4321", 500);
+        assertThrows(InsufficientFundsException.class, ()-> testBank.withdraw("4321", 501));
+        assertThrows(InsufficientFundsException.class, ()-> testBank.withdraw("4321", 1000));
+        assertThrows(InsufficientFundsException.class, ()-> testBank.withdraw("4321", 50000));
+
+        //withdraw negative amount
+        assertThrows(IllegalArgumentException.class, ()-> testBank.withdraw("4321", -1));
+        assertThrows(IllegalArgumentException.class, ()-> testBank.withdraw("4321", -100));
+        assertThrows(IllegalArgumentException.class, ()-> testBank.withdraw("4321", -1000));
+        assertThrows(IllegalArgumentException.class, ()-> testBank.withdraw("4321", 200.101)); //three decimal places
+
+    }
 }
