@@ -10,7 +10,7 @@ public class CentralBankTest {
     void confirmCredentialsTest() throws NonExistentAccountException{
         //TODO
         CentralBank testBank = new CentralBank();
-        testBank.createBankAccount(1, 100);
+        testBank.createUserAccount("user1","pass1","a@b.com",1);
     }
 
     @Test

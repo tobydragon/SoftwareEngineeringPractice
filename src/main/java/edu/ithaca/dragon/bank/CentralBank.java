@@ -15,6 +15,10 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
     //----------------- BasicAPI methods -------------------------//
 
     public boolean confirmCredentials(String username, String password) {
+
+        //Try/catch with nonexistentaccountexception
+
+
         return false;
     }
 
@@ -67,6 +71,16 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
 
     }
 
+    public void createUserAccount(String username, String password, String email, int userID){
+        UserAccount newAccount = new UserAccount(username, password, email, userID);
+        userAccounts.addAccount(newAccount);
+    }
+
+    public void closeUserAccount(int userId) throws IllegalArgumentException, NonExistentAccountException{
+        UserAccount removedAccount = userAccounts.findAccount(userId);
+        userAccounts.removeAccount(removedAccount);
+
+    }
 
     //------------------ AdminAPI methods -------------------------//
 
