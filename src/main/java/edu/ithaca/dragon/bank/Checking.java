@@ -58,7 +58,24 @@ public class Checking implements Account {
     }
 
     public static boolean isNameValid(String name){
-        return false;
+        if (name.length() < 3) return false;
+
+        int spaceCount = 0;
+        //check there's at least one space
+        for (int i = 0; i < name.length()-1; i++){
+            if(name.charAt(i) == ' '){
+                spaceCount++;
+            }
+        }
+        if(spaceCount < 1) return false;
+
+        for (int i = 0; i < name.length(); i++){
+            if(Character.isLetter(name.charAt(i)) || name.charAt(i) == ' '){
+                continue;
+            }
+            return false;
+        }
+        return true;
     }
 
     public static boolean isAmountValid(double amount){
