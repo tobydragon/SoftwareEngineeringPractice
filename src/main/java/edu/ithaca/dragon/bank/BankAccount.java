@@ -12,7 +12,7 @@ public class BankAccount {
 
     /**
      * @post creates a bank account object
-     * @throws IllegalArgumentException if email is invalid
+     * @throws IllegalArgumentException if dollar amount is invalid
      *
      */
     public BankAccount(double startingBalance, String acctId) {
@@ -33,6 +33,14 @@ public class BankAccount {
 
     public boolean isFrozen() {
         return frozen;
+    }
+
+    public String getAcctId() {
+        return acctId;
+    }
+
+    public void setFrozen(boolean frozen) {
+        this.frozen = frozen;
     }
 
     /**
