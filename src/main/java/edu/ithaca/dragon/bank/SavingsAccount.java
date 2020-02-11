@@ -4,7 +4,7 @@ public class SavingsAccount extends BankAccount {
     public SavingsAccount(double startingBalance, String acctId){
         super(startingBalance, acctId);
     }
-/**
+
     private double interestRate;
     private double maximumWithdrawal;
 
@@ -14,5 +14,4 @@ public class SavingsAccount extends BankAccount {
         this.interestRate = interestRate;
         this.maximumWithdrawal = maximumWithdrawal;
     }
- **/
 }
