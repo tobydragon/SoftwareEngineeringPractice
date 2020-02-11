@@ -2,7 +2,11 @@ package edu.ithaca.dragon.bank;
 
 public class ATM implements BasicAPI {
 
-    CentralBank centralBank = new CentralBank();
+    protected CentralBank centralBank;
+
+    public ATM(CentralBank bank) {
+        centralBank = bank;
+    }
 
     @Override
     public boolean confirmCredentials(String acctId, String password) {
@@ -32,5 +36,9 @@ public class ATM implements BasicAPI {
     @Override
     public String transactionHistory(String acctId) {
         return null;
+    }
+
+    public CentralBank getCentralBank() {
+        return centralBank;
     }
 }

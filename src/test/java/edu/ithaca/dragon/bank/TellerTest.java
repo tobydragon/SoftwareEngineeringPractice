@@ -11,7 +11,7 @@ public class TellerTest {
     @Test
     void createAccountTest() throws NoSuchObjectException {
         CentralBank centralBank = new CentralBank();
-        Teller teller = new Teller();
+        Teller teller = new Teller(centralBank);
         teller.createAccount("0", 0);
         for (Account account : centralBank.getAccounts().values()) {
             if (account.getID().equals("0")) {
