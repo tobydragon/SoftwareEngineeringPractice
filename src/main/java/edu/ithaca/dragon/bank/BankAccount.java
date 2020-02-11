@@ -31,6 +31,9 @@ public class BankAccount {
         return balance;
     }
 
+    public boolean isFrozen() {
+        return frozen;
+    }
 
     /**
      * @post checks if inputted dollar amount is a valid dollar amount

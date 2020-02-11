@@ -4,8 +4,8 @@ import java.util.Collection;
 
 public class Admin extends CentralBank implements AdminAPI {
 
-    public Admin(Collection<BankAccount> accounts, Collection<User>users){
-        super(accounts,users);
+    public Admin(){
+        super();
     }
 
     public double calcTotalAssets() {
