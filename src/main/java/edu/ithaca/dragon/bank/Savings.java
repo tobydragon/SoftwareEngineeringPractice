@@ -49,14 +49,20 @@ public class Savings implements Account{
         return frozen;
     }
 
-    public double checkBalance(String acctId){
+    public double checkBalance(String acctId) throws AcctFrozenException {
+        if (frozen){
+            throw new AcctFrozenException("Account is frozen");
+        }
         if (acctId != this.acctId){
             throw new IllegalArgumentException("This is not the correct account");
         }
         return balance;
     }
 
-    public void withdraw(String acctId, double amount) throws InsufficientFundsException{
+    public void withdraw(String acctId, double amount) throws InsufficientFundsException, AcctFrozenException {
+        if (frozen){
+            throw new AcctFrozenException("Account is frozen");
+        }
         if (acctId != this.acctId){
             throw new IllegalArgumentException("This is not the correct account");
         }
@@ -73,7 +79,10 @@ public class Savings implements Account{
         history.add("withdrawal of " + amount);
     }
 
-    public void deposit(String acctId, double amount){
+    public void deposit(String acctId, double amount) throws AcctFrozenException {
+        if (frozen){
+            throw new AcctFrozenException("Account is frozen");
+        }
         if (acctId != this.acctId){
             throw new IllegalArgumentException("This is not the correct account");
         }
@@ -85,7 +94,10 @@ public class Savings implements Account{
     }
 
 
-    public String transactionHistory(String acctId){
+    public String transactionHistory(String acctId) throws AcctFrozenException {
+        if (frozen){
+            throw new AcctFrozenException("Account is frozen");
+        }
         if (acctId != this.acctId){
             throw new IllegalArgumentException("This is not the correct account");
         }
@@ -97,7 +109,10 @@ public class Savings implements Account{
         return acctHistory;
     }
 
-    public void compoundInterest(String acctId){
+    public void compoundInterest(String acctId) throws AcctFrozenException {
+        if (frozen){
+            throw new AcctFrozenException("Account is frozen");
+        }
         if (acctId != this.acctId){
             throw new IllegalArgumentException("This is not the correct account");
         }
