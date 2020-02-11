@@ -11,6 +11,7 @@ public class Admin implements AdminAPI {
     private static DecimalFormat twoDecimals = new DecimalFormat("0.00");
     CentralBank bank;
 
+
     /**
      * creates an Admin account that knows what accounts it controls
      * @param bank the CentralBank that Admin must act on
@@ -22,7 +23,7 @@ public class Admin implements AdminAPI {
     @Override
     public double calcTotalAssets() {
         double total = 0;
-        Iterator<Account> itr = this.bank.accounts.iterator();
+        Iterator<Account> itr = this.bank.getAccounts().values().iterator();
         while (itr.hasNext()){
             Account current = itr.next();
             total += current.getBalance();
@@ -39,36 +40,21 @@ public class Admin implements AdminAPI {
 
     @Override
     public void freezeAccount(String acctId) throws IllegalArgumentException {
-        boolean accountFound = false;
-        Iterator<Account> itr = this.bank.accounts.iterator();
-        while (itr.hasNext()){
-            Account current = itr.next();
-            if (current.getID()== acctId){
-                accountFound = true;
-                current.setFrozen(true);
-            }
-        }
-        if (accountFound == false){
-            throw new IllegalArgumentException("String not in collection");
-        }
-
+        setAcctFreezeStatus(acctId,true);
     }
 
     @Override
     public void unfreezeAcct(String acctId) throws IllegalArgumentException {
-        boolean accountFound = false;
-        Iterator<Account> itr = this.bank.accounts.iterator();
-        while (itr.hasNext()){
-            Account current = itr.next();
-            if (current.getID()== acctId){
-                accountFound = true;
-                current.setFrozen(false);
-            }
-        }
-        if (accountFound == false){
+        setAcctFreezeStatus(acctId,false);
+    }
+
+    public void setAcctFreezeStatus(String acctId, boolean isFrozen) {
+        boolean accountFound = (bank.getAccounts().containsKey(acctId));
+        if(accountFound) {
+            bank.getAccounts().get(acctId).setFrozen(isFrozen);
+        } else {
             throw new IllegalArgumentException("String not in collection");
         }
-
     }
 
     public CentralBank getBank(){

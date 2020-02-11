@@ -2,17 +2,19 @@ package edu.ithaca.dragon.bank;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CentralBank {
 
-    Collection<ATM> atms;
-    Collection<Account> accounts;
-    Collection<Admin> admins;
-    Collection<User> users;
+    private Collection<ATM> atms;
+    private Map<String, Account> accounts;
+    private Collection<Admin> admins;
+    private Collection<User> users;
 
     public CentralBank(){
         atms = new ArrayList<ATM>();
-        accounts = new ArrayList<Account>();
+        accounts = new HashMap<String, Account>();
         admins = new ArrayList<Admin>();
         users = new ArrayList<User>();
     }
@@ -40,6 +42,14 @@ public class CentralBank {
 
     public String getHistory(Account account) {
         return account.getHistory();
+    }
+
+    public void setAccounts(Map<String, Account> newAccounts) {
+        accounts = newAccounts;
+    }
+
+    public Map<String, Account> getAccounts() {
+        return accounts;
     }
 
 }
