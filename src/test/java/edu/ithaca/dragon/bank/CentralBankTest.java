@@ -2,6 +2,11 @@ package edu.ithaca.dragon.bank;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Map;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CentralBankTest {
@@ -31,7 +36,7 @@ public class CentralBankTest {
     }
 
     @Test
-    void withdrawTest()throws InsufficientFundsException, IllegalArgumentException, ExceedsMaxWithdrawalException,
+    void withdrawTest() throws InsufficientFundsException, IllegalArgumentException, ExceedsMaxWithdrawalException,
             AccountAlreadyExistsException, AccountDoesNotExistException, AccountFrozenException {
         CentralBank newAccount = new CentralBank();
         String newAccountID = "email@test.com";
@@ -51,25 +56,25 @@ public class CentralBankTest {
         //Withdraw equals or less than is in account
         newAccount.withdraw("email@test.com", 1);
         assertEquals(199, newAccount.checkBalance("email@test.com")); //border case
-        newAccount.withdraw("email@test.com",100);
+        newAccount.withdraw("email@test.com", 100);
         assertEquals(99, newAccount.checkBalance("email@test.com"));
-        newAccount.withdraw("email@test.com",99);
+        newAccount.withdraw("email@test.com", 99);
         assertEquals(0, newAccount.checkBalance("email@test.com")); //border case
 
         // Negative, One to Two Decimals
-        assertThrows(IllegalArgumentException.class, () -> newAccount.withdraw("email@test.com",-1.01)); // border case
-        assertThrows(IllegalArgumentException.class, () -> newAccount.withdraw("email@test.com",-53.83));
-        assertThrows(IllegalArgumentException.class, () -> newAccount.withdraw("email@test.com",-9999999.9)); // border case
+        assertThrows(IllegalArgumentException.class, () -> newAccount.withdraw("email@test.com", -1.01)); // border case
+        assertThrows(IllegalArgumentException.class, () -> newAccount.withdraw("email@test.com", -53.83));
+        assertThrows(IllegalArgumentException.class, () -> newAccount.withdraw("email@test.com", -9999999.9)); // border case
 
         // Negative, Multiple Decimals
-        assertThrows(IllegalArgumentException.class, () -> newAccount.withdraw("email@test.com",-1.0000001)); // border case
-        assertThrows(IllegalArgumentException.class, () -> newAccount.withdraw("email@test.com",-7.48));
-        assertThrows(IllegalArgumentException.class, () -> newAccount.withdraw("email@test.com",-9999999.9999999)); // border case
+        assertThrows(IllegalArgumentException.class, () -> newAccount.withdraw("email@test.com", -1.0000001)); // border case
+        assertThrows(IllegalArgumentException.class, () -> newAccount.withdraw("email@test.com", -7.48));
+        assertThrows(IllegalArgumentException.class, () -> newAccount.withdraw("email@test.com", -9999999.9999999)); // border case
 
         // Positive, Multiple Decimals
-        assertThrows(IllegalArgumentException.class, () -> newAccount.withdraw("email@test.com",0.000001)); // border case
-        assertThrows(IllegalArgumentException.class, () -> newAccount.withdraw("email@test.com",92.498865));
-        assertThrows(IllegalArgumentException.class, () -> newAccount.withdraw("email@test.com",9999999.999999)); //border case
+        assertThrows(IllegalArgumentException.class, () -> newAccount.withdraw("email@test.com", 0.000001)); // border case
+        assertThrows(IllegalArgumentException.class, () -> newAccount.withdraw("email@test.com", 92.498865));
+        assertThrows(IllegalArgumentException.class, () -> newAccount.withdraw("email@test.com", 9999999.999999)); //border case
     }
 
     @Test
@@ -79,27 +84,27 @@ public class CentralBankTest {
         newAccount.createAccount(newAccountID, "password", 200, false, false);
 
         // Negative, One to Two Decimals
-        assertThrows(IllegalArgumentException.class, () -> newAccount.deposit("email@test.com",-1.01)); // border case
-        assertThrows(IllegalArgumentException.class, () -> newAccount.deposit("email@test.com",-53.83));
-        assertThrows(IllegalArgumentException.class, () -> newAccount.deposit("email@test.com",-9999999.9)); // border case
+        assertThrows(IllegalArgumentException.class, () -> newAccount.deposit("email@test.com", -1.01)); // border case
+        assertThrows(IllegalArgumentException.class, () -> newAccount.deposit("email@test.com", -53.83));
+        assertThrows(IllegalArgumentException.class, () -> newAccount.deposit("email@test.com", -9999999.9)); // border case
 
         // Positive, One to Two Decimals
-        newAccount.deposit("email@test.com",0);
+        newAccount.deposit("email@test.com", 0);
         assertEquals(200, newAccount.checkBalance("email@test.com")); //border case
-        newAccount.deposit("email@test.com",100);
+        newAccount.deposit("email@test.com", 100);
         assertEquals(300, newAccount.checkBalance("email@test.com"));
-        newAccount.deposit("email@test.com",999);
+        newAccount.deposit("email@test.com", 999);
         assertEquals(1299, newAccount.checkBalance("email@test.com")); //border case
 
         // Negative, Multiple Decimals
-        assertThrows(IllegalArgumentException.class, () -> newAccount.deposit("email@test.com",-1.0000001)); // border case
-        assertThrows(IllegalArgumentException.class, () -> newAccount.deposit("email@test.com",-7.48));
-        assertThrows(IllegalArgumentException.class, () -> newAccount.deposit("email@test.com",-9999999.9999999)); // border case
+        assertThrows(IllegalArgumentException.class, () -> newAccount.deposit("email@test.com", -1.0000001)); // border case
+        assertThrows(IllegalArgumentException.class, () -> newAccount.deposit("email@test.com", -7.48));
+        assertThrows(IllegalArgumentException.class, () -> newAccount.deposit("email@test.com", -9999999.9999999)); // border case
 
         // Positive, Multiple Decimals
-        assertThrows(IllegalArgumentException.class, () -> newAccount.deposit("email@test.com",0.000001)); // border case
-        assertThrows(IllegalArgumentException.class, () -> newAccount.deposit("email@test.com",92.498865));
-        assertThrows(IllegalArgumentException.class, () -> newAccount.deposit("email@test.com",9999999.999999)); //border case
+        assertThrows(IllegalArgumentException.class, () -> newAccount.deposit("email@test.com", 0.000001)); // border case
+        assertThrows(IllegalArgumentException.class, () -> newAccount.deposit("email@test.com", 92.498865));
+        assertThrows(IllegalArgumentException.class, () -> newAccount.deposit("email@test.com", 9999999.999999)); //border case
     }
 
     @Test
@@ -139,7 +144,7 @@ public class CentralBankTest {
         assertThrows(IllegalArgumentException.class, () -> account.transfer(accountAID, accountBID, 92.498865));
         assertThrows(IllegalArgumentException.class, () -> account.transfer(accountAID, accountBID, 9999999.999999)); //border case
     }
-    
+
     @Test
     void checkBalanceTest() throws AccountDoesNotExistException, AccountAlreadyExistsException {
 
@@ -173,7 +178,7 @@ public class CentralBankTest {
     }
 
     @Test
-    void accountExistsTest() throws AccountAlreadyExistsException, IllegalArgumentException{
+    void accountExistsTest() throws AccountAlreadyExistsException, IllegalArgumentException {
         CentralBank bank = new CentralBank();
         bank.createAccount("yes@yes.com", "password", 0, false, false);
         assertTrue(bank.accountExists("yes@yes.com"));
@@ -209,24 +214,24 @@ public class CentralBankTest {
 
         //account not created
         //invalid id/email
-        assertThrows(IllegalArgumentException.class, ()-> bank.createAccount("#bad", "password", 100, false, false));
-        assertThrows(IllegalArgumentException.class, ()-> bank.createAccount("bad..email@bad-.com", "password", 100, false, false));
-        assertThrows(IllegalArgumentException.class, ()-> bank.createAccount("bad@bad.c", "password", 100, false, false));
+        assertThrows(IllegalArgumentException.class, () -> bank.createAccount("#bad", "password", 100, false, false));
+        assertThrows(IllegalArgumentException.class, () -> bank.createAccount("bad..email@bad-.com", "password", 100, false, false));
+        assertThrows(IllegalArgumentException.class, () -> bank.createAccount("bad@bad.c", "password", 100, false, false));
 
         //id already exists
-        assertThrows(AccountAlreadyExistsException.class, ()-> bank.createAccount(id1, "password", 100, false, false));
-        assertThrows(AccountAlreadyExistsException.class, ()-> bank.createAccount(id2, "password", 100, false, false));
-        assertThrows(AccountAlreadyExistsException.class, ()-> bank.createAccount(id3, "password", 100, false, false));
+        assertThrows(AccountAlreadyExistsException.class, () -> bank.createAccount(id1, "password", 100, false, false));
+        assertThrows(AccountAlreadyExistsException.class, () -> bank.createAccount(id2, "password", 100, false, false));
+        assertThrows(AccountAlreadyExistsException.class, () -> bank.createAccount(id3, "password", 100, false, false));
 
         //invalid start balance
-        assertThrows(IllegalArgumentException.class, ()-> bank.createAccount("c@d.com", "password", -0.01, false, false));
-        assertThrows(IllegalArgumentException.class, ()-> bank.createAccount("d@e.com", "password", 100.999, false, false));
-        assertThrows(IllegalArgumentException.class, ()-> bank.createAccount("e@f.com", "password", -5.055, false, false));
+        assertThrows(IllegalArgumentException.class, () -> bank.createAccount("c@d.com", "password", -0.01, false, false));
+        assertThrows(IllegalArgumentException.class, () -> bank.createAccount("d@e.com", "password", 100.999, false, false));
+        assertThrows(IllegalArgumentException.class, () -> bank.createAccount("e@f.com", "password", -5.055, false, false));
 
         //invalid id and start balance
-        assertThrows(AccountAlreadyExistsException.class, ()-> bank.createAccount(id1, "password", -0.01, false, false));
-        assertThrows(AccountAlreadyExistsException.class, ()-> bank.createAccount(id2, "password", 100.999, false, false));
-        assertThrows(AccountAlreadyExistsException.class, ()-> bank.createAccount(id3, "password", -5.055, false, false));
+        assertThrows(AccountAlreadyExistsException.class, () -> bank.createAccount(id1, "password", -0.01, false, false));
+        assertThrows(AccountAlreadyExistsException.class, () -> bank.createAccount(id2, "password", 100.999, false, false));
+        assertThrows(AccountAlreadyExistsException.class, () -> bank.createAccount(id3, "password", -5.055, false, false));
 
     }
 
@@ -242,13 +247,13 @@ public class CentralBankTest {
         bank.createAccount("d@e.com", "password", 0, false, false);
 
         //class - account does not exist
-        assertThrows(AccountDoesNotExistException.class, ()-> bank.closeAccount("e@f.com"));
-        assertThrows(AccountDoesNotExistException.class, ()-> bank.closeAccount("acctId"));
-        assertThrows(AccountDoesNotExistException.class, ()-> bank.closeAccount(""));
+        assertThrows(AccountDoesNotExistException.class, () -> bank.closeAccount("e@f.com"));
+        assertThrows(AccountDoesNotExistException.class, () -> bank.closeAccount("acctId"));
+        assertThrows(AccountDoesNotExistException.class, () -> bank.closeAccount(""));
 
         //class - account exists and has money
-        assertThrows(BalanceRemainingException.class, ()-> bank.closeAccount("a@b.com"));
-        assertThrows(BalanceRemainingException.class, ()-> bank.closeAccount("c@d.com"));
+        assertThrows(BalanceRemainingException.class, () -> bank.closeAccount("a@b.com"));
+        assertThrows(BalanceRemainingException.class, () -> bank.closeAccount("c@d.com"));
 
         //class - account exists and does not have money
         bank.withdraw("a@b.com", bank.checkBalance("a@b.com"));
@@ -259,7 +264,7 @@ public class CentralBankTest {
         assertTrue(bank.accountExists("d@e.com"));
 
         //class - removed account (does not exist)
-        assertThrows(AccountDoesNotExistException.class, ()-> bank.closeAccount("a@b.com"));
+        assertThrows(AccountDoesNotExistException.class, () -> bank.closeAccount("a@b.com"));
 
 
         //just another test
@@ -269,7 +274,7 @@ public class CentralBankTest {
         assertTrue(bank.accountExists("b@c.com"));
         assertFalse(bank.accountExists("c@d.com"));
         assertTrue(bank.accountExists("d@e.com"));
-        assertThrows(AccountDoesNotExistException.class, ()-> bank.closeAccount("c@d.com"));
+        assertThrows(AccountDoesNotExistException.class, () -> bank.closeAccount("c@d.com"));
 
     }
 
@@ -306,7 +311,7 @@ public class CentralBankTest {
 
         //equivalence class - bank has no accounts
         CentralBank bank2 = new CentralBank();
-        assertThrows(AccountDoesNotExistException.class, ()-> bank2.calcTotalAssets());
+        assertThrows(AccountDoesNotExistException.class, () -> bank2.calcTotalAssets());
 
     }
 
@@ -317,7 +322,7 @@ public class CentralBankTest {
         test.createAccount(testID, "password", 200, false, false);
         assertTrue(test.confirmCredentials("test@email.com", "password"));
 
-        test.deposit(testID,45);
+        test.deposit(testID, 45);
         assertEquals(245, test.checkBalance(testID));
         test.withdraw(testID, 25);
         assertEquals(220, test.checkBalance(testID));
@@ -340,5 +345,49 @@ public class CentralBankTest {
     }
 
 
+    @Test
+    void veraSystemTest() throws AccountAlreadyExistsException, AccountDoesNotExistException, BalanceRemainingException, InsufficientFundsException, ExceedsMaxWithdrawalException {
+        CentralBank test = new CentralBank();
+        String testID = "test@email.com";
+        test.createAccount(testID, "password", 200, false, false);
+        String test2ID = "test2@email.com";
+        test.createAccount(test2ID, "password2", 400, true, false);
+        String test3ID = "test3@email.com";
+        test.createAccount(test3ID, "password3", 0, false, true);
 
+        assertTrue(test.accountExists(testID));
+        assertFalse(test.accountExists("nope@no.com"));
+
+        assertTrue(test.confirmCredentials(testID, "password"));
+
+        assertFalse(test.isFrozen(testID));
+
+        assertFalse(test.isFrozen(test2ID));
+        test.freezeAccount(test2ID);
+        assertTrue(test.isFrozen(test2ID));
+
+        assertTrue(test.isFrozen(test2ID));
+        test.unfreezeAcct(test2ID);
+        assertFalse(test.isFrozen(test2ID));
+
+        assertTrue(test.accountExists(test3ID));
+        test.closeAccount(test3ID);
+        assertFalse(test.accountExists(test3ID));
+
+        assertEquals(200, test.checkBalance(testID));
+        assertEquals(400, test.checkBalance(test2ID));
+
+        test.deposit(testID, 45);
+        assertEquals(245, test.checkBalance(testID));
+        test.withdraw(testID, 25);
+        assertEquals(220, test.checkBalance(testID));
+
+        test.transfer(testID, test2ID, 100);
+        assertEquals(120, test.checkBalance(testID));
+        assertEquals(500, test.checkBalance(test2ID));
+
+        assertEquals(620, test.calcTotalAssets());
+
+        assertEquals("d,w,t", test.transactionHistory(testID));
+    }
 }
