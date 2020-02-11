@@ -77,8 +77,19 @@ public class CentralBankTest {
 
         assertThrows(InsufficientFundsException.class, ()-> cb.transfer("prav15@cornell.edu", "ppatel@ithaca.edu",700));
         assertThrows(InsufficientFundsException.class, ()-> cb.transfer("ppatel@ithaca.edu", "prav15@cornell.edu",500));
+    }
 
+    @Test
+    void removeAccountTest(){
+        CentralBank cb = new CentralBank();
+        cb.createAccount("ppatel@ithaca.edu", 300, "PopTartK1NG");
+        cb.createAccount("mark.davis12@federal.gov", 1400, "PopTartsAreAmazing");
+        cb.createAccount("lolAntonioBrown@dramaqueen.cc", 1600, "Steelersarebetterwithoutyou");
+        cb.createAccount("ABshouldFIGHTLoganPaul@DaZn.com", 500, "ABizweak84");
+        cb.createAccount("ABisaWORSETO@nevergonnahappen.net", 30, "81isgreaterthan84");
 
+        cb.closeAccount("ABshouldFIGHTLoganPaul@DaZn.com");
+        assertTrue(cb.checkCustomerCollection("ABshouldFIGHTLoganPaul@DaZn.com"));
 
     }
 }

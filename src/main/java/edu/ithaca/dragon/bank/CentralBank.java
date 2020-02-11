@@ -141,8 +141,22 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
     }
 
     @Override
-    public void closeAccount(String acctId) {
+    public void closeAccount(String acctId) throws IllegalArgumentException {
+        if (customerCollection.containsKey(acctId)) {
+            BankAccount bankAccount = customerCollection.get(acctId);
+            customerCollection.remove(acctId);
+            bankAccount = null;
+        }
+        else{
+            throw new IllegalArgumentException(acctId+ " does not exist");
+        }
+    }
 
+    public boolean checkCustomerCollection(String acctId){
+        if (customerCollection.containsKey(acctId)){
+            return false;
+        }
+        return true;
     }
 
 
