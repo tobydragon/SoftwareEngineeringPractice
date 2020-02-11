@@ -62,7 +62,14 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
     }
 
     public void deposit(String acctId, double amount) {
-        //TODO
+        if (BankAccount.isAmountValid(amount)){
+            double balance = bankAccounts.get(acctId).getBalance();
+            balance += amount;
+            bankAccounts.get(acctId).setBalance(balance);
+        }
+        else{
+            throw new IllegalArgumentException("Invalid amount entry.");
+        }
     }
 
     public void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws InsufficientFundsException {
