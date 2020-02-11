@@ -8,6 +8,7 @@ public class BankAccount {
     private double balance;
     private boolean frozen = false;
     private ArrayList<Double> transactionHistory = new ArrayList<Double>();
+    //.
 
     /**
      * @post creates a bank account object
