@@ -1,0 +1,202 @@
+body{
+    background-color: #170312;
+    text-align: center;
+    align-items: center;
+}
+
+.slider-system > .feedback-ticket{
+    position: absolute; 
+    background-color: antiquewhite;
+    top: 33.5%;
+    left: 38%;
+    min-width: 450px;
+    min-height: 60px;
+    max-width: 450px;
+    max-height: 60px;
+    background-color: #531253;
+    border-color: #531253;
+    border-right: #3d0e3d;
+    border-bottom: #3d0e3d;
+    border-width: 5px;
+    border-style: solid;
+    border-radius: 5%;
+    box-shadow: #33032fbf 2px 2px 2px 2px;
+}
+
+.feedback-ticket > .ticket-val{
+    font-family: sans-serif;
+    font-size: 45px;
+    text-align: left;
+    padding-left: 15px;
+    vertical-align: bottom;
+    float: left;
+    background-color: #531253;
+    color: #8ac5a2;
+}
+
+.control-panel{
+    top: 40%;
+    left: 37%;
+    margin: auto;
+    display: flex;
+    position: absolute; 
+    min-width: 450px;
+    min-height: 150px;
+    max-width: 450px;
+    max-height: 150px;
+    background-color: #531253;
+    border-color: #531253;
+    border-right: #3d0e3d;
+    border-bottom: #3d0e3d;
+    border-width: 15px;
+    border-style: solid;
+    border-radius: 5%;
+    box-shadow: #33032fbf 3px 3px 3px 3px;
+}
+
+.slider{
+    margin: auto;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    min-width: 300px;
+    min-height: 30px;
+    max-width: 300px;
+    max-height: 30px;
+    background-color: #3d0e3d;
+    box-shadow: #33032fbf 6px 6px 3px 3px inset;
+}
+
+.dial{
+    display: flex;
+    position: absolute;
+    display: inline-block;
+    text-align: center;
+    font-size: 50px;
+    vertical-align: bottom;
+    min-width: 75px;
+    min-height: 75px;
+    max-width: 105px;
+    max-height: 105px;
+    background-color: #97d8b2;
+    color: #8ac5a2;
+    border-top-color:#97d8b2;
+    border-left-color:#97d8b2;
+    border-right: #8ac5a2;
+    border-bottom: #8ac5a2;
+    border-width: 15px;
+    border-style: solid;
+    box-shadow: #33032fbf 6px 6px 6px 6px;
+    border-radius: 15%;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -khtml-user-select: none; 
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+}
+
+.dial:hover{
+    background-color: #8ac5a2;
+    color: #6e9e82;
+    border-top-color:#8ac5a2;
+    border-left-color:#8ac5a2;
+    border-right: #6e9e82;
+    border-bottom: #6e9e82;
+    border-width: 15px;
+    border-style: solid;
+    cursor: pointer;
+    box-shadow: #33032fbf 3px 3px 6px 6px;
+}
+
+.dial:active{
+    background-color: #6e9e82;
+    color: #537662;
+    border-top-color:#6e9e82;
+    border-left-color:#6e9e82;
+    border-right: #537662;
+    border-bottom: #537662;
+    border-width: 15px;
+    border-style: solid;
+    cursor: pointer;
+    box-shadow: #33032fbf 3px 3px 3px 3px;
+}
+
+.lock-status-panel{
+    position: absolute; 
+    background-color: antiquewhite;
+    top: 58%;
+    left: 38%;
+    min-width: 450px;
+    min-height: 35px;
+    max-width: 450px;
+    max-height: 35px;
+    background-color: #531253;
+    border-color: #531253;
+    border-right: #3d0e3d;
+    border-bottom: #3d0e3d;
+    border-width: 5px;
+    border-style: solid;
+    border-radius: 5%;
+    box-shadow: #33032fbf 2px 2px 2px 2px;
+}
+
+.lock-status-light{
+    background-color: gray;
+    min-width: 15px;
+    min-height: 15px;
+    max-width: 15px;
+    max-height: 15px;
+    float: left;
+    margin: 10px;
+}
+
+.submit-button{
+    background-color: #97d8b2;
+    min-width: 75px;
+    min-height: 35px;
+    max-width: 75px;
+    max-height: 35px;
+    float: right;
+    margin: 5px;
+    margin-right: 10px;
+    color: #8ac5a2;
+    border-top-color:#97d8b2;
+    border-left-color:#97d8b2;
+    border-right: #8ac5a2;
+    border-bottom: #8ac5a2;
+    border-width: 5px;
+    border-style: solid;
+    border-radius: 5%;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -khtml-user-select: none; 
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+}
+
+.submit-button:hover{
+    background-color: #8ac5a2;
+    color: #6e9e82;
+    border-top-color:#8ac5a2;
+    border-left-color:#8ac5a2;
+    border-right: #6e9e82;
+    border-bottom: #6e9e82;
+    border-width: 5px;
+    border-style: solid;
+    border-radius: 5%;
+    cursor: pointer;
+}
+
+.submit-button:active{
+    background-color: #6e9e82;
+    color: #537662;
+    border-top-color:#6e9e82;
+    border-left-color:#6e9e82;
+    border-right: #537662;
+    border-bottom: #537662;
+    border-width: 5px;
+    border-style: solid;
+    border-radius: 5%;
+    cursor: pointer;
+}
+
