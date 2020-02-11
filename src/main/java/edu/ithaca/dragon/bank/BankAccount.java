@@ -46,9 +46,15 @@ public abstract class BankAccount {
         return password;
     }
 
-    public void freeze() {frozen = true;}
-    public void unfreeze() {frozen = false;}
-    public boolean isFrozen() {return frozen;}
+    public void freeze() {
+        frozen = true;
+    }
+    public void unfreeze() {
+        frozen = false;
+    }
+    public boolean isFrozen() {
+        return frozen;
+    }
 
     /**
      * @post reduces the balance by amount if amount is non-negative and smaller than balance

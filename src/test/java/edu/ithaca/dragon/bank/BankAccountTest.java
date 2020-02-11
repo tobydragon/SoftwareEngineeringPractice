@@ -129,7 +129,7 @@ class BankAccountTest {
         bankAccount7.deposit(23.93);
         assertEquals(489.86, bankAccount7.getBalance());
 
-        BankAccount bankAccount8 = new CheckingAccount("a@b.com", "password", 400); //equivalence case with multiple low decimal value deposits
+        BankAccount bankAccount8 = new CheckingAccount("a@b.com", "password", 400, false); //equivalence case with multiple low decimal value deposits
         bankAccount8.deposit(16.75);
         assertEquals(416.75, bankAccount8.getBalance());
         bankAccount8.deposit(3.40);
@@ -139,21 +139,21 @@ class BankAccountTest {
     @Test
     void transferTest() throws InsufficientFundsException, ExceedsMaxWithdrawalException {
         //equivalence case with basic balances of 200 and 500 with 50 dollar transfer
-        BankAccount bankAccount = new CheckingAccount("a@b.com", "password", 200);
-        BankAccount bankAccount2 = new CheckingAccount("a@b.com", "password", 500);
+        BankAccount bankAccount = new CheckingAccount("a@b.com", "password", 200, false);
+        BankAccount bankAccount2 = new CheckingAccount("a@b.com", "password", 500, false);
         BankAccount.transfer(bankAccount, bankAccount2, 50.00);
         assertEquals(250, bankAccount.getBalance());
         assertEquals(450, bankAccount2.getBalance());
 
         //equivalence case with 2nd account is less than amount wanted to transfer, so nothing gets transferred
-        BankAccount bankAccount7 = new CheckingAccount("a@b.com", "password", 549.34);
-        BankAccount bankAccount8 = new CheckingAccount("a@b.com", "password", 47);
+        BankAccount bankAccount7 = new CheckingAccount("a@b.com", "password", 549.34, false);
+        BankAccount bankAccount8 = new CheckingAccount("a@b.com", "password", 47, false);
         assertThrows(InsufficientFundsException.class, ()-> BankAccount.transfer(bankAccount7, bankAccount8, 48.54));
     }
 
     @Test
     void constructorTest() {
-        BankAccount bankAccount = new CheckingAccount("a@b.com", "password", 200);
+        BankAccount bankAccount = new CheckingAccount("a@b.com", "password", 200, false);
 
         assertEquals("a@b.com", bankAccount.getEmail());
         assertEquals(200, bankAccount.getBalance());
