@@ -19,7 +19,7 @@ public class ATMTest {
         mybank.users.add(christian);
         ATM atm = new ATM(mybank);
 
-        //correct credentials
+        //correct credentialss
         assertEquals(true,atm.confirmCredentials("christian","martano"));
 
         //incorrect credetials
