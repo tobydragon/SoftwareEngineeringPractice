@@ -163,7 +163,7 @@ public class BankAccount {
         bankAccountFrozenCheck();
 
         if (isAmountValid(amount) && amount < this.balance){
-            history.add("Transfer: " + amount + "To" + bankAccounta.getAcctId());
+            history.add("Transfer: " + amount + " to " + bankAccounta.getAcctId());
             this.withdraw(amount);
             bankAccounta.balance = bankAccounta.balance + amount;
         }else{

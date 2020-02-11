@@ -180,7 +180,8 @@ import static org.junit.jupiter.api.Assertions.*;
          c1.withdraw("b123",10);
          c1.deposit("b123",100);
          c1.checkBalance("b123");
-         assertEquals("Withdraw: 10.0\nDeposit: 100.0\nCheck balance: 290.0",c1.transactionHistory("b123"));
+         c1.transfer("b123","c321",11);
+         assertEquals("Withdraw: 10.0\nDeposit: 100.0\nCheck balance: 290.0\nTransfer: 11.0 to c321\nWithdraw: 11.0",c1.transactionHistory("b123"));
 
 
      }
