@@ -41,7 +41,15 @@ public class CustomerCollection {
 
     public void closeAccount(String actID){}
 
-    public void closeCustomer(String actID){}
+    public void closeCustomer(String actID) throws IllegalArgumentException{
+        for(int x = 0; x < customers.size(); x++){
+            if(customers.get(x).getId()==actID){
+                customers.remove(x);
+                return;
+            }
+        }
+        throw new IllegalArgumentException("No Such Account");
+    }
 
     public int getNumCustomers(){
         return customers.size();

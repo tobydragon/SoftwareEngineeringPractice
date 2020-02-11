@@ -53,6 +53,6 @@ public class CustomerCollectionTest {
         assertEquals(2, c1.getNumCustomers());
         c1.closeCustomer("bob");
         assertEquals(1, c1.getNumCustomers());
-        assertThrows(IllegalArgumentException.class, ()-> c1.closeAccount("bbb"));
+        assertThrows(IllegalArgumentException.class, ()-> c1.closeCustomer("bbb"));
     }
 }
