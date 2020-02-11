@@ -129,6 +129,7 @@ public class CheckingTest {
         assertThrows(InsufficientFundsException.class, () -> finalCheckingAcctA.transfer("1234567890", "0987654321", 101));
     }*/
 
+    //Integration test
     @Test
     void transactionHistoryTest() throws InsufficientFundsException, AcctFrozenException{
         //check deposit
