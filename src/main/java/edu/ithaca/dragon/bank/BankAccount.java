@@ -4,16 +4,42 @@ import java.util.regex.Pattern;
 
 public class BankAccount {
 
-    private String email;
-    private double balance;
+    protected String acctId;
+    protected String email;
+    protected double balance;
+    protected String type;
 
     /**
+     * @param email same as user email
+     * @param startingBalance starting balance in account
      * @throws IllegalArgumentException if email is invalid
      */
     public BankAccount(String email, double startingBalance){
         if (isEmailValid(email) && isAmountValid(startingBalance)){
             this.email = email;
             this.balance = startingBalance;
+            this.acctId = "testAccount";
+        }
+        else if(!isEmailValid(email)) {
+            throw new IllegalArgumentException("Email address: " + email + " is invalid, cannot create account");
+        }
+        else if(!isAmountValid(startingBalance)){
+            throw new IllegalArgumentException("Starting balance: " + startingBalance + " is invalid, cannot create account");
+        }
+    }
+
+    /**
+     * Constructor with acctId
+     * @param email same as user email
+     * @param startingBalance starting balance in account
+     * @param acctId Associated account ID
+     * @throws IllegalArgumentException if email is invalid
+     */
+    public BankAccount(String email, double startingBalance, String acctId){
+        if (isEmailValid(email) && isAmountValid(startingBalance)){
+            this.email = email;
+            this.balance = startingBalance;
+            this.acctId = acctId;
         }
         else if(!isEmailValid(email)) {
             throw new IllegalArgumentException("Email address: " + email + " is invalid, cannot create account");

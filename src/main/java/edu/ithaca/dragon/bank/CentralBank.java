@@ -1,8 +1,37 @@
 package edu.ithaca.dragon.bank;
 
+import java.security.PublicKey;
 import java.util.Collection;
 
-public abstract class CentralBank implements AdvancedAPI, AdminAPI {
+public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
+
+    private User[] users;
+    private BankAccount[] accounts;
+    private double netWorth;
+    private int time;
+    private String adminPassoword;
+    private String[] allHistory;
+    private String[] atmHistory;
+    private String[] tellerHistory;
+    private String[] adminHistory;
+    private int numAccounts;
+
+    public CentralBank() {
+
+        int defaultArraySize = 10; //this may change
+
+        users = new User[defaultArraySize];
+        accounts = new BankAccount[defaultArraySize];
+        adminPassoword = "NotRobert";
+        allHistory = new String[defaultArraySize];
+        atmHistory = new String[defaultArraySize];
+        tellerHistory = new String[defaultArraySize];
+        adminHistory = new String[defaultArraySize];
+
+        numAccounts = 0;
+        time = 0;
+        netWorth = 0;
+    }
 
     //----------------- edu.ithaca.dragon.bank.BasicAPI methods -------------------------//
 
@@ -10,16 +39,36 @@ public abstract class CentralBank implements AdvancedAPI, AdminAPI {
         return false;
     }
 
+    /**
+     * Checks an accounts balance
+     * @param acctId Account Identifier
+     * @return current account balance
+     */
     public double checkBalance(String acctId) {
-        return 0;
+        for (int i = 0; i < numAccounts; i++){
+            if(accounts[i].acctId == acctId){
+                return accounts[i].getBalance();
+            }
+        }
+        throw new IllegalArgumentException("Account not found");
     }
 
     public void withdraw(String acctId, double amount) throws InsufficientFundsException {
 
     }
 
+    /**
+     * Deposits money to an account
+     * @param acctId Account Identifier
+     * @param amount Amount to be deposited
+     */
     public void deposit(String acctId, double amount) {
-
+        for (int i = 0; i < numAccounts; i++){
+            if(accounts[i].acctId == acctId){
+                accounts[i].deposit(amount);
+            }
+        }
+        throw new IllegalArgumentException("Account not found");
     }
 
     public void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws InsufficientFundsException {
@@ -30,10 +79,40 @@ public abstract class CentralBank implements AdvancedAPI, AdminAPI {
         return null;
     }
 
+    public String getAccountId(String email, String accountType){
+        for (int i = 0; i < numAccounts; i++){
+            if(accounts[i].getEmail() == email && accounts[i].type == accountType){
+                return accounts[i].acctId;
+            }
+        }
+        throw new IllegalArgumentException("Account not found");
+    }
+
 
     //----------------- edu.ithaca.dragon.bank.AdvancedAPI methods -------------------------//
 
-    public void createAccount(String acctId, double startingBalance) {
+    /**
+     * Creates an acct of type defined, adds acct to acct list, updates num accts
+     * @param email email associated with acct
+     * @param startingBalance starting balance
+     * @param acctType type of account
+     */
+    public void createAccount(String email, double startingBalance, String acctType) {
+        String id = (this.numAccounts + 1) + acctType.substring(0,1);
+        if (acctType.equals("Checking")){
+            CheckingAccount account = new CheckingAccount(email, startingBalance, id);
+            accounts[numAccounts] = account;
+            numAccounts++;
+
+        }
+        else if(acctType.equals("Savings")){
+            SavingsAccount account = new SavingsAccount(email, startingBalance, id);
+            accounts[numAccounts] = account;
+            numAccounts++;
+        }
+        else{
+            throw new IllegalArgumentException("AcctType must be either Savings or Checking");
+        }
 
     }
 
@@ -44,7 +123,7 @@ public abstract class CentralBank implements AdvancedAPI, AdminAPI {
 
     //------------------ edu.ithaca.dragon.bank.AdminAPI methods -------------------------//
 
-    public double checkTotalAssets() {
+    public double calcTotalAssets() {
         return 0;
     }
 
@@ -60,4 +139,42 @@ public abstract class CentralBank implements AdvancedAPI, AdminAPI {
 
     }
 
+    //------------------ CentralBank Getters -------------------------//
+
+
+    public User[] getUsers() {
+        return users;
+    }
+
+    public BankAccount[] getAccounts() {
+        return accounts;
+    }
+
+    public double getNetWorth() {
+        return netWorth;
+    }
+
+    public int getTime() {
+        return time;
+    }
+
+    public String[] getAllHistory() {
+        return allHistory;
+    }
+
+    public String[] getAtmHistory() {
+        return atmHistory;
+    }
+
+    public String[] getTellerHistory() {
+        return tellerHistory;
+    }
+
+    public String[] getAdminHistory() {
+        return adminHistory;
+    }
+
+    public int getNumAccounts() {
+        return numAccounts;
+    }
 }
