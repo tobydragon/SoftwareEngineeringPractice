@@ -24,6 +24,13 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
 
     //----------------- BasicAPI methods -------------------------//
 
+    /**
+     *
+     * @param acctId
+     * @param password
+     * @return if password is valid
+     * @throws IllegalArgumentException if account ID does not exist
+     */
     public boolean confirmCredentials(String acctId, String password) {
         return false;
     }
@@ -114,7 +121,7 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
      * @param startingBalance
      * @throws IllegalArgumentException if ID already exists or balance isn't valid
      */
-    public void createAccount(String acctId, double startingBalance) throws IllegalArgumentException{
+    public void createAccount(String acctId, double startingBalance, String password) throws IllegalArgumentException{
         if (bankAccounts.containsKey(acctId)) {
             throw new IllegalArgumentException("Account ID already exists");
         } else if (frozenAccounts.containsKey(acctId)) {
@@ -124,7 +131,7 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
         } else if (acctId.equals("") || acctId.contains(" ")) {
             throw new IllegalArgumentException("Must enter an ID");
         } else {
-            BankAccount newAccount = new BankAccount(acctId,startingBalance);
+            BankAccount newAccount = new BankAccount(acctId,startingBalance, password);
             bankAccounts.put(acctId, newAccount);
         }
     }

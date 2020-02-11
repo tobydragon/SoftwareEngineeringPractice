@@ -5,17 +5,21 @@ public class BankAccount {
     private String id;
     private double balance;
     private String transHist;
+    private String password;
 
     /**
      * @throws IllegalArgumentException if email is invalid
      */
-    public BankAccount(String id, double startingBalance){
+    public BankAccount(String id, double startingBalance, String password){
         if (isAmountValid(startingBalance)){
             this.id = id;
             this.balance = startingBalance;
             this.transHist = "";
+            this.password = password;
         }
     }
+
+    public String getPassword() { return password; }
 
     public void newTransaction(String tran){
         transHist += tran;
