@@ -4,6 +4,7 @@ public class BankAccount {
 
     private String email;
     private double balance;
+    private int userID; //same userID data is used for UserAccounts
 
     /**
      * @post The constructor of the BankAccount class
@@ -11,13 +12,14 @@ public class BankAccount {
      * @param startingBalance a double denoting the amount of initial money in the account.
      * @throws IllegalArgumentException if email or starting balance is invalid
      */
-    public BankAccount(String email, double startingBalance) {
+    public BankAccount(String email, double startingBalance, int userID) {
         if(!isAmountValid(startingBalance)){
             throw new IllegalArgumentException("Starting balance: " + startingBalance + " is invalid, cannot create account");
         }
         if (isEmailValid(email)) {
             this.email = email;
             this.balance = startingBalance;
+            this.userID = userID;
         }else {
             throw new IllegalArgumentException("Email address: " + email + " is invalid, cannot create account");
         }
@@ -39,6 +41,21 @@ public class BankAccount {
      */
     public String getEmail() {
         return email;
+    }
+
+    /**
+     * @post A getter for the userID data member.
+     * @return an int denoting the userID associated with the current account.
+     */
+    public int getUserID(){ return userID; }
+
+    /**
+     * Only used when the associated UserAccount's userID is changed (shouldn't be changed from here)
+     * @post this account's userID is updated with new userID input param
+     * @param userID int //TODO decide on standardized userID length/format
+     */
+    public void updateUserID(int userID){
+        this.userID=userID;
     }
 
     /**

@@ -11,24 +11,24 @@ class BankAccountTest {
         /*
          * Checks for a bank account with a perfectly valid amount of money. Equivalence case.
          */
-        BankAccount bankAccount = new BankAccount("a@b.com", 200);
+        BankAccount bankAccount = new BankAccount("a@b.com", 200, 1234);
         assertEquals(200.00, bankAccount.getBalance());
         /*
          * Checks for bank account with no money at all. Border case.
          */
-        bankAccount = new BankAccount("a@b.com", 0);
+        bankAccount = new BankAccount("a@b.com", 0,1234);
         assertEquals(0, bankAccount.getBalance());
         /*
          * Checks for a bank account with negative amount of money. Equivalence case. No longer valid since
          * this test is covered by the constructor test.
          */
-        assertThrows(IllegalArgumentException.class, () -> new BankAccount("a@b.com", -200));
+        assertThrows(IllegalArgumentException.class, () -> new BankAccount("a@b.com", -200,1234));
         //assertEquals(0, bankAccount.getBalance());
     }
 
     @Test
     void withdrawTest() throws InsufficientFundsException{
-        BankAccount bankAccount = new BankAccount("a@b.com", 200);
+        BankAccount bankAccount = new BankAccount("a@b.com", 200,1234);
         /*
          * Check for proper withdrawal use. Equivalence test.
          */
@@ -145,7 +145,7 @@ class BankAccountTest {
 
     @Test
     void isAmountValidTest(){
-        BankAccount bankAccount = new BankAccount("a@b.com", 200);
+        BankAccount bankAccount = new BankAccount("a@b.com", 200,1234);
         /**
          * Equivalence test checking a valid positive mid-value.
          */
@@ -183,8 +183,8 @@ class BankAccountTest {
 
     @Test
     void transferTest() throws IllegalArgumentException, InsufficientFundsException{
-        BankAccount bankAccountA = new BankAccount("a@b.com", 200);
-        BankAccount bankAccountB = new BankAccount("a@b.com", 200);
+        BankAccount bankAccountA = new BankAccount("a@b.com", 200,1234);
+        BankAccount bankAccountB = new BankAccount("a@b.com", 200,1234);
 
         /**
          * Equivalence test for a valid positive mid-value.
@@ -246,7 +246,7 @@ class BankAccountTest {
 
     @Test
     void depositTest(){
-        BankAccount bankAccount = new BankAccount("a@b.com", 200);
+        BankAccount bankAccount = new BankAccount("a@b.com", 200,1234);
         bankAccount.deposit(100);
 
         /**
@@ -302,14 +302,60 @@ class BankAccountTest {
 
     @Test
     void constructorTest() {
-        BankAccount bankAccount = new BankAccount("a@b.com", 200);
+        BankAccount bankAccount = new BankAccount("a@b.com", 200,1234);
 
         assertEquals("a@b.com", bankAccount.getEmail());
         assertEquals(200, bankAccount.getBalance());
+        assertEquals(1234, bankAccount.getUserID());
         //check for exception thrown correctly
-        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", 100));
-        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("a@b.com", -100));
-        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("a@b.com", 100.123));
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", 100,1234));
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("a@b.com", -100,1234));
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("a@b.com", 100.123,1234));
+
+    }
+
+    @Test
+    void CentralBankTest() throws InsufficientFundsException {
+        CentralBank CentralBank1 = new CentralBank();
+        CentralBank CentralBank2 = new CentralBank();
+        CentralBank CentralBank3 = new CentralBank();
+        CentralBank1.createAccount("CB1",100);
+        CentralBank2.createAccount("CB2",0);
+        CentralBank3.createAccount("CB3",-100);
+      //CheckBalanceTest
+        //Testing the CheckBalance Method for a a standard return of a positive balance
+        assertEquals(100, CentralBank1.checkBalance("CB1"));
+        //Testing the CheckBalance Method for a a standard return of a 0 balance
+        assertEquals(0, CentralBank2.checkBalance("CB2"));
+
+        //AssertDepositTest
+
+        //Testing the deposit Method for a a standard return of a positive amount
+        CentralBank1.deposit("CB1",25);
+        assertEquals(125,CentralBank1.checkBalance("CB1"));
+
+        //Testing the Deposit Method for a a standard return of a IllegalArugumentExcept since a negative amount is not possible
+        assertThrows(IllegalArgumentException.class, ()-> CentralBank1.deposit("CB1",-25));
+        //Testing the Deposit Method for a a standard return of a IllegalArugumentExcept since an amount with more than 2 decimal points shouldn't be possible.
+        assertThrows(IllegalArgumentException.class, ()-> CentralBank1.deposit("CB1",25.503));
+
+        //Testing the Deposit Method for a return of the balance since it should be okay to deposit 0
+        CentralBank1.deposit("CB1",0);
+        assertEquals(125,CentralBank1.checkBalance("CB1"));
+
+
+
+        //AssertWithdrawTest
+        //Testing the withdraw Method for a a standard withdraw of a positive amount
+        CentralBank1.withdraw("CB1",25);
+        assertEquals(75,CentralBank1.checkBalance("CB1"));
+        //Testing the Withdraw Method for a a standard return of a IllegalArugumentExcept since a negative amount is not possible
+        assertThrows(IllegalArgumentException.class, ()-> CentralBank1.withdraw("CB1",-25));
+        //Testing the Withdraw Method for a a standard return of a IllegalArugumentExcept since an amount with more than 2 decimal points shouldn't be possible.
+        assertThrows(IllegalArgumentException.class, ()-> CentralBank1.withdraw("CB1",25.503));
+        //Testing the Withdraw Method for a return of the balance since it should be okay to withdraw 0
+        CentralBank1.withdraw("CB1",0);
+        assertEquals(75,CentralBank1.checkBalance("CB1"));
 
     }
 
