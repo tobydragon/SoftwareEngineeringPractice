@@ -8,7 +8,7 @@ public class Teller extends ATM implements AdvancedAPI {
         super(accounts, users);
     }
 
-    public void createAccount(String acctId, double startingBalance) {
+    public void createAccount(String acctId, double startingBalance, boolean savings) {
 
     }
 
