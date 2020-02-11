@@ -1,10 +1,13 @@
 package edu.ithaca.dragon.bank;
 
+import java.util.ArrayList;
+
 public class BankAccount {
 
     private String acctId;
     private double balance;
     private boolean frozen = false;
+    private ArrayList<Double> transactionHistory = new ArrayList<Double>();
 
     /**
      * @post creates a bank account object
@@ -74,7 +77,7 @@ public class BankAccount {
             balance -= amount;
         }
 
-
+        transactionHistory.add(-amount);
     }
 
 
@@ -94,6 +97,7 @@ public class BankAccount {
         else {
             balance += amount;
         }
+        transactionHistory.add(amount);
     }
 
 
