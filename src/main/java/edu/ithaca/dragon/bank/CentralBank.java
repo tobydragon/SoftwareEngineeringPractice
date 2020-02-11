@@ -70,7 +70,9 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
         if (BankAccount.isAmountValid(amount)){
             double balance = bankAccounts.get(acctId).getBalance();
             balance += amount;
-            bankAccounts.get(acctId).setBalance(balance);
+            BigDecimal bd = new BigDecimal(balance).setScale(2, RoundingMode.HALF_UP);
+            double roundedBalance = bd.doubleValue();
+            bankAccounts.get(acctId).setBalance(roundedBalance);
         }
         else{
             throw new IllegalArgumentException("Invalid amount entry.");
