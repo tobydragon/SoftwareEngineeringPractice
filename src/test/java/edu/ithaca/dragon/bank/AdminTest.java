@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -16,11 +18,11 @@ public class AdminTest {
     void constructorTest() {
         Admin admin = new Admin(null);
         assertEquals(null, admin.getBank());
-        Collection <Account> testCollection = new ArrayList<Account>();
-        testCollection.add(new CheckingAccount(50, "1234"));
-        testCollection.add(new CheckingAccount(100,"123"));
+        Map<String, Account> testCollection = new HashMap<>();
+        testCollection.put("1234", new CheckingAccount(50, "1234"));
+        testCollection.put("123", new CheckingAccount(100,"123"));
         CentralBank testBank = new CentralBank();
-        testBank.accounts = testCollection;
+        testBank.setAccounts(testCollection);
         admin = new Admin(testBank);
         assertEquals(testBank, admin.getBank());
 
@@ -30,11 +32,11 @@ public class AdminTest {
     void freezeAccountTest() {
         Account abcAcc = new CheckingAccount(500, "abc");
         Account xyzAcc = new CheckingAccount(500, "xyz");
-        Collection<Account>  collection = new ArrayList<Account>();
-        collection.add(abcAcc);
-        collection.add(xyzAcc);
+        Map<String, Account>  collection = new HashMap<>();
+        collection.put(abcAcc.getID(), abcAcc);
+        collection.put(xyzAcc.getID(), xyzAcc);
         CentralBank testBank = new CentralBank();
-        testBank.accounts = collection;
+        testBank.setAccounts(collection);
         Admin admin = new Admin(testBank);
         //Checking false frozen status after no change
         assertEquals(false, abcAcc.getFrozenStatus());
@@ -60,11 +62,11 @@ public class AdminTest {
     void unFreezeAccountTest() {
         Account abcAcc = new CheckingAccount(500, "abc");
         Account xyzAcc = new CheckingAccount(500, "xyz");
-        Collection<Account>  collection = new ArrayList<Account>();
-        collection.add(abcAcc);
-        collection.add(xyzAcc);
+        Map<String, Account>  collection = new HashMap<>();
+        collection.put(abcAcc.getID(), abcAcc);
+        collection.put(xyzAcc.getID(), xyzAcc);
         CentralBank testBank = new CentralBank();
-        testBank.accounts = collection;
+        testBank.setAccounts(collection);
         Admin admin = new Admin(testBank);
         //Checking true frozen status after change
         abcAcc.setFrozen(true);
@@ -95,14 +97,14 @@ public class AdminTest {
         //Checking with no accounts
         assertEquals(0, admin.calcTotalAssets());
         //Checking with one account
-        testBank.accounts.add(new CheckingAccount(100, "abc"));
+        testBank.getAccounts().put("abc", new CheckingAccount(100, "abc"));
         assertEquals(100, admin.calcTotalAssets());
         //Checking with multiple accounts
-        testBank.accounts.add(new CheckingAccount(50.65, "xyz"));
-        testBank.accounts.add(new CheckingAccount(156, "def"));
+        testBank.getAccounts().put("xyz", new CheckingAccount(50.65, "xyz"));
+        testBank.getAccounts().put("def",new CheckingAccount(156, "def"));
         assertEquals(306.65, admin.calcTotalAssets());
         //Check when there is an account with 0 assets
-        testBank.accounts.add(new CheckingAccount(0, "ghi"));
+        testBank.getAccounts().put("ghi", new CheckingAccount(0, "ghi"));
         assertEquals(306.65, admin.calcTotalAssets());
     }
 
@@ -111,11 +113,11 @@ public class AdminTest {
         //Meant to test that freeze/unfreeze can work in conjunction, as well as calcTotalAssets working with the Account methods
         Account abcAcc = new CheckingAccount(500, "abc");
         Account xyzAcc = new CheckingAccount(500, "xyz");
-        Collection<Account>  collection = new ArrayList<Account>();
-        collection.add(abcAcc);
-        collection.add(xyzAcc);
+        Map<String, Account>  collection = new HashMap<>();
+        collection.put(abcAcc.getID(), abcAcc);
+        collection.put(xyzAcc.getID(), xyzAcc);
         CentralBank testBank = new CentralBank();
-        testBank.accounts = collection;
+        testBank.setAccounts(collection);
         Admin admin = new Admin(testBank);
         assertEquals(1000, admin.calcTotalAssets());
         abcAcc.transfer(xyzAcc, 300);
