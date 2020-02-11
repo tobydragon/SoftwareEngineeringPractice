@@ -63,7 +63,13 @@ public class Checking implements Account {
     }
 
     public void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws InsufficientFundsException{
-
+        /*if(amount > balance){
+            throw new InsufficientFundsException("Amount cannot be greater than account balance");
+        }
+        else{
+            withdraw(acctIdToWithdrawFrom, amount);
+            deposit(acctIdToDepositTo, amount);
+        }*/
     }
 
     public String transactionHistory(String acctId){

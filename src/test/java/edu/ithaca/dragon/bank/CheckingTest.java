@@ -97,7 +97,7 @@ public class CheckingTest {
         assertThrows(IllegalArgumentException.class, ()-> finalCheckingAcct.withdraw("1234567890", 2.4422));
     }
 
-    @Test
+    /*@Test
     void transferTest() throws InsufficientFundsException{
         Checking checkingAcctA = new Checking("1234567890", "Jim Bean", "dogog", 100);
         Checking checkingAcctB = new Checking("0987654321", "John Bon", "froggs", 100);
@@ -127,6 +127,6 @@ public class CheckingTest {
 
         // check overdraw
         assertThrows(InsufficientFundsException.class, () -> finalCheckingAcctA.transfer("1234567890", "0987654321", 101));
-    }
+    }*/
 
 }
