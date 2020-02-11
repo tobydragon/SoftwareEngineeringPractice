@@ -72,4 +72,29 @@ public class CheckingTest {
         //check amount with more than 2 decimal places
         assertThrows(IllegalArgumentException.class, ()-> finalCheckingAcct.withdraw("1234567890", 2.4422));
     }
+
+    @Test
+    void depositTest(){
+        //zero value
+        Checking checkingAcct = new Checking("1234567890", "Bob G", "bao", 200);
+        checkingAcct.deposit("1234567890", 0);
+        assertEquals(200, checkingAcct.checkBalance("1234567890"));
+
+        //normal positive case
+        checkingAcct = new Checking("1234567890", "Bob Lob", "dog123", 100);
+        checkingAcct.deposit("1234567890", 50);
+        assertEquals(150, checkingAcct.checkBalance("1234567890"));
+
+        //two in a row
+        checkingAcct.deposit("1234567890", 123.63);
+        assertEquals(173.63, checkingAcct.checkBalance("1234567890"));
+
+        Checking finalCheckingAcct = new Checking("1234567890", "Bill Mill", "dg", 140);
+        //check negative amount
+        assertThrows(IllegalArgumentException.class, ()-> finalCheckingAcct.withdraw("1234567890", -130));
+
+        //check amount with more than 2 decimal places
+        assertThrows(IllegalArgumentException.class, ()-> finalCheckingAcct.withdraw("1234567890", 2.4422));
+    }
+
 }
