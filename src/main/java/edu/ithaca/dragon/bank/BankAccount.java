@@ -7,9 +7,6 @@ public class BankAccount {
     public String email;
     public double balance;
     private String password;
-    private int withdrawcount;
-    private int depositcount;
-    private int transfercount;
 
     /**
      * @throws IllegalArgumentException if amount to be withdrawn is invalid
@@ -43,9 +40,6 @@ public class BankAccount {
             this.email = email;
             this.balance = startingBalance;
             this.password = password;
-            this.depositcount =0;
-            this.withdrawcount =0;
-            this.transfercount =0;
         }
         else {
             throw new IllegalArgumentException("Email address: " + email + " is invalid, cannot create account");
@@ -83,10 +77,7 @@ public class BankAccount {
 
         else {
             balance -= amount;
-            transfercount ++;
             bankAccountTranferringTo.balance += amount;
-            bankAccountTranferringTo.transfercount ++;
-
         }
     }
 
@@ -106,8 +97,6 @@ public class BankAccount {
         }
         else {
             balance += amount;
-            depositcount ++;
-
         }
     }
 
@@ -122,16 +111,15 @@ public class BankAccount {
             throw new IllegalArgumentException("The amount you entered " + amount + " is invalid");
         }
 
-        if (amount < .01) {
+        if (amount < .01)
             throw new IllegalArgumentException("Cannot withdraw $0 or less");
-        }
-        else if (balance >= amount) {
+
+        else if (balance >= amount)
             balance -= amount;
-            withdrawcount++;
-        }
-        else if (balance < amount) {
+
+        else if (balance < amount)
             throw new InsufficientFundsException("Cannot draw more than account balance.");
-        }
+
     }
 
     /**
@@ -317,15 +305,5 @@ public class BankAccount {
         validCharSet.add('0');
 
         return validCharSet;
-    }
-
-    private int getWithdrawcount(){
-        return withdrawcount;
-    }
-    private int getDepositcount(){
-        return depositcount;
-    }
-    private int getTransfercount(){
-        return transfercount;
     }
 }

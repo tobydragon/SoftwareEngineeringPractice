@@ -67,7 +67,7 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
             throw new InsufficientFundsException("Cannot draw more than account balance.");
         }
         else {
-            bankAccount.withdraw(amount);
+            bankAccount.balance -= amount;
         }
 
     }
@@ -85,7 +85,7 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
             throw new IllegalArgumentException("Cannot deposit less than $0.01");
         }
         else {
-            bankAccount.deposit(amount);
+            bankAccount.balance += amount;
         }
 
     }
@@ -104,15 +104,13 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
             throw new InsufficientFundsException("amount you wish to withdraw exceeds balance");
         }
         else{
-            withdrawBankAccount.transfer(depositBankAccount,amount);
-
+            withdrawBankAccount.balance -= amount;
+            depositBankAccount.balance += amount;
         }
     }
 
     @Override
     public String transactionHistory(String acctId) {
-        BankAccount bankAccount = customerCollection.get(acctId);
-        bankAccount.get
         return null;
     }
 

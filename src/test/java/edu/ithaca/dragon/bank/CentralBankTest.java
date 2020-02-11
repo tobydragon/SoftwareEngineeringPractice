@@ -77,7 +77,33 @@ public class CentralBankTest {
 
         assertThrows(InsufficientFundsException.class, ()-> cb.transfer("prav15@cornell.edu", "ppatel@ithaca.edu",700));
         assertThrows(InsufficientFundsException.class, ()-> cb.transfer("ppatel@ithaca.edu", "prav15@cornell.edu",500));
+    }
 
+    @Test
+    void removeAccountTest(){
+        CentralBank cb = new CentralBank();
+        cb.createAccount("ppatel@ithaca.edu", 300, "PopTartK1NG");
+        cb.createAccount("mark.davis12@federal.gov", 1400, "PopTartsAreAmazing");
+        cb.createAccount("lolAntonioBrown@dramaqueen.cc", 1600, "Steelersarebetterwithoutyou");
+        cb.createAccount("ABshouldFIGHTLoganPaul@DaZn.com", 500, "ABizweak84");
+        cb.createAccount("ABisaWORSETO@nevergonnahappen.net", 30, "81isgreaterthan84");
+
+        cb.closeAccount("ABshouldFIGHTLoganPaul@DaZn.com");
+        assertTrue(cb.checkCustomerCollection("ABshouldFIGHTLoganPaul@DaZn.com"));
+    }
+
+    @Test
+    void transactionHistoryTest() throws InsufficientFundsException {
+        CentralBank cb = new CentralBank();
+        cb.createAccount("LOLKrisHumphries@72daymarriage.com", 400, "CantKeepAKardashian");
+        cb.createAccount("LilYoungHova@WeRtheWorld.net", 200, "RapisBack2k2k");
+
+        cb.deposit("LOLKrisHumphries@72daymarriage.com",250);
+        cb.withdraw("LOLKrisHumphries@72daymarriage.com",300);
+        cb.transfer("LOLKrisHumphries@72daymarriage.com","LilYoungHova@WeRtheWorld.net",50);
+
+        cb.transactionHistory("LOLKrisHumphries@72daymarriage.com");
+        cb.transactionHistory("LilYoungHova@WeRtheWorld.net");
 
 
     }
