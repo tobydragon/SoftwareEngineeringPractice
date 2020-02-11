@@ -6,10 +6,10 @@ public interface AdminAPI {
 
     public double calcTotalAssets();
 
-    public Collection<String> findAcctIdsWithSuspiciousActivity();
+    public Collection<Integer> findAcctIdsWithSuspiciousActivity();
 
-    public void freezeAccount(String acctId);
+    public void freezeAccount(int acctId);
 
-    public void unfreezeAcct(String acctId);
+    public void unfreezeAcct(int acctId);
 
 }
