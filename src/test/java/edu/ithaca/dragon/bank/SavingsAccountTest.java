@@ -8,13 +8,13 @@ public class SavingsAccountTest {
 
     @Test
     void withdrawTest() throws IllegalArgumentException, InsufficientFundsException, ExceedsMaxWithdrawalException {
-        BankAccount savings = new SavingsAccount("savings@bank.com", "password", 100, false);
+        BankAccount savings = new SavingsAccount("savings@bank.com", "password", 100);
         //withdraw more than in account
         assertThrows(InsufficientFundsException.class, ()-> savings.withdraw(100.01));
         assertThrows(InsufficientFundsException.class, ()-> savings.withdraw(200.50));
         assertThrows(InsufficientFundsException.class, ()-> savings.withdraw(499.99));
 
-        BankAccount savings2 = new SavingsAccount("savings@bank.com", "password", 1000, false);
+        BankAccount savings2 = new SavingsAccount("savings@bank.com", "password", 1000);
         //withdraw more than max withdrawal
         assertThrows(ExceedsMaxWithdrawalException.class, ()-> savings2.withdraw(500.01));
         assertThrows(ExceedsMaxWithdrawalException.class, ()-> savings2.withdraw(700.50));
@@ -35,11 +35,11 @@ public class SavingsAccountTest {
 
     @Test
     void compoundInterestTest() {
-        BankAccount savings = new SavingsAccount("savings@bank.com", "password", 100, false);
+        BankAccount savings = new SavingsAccount("savings@bank.com", "password", 100);
         ((SavingsAccount) savings).compoundInterest();
         assertEquals(101.5, savings.getBalance());
 
-        BankAccount savings2 = new SavingsAccount("savings@bank.com", "password", 1000, false);
+        BankAccount savings2 = new SavingsAccount("savings@bank.com", "password", 1000);
         ((SavingsAccount) savings2).compoundInterest();
         assertEquals(1015.00, savings2.getBalance());
     }

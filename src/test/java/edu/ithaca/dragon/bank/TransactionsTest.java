@@ -4,6 +4,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.LinkedList;
+
 public class TransactionsTest {
 
     @Test
@@ -13,7 +17,7 @@ public class TransactionsTest {
         //refactored this to "bank" because newAccount makes it sound like it's just one account and not all of them @Vera
         CentralBank bank = new CentralBank();
         String testAccountID = "a@b.com";
-        bank.createAccount(testAccountID, "password", 2000, false, false);
+        bank.createAccount(testAccountID, "password", 2000, false);
 
         // Account has wrong accountID
         assertThrows(AccountDoesNotExistException.class, () -> bank.transactionHistory("like@comment.subscribe"));
@@ -42,7 +46,7 @@ public class TransactionsTest {
 
         // Account has multiple transfers
         String transferActID = "m@v.com";
-        bank.createAccount(transferActID, "password", 350, true, false);
+        bank.createAccount(transferActID, "password", 350, true);
 
         bank.transfer(testAccountID,transferActID, 50.34);
         bank.transfer(testAccountID,transferActID, 34.34);
@@ -61,7 +65,7 @@ public class TransactionsTest {
             ExceedsMaxWithdrawalException, AccountDoesNotExistException, AccountFrozenException {
         CentralBank bank = new CentralBank();
         String testAccountID2 = "a@b.com";
-        bank.createAccount(testAccountID2, "password", 1500, false, false);
+        bank.createAccount(testAccountID2, "password", 1500, false);
 
         // With multiple withdraws
         bank.withdraw("a@b.com",50);
@@ -69,32 +73,51 @@ public class TransactionsTest {
         bank.withdraw("a@b.com",213.54);
         bank.withdraw("a@b.com",130.43);
         bank.withdraw("a@b.com",400);
-                System.out.println(bank.transactionHistory(testAccountID2));
-                assertEquals("withdraw 50, withdraw 170.0,withdraw 213.54,withdraw 130.43,withdraw 400.0", bank.transactionHistory(testAccountID2));
-
-
 
         // With multiple transfers
         String transferActID = "m@v.com";
-        bank.createAccount(transferActID, "password", 2000, true, false);
+        bank.createAccount(transferActID, "password", 2000, true);
 
         bank.transfer(testAccountID2,transferActID, 80);
         bank.transfer(testAccountID2,transferActID, 44.84);
         bank.transfer(testAccountID2,transferActID, 123.34);
         bank.transfer(testAccountID2,transferActID, 22.97);
         bank.transfer(testAccountID2,transferActID, 190);
-                System.out.println(bank.transactionHistory(testAccountID2));
-        assertEquals("withdraw 50, withdraw 170.0,withdraw 213.54,withdraw 130.43,withdraw 400.0, " +
-                        "transfer 80.0, transfer 44.84,transfer 123.34,transfer 22.97,transfer 190.0", bank.transactionHistory(testAccountID2));
-                System.out.println(bank.transactionHistory(transferActID));
-        assertEquals("transfer 80, transfer 44.84,transfer 123.34,transfer 22.97,transfer 190.0", bank.transactionHistory(transferActID));
+
+        //make a bunch of not suspicious accounts
+        String test1 = "test1@bank.com";
+        String test2 = "test2@bank.com";
+        String test3 = "test3@bank.com";
+        bank.createAccount(test1, "password", 2000, true);
+        bank.createAccount(test2, "password", 2000, false);
+        bank.createAccount(test3, "password", 2000, false);
+
+        bank.deposit(test1, 100);
+        bank.withdraw(test1, 100);
+        bank.deposit(test1, 100);
+        bank.withdraw(test1, 100);
+        bank.deposit(test1, 100);
+        bank.withdraw(test1, 100);
+        bank.deposit(test1, 100);
+        bank.withdraw(test1, 100);
+        bank.deposit(test1, 100);
+        bank.withdraw(test1, 100);
+        bank.deposit(test2, 50000);
+        bank.withdraw(test2, 1000);
+        bank.transfer(test3, test2, 1000);
+
+        Collection<String> suspicious = new HashSet<>();
+        suspicious.add(testAccountID2);
+        suspicious.add(transferActID);
+        assertEquals(suspicious, bank.findAcctIdsWithSuspiciousActivity());
+
     }
 
     @Test
     void freezeAccount() throws AccountAlreadyExistsException, AccountDoesNotExistException {
         CentralBank bank = new CentralBank();
         String testAccountID3 = "a@b.com";
-        bank.createAccount(testAccountID3, "password", 200, false, false);
+        bank.createAccount(testAccountID3, "password", 200, false);
 
         assertEquals(false, bank.isFrozen(testAccountID3));
                 bank.freezeAccount(testAccountID3);
@@ -106,18 +129,14 @@ public class TransactionsTest {
     void unfreezeAcct() throws AccountAlreadyExistsException, AccountDoesNotExistException {
         CentralBank bank = new CentralBank();
         String testAccountID4 = "r@g.com";
-        bank.createAccount(testAccountID4, "password", 200, false, true);
+        bank.createAccount(testAccountID4, "password", 200, false);
 
+        assertEquals(false, bank.isFrozen(testAccountID4));
+        bank.freezeAccount(testAccountID4);
         assertEquals(true, bank.isFrozen(testAccountID4));
         bank.unfreezeAcct(testAccountID4);
         assertEquals(false, bank.isFrozen(testAccountID4));
 
-        String frozeAccountID = "y@t.com";
-        bank.createAccount(frozeAccountID, "password", 200, false, false);
 
-        assertEquals(false, bank.isFrozen(frozeAccountID));
-                bank.freezeAccount(frozeAccountID);
-        assertEquals(true, bank.isFrozen(frozeAccountID));
-                bank.unfreezeAcct(frozeAccountID);
     }
 }

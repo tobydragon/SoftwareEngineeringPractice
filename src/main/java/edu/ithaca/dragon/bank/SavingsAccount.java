@@ -5,8 +5,8 @@ public class SavingsAccount extends BankAccount {
     private double maxWithdraw = 500;
     private double interestRate = 0.015;
 
-    public SavingsAccount(String email, String password, double startingBalance, boolean frozen) {
-        super(email, password, startingBalance, frozen);
+    public SavingsAccount(String email, String password, double startingBalance) {
+        super(email, password, startingBalance);
     }
 
     public double getMaxWithdrawal() {return maxWithdraw;}

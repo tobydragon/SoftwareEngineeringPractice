@@ -23,10 +23,9 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
         return account.getBalance();
     }
 
-    private void addToHistory(String transaction, String acctId, Double amount) {
-        String amountStr = " " + amount.toString();
+    private void addToHistory(String transaction, String acctId) {
         if (transactionHist.containsKey(acctId)) {
-            String history = transactionHist.get(acctId) + amountStr;
+            String history = transactionHist.get(acctId);
             history += "," + transaction;
             transactionHist.put(acctId, history);
         } else {
@@ -40,7 +39,8 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
         BankAccount account = accounts.get(acctId);
         account.withdraw(amount);
         // Added
-        addToHistory("withdraw", acctId, amount);
+        String trans = "withdraw " + String.format("%.2f", amount);
+        addToHistory(trans, acctId);
     }
 
     public void deposit(String acctId, double amount) throws AccountDoesNotExistException {
@@ -48,7 +48,8 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
         BankAccount account = accounts.get(acctId);
         account.deposit(amount);
         // Added
-        addToHistory("deposit", acctId, amount);
+        String trans = "deposit " + String.format("%.2f", amount);
+        addToHistory(trans, acctId);
     }
 
     public void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount)
@@ -60,8 +61,10 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
 
         BankAccount.transfer(accountD, accountW, amount);
         // Added
-        addToHistory("transfer", acctIdToWithdrawFrom, amount);
-        addToHistory("transfer", acctIdToDepositTo, amount);
+        String transD = "transfer from " + acctIdToWithdrawFrom + " " + String.format("%.2f", amount);
+        String transW = "transfer to " + acctIdToDepositTo + " " + String.format("%.2f", amount);
+        addToHistory(transD, acctIdToDepositTo);
+        addToHistory(transW, acctIdToWithdrawFrom);
     }
 
     public String transactionHistory(String acctId) throws AccountDoesNotExistException, AccountAlreadyExistsException, InsufficientFundsException, ExceedsMaxWithdrawalException {
@@ -73,12 +76,12 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
 
     //----------------- AdvancedAPI methods -------------------------//
 
-    public void createAccount(String acctId, String password, double startingBalance, boolean savings, boolean frozen) throws AccountAlreadyExistsException, IllegalArgumentException {
+    public void createAccount(String acctId, String password, double startingBalance, boolean savings) throws AccountAlreadyExistsException, IllegalArgumentException {
         if (accounts.containsKey(acctId)) throw new AccountAlreadyExistsException("Account with this id already exists");
 
         BankAccount account;
-        if (savings) account = new SavingsAccount(acctId, password, startingBalance, frozen);
-        else account = new CheckingAccount(acctId, password, startingBalance, frozen);
+        if (savings) account = new SavingsAccount(acctId, password, startingBalance);
+        else account = new CheckingAccount(acctId, password, startingBalance);
 
         accounts.put(acctId, account);
     }
@@ -112,41 +115,26 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
     }
 
     public Collection<String> findAcctIdsWithSuspiciousActivity() {
-        BankAccount suspiciousAct;
-        Collection<String> suspiciousAccts = new LinkedList<>();
+        Collection<String> suspiciousAccts = new HashSet<>();
 
-        //check for suspicious activity
-        //I recommend using the first character in each transaction string - it will be t, d, or w
-        //You'll have to split the string by the comma delimiter
-        //you can compare items in the list and see if there are too many withdraws/deposits together
-        Iterator<Map.Entry<String, String>> iterator = transactionHist.entrySet().iterator();
-        int wCount = 0;
-        int dCount = 0;
-        int tCount = 0;
+        for (String acctId:transactionHist.keySet()) {
+            int wCount = 0;
+            int dCount = 0;
+            int tCount = 0;
+            String history = transactionHist.get(acctId);
+            String[] trans = history.split(",");
+            for(String t:trans) {
+                if (t.toCharArray()[0] == 'w') wCount++;
+                if (t.toCharArray()[0] == 'd') dCount++;
+                if (t.toCharArray()[0] == 't') tCount++;
+            }
+            //if there are a lot of withdraws out not interspersed with deposits
+            //or too many transfers, it's suspicious
+            if ((wCount >= 5 && dCount < 3) || tCount >= 5) {
+                suspiciousAccts.add(acctId);
+            }
+        }
 
-        while(iterator.hasNext()){
-            if (transactionHist.equals("w")){
-                wCount++;
-            }
-            else if(transactionHist.equals("d")){
-                dCount++;
-            }
-            else if(transactionHist.equals("t")){
-                tCount++;
-            }
-            else{
-                iterator.next();
-            }
-        }
-        if(wCount >= 5 && tCount >= 5){
-            System.out.println("You account has done" + wCount + " Withdraws" + tCount + " Transfers");
-        }
-        else if(wCount >= 5){
-            System.out.println("You account has done" + wCount + " Withdraws");
-        }
-        else{
-            System.out.println("You account has done" + tCount + " Transfers");
-        }
         return suspiciousAccts;
     }
 
