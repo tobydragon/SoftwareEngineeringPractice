@@ -69,7 +69,9 @@ public class TransactionsTest {
         bank.withdraw("a@b.com",213.54);
         bank.withdraw("a@b.com",130.43);
         bank.withdraw("a@b.com",400);
-                bank.transactionHistory(testAccountID2);
+                System.out.println(bank.transactionHistory(testAccountID2));
+                assertEquals("withdraw 50, withdraw 170.0,withdraw 213.54,withdraw 130.43,withdraw 400.0", bank.transactionHistory(testAccountID2));
+
 
 
         // With multiple transfers
@@ -81,8 +83,11 @@ public class TransactionsTest {
         bank.transfer(testAccountID2,transferActID, 123.34);
         bank.transfer(testAccountID2,transferActID, 22.97);
         bank.transfer(testAccountID2,transferActID, 190);
-                bank.transactionHistory(testAccountID2);
-                bank.transactionHistory(transferActID);
+                System.out.println(bank.transactionHistory(testAccountID2));
+        assertEquals("withdraw 50, withdraw 170.0,withdraw 213.54,withdraw 130.43,withdraw 400.0, " +
+                        "transfer 80.0, transfer 44.84,transfer 123.34,transfer 22.97,transfer 190.0", bank.transactionHistory(testAccountID2));
+                System.out.println(bank.transactionHistory(transferActID));
+        assertEquals("transfer 80, transfer 44.84,transfer 123.34,transfer 22.97,transfer 190.0", bank.transactionHistory(transferActID));
     }
 
     @Test
@@ -103,7 +108,7 @@ public class TransactionsTest {
         String testAccountID4 = "r@g.com";
         bank.createAccount(testAccountID4, "password", 200, false, true);
 
-        //assertEquals(true, bank.isFrozen(testAccountID));
+        assertEquals(true, bank.isFrozen(testAccountID4));
         bank.unfreezeAcct(testAccountID4);
         assertEquals(false, bank.isFrozen(testAccountID4));
 
