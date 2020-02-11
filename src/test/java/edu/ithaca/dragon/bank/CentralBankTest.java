@@ -55,4 +55,11 @@ public class CentralBankTest {
 
 
     }
+
+    @Test
+    void integrationTest1(){
+        CentralBank theBank = new CentralBank();
+        AdvancedAPI Teller = theBank;
+        BasicAPI atm = theBank;
+    }
 }
