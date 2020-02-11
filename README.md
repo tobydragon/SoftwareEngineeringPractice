@@ -6,6 +6,6 @@
 
 #CE Sequence Diagram:
 
-#SW Sequence Diagram:
+#SW Sequence Diagram: https://www.draw.io/#G1JFUCjxWpQ7p6xs8KKuwfl25wGQdMTHNj
 
 #LC Sequence Diagram:
