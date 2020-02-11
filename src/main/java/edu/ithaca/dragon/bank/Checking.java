@@ -38,11 +38,19 @@ public class Checking implements Account {
     }
 
     public double checkBalance(String acctId){
-        return balance;
+        return this.balance;
     }
 
     public void withdraw(String acctId, double amount) throws InsufficientFundsException{
-
+        if(amount > balance){
+            throw new InsufficientFundsException("Cannot withdraw amount greater than balance");
+        }
+        if(!isAmountValid(amount)){
+            throw new IllegalArgumentException("Amount is not valid");
+        }
+        else{
+            balance -= amount;
+        }
     }
 
     public void deposit(String acctId, double amount){
