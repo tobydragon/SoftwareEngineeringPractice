@@ -79,4 +79,17 @@ public class CustomerTest {
         assertThrows(IllegalArgumentException.class, ()-> c3.createAccount(100.001));
         assertThrows(IllegalArgumentException.class, ()-> c3.createAccount(-100));
     }
+
+    @Test
+    void getBalanceTest() throws Exception{
+        Customer c1 = new Customer("bob", "1");
+        c1.createAccount(100);
+        assertEquals(100, c1.getBalance());
+        Customer c2 = new Customer("bb", "1");
+        c2.createAccount(200);
+        assertEquals(200, c2.getBalance());
+        Customer c3 = new Customer("bbb","password");
+
+        assertThrows(IllegalArgumentException.class, ()-> c3.getBalance());
+    }
 }

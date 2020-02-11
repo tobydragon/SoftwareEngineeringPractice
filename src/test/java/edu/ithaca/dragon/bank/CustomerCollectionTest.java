@@ -37,9 +37,11 @@ public class CustomerCollectionTest {
         c1.createAccount("bob", 100);
         assertEquals(100, c1.getBalance("bob"));
         c1.addCustomer("bb", "password");
-        c1.createAccount("bb", 100);
-        assertEquals(100, c1.getBalance("bob"));
+        c1.createAccount("bb", 200);
+        assertEquals(200, c1.getBalance("bb"));
+        c1.addCustomer("bbb", "password");
 
         assertThrows(IllegalArgumentException.class, ()-> c1.getBalance("b"));
+        assertThrows(IllegalArgumentException.class, ()-> c1.getBalance("bbb"));
     }
 }
