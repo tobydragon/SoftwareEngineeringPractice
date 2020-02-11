@@ -86,7 +86,7 @@ public class CheckingTest {
         assertEquals(150, checkingAcct.checkBalance("1234567890"));
 
         //two in a row
-        checkingAcct.deposit("1234567890", 123.63);
+        checkingAcct.deposit("1234567890", 23.63);
         assertEquals(173.63, checkingAcct.checkBalance("1234567890"));
 
         Checking finalCheckingAcct = new Checking("1234567890", "Bill Mill", "dg", 140);

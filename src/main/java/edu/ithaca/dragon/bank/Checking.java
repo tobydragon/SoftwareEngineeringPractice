@@ -54,7 +54,12 @@ public class Checking implements Account {
     }
 
     public void deposit(String acctId, double amount){
-
+        if(isAmountValid(amount)){
+            balance += amount;
+        }
+        else{
+            throw new IllegalArgumentException("Amount is not valid");
+        }
     }
 
     public void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws InsufficientFundsException{
