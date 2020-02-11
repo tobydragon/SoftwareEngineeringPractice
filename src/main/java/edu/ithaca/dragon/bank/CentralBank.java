@@ -5,6 +5,7 @@ import java.util.Collection;
 public class CentralBank implements AdvancedAPI, AdminAPI {
 
     private UserArrayList userAccounts;
+    private BankAccountCollection bankAccountCollection;
 
     public CentralBank(){
         userAccounts = new UserArrayList();
