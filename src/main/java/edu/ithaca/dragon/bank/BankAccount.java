@@ -143,7 +143,7 @@ public class BankAccount {
 
         }
 
-    public String getPassword() {
+    protected String getPassword() {
         return password;
     }
 }

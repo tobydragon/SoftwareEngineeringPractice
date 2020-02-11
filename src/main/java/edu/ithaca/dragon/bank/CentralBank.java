@@ -2,6 +2,7 @@ package edu.ithaca.dragon.bank;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 public class CentralBank implements AdvancedAPI, AdminAPI {
@@ -56,15 +57,23 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
     }
 
     public void closeAccount(String acctId) throws AccountNotFoundException, IllegalArgumentException{
-        getAcctByID(acctId);
-        acctMap.put(acctId, null);
+        if (!acctMap.containsKey(acctId)) throw new AccountNotFoundException("Specified account not found.");
+        acctMap.remove(acctId);
     }
 
 
     //------------------ AdminAPI methods -------------------------//
 
     public double calcTotalAssets() {
-        return 0;
+        Collection<BankAccount> bankAccountCollection = acctMap.values();
+        double total = 0.0;
+        if (bankAccountCollection.isEmpty()) return 0.0;
+        for (BankAccount acc : bankAccountCollection) {
+            if (acc == null) System.out.println("acc is null");
+            if (bankAccountCollection == null) System.out.println("collection is null");
+            total += acc.getBalance();
+        }
+        return total;
     }
 
     public Collection<String> findAcctIdsWithSuspiciousActivity() {
