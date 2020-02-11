@@ -22,16 +22,16 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
         return getAcctByID(acctId).getBalance();
     }
 
-    public void withdraw(String acctId, double amount) throws InsufficientFundsException {
-
+    public void withdraw(String acctId, double amount) throws InsufficientFundsException, AccountNotFoundException{
+        getAcctByID(acctId).withdraw(amount);
     }
 
-    public void deposit(String acctId, double amount) {
-
+    public void deposit(String acctId, double amount) throws AccountNotFoundException{
+        getAcctByID(acctId).deposit(amount);
     }
 
-    public void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws InsufficientFundsException {
-
+    public void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws InsufficientFundsException, AccountNotFoundException {
+        getAcctByID(acctIdToWithdrawFrom).transfer(amount, getAcctByID(acctIdToDepositTo));
     }
 
     public String transactionHistory(String acctId) {
@@ -46,8 +46,9 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
         addAccount(ba, acctId);
     }
 
-    public void closeAccount(String acctId) {
-
+    public void closeAccount(String acctId) throws AccountNotFoundException{
+        getAcctByID(acctId);
+        acctMap.put(acctId, null);
     }
 
 
