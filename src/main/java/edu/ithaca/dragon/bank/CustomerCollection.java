@@ -28,7 +28,15 @@ public class CustomerCollection {
         return false;
     }
 
-    public void createAccount(String actID, double startingBalance){}
+    public void createAccount(String actID, double startingBalance) throws Exception{
+        for(int x = 0; x < customers.size(); x++){
+            if(customers.get(x).getId()==actID){
+                customers.get(x).createAccount(startingBalance);
+                return;
+            }
+        }
+        throw new IllegalArgumentException("No such account");
+    }
 
     public void closeAccount(String actID){}
 
