@@ -18,7 +18,7 @@ public class Savings implements Account{
     }
 
     public double checkBalance(String acctId){
-        return 0;
+        return balance;
     }
 
     public void withdraw(String acctId, double amount) throws InsufficientFundsException{
