@@ -24,9 +24,23 @@ import static org.junit.jupiter.api.Assertions.*;
 
      //Admin Tests
 
+     @Test
+
+     void overAllBalanceTest(){
+         //formerly calcTotalAssetsTest()
+         CentralBank c1 = new CentralBank();
+         assertEquals(0, c1.calcTotalAssets());
+         c1.createAccount("b123", 200, "jim@gmail.com");
+         c1.createAccount("b00", 200, "pam@gmail.com");
+         c1.createAccount("b13", 200, "kelly@gmail.com");
+
+         assertEquals(600, c1.calcTotalAssets());
+
+     }
+
 
      @Test
-     void freezeAccountTest(){
+     void freezeAccountTest() throws IllegalAccessException {
          CentralBank c1 = new CentralBank();
          c1.createAccount("BA1234", 10000, "candace@gmail.com");
          BankAccount b1 = c1.findAccountWithId("BA1234");
@@ -34,6 +48,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
          c1.freezeAccount("BA1234");
          assertTrue(b1.getAcctFrozen());
+         assertThrows(IllegalAccessException.class,()-> b1.deposit(200));
+         assertThrows(IllegalAccessException.class,()-> b1.withdraw(200));
+
+
 
 
      }
@@ -80,12 +98,7 @@ import static org.junit.jupiter.api.Assertions.*;
      }
 
 
-     @Test
-      void calcTotalAssetsTest(){
-         //total assets test
 
-
-     }
 
 
      //Basic Tests

@@ -7,7 +7,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class savingsAccountTest {
     @Test
-    void withdrawSavingsTest(){
+    void withdrawSavingsTest()throws IllegalAccessException {
+
         //positive, negative, zero, test above withdraw max
 
         savingsAccount savings1 = new savingsAccount("a@b.com", 200.00, 150.00, .15);
@@ -31,7 +32,8 @@ public class savingsAccountTest {
     }
 
     @Test
-    void calcSavingsInterestTest(){
+    void calcSavingsInterestTest()throws IllegalAccessException {
+
         //postive, negative, zero interest rates
 
         //positive interest rate
