@@ -2,6 +2,7 @@ package edu.ithaca.dragon.bank;
 
 public class ATM implements BasicAPI {
 
+    CentralBank centralBank;
 
     @Override
     public boolean confirmCredentials(String acctId, String password) {
