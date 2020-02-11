@@ -39,7 +39,7 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
 
     //----------------- AdvancedAPI methods -------------------------//
 
-    public void createAccount(String acctId, double startingBalance, UserArrayList userAccounts) {
+    public void createAccount(String acctId, double startingBalance) {
 
     }
 
