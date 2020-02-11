@@ -9,7 +9,7 @@ public class ATM implements BasicAPI {
         this.userAccounts = userAccounts;
     }
 
-    public boolean confirmCredentials(int acctId, String password){
+    public boolean confirmCredentials(String username, String password){
         return false;
     }
 
