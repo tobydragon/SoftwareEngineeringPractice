@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 package edu.ithaca.dragon.bank;
 
 /**
@@ -14,4 +12,3 @@ public class User {
 
     //WE DON NOT NEED THIS CLASS
 }
->>>>>>> abb63addd798d45fe4c0495f4575e573feceeb19
