@@ -15,6 +15,9 @@ public class BankAccount {
             this.balance = startingBalance;
             this.transHist = "";
         }
+        else{
+            throw new IllegalArgumentException("Starting Balance Amount is invalid.");
+        }
     }
 
     public void newTransaction(String tran){
@@ -29,7 +32,7 @@ public class BankAccount {
         return transHist;
     }
 
-    public String getEmail(){
+    public String getId(){
         return id;
     }
 

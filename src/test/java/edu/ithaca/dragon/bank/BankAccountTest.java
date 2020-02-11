@@ -176,21 +176,20 @@ class BankAccountTest {
 
     @Test
     void constructorTest() {
-        BankAccount bankAccount = new BankAccount("a@b.com", 200);
+        BankAccount bankAccount = new BankAccount("4321", 200);
 
-        assertEquals("a@b.com", bankAccount.getEmail());
+        assertEquals("4321", bankAccount.getId());
         assertEquals(200, bankAccount.getBalance());
 
         //check for exception thrown correctly
-        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", 100));
         //positive number three decimals
-        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("h@j.com", 100.763));
-        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("h@j.com", 10.763));
-        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("h@j.com", 1.763));
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("1234", 100.763));
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("1234", 10.763));
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("1234", 1.763));
         //negative number three decimals
-        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("h@j.com", -100.763));
-        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("h@j.com", -10.763));
-        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("h@j.com", -1.763));
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("1234", -100.763));
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("1234", -10.763));
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("1234", -1.763));
     }
 
     @Test
