@@ -127,6 +127,9 @@ public class CentralBank implements AdvancedAPI, AdminAPI, BasicAPI {
         b.setAcctFrozen(false);
     }
 
+    public static void main(String [] args){
+
+    }
 
 
 }
