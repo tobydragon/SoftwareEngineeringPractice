@@ -16,4 +16,17 @@ public class CustomerCollectionTest {
 
         assertThrows(IllegalArgumentException.class, ()-> c1.addCustomer("bob", "password"));
     }
+
+    @Test
+    void addAccountTest(){
+        CustomerCollection c1 = new CustomerCollection();
+        c1.addCustomer("bob", "password");
+        c1.createAccount("bob", 100);
+        assertEquals(100, c1.getBalance("bob"));
+        c1.addCustomer("bb", "password");
+        assertThrows(IllegalArgumentException.class, ()->c1.createAccount("bb", -100));
+        assertThrows(IllegalArgumentException.class, ()->c1.createAccount("bb", 100.001));
+        assertThrows(Exception.class, ()->c1.createAccount("bob", 100));
+        assertThrows(IllegalArgumentException.class, ()->c1.createAccount("b", 100));
+    }
 }
