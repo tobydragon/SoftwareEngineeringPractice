@@ -130,7 +130,24 @@ public class AdminTest {
         admin.unfreezeAcct("abc");
         abcAcc.deposit(50);
         assertEquals(1249.45, admin.calcTotalAssets());
+    }
 
+    @Test
+    void systemTest() throws InsufficientFundsException,  AccountFrozenException{
+        //Going to test that teller and admin are working properly, use teller to create new accounts and admin to find the total balance
+        Teller teller = new Teller();
+        Admin admin = new Admin(teller.centralBank);
+        assertEquals(0, admin.calcTotalAssets());
+        teller.createAccount("abc", 150);
+        assertEquals(150, admin.calcTotalAssets());
+        teller.createAccount("123", 20.45);
+        assertEquals(170.45, admin.calcTotalAssets());
+        teller.createAccount("xyz", 0);
+        assertEquals(170.45, admin.calcTotalAssets());
+        teller.createAccount("acc", 0.14);
+        assertEquals(170.59, admin.calcTotalAssets());
+        assertThrows(IllegalArgumentException.class, ()->teller.createAccount("account", -50));
+        assertThrows(IllegalArgumentException.class, ()->teller.createAccount("ghi", 100.505));
 
     }
 
