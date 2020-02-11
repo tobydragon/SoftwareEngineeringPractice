@@ -9,7 +9,7 @@ withdraw|
 isamountValid|
 constructor & withdraw fix|
 
-Use-Case Diagram: https://www.draw.io/#G1WzWrKsD5IlWuO8BXCeAaA80RCC1f3U0p
-Class Diagram: https://www.draw.io/#G1UJcjYeK8KQpGEVkPTTIj7UvZEWOI9qwM
-Sequence Diagrams: https://www.draw.io/#G1ERmSFQ6JHAgPMtCmaHBkvQJ1MQipghoV
+Use-Case Diagram: https://drive.google.com/file/d/1WzWrKsD5IlWuO8BXCeAaA80RCC1f3U0p/view?usp=sharing
+Class Diagram: https://drive.google.com/file/d/1UJcjYeK8KQpGEVkPTTIj7UvZEWOI9qwM/view?usp=sharing
+Sequence Diagrams: https://drive.google.com/file/d/1ERmSFQ6JHAgPMtCmaHBkvQJ1MQipghoV/view?usp=sharing
 https://drive.google.com/file/d/1fEIvmBCA4iPbAsOygiYkEIbXpAX-0B8k/view?usp=sharing
