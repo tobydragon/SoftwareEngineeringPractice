@@ -2,8 +2,13 @@ package edu.ithaca.dragon.bank;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+
+
 
 public class Admin implements AdminAPI {
+    private static DecimalFormat twoDecimals = new DecimalFormat("0.00");
     CentralBank bank;
 
     /**
@@ -22,6 +27,8 @@ public class Admin implements AdminAPI {
             Account current = itr.next();
             total += current.getBalance();
         }
+        total = Double.valueOf(twoDecimals.format(total));
+
         return total;
     }
 
