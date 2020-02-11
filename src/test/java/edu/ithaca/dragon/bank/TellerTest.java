@@ -2,20 +2,27 @@ package edu.ithaca.dragon.bank;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.rmi.NoSuchObjectException;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TellerTest {
 
     @Test
-    void createAccountTest() {
+    void createAccountTest() throws NoSuchObjectException {
         CentralBank centralBank = new CentralBank();
-        Map<String, Account> accounts = new HashMap<>();
-        centralBank.accounts = accounts;
-
         Teller teller = new Teller();
-        teller.createAccount();
+        teller.createAccount("0", 0);
+        boolean found = false;
+        for (Account account : centralBank.accounts) {
+            if (account.getID().equals("0")) {
+                assertEquals(account, new CheckingAccount(0, "0"));
+                found = true;
+            }
+        }
 
+        if (!found) {
+            throw new NoSuchObjectException("Account not found");
+        }
     }
 }
