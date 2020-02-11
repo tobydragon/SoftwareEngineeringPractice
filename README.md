@@ -8,5 +8,4 @@ Sequence Diagram (Saul): Teller, User, Account https://drive.google.com/file/d/1
 
 Sequence Diagram (Josh): Admin, Account https://drive.google.com/file/d/1hWu4E4gvjYxcYmPHV18QAMbwkdUuo9Hd/view?usp=sharing
 
-
-
+Sequence Diagram (Erich): https://drive.google.com/file/d/1tcE_ITNZHlpZ7IzYDILuwuuKqsxNMex5/view?usp=sharing
