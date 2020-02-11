@@ -21,7 +21,11 @@ public class Admin implements AdminAPI {
     }
 
     public void createCheckingForTeller(String acctIdIn, String nameIn, String passwordIn, double startingBalance) throws IllegalArgumentException {
-
+        if(accounts.containsKey(acctIdIn)){
+            throw new IllegalArgumentException("Cannot create account; account ID already exists.");
+        } else {
+            accounts.put(acctIdIn, new Checking(acctIdIn, nameIn, passwordIn, startingBalance));
+        }
     }
 
     public void createSavingsForTeller(String acctIdIn, String nameIn, String passwordIn, double startingBalance, double interestRateIn, double maxWithdrawalIn) throws IllegalArgumentException {
