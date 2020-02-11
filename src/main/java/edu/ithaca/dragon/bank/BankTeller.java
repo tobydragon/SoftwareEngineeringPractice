@@ -1,10 +1,15 @@
 package edu.ithaca.dragon.bank;
 
-import java.util.Collection;
+public class BankTeller implements AdvancedAPI {
+    private CustomerCollection customers;
 
-public class CentralBank implements AdvancedAPI, AdminAPI {
+    public BankTeller(){
+        customers = new CustomerCollection();
+    }
 
-    //----------------- BasicAPI methods -------------------------//
+    public CustomerCollection getCustomers() {
+        return customers;
+    }
 
     public boolean confirmCredentials(String acctId, String password) {
         return false;
@@ -29,35 +34,11 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
     public String transactionHistory(String acctId) {
         return null;
     }
-
-
-    //----------------- AdvancedAPI methods -------------------------//
+    
 
     public void createAccount(String acctId, String password, double startingBalance) {
 
     }
 
-    public void closeAccount(String acctId) {
-
-    }
-
-
-    //------------------ AdminAPI methods -------------------------//
-
-    public double calcTotalAssets() {
-        return 0;
-    }
-
-    public Collection<String> findAcctIdsWithSuspiciousActivity() {
-        return null;
-    }
-
-    public void freezeAccount(String acctId) {
-
-    }
-
-    public void unfreezeAcct(String acctId) {
-
-    }
-
+    public void closeAccount(String acctId) {}
 }
