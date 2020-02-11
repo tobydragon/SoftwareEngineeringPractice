@@ -17,13 +17,13 @@ public class UserArrayList {
      * @return requested userAccount for further use
      * @throws IllegalArgumentException if account not found
      */
-    public UserAccount findAccount(int userID) throws IllegalArgumentException {
+    public UserAccount findAccount(int userID) throws NonExistentAccountException {
         for (int i = 0; i < userAccounts.size(); i++){
             if (userAccounts.get(i).getUserID() == userID){
                 return userAccounts.get(i);
             }
         }
-        throw new IllegalArgumentException("Account not found"); //Throws error if account not found
+        throw new NonExistentAccountException("Account not found"); //Throws error if account not found
     }
 
     /**

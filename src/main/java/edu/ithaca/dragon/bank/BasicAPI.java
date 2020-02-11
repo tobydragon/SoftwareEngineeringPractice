@@ -3,16 +3,16 @@ package edu.ithaca.dragon.bank;
 //API to be used by ATMs
 public interface BasicAPI {
 
-    boolean confirmCredentials(String acctId, String password);
+    boolean confirmCredentials(int acctId, String password);
 
-    double checkBalance(String acctEmail);
+    double checkBalance(int acctId);
 
-    void withdraw(String acctId, double amount) throws InsufficientFundsException;
+    void withdraw(int acctId, double amount) throws InsufficientFundsException;
 
-    void deposit(String acctId, double amount);
+    void deposit(int acctId, double amount);
 
-    void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws InsufficientFundsException;
+    void transfer(int acctIdToWithdrawFrom, int acctIdToDepositTo, double amount) throws InsufficientFundsException;
 
-    String transactionHistory(String acctId);
+    String transactionHistory(int acctId);
 
 }

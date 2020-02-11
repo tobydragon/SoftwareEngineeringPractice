@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class UserArrayListTest {
     @Test
-    public void addFindRemoveTests() throws IllegalArgumentException{
+    public void addFindRemoveTests() throws NonExistentAccountException{
        //Testing add, find, and remove at the same time
 
         UserArrayList testList = new UserArrayList();
