@@ -26,7 +26,8 @@ class BankAccountTest {
     }
 
     @Test
-    void withdrawTest() {
+    void withdrawTest() throws IllegalAccessException {
+
 
         //part of non-negative and smaller equivalence class
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
@@ -91,8 +92,15 @@ class BankAccountTest {
         String testString = "C123";
         bankAccount.setAcctId(testString);
         assertEquals(testString, bankAccount.getAcctId());
+    }
 
+    @Test
+    void suspActivityTest(){
+        BankAccount b1 = new BankAccount("a@b.com", 200);
+        assertFalse(b1.getSusAct());
 
+        b1.setSusAct(true);
+        assertTrue(b1.getSusAct());
 
     }
 
@@ -119,12 +127,16 @@ class BankAccountTest {
     }
 
     @Test
-    void acctFrozenTest(){
+    void acctFrozenTest()throws IllegalAccessException{
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
         assertFalse(bankAccount.getAcctFrozen());
 
         bankAccount.setAcctFrozen(true); //freeze
         assertTrue(bankAccount.getAcctFrozen());
+
+        assertThrows(IllegalAccessException.class, () -> bankAccount.deposit(200));
+        assertThrows(IllegalAccessException.class, () -> bankAccount.withdraw(1));
+        assertThrows(IllegalAccessException.class, () -> bankAccount.transfer(1, new BankAccount("bob@b.com",200)));
 
 
     }
@@ -201,7 +213,7 @@ class BankAccountTest {
     }
 
     @Test
-    void depositTest(){
+    void depositTest() throws IllegalAccessException {
         //equivalence classes:
         // positive, negative, 0
 
@@ -240,7 +252,8 @@ class BankAccountTest {
     }
 
     @Test
-    void transferTest(){
+    void transferTest()throws IllegalAccessException {
+
         //equivalence classes:
         // positive, negative, 0
 

@@ -5,7 +5,8 @@ public class BankAccount {
     private String email;
     public double balance;
     public  boolean acctFrozen;
-    public String acctId;
+    private String acctId;
+    private boolean susAct;
 
 
     /**
@@ -13,6 +14,7 @@ public class BankAccount {
      */
     public BankAccount(String email, double startingBalance) {
         this.acctFrozen = false;
+        this.susAct= false;
         this.acctId = "B000";
         if (isEmailValid(email) && isAmountValid(startingBalance)) {
             this.email = email;
@@ -36,11 +38,21 @@ public class BankAccount {
         this.acctId = IDin;
     }
 
+    public void setSusAct(Boolean in){
+        this.susAct = in;
+    }
+
+    public boolean getSusAct(){
+        return this.susAct;
+    }
+
     /**
      * @post reduces the balance by amount if amount is non-negative and smaller than balance
      * if amount is negative or larger than balance, balance stays the same
      */
-    public void withdraw(double amount) {
+    public void withdraw(double amount) throws IllegalAccessException {
+        bankAccountFrozenCheck();
+
         if (isAmountValid(amount)) {
             if (!(balance < amount) && amount > 0) {
                 balance -= amount;
@@ -118,7 +130,9 @@ public class BankAccount {
     /**
      * function will add money of specified amount to the balance of the account
      */
-    public void deposit (double amount){
+    public void deposit (double amount) throws IllegalAccessException {
+        bankAccountFrozenCheck();
+
         if (isAmountValid(amount)) {
             if (!(balance < amount) && amount > 0) {
                 balance += amount;
@@ -133,12 +147,20 @@ public class BankAccount {
      * @param amount
      * @param bankAccounta
      */
-    public void transfer (double amount, BankAccount bankAccounta){
+    public void transfer (double amount, BankAccount bankAccounta)throws IllegalAccessException {
+        bankAccountFrozenCheck();
+
         if (isAmountValid(amount) && amount < this.balance){
             this.withdraw(amount);
             bankAccounta.balance = bankAccounta.balance + amount;
         }else{
             throw new IllegalArgumentException("transfer amount: " + amount + " is invalid, amount cannot be transfered");
+        }
+    }
+
+    public void bankAccountFrozenCheck() throws IllegalAccessException {
+        if (this.acctFrozen == true){
+            throw new IllegalAccessException("This Account is Frozen, No Actions can be taken on it");
         }
     }
 }

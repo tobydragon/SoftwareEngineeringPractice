@@ -7,32 +7,98 @@ import static org.junit.jupiter.api.Assertions.*;
 
  class CentralBankTest {
 
+     @Test
+     void centralBankConstuctor(){
+         CentralBank c1 = new CentralBank();
+         c1.createAccount("b123", 200, "jim@gmail.com");
+         assertEquals(1,c1.accountCount());
+
+         //create multiple accounts
+         //CE: Multiple account test can also go in the add/delete account tests
+         c1.createAccount("b00", 200, "pam@gmail.com");
+         c1.createAccount("b13", 200, "kelly@gmail.com");
+         assertEquals(3,c1.accountCount());
+
+
+     }
+
      //Admin Tests
 
      @Test
-     void freezeAccountTest(){
+
+     void overAllBalanceTest(){
+         //formerly calcTotalAssetsTest()
+         CentralBank c1 = new CentralBank();
+         assertEquals(0, c1.calcTotalAssets());
+         c1.createAccount("b123", 200, "jim@gmail.com");
+         c1.createAccount("b00", 200, "pam@gmail.com");
+         c1.createAccount("b13", 200, "kelly@gmail.com");
+
+         assertEquals(600, c1.calcTotalAssets());
+
+     }
+
+
+     @Test
+     void freezeAccountTest() throws IllegalAccessException {
+         CentralBank c1 = new CentralBank();
+         c1.createAccount("BA1234", 10000, "candace@gmail.com");
+         BankAccount b1 = c1.findAccountWithId("BA1234");
+         assertFalse(b1.getAcctFrozen());
+
+         c1.freezeAccount("BA1234");
+         assertTrue(b1.getAcctFrozen());
+         assertThrows(IllegalAccessException.class,()-> b1.deposit(200));
+         assertThrows(IllegalAccessException.class,()-> b1.withdraw(200));
+
+
 
 
      }
 
      @Test
      void unfreezeAccountTest(){
+         CentralBank c1 = new CentralBank();
+         c1.createAccount("BA1234", 10000, "candace@gmail.com");
+         BankAccount b1 = c1.findAccountWithId("BA1234");
+         assertFalse(b1.getAcctFrozen());
 
-         //unfreeze account
+         c1.freezeAccount("BA1234");
+         assertTrue(b1.getAcctFrozen());
+
+         c1.unfreezeAcct("BA1234");
+         assertFalse(b1.getAcctFrozen());
+
+     }
+
+     @Test
+     void findAccountStringTest(){
+         CentralBank c1 = new CentralBank();
+         c1.createAccount("b123", 200, "jim@gmail.com");
+         assertEquals("b123", c1.findAccountWithId("b123").getAcctId());
+
+
      }
 
      @Test
      void suspActTest(){
-         //sus activity test
+         CentralBank c1 = new CentralBank();
+         c1.createAccount("b123", 200, "jim@gmail.com");
+
+         //sus activity should be true for singular account
+         BankAccount b1 = c1.findAccountWithId("b123");
+         assertFalse(b1.getSusAct());
+
+         b1.setSusAct(true);
+         assertTrue(b1.getSusAct());
+
+         //appear on sus activity collection; list.
+         assertNotNull(c1.findAcctIdsWithSuspiciousActivity());
+         assertEquals(1, c1.findAcctIdsWithSuspiciousActivity().size());
      }
 
 
-     @Test
-      void calcTotalAssetsTest(){
-         //total assets test
 
-
-     }
 
 
      //Basic Tests
