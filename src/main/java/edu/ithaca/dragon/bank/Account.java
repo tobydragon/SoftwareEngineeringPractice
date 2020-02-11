@@ -10,6 +10,9 @@ public interface Account {
 
     String transactionHistory(String acctId);
 
+    void setFrozen(boolean value);
+
     String getAcctId();
 
-}
+    boolean getFrozenStatus();
+    }
