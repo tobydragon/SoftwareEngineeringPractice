@@ -20,6 +20,17 @@ import static org.junit.jupiter.api.Assertions.*;
          assertEquals(3,c1.accountCount());
 
 
+         //close account
+         c1.closeAccount("b123");
+         assertEquals(2,c1.accountCount());
+
+         //create multiple accounts
+         //CE: Multiple account test can also go in the add/delete account tests
+         c1.closeAccount("b00");
+         c1.closeAccount("b13");
+         assertEquals(0,c1.accountCount());
+
+
      }
 
      //Admin Tests
