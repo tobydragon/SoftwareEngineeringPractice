@@ -11,8 +11,8 @@ public class SavingsAccount extends BankAccount {
      * @param interestIn
      * @throws IllegalArgumentException if email is invalid
      */
-    public SavingsAccount(String id, double startingBalance, double interestIn) {
-        super(id, startingBalance);
+    public SavingsAccount(String id, double startingBalance, String password, double interestIn) {
+        super(id, startingBalance, password);
         if (isAmountValid(interestIn)){
             interest = interestIn;
         }

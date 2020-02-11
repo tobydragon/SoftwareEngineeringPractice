@@ -8,16 +8,16 @@ public class SavingsAccountTest {
 
     @Test
     void constructorTest(){
-        SavingsAccount testAccount = new SavingsAccount("1234", 500, 5);
+        SavingsAccount testAccount = new SavingsAccount("1234", 500, "password", 5);
 
         //Make sure it sets the object up
         assertEquals("1234", testAccount.getId());
         assertEquals(500, testAccount.getBalance());
 
         //test exception
-        assertThrows(IllegalArgumentException.class, () -> new SavingsAccount("4321", -10, 5) );
-        assertThrows(IllegalArgumentException.class, () -> new SavingsAccount("4321", 100, -5) );
-        assertThrows(IllegalArgumentException.class, () -> new SavingsAccount("4321", 100, 5.101) );
+        assertThrows(IllegalArgumentException.class, () -> new SavingsAccount("4321", -10, "password", 5) );
+        assertThrows(IllegalArgumentException.class, () -> new SavingsAccount("4321", 100, "password", -5) );
+        assertThrows(IllegalArgumentException.class, () -> new SavingsAccount("4321", 100, "password", 5.101) );
 
 
 
