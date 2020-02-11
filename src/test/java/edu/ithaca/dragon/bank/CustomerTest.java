@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CustomerTest {
+    
     @Test
     void isEmailValidTest(){
         assertTrue(Customer.isEmailValid( "a@b.com"));
@@ -64,4 +65,19 @@ public class CustomerTest {
         assertEquals("asdfasdf", c1.getPassword());
     }
 
+    @Test
+    void createAccount(){
+        Customer c1 = new Customer("bob", "1");
+        c1.createAccount(100);
+        assertEquals(100, c1.getBalance());
+        Customer c2 = new Customer("bob", "1");
+        c2.createAccount(200);
+        assertEquals(200, c2.getBalance());
+        assertThrows(Exception.class, ()->c2.createAccount(200));
+        assertThrows(Exception.class, ()->c2.createAccount(300));
+        Customer c3 = new Customer("bob", "1");
+        assertThrows(IllegalArgumentException.class, ()-> c3.createAccount(100.001));
+        assertThrows(IllegalArgumentException.class, ()-> c3.createAccount(-100));
+        assertThrows(IllegalArgumentException.class, ()-> c3.createAccount(0));
+    }
 }
