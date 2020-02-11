@@ -4,55 +4,53 @@ import org.junit.jupiter.api.Test;
 
 public class CentralBankTest {
     @Test
-    void confirmCredentialsTest(){
+    void confirmCredentialsTest() {
         CentralBank testBank = new CentralBank();
         testBank.createAccount("User01", 100);
+    }
 
+    @Test
+    void checkBalanceTest() {
 
     }
 
     @Test
-    void checkBalanceTest(){
+    void withdrawTest() {
 
     }
 
     @Test
-    void withdrawTest(){
+    void depositTest() {
 
     }
 
     @Test
-    void depositTest(){
+    void getHistoryTest() {
 
     }
 
     @Test
-    void getHistoryTest(){
+    void createAccountTest() {
 
     }
 
     @Test
-    void createAccountTest(){
+    void closeAccountTest() {
 
     }
 
     @Test
-    void closeAccountTest(){
+    void getSuspiciousAccountsTest() {
 
     }
 
     @Test
-    void getSuspiciousAccountsTest(){
+    void freezeAccountTest() {
 
     }
 
     @Test
-    void freezeAccountTest(){
-
-    }
-
-    @Test
-    void unfreezeAccountTest(){
+    void unfreezeAccountTest() {
 
     }
 }
