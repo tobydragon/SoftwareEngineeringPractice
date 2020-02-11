@@ -23,7 +23,7 @@ public class ATM implements BasicAPI {
 
     }
 
-    public void deposit(int acctId, double amount){
+    public void deposit(int acctId, double amount) throws InsufficientFundsException, NonExistentAccountException{
 
     }
 

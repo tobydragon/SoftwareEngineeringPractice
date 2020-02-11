@@ -34,8 +34,8 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
 
     }
 
-    public void deposit(int userId, double amount) {
-
+    public void deposit(int userId, double amount) throws InsufficientFundsException, NonExistentAccountException{
+        bankAccountCollection.retrieveAccount(userId, 0).deposit(amount);
     }
 
     public void deposit(int userId, int bankAccID, double amount) throws InsufficientFundsException {

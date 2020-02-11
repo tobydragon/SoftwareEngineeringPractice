@@ -65,8 +65,9 @@ public class CentralBankTest {
     }
 
     @Test
-    void depositTest() throws IllegalArgumentException, NonExistentAccountException{
+    void depositTest() throws IllegalArgumentException, NonExistentAccountException, InsufficientFundsException{
         CentralBank testBank = new CentralBank();
+        testBank.createUser("A", "Password", "a@b.com", 1);
         testBank.createAccount(1, 100);
 
         testBank.deposit(1, 10);
