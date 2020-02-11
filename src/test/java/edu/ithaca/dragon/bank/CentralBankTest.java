@@ -164,9 +164,9 @@ public class CentralBankTest {
         testBank.withdraw("1234", 350);
         assertEquals(650, testBank.checkBalance("1234"));
         testBank.withdraw("1234", 500);
-        assertEquals(200, testBank.checkBalance("1234"));
+        assertEquals(150, testBank.checkBalance("1234"));
         testBank.withdraw("1234", 5);
-        assertEquals(195, testBank.checkBalance("1234"));
+        assertEquals(145, testBank.checkBalance("1234"));
 
         //withdraw more than balance
         testBank.createAccount("4321", 500);
