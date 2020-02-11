@@ -10,5 +10,8 @@
         <module name="SoftwareEngineeringPractice" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="SoftwareEngineeringPractice" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>
