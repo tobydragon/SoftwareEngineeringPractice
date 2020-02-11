@@ -19,7 +19,7 @@ public class SavingsTests {
     }
 
     @Test
-    void checkBalanceTests() {
+    void checkBalanceTests() throws AcctFrozenException {
         Savings newSavings = new Savings("1234567890", "Mike", "jdsakjh23u329", 100, 3, 50);
         assertEquals(100, newSavings.checkBalance("1234567890"), 0.009);
         newSavings.deposit("1234567890", 20);
@@ -32,7 +32,7 @@ public class SavingsTests {
     }
 
     @Test
-    void withdrawTests() throws InsufficientFundsException {
+    void withdrawTests() throws InsufficientFundsException, AcctFrozenException {
         Savings newSavings = new Savings("1234567890", "Mike", "dg38g8qw", 100, 5, 30);
         newSavings.withdraw("1234567890", 20);
         assertEquals(80, newSavings.checkBalance("1234567890"), 0.009);
@@ -55,7 +55,7 @@ public class SavingsTests {
     }
 
     @Test
-    void depositTests(){
+    void depositTests() throws AcctFrozenException {
         Savings newSavings = new Savings("1234567890", "Mike", "jdsakjh23u329", 100, 3, 50);
         assertEquals(100, newSavings.checkBalance("1234567890"), 0.009);
         newSavings.deposit("1234567890", 20);
@@ -71,7 +71,7 @@ public class SavingsTests {
 
 
     @Test
-    void transactionHistoryTests() throws InsufficientFundsException {
+    void transactionHistoryTests() throws InsufficientFundsException, AcctFrozenException {
         //this also acts as an integration test
         Savings newSavings = new Savings("1234567890", "Mike", "bfuid3b", 300, 2, 120);
         newSavings.deposit("1234567890", 20);
@@ -86,7 +86,7 @@ public class SavingsTests {
     }
 
     @Test
-    void compoundInterestTests(){
+    void compoundInterestTests() throws AcctFrozenException {
         Savings newSavings = new Savings("1234567890", "Mike", "fduiewh9uf", 200, 3, 40);
         newSavings.compoundInterest("1234567890");
         assertEquals(206, newSavings.checkBalance("1234567890"), 0.009);
