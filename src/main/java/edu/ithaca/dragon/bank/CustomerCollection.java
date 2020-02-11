@@ -21,12 +21,13 @@ public class CustomerCollection {
         for (Customer customer : customers) {
             if (customer.getId().equals(ID)) {
                 customer.deposit(amount);
+                return;
 
             }
-            else{
-                throw new IllegalArgumentException("Account doesn't exist");
-            }
+
+
         }
+        throw new IllegalArgumentException("Account doesn't exist");
     }
 
     public void withdraw(String ID, double amount){}
