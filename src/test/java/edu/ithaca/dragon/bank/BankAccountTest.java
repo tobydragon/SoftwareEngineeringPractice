@@ -180,9 +180,9 @@ class BankAccountTest {
 
         assertEquals("a@b.com", bankAccount.getEmail());
         assertEquals(200, bankAccount.getBalance());
+        assertEquals("password", bankAccount.getPassword());
 
-        //check for exception thrown correctly
-        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", 100, "password"));
+
         //positive number three decimals
         assertThrows(IllegalArgumentException.class, ()-> new BankAccount("h@j.com", 100.763, "password"));
         assertThrows(IllegalArgumentException.class, ()-> new BankAccount("h@j.com", 10.763, "password"));

@@ -16,6 +16,8 @@ public class BankAccount {
             this.balance = startingBalance;
             this.transHist = "";
             this.password = password;
+        } else {
+            throw new IllegalArgumentException("Invalid balance");
         }
     }
 
