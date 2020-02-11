@@ -46,12 +46,11 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
      * @throws InsufficientFundsException if amount is more than balance
      */
     public void withdraw(String acctId, double amount) throws InsufficientFundsException {
-        double balance = bankAccounts.get(acctId);
-        double newBalance;
+        double balance = bankAccounts.get(acctId).getBalance();
         if(BankAccount.isAmountValid(amount)){
             if (amount <= balance){
-                newBalance = balance - amount;
-                bankAccounts.replace(acctId, newBalance);
+                balance -= amount;
+                bankAccounts.get(acctId).setBalance(balance);
             }
             else{
                 throw new InsufficientFundsException("Not enough funds for withdrawal.");

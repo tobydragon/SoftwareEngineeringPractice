@@ -29,6 +29,8 @@ public class BankAccount {
         return id;
     }
 
+    public void setBalance(double newBalance){this.balance = newBalance;}
+
     /**
      * @post reduces the balance by amount if amount is non-negative and smaller than balance
      */
