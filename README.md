@@ -8,4 +8,4 @@ Aidan Sequence Diagrams:
 
 Damel Sequence Diagrams:
 
-Cobi Sequence Diagrams:
+Cobi Sequence Diagrams: https://www.draw.io/#G1JSCEEiAHPZA61TeB2m-JlvqevmuESXX-
