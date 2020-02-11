@@ -342,48 +342,41 @@ public class CentralBankTest {
 
 
     @Test
-    void veraSystemTest() throws AccountAlreadyExistsException, AccountDoesNotExistException, BalanceRemainingException, InsufficientFundsException, ExceedsMaxWithdrawalException {
+    void veraDepositSystemTest() throws AccountAlreadyExistsException, AccountDoesNotExistException, BalanceRemainingException, InsufficientFundsException, ExceedsMaxWithdrawalException {
         CentralBank test = new CentralBank();
         String testID = "test@email.com";
         test.createAccount(testID, "password", 200, false);
         String test2ID = "test2@email.com";
         test.createAccount(test2ID, "password2", 400, true);
         String test3ID = "test3@email.com";
-        test.createAccount(test3ID, "password3", 0, false);
-
-        assertTrue(test.accountExists(testID));
-        assertFalse(test.accountExists("nope@no.com"));
-
-        assertTrue(test.confirmCredentials(testID, "password"));
-
-        assertFalse(test.isFrozen(testID));
-
-        assertFalse(test.isFrozen(test2ID));
-        test.freezeAccount(test2ID);
-        assertTrue(test.isFrozen(test2ID));
-
-        assertTrue(test.isFrozen(test2ID));
-        test.unfreezeAcct(test2ID);
-        assertFalse(test.isFrozen(test2ID));
-
-        assertTrue(test.accountExists(test3ID));
-        test.closeAccount(test3ID);
-        assertFalse(test.accountExists(test3ID));
-
-        assertEquals(200, test.checkBalance(testID));
-        assertEquals(400, test.checkBalance(test2ID));
+        test.createAccount(test3ID, "password3", 600, false);
 
         test.deposit(testID, 45);
         assertEquals(245, test.checkBalance(testID));
+        test.deposit(test2ID, 45);
+        assertEquals(445, test.checkBalance(test2ID));
+        test.deposit(test3ID, 45);
+        assertEquals(645, test.checkBalance(test3ID));
+
         test.withdraw(testID, 25);
         assertEquals(220, test.checkBalance(testID));
+        test.withdraw(test2ID, 50);
+        assertEquals(395, test.checkBalance(test2ID));
+        test.withdraw(test3ID, 75);
+        assertEquals(570, test.checkBalance(test3ID));
 
         test.transfer(testID, test2ID, 100);
         assertEquals(120, test.checkBalance(testID));
-        assertEquals(500, test.checkBalance(test2ID));
+        assertEquals(495, test.checkBalance(test2ID));
+        test.transfer(test3ID, test2ID, 200);
+        assertEquals(370, test.checkBalance(test3ID));
+        assertEquals(695, test.checkBalance(test2ID));
 
-        assertEquals(620, test.calcTotalAssets());
-
-        assertEquals("deposit 45.00,withdraw 25.00,transfer to test2@email.com 100.00", test.transactionHistory(testID));
+        test.deposit(testID, 50);
+        assertEquals(170, test.checkBalance(testID));
+        test.deposit(test2ID, 50);
+        assertEquals(745, test.checkBalance(test2ID));
+        test.deposit(test3ID, 50);
+        assertEquals(420, test.checkBalance(test3ID));
     }
 }
