@@ -9,7 +9,7 @@ public class Checking implements Account {
     private String password;
     private double balance;
     private boolean frozen;
-    private List<String[]> history;
+    private List<String> history;
 
     public Checking(String acctIdIn, String nameIn, String passwordIn, double startingBalance) throws IllegalArgumentException {
         if (acctIdIn.length() == 10) {
@@ -26,7 +26,7 @@ public class Checking implements Account {
 
         this.password = passwordIn;
         frozen = false;
-        history = new ArrayList<String[]>();
+        history = new ArrayList<String>();
     }
 
     public String getAcctId(){
@@ -50,12 +50,14 @@ public class Checking implements Account {
         }
         else{
             balance -= amount;
+            history.add("withdraw of " + String.valueOf(amount));
         }
     }
 
     public void deposit(String acctId, double amount){
         if(isAmountValid(amount)){
             balance += amount;
+            history.add("deposit of " + String.valueOf(amount));
         }
         else{
             throw new IllegalArgumentException("Amount is not valid");
@@ -73,7 +75,12 @@ public class Checking implements Account {
     }
 
     public String transactionHistory(String acctId){
-        return "";
+        String historyStr = "";
+        for (int i = 0; i < history.size(); i++) {
+            historyStr += history.get(i);
+            if (i < history.size()-1) historyStr += "; ";
+        }
+        return historyStr;
     }
 
     public static boolean isNameValid(String name){
