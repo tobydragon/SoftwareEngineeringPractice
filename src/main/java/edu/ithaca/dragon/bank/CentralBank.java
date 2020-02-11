@@ -1,14 +1,15 @@
 package edu.ithaca.dragon.bank;
-import java.lang.reflect.Array;
-import java.util.*;
-import java.awt.*;
+
+import java.util.Collection;
+import java.util.HashMap;
 
 
 public class CentralBank implements AdvancedAPI, AdminAPI {
 
+    private HashMap<String, BankAccount> customerCollection = new HashMap<String, BankAccount>();
+
     public CentralBank (){
-        BankAccount customerCollection[]= new BankAccount[1];
-        customerCollection[0] = new BankAccount("a@b.com",305, "abcdefg1234");
+
     }
 
     private boolean isAmountValid(double amount) throws IllegalArgumentException{
@@ -17,25 +18,25 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
 
         if (length > 3){ //only runs this test if amount has more than 3 chars
             int period = numString.lastIndexOf(".");
-            if (length > (period + 3)) throw new IllegalArgumentException("The amount you entered " + amount + " is invalid because it has more than three decimal places.");
+            if (length > (period + 3)){
+                throw new IllegalArgumentException("The amount you entered " + amount + " is invalid because it has more than three decimal places.");
+            }
         }
-
         else if (amount < 0){  //checks ifd the number is negative
             throw new IllegalArgumentException("The amount you entered " + amount + " is invalid because it is negative");
         }
 
         return true; // returns true if amount is valid
+
     }
 
     //----------------- BasicAPI methods -------------------------//
 
-    public boolean confirmCredentials(String acctId, String password, BankAccount[] customerCollection) {
-        for (int i = 0; i < customerCollection.length; i++) {
-            if (customerCollection[i].email == acctId){
-                if (customerCollection[i].getPassword() != password){
-                    return false;
-                }
-                else{
+    public boolean confirmCredentials(String acctId, String password) {
+        for (int i = 0; i < customerCollection.size(); i++) {
+            if (customerCollection.containsKey(acctId)) {
+                BankAccount bankAccount = customerCollection.get(acctId);
+                if (bankAccount.getPassword() == password){
                     return true;
                 }
             }
@@ -43,8 +44,109 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
         return false;
     }
 
+    @Override
+    public double checkBalance(String acctId) {
+        if (customerCollection.containsKey(acctId)) {
+            BankAccount bankAccount = customerCollection.get(acctId);
+            return bankAccount.getBalance();
+        }
+        throw new IllegalArgumentException("please provide valid accout ID");
+    }
 
-    public double checkBalance(String acctId, BankAccount[] customerCollection) throws IllegalArgumentException {
+    @Override
+    public void withdraw(String acctId, double amount) throws InsufficientFundsException {
+        BankAccount bankAccount = customerCollection.get(acctId);
+
+        if (isAmountValid(amount) != true) {
+            throw new IllegalArgumentException("The amount you entered " + amount + " is invalid");
+        }
+        if (amount < .01){ //checks that withdraw amount isnt 0
+            throw new IllegalArgumentException("Cannot withdraw $0 or less");
+        }
+        if (bankAccount.getBalance() < amount){ //checks that you have sufficient funds for the withdraw.
+            throw new InsufficientFundsException("Cannot draw more than account balance.");
+        }
+        else {
+            bankAccount.balance -= amount;
+        }
+
+    }
+
+    @Override
+    public void deposit(String acctId, double amount) throws IllegalArgumentException {
+        BankAccount bankAccount = customerCollection.get(acctId);
+        if (isAmountValid(amount) != true) {
+            throw new IllegalArgumentException("The amount you entered " + amount + " is invalid");
+        }
+        if (amount <= 0){ //checks that deposit amount isn't 0
+            throw new IllegalArgumentException("Cannot deposit $0");
+        }
+        if (amount < .01){ //checks that deposit amount isnt 0
+            throw new IllegalArgumentException("Cannot deposit less than $0.01");
+        }
+        else {
+            bankAccount.balance += amount;
+        }
+
+    }
+
+    @Override
+    public void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws InsufficientFundsException {
+        BankAccount withdrawBankAccount = customerCollection.get(acctIdToWithdrawFrom);
+        BankAccount depositBankAccount = customerCollection.get(acctIdToDepositTo);
+        if (isAmountValid(amount) != true) {
+            throw new IllegalArgumentException("The amount you entered " + amount + " is invalid");
+        }
+        if (amount == 0) { //checks that amount isn't 0
+            throw new IllegalArgumentException("Cannot deposit $0");
+        }
+        if (withdrawBankAccount.balance < amount){
+            throw new InsufficientFundsException("amount you wish to withdraw exceeds balance");
+        }
+        else{
+            withdrawBankAccount.balance -= amount;
+            depositBankAccount.balance += amount;
+        }
+    }
+
+    @Override
+    public String transactionHistory(String acctId) {
+        return null;
+    }
+
+    @Override
+    public double calcTotalAssets() {
+        return 0;
+    }
+
+    @Override
+    public Collection<String> findAcctIdsWithSuspiciousActivity() {
+        return null;
+    }
+
+    @Override
+    public void freezeAccount(String acctId) {
+
+    }
+
+    @Override
+    public void unfreezeAcct(String acctId) {
+
+    }
+
+    @Override
+    public void createAccount(String acctId, double startingBalance, String password) {
+        BankAccount bankAccount = new BankAccount(acctId,startingBalance, password);
+        customerCollection.put(acctId,bankAccount);
+    }
+
+    @Override
+    public void closeAccount(String acctId) {
+
+    }
+
+
+    /*public double checkBalance(String acctId, BankAccount[] customerCollection) throws IllegalArgumentException {
         int length = customerCollection.length;
         for(int i =0; i < length; i++){
             if (acctId == customerCollection[i].email)
@@ -52,16 +154,13 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
         }
         throw new IllegalArgumentException("The account ID you entered is not in the system");
     }
-
     public void withdraw(String acctId, double amount, BankAccount[] customerCollection) throws InsufficientFundsException {
         int length = customerCollection.length;
-
         if (isAmountValid(amount) == false){
             throw new IllegalArgumentException("The amount you entered " + amount + " is invalid");
         }
         if (amount < .01) //checks that withdraw amount isnt 0
             throw new IllegalArgumentException("Cannot withdraw $0 or less");
-
         for(int i =0; i < length; i++){
             if (acctId == customerCollection[i].email) {
                 if (customerCollection[i].balance < amount) //checks that you have sufficient funds for the withdraw.
@@ -70,13 +169,9 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
                     customerCollection[i].balance -= amount; //takes out money if everything is good
             }
         }
-
-
     }
-
     public void deposit(String acctId, double amount, BankAccount[] customerCollection) {
         int length = customerCollection.length;
-
         if (isAmountValid(amount) == false){
             throw new IllegalArgumentException("The amount you entered " + amount + " is invalid");
         }
@@ -89,66 +184,29 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
                     customerCollection[i].balance += amount;
             }
     }
-
     public void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws InsufficientFundsException {
-
     }
-
     public String transactionHistory(String acctId) {
         return null;
     }
-
-
     //----------------- AdvancedAPI methods -------------------------//
-
-    // I/O not working... need to fix in order for function to work
     public void createAccount(String acctId, double startingBalance) {
-        System.out.println("Is this a checking or savings account? (c/s): ");
-        String A = scan.nextLine();
-        System.out.println("Create Password: ");
-        String X = scan.nextLine();
-        System.out.println("Please Re-type Password: ");
-        String Y = scan.nextLine();
-
-        while (X != Y){
-            System.out.println("Please try again to re-type Password: ");
-            Y = scan.nextLine();
-        }
-        BankAccount newAcct = new BankAccount(acctId,startingBalance,X);
-        if (A == "c" || A == "C"){
-            //add to checking collection
-        }
-        else if (A == "s" || A == "S"){
-            //add to saving collection
-        }
-        //add to customer collection
     }
-
     public void closeAccount(String acctId) {
-
     }
-
-
     //------------------ AdminAPI methods -------------------------//
-
     public double checkTotalAssets() {
         return 0;
     }
-
     public double calcTotalAssets() {
         return 0;
     }
-
     public Collection<String> findAcctIdsWithSuspiciousActivity() {
         return null;
     }
-
     public void freezeAccount(String acctId) {
-
     }
-
     public void unfreezeAcct(String acctId) {
-
     }
-
+*/
 }
