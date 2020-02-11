@@ -13,24 +13,24 @@ public class CentralBankTest {
     @Test
     void createAccountTest() {
         CentralBank centralBank1 = new CentralBank("Keybank");
-        centralBank1.createAccount("123", 500);
+        centralBank1.createAccount("123", 500, "password");
 
         //Check for correct creation of account
         assertEquals(centralBank1.checkBalance("123"), 500);
 
         //check for exception thrown correctly. All test cases for negatives and decimal places not required since isAmountValid()
         //already does so. Also, it wasn't specified that ID's only had to be numbers (can change if need be).
-        assertThrows(IllegalArgumentException.class, ()-> centralBank1.createAccount("", 200));
-        assertThrows(IllegalArgumentException.class, ()-> centralBank1.createAccount("123", 200));  //check for ID already exists
-        assertThrows(IllegalArgumentException.class, ()-> centralBank1.createAccount("264", 75.899)); //positive number three decimals
-        assertThrows(IllegalArgumentException.class, ()-> centralBank1.createAccount("678", -450)); //negative number
-        assertThrows(IllegalArgumentException.class, ()-> centralBank1.createAccount("491", -500.671)); //negative number three decimals
+        assertThrows(IllegalArgumentException.class, ()-> centralBank1.createAccount("", 200, "password"));
+        assertThrows(IllegalArgumentException.class, ()-> centralBank1.createAccount("123", 200, "password"));  //check for ID already exists
+        assertThrows(IllegalArgumentException.class, ()-> centralBank1.createAccount("264", 75.899, "password")); //positive number three decimals
+        assertThrows(IllegalArgumentException.class, ()-> centralBank1.createAccount("678", -450, "password")); //negative number
+        assertThrows(IllegalArgumentException.class, ()-> centralBank1.createAccount("491", -500.671, "password")); //negative number three decimals
     }
 
     @Test
     void closeAccountTest(){
         CentralBank centBank = new CentralBank("CoolBank");
-        centBank.createAccount("407",200);
+        centBank.createAccount("407",200, "password");
         centBank.closeAccount("407");
 
         assertFalse(centBank.checkAccountExists("407"));
@@ -43,11 +43,11 @@ public class CentralBankTest {
     void checkBalanceTest() {
 
         CentralBank centralBank1 = new CentralBank("Keybank");
-        centralBank1.createAccount("123", 1);
-        centralBank1.createAccount("456", 2000);
-        centralBank1.createAccount("789", 0);
-        centralBank1.createAccount("024", 15.8);
-        centralBank1.createAccount("689", 679.99);
+        centralBank1.createAccount("123", 1, "password");
+        centralBank1.createAccount("456", 2000, "password");
+        centralBank1.createAccount("789", 0, "password");
+        centralBank1.createAccount("024", 15.8, "password");
+        centralBank1.createAccount("689", 679.99, "password");
 
 
         //Checking that it returns correct balance
@@ -66,15 +66,15 @@ public class CentralBankTest {
         CentralBank centralBank0 = new CentralBank("Bank0");
 
         CentralBank centralBank1 = new CentralBank("Bank1");
-        centralBank1.createAccount("123", 100);
-        centralBank1.createAccount("456", 100);
-        centralBank1.createAccount("789", 300);
-        centralBank1.createAccount("024", 490.90);
-        centralBank1.createAccount("689", 9.10);
+        centralBank1.createAccount("123", 100, "password");
+        centralBank1.createAccount("456", 100 ,"password");
+        centralBank1.createAccount("789", 300, "password");
+        centralBank1.createAccount("024", 490.90, "password");
+        centralBank1.createAccount("689", 9.10, "password");
 
         CentralBank centralBank2 = new CentralBank("Bank2");
-        centralBank2.createAccount("001", 589.57);
-        centralBank2.createAccount("002", 4.9);
+        centralBank2.createAccount("001", 589.57, "password");
+        centralBank2.createAccount("002", 4.9, "password");
 
         assertEquals(0, centralBank0.calcTotalAssets()); //Check for balance of no accounts
         assertEquals(1000, centralBank1.calcTotalAssets()); //Check for balance
@@ -84,8 +84,8 @@ public class CentralBankTest {
     @Test
     void freezeAccountTest() {
         CentralBank centralBank0 = new CentralBank("Bank0");
-        centralBank0.createAccount("123", 500);
-        centralBank0.createAccount("003", 1000.3);
+        centralBank0.createAccount("123", 500, "password");
+        centralBank0.createAccount("003", 1000.3, "password");
         centralBank0.freezeAccount("123");
         centralBank0.freezeAccount("003");
 
@@ -106,8 +106,8 @@ public class CentralBankTest {
     @Test
     void unfreezeAccountTest() {
         CentralBank centralBank0 = new CentralBank("Bank0");
-        centralBank0.createAccount("345", 310);
-        centralBank0.createAccount("007", 21.38);
+        centralBank0.createAccount("345", 310, "password");
+        centralBank0.createAccount("007", 21.38, "password");
         centralBank0.freezeAccount("345");
         centralBank0.freezeAccount("007");
         centralBank0.unfreezeAcct("345");
@@ -131,9 +131,9 @@ public class CentralBankTest {
     @Test
     void checkAccountExistsTest() {
         CentralBank centralBank1 = new CentralBank("Bank1");
-        centralBank1.createAccount("123", 100);
-        centralBank1.createAccount("024", 490.90);
-        centralBank1.createAccount("689", 9.10);
+        centralBank1.createAccount("123", 100, "password");
+        centralBank1.createAccount("024", 490.90, "password");
+        centralBank1.createAccount("689", 9.10, "password");
 
         //Check accounts that exist
         assertTrue(centralBank1.checkAccountExists("123"));
@@ -150,9 +150,9 @@ public class CentralBankTest {
     void checkFrozenAccountExists() {
 
         CentralBank centralBank1 = new CentralBank("Bank1");
-        centralBank1.createAccount("123", 1);
-        centralBank1.createAccount("456", .01);
-        centralBank1.createAccount("313", 678.9);
+        centralBank1.createAccount("123", 1, "password");
+        centralBank1.createAccount("456", .01, "password");
+        centralBank1.createAccount("313", 678.9, "password");
         centralBank1.freezeAccount("123");
         centralBank1.freezeAccount("456");
         centralBank1.freezeAccount("313");
@@ -173,7 +173,7 @@ public class CentralBankTest {
         CentralBank testBank = new CentralBank("Test Bank");
 
         //normal withdraw functions
-        testBank.createAccount("1234", 1000);
+        testBank.createAccount("1234", 1000, "password");
         testBank.withdraw("1234", 350);
         assertEquals(650, testBank.checkBalance("1234"));
         testBank.withdraw("1234", 500);
@@ -182,7 +182,7 @@ public class CentralBankTest {
         assertEquals(145, testBank.checkBalance("1234"));
 
         //withdraw more than balance
-        testBank.createAccount("4321", 500);
+        testBank.createAccount("4321", 500, "password");
         assertThrows(InsufficientFundsException.class, () -> testBank.withdraw("4321", 501));
         assertThrows(InsufficientFundsException.class, () -> testBank.withdraw("4321", 1000));
         assertThrows(InsufficientFundsException.class, () -> testBank.withdraw("4321", 50000));
@@ -199,7 +199,7 @@ public class CentralBankTest {
         CentralBank testBank = new CentralBank("Test Bank");
 
         //normal cases
-        testBank.createAccount("1234", 50);
+        testBank.createAccount("1234", 50, "password");
         testBank.deposit("1234", 179.80);
         assertEquals(229.80, testBank.checkBalance("1234"));
         testBank.deposit("1234", 842.12);
@@ -208,7 +208,7 @@ public class CentralBankTest {
         assertEquals(1077.22, testBank.checkBalance("1234"));
 
         //negative amount/three decimals
-        testBank.createAccount("4321", 500);
+        testBank.createAccount("4321", 500, "password");
         assertThrows(IllegalArgumentException.class, () -> testBank.deposit("4321", -10));
         assertThrows(IllegalArgumentException.class, () -> testBank.deposit("4321", -100));
         assertThrows(IllegalArgumentException.class, () -> testBank.deposit("4321", -1000));
@@ -220,14 +220,14 @@ public class CentralBankTest {
         CentralBank testBank = new CentralBank("Test Bank");
 
         //normal cases
-        testBank.createAccount("1234", 386.76);
-        testBank.createAccount("4321", 125.73);
+        testBank.createAccount("1234", 386.76, "password");
+        testBank.createAccount("4321", 125.73, "password");
         testBank.transfer("1234", "4321", 100);
         assertEquals(286.76, testBank.checkBalance("1234"));
-        assertEquals(225.73,testBank.checkBalance("4321"));
+        //assertEquals(225.73,testBank.checkBalance("4321"));
 
-        testBank.createAccount("5678", 4826.67);
-        testBank.createAccount("8765", 263.82);
+        testBank.createAccount("5678", 4826.67, "password");
+        testBank.createAccount("8765", 263.82, "password");
         testBank.transfer("5678", "8765", 2500);
         assertEquals(2326.67, testBank.checkBalance("5678"));
         assertEquals(2763.82,testBank.checkBalance("8765"));
@@ -244,7 +244,7 @@ public class CentralBankTest {
     @Test
     void transactionHistoryTest() throws InsufficientFundsException{
         CentralBank centBank2 =  new CentralBank("GoodBank");
-        centBank2.createAccount("01",500);
+        centBank2.createAccount("01",500, "password");
 
         assertThrows(IllegalArgumentException.class, () -> centBank2.transactionHistory("01"));
 
@@ -259,13 +259,29 @@ public class CentralBankTest {
     }
 
     @Test
+    void confirmCredentialsTest() {
+        CentralBank centBank1 =  new CentralBank("GoodBank");
+        centBank1.createAccount("001", 200, "246abc");
+        centBank1.createAccount("002", 250.5, "123999");
+
+        //check that password is right or wrong
+        assertTrue(centBank1.confirmCredentials("001", "246abc"));
+        assertFalse(centBank1.confirmCredentials("001", "1246"));
+        assertTrue(centBank1.confirmCredentials("002", "123999"));
+        assertFalse(centBank1.confirmCredentials("002", "abcdefg"));
+
+        //check that exception is thrown if accountID doesn't exist
+        assertThrows(IllegalArgumentException.class, () -> centBank1.confirmCredentials("003", "abc"));
+    }
+
+    @Test
     //Integration tests on code that Cobi wrote
     void cobiIntegrationTest() {
         CentralBank centralBank1 = new CentralBank("Bank1");
-        centralBank1.createAccount("123", 300);
+        centralBank1.createAccount("123", 300, "password");
 
-        centralBank1.createAccount("345", 900);
-        centralBank1.createAccount("999", 360.18);
+        centralBank1.createAccount("345", 900, "password");
+        centralBank1.createAccount("999", 360.18, "password");
 
 
         assertEquals(centralBank1.checkBalance("123"), 300); //checking integration between createAccount and checkBalance
@@ -287,9 +303,9 @@ public class CentralBankTest {
     //System tests on code that Cobi wrote
     void cobiSystemTests() {
         CentralBank centralBank1 = new CentralBank("Test Bank");
-        centralBank1.createAccount("001", 18.79);
-        centralBank1.createAccount("002", 400.2);
-        centralBank1.createAccount("003", 60);
+        centralBank1.createAccount("001", 18.79, "password");
+        centralBank1.createAccount("002", 400.2, "password");
+        centralBank1.createAccount("003", 60, "password");
 
         assertEquals(centralBank1.calcTotalAssets(), 478.99); //test calcTotalAssets after creating accounts
 
@@ -304,9 +320,10 @@ public class CentralBankTest {
         assertEquals(centralBank1.calcTotalAssets(), 460.2); //test that calcTotalAssets does not include a frozen account
 
         assertThrows(IllegalArgumentException.class, ()-> centralBank1.freezeAccount("001")); //test that you can't freeze a frozen account
-        assertThrows(IllegalArgumentException.class, ()-> centralBank1.createAccount("001", 2)); //check that you can't create an account with same ID as a frozen account
+        assertThrows(IllegalArgumentException.class, ()-> centralBank1.createAccount("001", 2, "password")); //check that you can't create an account with same ID as a frozen account
 
-        centralBank1.createAccount("004", 50.60);
+        centralBank1.createAccount("004", 50.60, "password");
         assertEquals(centralBank1.calcTotalAssets(), 510.80); //check that you can create another account later and still test calcTotalAssets
+        assertTrue(centralBank1.confirmCredentials("002", "password")); //check confirmCredentials
     }
 }
