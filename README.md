@@ -1,10 +1,5 @@
-# SoftwareEngineeringPractice
-## grading
+Class Diagram: https://drive.google.com/file/d/19JT3qFx5QZFDDfXToH9PeJ05eA53T-fP/view?usp=sharing
 
-To Do | correct
----|---
-at least 8 commits|
-isEmailValid|
-withdraw|
-isamountValid|
-constructor & withdraw fix|
+Use Case Diagram: https://drive.google.com/file/d/1mQPoJrk448VQrnWcDUUmM017RHZNLHQZ/view?usp=sharing
+
+CreateAccount Sequence Diagram : https://drive.google.com/file/d/17_fjRoPPmLSFtNEhx62D5JeDLVHGVAaf/view?usp=sharing

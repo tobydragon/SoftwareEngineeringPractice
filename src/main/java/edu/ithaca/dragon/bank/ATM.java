@@ -37,7 +37,6 @@ public class ATM implements BasicAPI {
 
     public void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws InsufficientFundsException {
 
-
     }
 
     public String transactionHistory(String acctId) {

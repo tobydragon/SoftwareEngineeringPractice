@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ATMTest {
     @Test
-    void depositTest(){
+    void depositTest() throws Exception {
         //Equivalence class: valid amount-positive int
         CustomerCollection c1 = new CustomerCollection();
         c1.addCustomer("Mari", "love12");
