@@ -4,6 +4,8 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.HashMap;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
 
@@ -50,7 +52,9 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
             double balance = bankAccounts.get(acctId).getBalance();
             if (amount <= balance){
                 balance -= amount;
-                bankAccounts.get(acctId).setBalance(balance);
+                BigDecimal bd = new BigDecimal(balance).setScale(2, RoundingMode.HALF_UP);
+                double roundedBalance = bd.doubleValue();
+                bankAccounts.get(acctId).setBalance(roundedBalance);
                 bankAccounts.get(acctId).newTransaction("Withdraw: " + amount + "\n");
             }
             else{
@@ -66,7 +70,9 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
         if (BankAccount.isAmountValid(amount)){
             double balance = bankAccounts.get(acctId).getBalance();
             balance += amount;
-            bankAccounts.get(acctId).setBalance(balance);
+            BigDecimal bd = new BigDecimal(balance).setScale(2, RoundingMode.HALF_UP);
+            double roundedBalance = bd.doubleValue();
+            bankAccounts.get(acctId).setBalance(roundedBalance);
         }
         else{
             throw new IllegalArgumentException("Invalid amount entry.");
@@ -74,7 +80,13 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
     }
 
     public void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws InsufficientFundsException {
-        //TODO
+        if (BankAccount.isAmountValid(amount)){
+            this.withdraw(acctIdToWithdrawFrom, amount);
+            this.deposit(acctIdToDepositTo, amount);
+        }
+        else{
+            throw new IllegalArgumentException("Invalid amount entry.");
+        }
     }
 
     public String transactionHistory(String acctId) {
