@@ -41,37 +41,35 @@ public class Checking implements Account {
         return this.balance;
     }
 
-    public void withdraw(String acctId, double amount) throws InsufficientFundsException{
-        if(amount > balance){
-            throw new InsufficientFundsException("Cannot withdraw amount greater than balance");
+    public void withdraw(String acctId, double amount) throws InsufficientFundsException, AcctFrozenException{
+        if(frozen) {
+            throw new AcctFrozenException("Cannot deposit into a forzen account");
         }
-        if(!isAmountValid(amount)){
-            throw new IllegalArgumentException("Amount is not valid");
-        }
-        else{
-            balance -= amount;
-            history.add("withdraw of " + String.valueOf(amount));
-        }
-    }
-
-    public void deposit(String acctId, double amount){
-        if(isAmountValid(amount)){
-            balance += amount;
-            history.add("deposit of " + String.valueOf(amount));
-        }
-        else{
-            throw new IllegalArgumentException("Amount is not valid");
+        else {
+            if (amount > balance) {
+                throw new InsufficientFundsException("Cannot withdraw amount greater than balance");
+            }
+            if (!isAmountValid(amount)) {
+                throw new IllegalArgumentException("Amount is not valid");
+            } else {
+                balance -= amount;
+                history.add("withdraw of " + String.valueOf(amount));
+            }
         }
     }
 
-    public void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws InsufficientFundsException{
-        /*if(amount > balance){
-            throw new InsufficientFundsException("Amount cannot be greater than account balance");
+    public void deposit(String acctId, double amount) throws AcctFrozenException{
+        if(frozen){
+            throw new AcctFrozenException("Cannot deposit into a forzen account");
         }
-        else{
-            withdraw(acctIdToWithdrawFrom, amount);
-            deposit(acctIdToDepositTo, amount);
-        }*/
+        else {
+            if (isAmountValid(amount)) {
+                balance += amount;
+                history.add("deposit of " + String.valueOf(amount));
+            } else {
+                throw new IllegalArgumentException("Amount is not valid");
+            }
+        }
     }
 
     public String transactionHistory(String acctId){
@@ -115,5 +113,9 @@ public class Checking implements Account {
         String checkDouble = Double.toString(amount);
         int indexDecimal = checkDouble.indexOf('.');
         return checkDouble.length() - indexDecimal <= 3;
+    }
+
+    public void setFrozen(boolean value){
+        this.frozen = value;
     }
 }

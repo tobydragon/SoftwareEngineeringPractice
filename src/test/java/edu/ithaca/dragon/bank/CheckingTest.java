@@ -47,7 +47,7 @@ public class CheckingTest {
     }
 
     @Test
-    void withdrawTest() throws InsufficientFundsException{
+    void withdrawTest() throws InsufficientFundsException, AcctFrozenException{
         //zero balance
         Checking checkingAcct = new Checking("1234567890", "Bob Lob", "dog123", 75.24);
         checkingAcct.withdraw("1234567890", 75.24);
@@ -74,7 +74,7 @@ public class CheckingTest {
     }
 
     @Test
-    void depositTest(){
+    void depositTest() throws AcctFrozenException{
         //zero value
         Checking checkingAcct = new Checking("1234567890", "Bob G", "bao", 200);
         checkingAcct.deposit("1234567890", 0);
@@ -130,7 +130,7 @@ public class CheckingTest {
     }*/
 
     @Test
-    void transactionHistoryTest() throws InsufficientFundsException{
+    void transactionHistoryTest() throws InsufficientFundsException, AcctFrozenException{
         //check deposit
         Checking checkingAcct = new Checking("1234567890", "Bob James", "frog", 200);
         checkingAcct.deposit("1234567890", 100);
