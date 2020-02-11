@@ -100,7 +100,7 @@ public class SavingsTests {
         newSavings.freezeOrUnfreezeAccount("1234567890");
         newSavings.freezeOrUnfreezeAccount("1234567890");
         newSavings.freezeOrUnfreezeAccount("1234567890");
-        assertEquals(false, newSavings.getFrozenStatus());
+        assertEquals(true, newSavings.getFrozenStatus());
     }
 
 
