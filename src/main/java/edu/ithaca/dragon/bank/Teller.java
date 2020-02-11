@@ -3,11 +3,12 @@ package edu.ithaca.dragon.bank;
 import java.util.Collection;
 
 public class Teller extends ATM implements AdvancedAPI {
+    CentralBank bank;
 
-    public Teller(Collection<BankAccount> accounts, Collection<User> users) {
-        super(accounts, users);
+    public Teller(CentralBank bank){
+        super(bank);
+
     }
-
     public void createAccount(String acctId, double startingBalance) {
 
     }

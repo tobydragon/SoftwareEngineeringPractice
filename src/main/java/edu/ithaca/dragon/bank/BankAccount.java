@@ -1,14 +1,18 @@
 package edu.ithaca.dragon.bank;
 
+import java.util.ArrayList;
+
 public class BankAccount {
 
     private String acctId;
     private double balance;
     private boolean frozen = false;
+    private ArrayList<Double> transactionHistory = new ArrayList<Double>();
+    //.
 
     /**
      * @post creates a bank account object
-     * @throws IllegalArgumentException if email is invalid
+     * @throws IllegalArgumentException if dollar amount is invalid
      *
      */
     public BankAccount(double startingBalance, String acctId) {
@@ -27,6 +31,17 @@ public class BankAccount {
         return balance;
     }
 
+    public boolean isFrozen() {
+        return frozen;
+    }
+
+    public String getAcctId() {
+        return acctId;
+    }
+
+    public void setFrozen(boolean frozen) {
+        this.frozen = frozen;
+    }
 
     /**
      * @post checks if inputted dollar amount is a valid dollar amount
@@ -74,7 +89,7 @@ public class BankAccount {
             balance -= amount;
         }
 
-
+        transactionHistory.add(-amount);
     }
 
 
@@ -94,6 +109,7 @@ public class BankAccount {
         else {
             balance += amount;
         }
+        transactionHistory.add(amount);
     }
 
 

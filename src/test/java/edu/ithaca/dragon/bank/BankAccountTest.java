@@ -2,6 +2,9 @@ package edu.ithaca.dragon.bank;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class BankAccountTest {
@@ -39,6 +42,7 @@ class BankAccountTest {
         //invalid format
         assertFalse(BankAccount.isAmountValid(83746.82736453));
     }
+
 
 //    @Test
 //    void withdrawTest() throws InsufficientFundsException, IllegalArgumentException{
