@@ -65,8 +65,15 @@ public class SavingsTests {
 
 
     @Test
-    void transactionHistoryTests(){
-
+    void transactionHistoryTests() throws InsufficientFundsException {
+        Savings newSavings = new Savings("1234567890", "Mike", "bfuid3b", 300, 2, 120);
+        newSavings.deposit("1234567890", 20);
+        newSavings.deposit("1234567890", 40);
+        newSavings.withdraw("1234567890", 90);
+        assertThrows(IllegalArgumentException.class, ()-> newSavings.transactionHistory("1238456789"));
+        assertEquals("deposit of 20; deposit of 40; withdrawal of 90", newSavings.transactionHistory("1234567890"));
+        newSavings.deposit("1234567890", 80);
+        assertEquals("deposit of 20; deposit of 40; withdrawal of 90; deposit of 80", newSavings.transactionHistory("1234567890"));
     }
 
     @Test

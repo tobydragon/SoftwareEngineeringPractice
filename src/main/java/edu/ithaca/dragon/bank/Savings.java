@@ -10,7 +10,7 @@ public class Savings implements Account{
     private String password;
     private double balance;
     private boolean frozen;
-    private List<String []> history;
+    private List<String> history;
     private double interestRate;
     private double maxWithdrawal;
 
@@ -34,7 +34,7 @@ public class Savings implements Account{
         interestRate = interestRateIn;
         maxWithdrawal = maxWithdrawalIn;
         frozen = false;
-        history = new ArrayList<String[]>();
+        history = new ArrayList<String>();
     }
 
     public String getAcctId(){
@@ -66,6 +66,7 @@ public class Savings implements Account{
             throw new IllegalArgumentException("Amount exceeds daily maximum withdrawal amount");
         }
         balance -= amount;
+        history.add("withdrawal of" + amount);
     }
 
     public void deposit(String acctId, double amount){
@@ -76,6 +77,7 @@ public class Savings implements Account{
             throw new IllegalArgumentException("Cannot deposit 0 or less");
         }        
         balance += amount;
+        history.add("deposit of" + amount);
     }
 
     public void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws InsufficientFundsException{
