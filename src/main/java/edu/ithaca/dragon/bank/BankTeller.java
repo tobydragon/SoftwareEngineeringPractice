@@ -42,7 +42,9 @@ public class BankTeller implements AdvancedAPI {
 
     }
 
-    public void closeAccount(String acctId) {}
+    public void closeAccount(String acctId) throws IllegalArgumentException {
+        customers.closeCustomer(acctId);
+    }
 
     public int getNumCustomers(){
         return customers.getNumCustomers();

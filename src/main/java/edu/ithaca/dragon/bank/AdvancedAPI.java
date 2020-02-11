@@ -5,5 +5,5 @@ public interface AdvancedAPI extends BasicAPI {
 
     public void createAccount(String acctId, String password, double startingBalance) throws Exception;
 
-    public void closeAccount(String acctId);
+    public void closeAccount(String acctId) throws IllegalArgumentException;
 }
