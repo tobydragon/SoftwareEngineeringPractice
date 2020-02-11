@@ -7,7 +7,15 @@ public class CheckingAccount extends Account {
     public CheckingAccount(String ID, double balance){
         super(ID, balance);
     }
-    public void deposit(double amount){}
+    public void deposit(double amount){
+        if (isAmountValid(amount)){
+            balance += amount;
+        }
+        else {
+            throw new IllegalArgumentException("invalid amount ");
+
+        }
+    }
     public void withdraw(double amount) throws InsufficientFundsException, IllegalArgumentException{
         if(!CheckingAccount.isAmountValid(amount))throw new IllegalArgumentException("Not a valid Amount");
         if(Double.compare(amount, 0.0)==0)throw new IllegalArgumentException("Cannot Withdraw zero dollars");

@@ -16,7 +16,7 @@ public class BankTeller implements AdvancedAPI {
     }
 
     public double checkBalance(String acctId) {
-        return 0;
+        return customers.getBalance(acctId);
     }
 
     public void withdraw(String acctId, double amount) throws InsufficientFundsException {
@@ -24,6 +24,13 @@ public class BankTeller implements AdvancedAPI {
     }
 
     public void deposit(String acctId, double amount) {
+        if (isAmountValid(amount)){
+            customers.deposit( acctId,  amount);;
+        }
+        else {
+            throw new IllegalArgumentException("invalid amount ");
+
+        }
 
     }
 
@@ -41,4 +48,12 @@ public class BankTeller implements AdvancedAPI {
     }
 
     public void closeAccount(String acctId) {}
+
+    public static boolean isAmountValid(double amountIn){
+        if (amountIn < 0) return false;
+        double scale = Math.pow(10, 9);
+        amountIn = Math.round(amountIn*scale)/scale;
+        if(Double.compare(amountIn, Math.round(amountIn*100)/100.0)!= 0) return false;
+        else return true;
+    }
 }
