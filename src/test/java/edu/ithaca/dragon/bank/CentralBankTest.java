@@ -5,6 +5,9 @@ import org.junit.jupiter.api.Test;
 public class CentralBankTest {
     @Test
     void confirmCredentialsTest(){
+        CentralBank testBank = new CentralBank();
+        testBank.createAccount("User01", 100);
+
 
     }
 
