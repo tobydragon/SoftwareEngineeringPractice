@@ -129,6 +129,90 @@ class BankAccountTest {
         bankAccount7.deposit(23.93);
         assertEquals(489.86, bankAccount7.getBalance());
 
+        BankAccount bankAccount8 = new CheckingAccount("a@b.com", "password", 400); //equivalence case with multiple low decimal value deposits
+        bankAccount8.deposit(16.75);
+        assertEquals(416.75, bankAccount8.getBalance());
+        bankAccount8.deposit(3.40);
+        assertEquals(420.15, bankAccount8.getBalance());
+    }
+
+    @Test
+    void transferTest() throws InsufficientFundsException, ExceedsMaxWithdrawalException {
+        //equivalence case with basic balances of 200 and 500 with 50 dollar transfer
+        BankAccount bankAccount = new CheckingAccount("a@b.com", "password", 200);
+        BankAccount bankAccount2 = new CheckingAccount("a@b.com", "password", 500);
+        BankAccount.transfer(bankAccount, bankAccount2, 50.00);
+        assertEquals(250, bankAccount.getBalance());
+        assertEquals(450, bankAccount2.getBalance());
+
+        //equivalence case with 2nd account is less than amount wanted to transfer, so nothing gets transferred
+        BankAccount bankAccount7 = new CheckingAccount("a@b.com", "password", 549.34);
+        BankAccount bankAccount8 = new CheckingAccount("a@b.com", "password", 47);
+        assertThrows(InsufficientFundsException.class, ()-> BankAccount.transfer(bankAccount7, bankAccount8, 48.54));
+    }
+
+    @Test
+    void constructorTest() {
+        BankAccount bankAccount = new CheckingAccount("a@b.com", "password", 200);
+
+        assertEquals("a@b.com", bankAccount.getEmail());
+        assertEquals(200, bankAccount.getBalance());
+        //check for exception thrown correctly
+        assertThrows(IllegalArgumentException.class, ()-> new CheckingAccount("", "password", 100, false)); //equivalence case with no email input
+        assertThrows(IllegalArgumentException.class, ()-> new CheckingAccount("a.cc", "password", -100, false)); //equivalence case with only a letter
+        assertThrows(IllegalArgumentException.class, ()-> new CheckingAccount("@b.cc", "password", 100, false)); //equivalence case with only domain and extension
+        assertThrows(IllegalArgumentException.class, ()-> new CheckingAccount("bank@email.com", "", 100, false));
+        assertThrows(IllegalArgumentException.class, ()-> new CheckingAccount("bank@email.com", "1234", 100, false));
+        assertThrows(IllegalArgumentException.class, ()-> new CheckingAccount("bank@email.com", "passwrd", 100,false));
+
+        //ummmm these tests don't exactly go with the constructor test but ok????
+        BankAccount bankAccount1 = new CheckingAccount("hello@barry.cc", "password", 50, false);
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount1.withdraw(-6000)); //equivalence case with a large (or low) negative amount value to withdraw
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount1.withdraw(-60)); //equivalence case with a negative amount value to withdraw
+
+        BankAccount bankAccount2 = new CheckingAccount("b@a.cc", "password", 90, false);
+        assertThrows(IllegalArgumentException.class, ()-> BankAccount.transfer(bankAccount1, bankAccount2, -900)); //equivalence case where the transfer amount is negative amount of money
+        assertThrows(IllegalArgumentException.class, ()-> BankAccount.transfer(bankAccount1, bankAccount2, -91)); //equivalence case of negative amount of money to transfer
+    }
+
+    @Test
+    void isPasswordValidTest() {
+        //too short
+        assertFalse(BankAccount.isPasswordValid(""));
+        assertFalse(BankAccount.isPasswordValid("pw123"));
+        assertFalse(BankAccount.isPasswordValid("passwrd"));
+
+        //okay
+        assertTrue(BankAccount.isPasswordValid("password"));
+        assertTrue(BankAccount.isPasswordValid("supersecretpassword123"));
+        assertTrue(BankAccount.isPasswordValid("#thebestpasswordever!!12345"));
+    }
+
+    @Test
+    void depositTest(){
+        //Basic test
+        BankAccount bankAccount = new CheckingAccount("a@b.com", "password", 200, false); //equivalence case is a regular amount of 100 dollars deposited
+        bankAccount.deposit(100.);
+        assertEquals(300, bankAccount.getBalance());
+
+        BankAccount bankAccount2 = new CheckingAccount("a@b.com", "password", 7000.0, false); //equivalence case using decimals and values above 5000 in account
+        bankAccount2.deposit(234.98);
+        assertEquals(7234.98, bankAccount2.getBalance());
+
+        //Negative deposit amount
+        BankAccount bankAccount5 = new CheckingAccount("a@b.com", "password", 200, false); //equivalence case with withdraw being a negative and automatically adding nothing
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount5.deposit(-600));
+
+        BankAccount bankAccount6 = new CheckingAccount("a@b.com", "password", 100000, false); //equivalence edge case without anything being deposited
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount6.deposit(-10000));
+
+        //Multiple deposits with doubles
+        BankAccount bankAccount7 = new CheckingAccount("a@b.com", "password", 400, false); //equivalence case with multiple decimal value deposits
+        bankAccount7.deposit(65.93);
+        assertEquals(465.93, bankAccount7.getBalance());
+        bankAccount7.deposit(23.93);
+        assertEquals(489.86, bankAccount7.getBalance());
+
         BankAccount bankAccount8 = new CheckingAccount("a@b.com", "password", 400, false); //equivalence case with multiple low decimal value deposits
         bankAccount8.deposit(16.75);
         assertEquals(416.75, bankAccount8.getBalance());
