@@ -13,6 +13,12 @@ public class SavingsAccount extends BankAccount {
      */
     public SavingsAccount(String id, double startingBalance, double interestIn) {
         super(id, startingBalance);
+        if (isAmountValid(interestIn)){
+            interest = interestIn;
+        }
+        else{
+            throw new IllegalArgumentException("Interest Amount is invalid.");
+        }
     }
 
     public void compoundInterest(){
