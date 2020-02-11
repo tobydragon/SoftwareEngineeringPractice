@@ -5,5 +5,5 @@ public interface AdvancedAPI extends BasicAPI {
 
     public void createAccount(String acctId, double startingBalance) throws AccountAlreadyExistsException;  //Implemented
 
-    public void closeAccount(String acctId) throws AccountNotFoundException;  //Not implemented
+    public void closeAccount(String acctId) throws AccountNotFoundException;  //Implemented
 }
