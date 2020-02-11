@@ -1,6 +1,7 @@
 package edu.ithaca.dragon.bank;
 
 import java.util.Collection;
+import java.util.Iterator;
 
 public class ATM implements BasicAPI{
     CentralBank bank;
@@ -10,6 +11,20 @@ public class ATM implements BasicAPI{
     }
 
     public boolean confirmCredentials(String username, String password) {
+        Iterator<User> itr = this.bank.users.iterator();
+        while (itr.hasNext()){
+            User current = itr.next();
+            if (current.getUsername()== username){
+                if (current.getPassword()==password){
+                    return true;
+                }
+
+                else{
+                    return false;
+                }
+            }
+        }
+
         return false;
     }
 
