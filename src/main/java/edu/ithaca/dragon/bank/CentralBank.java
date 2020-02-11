@@ -67,7 +67,7 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
             throw new InsufficientFundsException("Cannot draw more than account balance.");
         }
         else {
-            bankAccount.balance -= amount;
+            bankAccount.withdraw(amount);
         }
 
     }
@@ -85,7 +85,7 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
             throw new IllegalArgumentException("Cannot deposit less than $0.01");
         }
         else {
-            bankAccount.balance += amount;
+            bankAccount.deposit(amount);
         }
 
     }
@@ -104,13 +104,21 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
             throw new InsufficientFundsException("amount you wish to withdraw exceeds balance");
         }
         else{
-            withdrawBankAccount.balance -= amount;
-            depositBankAccount.balance += amount;
+            withdrawBankAccount.transfer(depositBankAccount,amount);
         }
     }
 
     @Override
     public String transactionHistory(String acctId) {
+        if(checkCustomerCollection(acctId) == false) {
+            BankAccount bankAccount = customerCollection.get(acctId);
+            int transCount = bankAccount.getTransferCount();
+            int depoCount = bankAccount.getDepositCount();
+            int withCount = bankAccount.getWithdrawCount();
+            int total = bankAccount.getDepositCount()+bankAccount.getTransferCount()+bankAccount.getWithdrawCount();
+            String transHistory = "Total number of transactions done on account: "+total + " (Deposits: " + depoCount+ " Withdraws: "+withCount+ " Transfers: "+transCount+")";
+            return transHistory;
+        }
         return null;
     }
 
@@ -141,8 +149,22 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
     }
 
     @Override
-    public void closeAccount(String acctId) {
+    public void closeAccount(String acctId) throws IllegalArgumentException {
+        if (customerCollection.containsKey(acctId)) {
+            BankAccount bankAccount = customerCollection.get(acctId);
+            customerCollection.remove(acctId);
+            bankAccount = null;
+        }
+        else{
+            throw new IllegalArgumentException(acctId+ " does not exist");
+        }
+    }
 
+    public boolean checkCustomerCollection(String acctId){
+        if (customerCollection.containsKey(acctId)){
+            return false;
+        }
+        return true;
     }
 
 
