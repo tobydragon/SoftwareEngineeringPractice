@@ -20,18 +20,18 @@ public class ATM implements BasicAPI {
     }
 
     @Override
-    public void withdraw(String acctId, double amount) throws InsufficientFundsException {
-
+    public void withdraw(String acctId, double amount) throws AccountFrozenException, InsufficientFundsException {
+        centralBank.withdraw(acctId, amount);
     }
 
     @Override
-    public void deposit(String acctId, double amount) {
-
+    public void deposit(String acctId, double amount) throws AccountFrozenException {
+        centralBank.deposit(acctId, amount);
     }
 
     @Override
-    public void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws InsufficientFundsException {
-
+    public void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws InsufficientFundsException, AccountFrozenException {
+        centralBank.transfer(acctIdToWithdrawFrom, acctIdToDepositTo, amount);
     }
 
     @Override

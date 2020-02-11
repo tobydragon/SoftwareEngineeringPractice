@@ -23,7 +23,7 @@ public class ATMTest {
     }
 
     @Test
-    void withdrawTest() throws InsufficientFundsException{
+    void withdrawTest() throws InsufficientFundsException, AccountFrozenException{
         CentralBank bank = new CentralBank();
         bank.getAccounts().put("abc", new CheckingAccount(100, "abc"));
         ATM a = new ATM(bank);
@@ -36,7 +36,7 @@ public class ATMTest {
     }
 
     @Test
-    void depositTest() {
+    void depositTest() throws AccountFrozenException{
         CentralBank bank = new CentralBank();
         bank.getAccounts().put("abc", new CheckingAccount(100, "abc"));
         ATM a = new ATM(bank);
@@ -48,7 +48,7 @@ public class ATMTest {
     }
 
     @Test
-    void transferTest() throws InsufficientFundsException{
+    void transferTest() throws InsufficientFundsException, AccountFrozenException{
         CentralBank bank = new CentralBank();
         bank.getAccounts().put("abc", new CheckingAccount(100, "abc"));
         bank.getAccounts().put("def", new CheckingAccount(100, "abc"));
