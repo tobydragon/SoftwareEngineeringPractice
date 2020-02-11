@@ -145,7 +145,7 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
         if (bankAccounts.containsKey(acctId)) {
             throw new IllegalArgumentException("Account not frozen");
         } else if (frozenAccounts.containsKey(acctId)) {
-            BankAccount account =  bankAccounts.get(acctId);
+            BankAccount account =  frozenAccounts.get(acctId);
             frozenAccounts.remove(acctId);
             bankAccounts.put(acctId, account);
         } else {
