@@ -2,8 +2,7 @@ package edu.ithaca.dragon.bank;
 
 public class BankAccount {
 
-    private String email;
-    private String password;
+    private String email, password;
     private double balance;
 
     /**
@@ -23,8 +22,6 @@ public class BankAccount {
         } else {
             throw new IllegalArgumentException("Starting balance: " + startingBalance + " is invalid, cannot create account");
         }
-
-
     }
 
     public double getBalance() {
@@ -35,10 +32,16 @@ public class BankAccount {
         return email;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
     /**
      * @post reduces the balance by amount if amount is non-negative and has 2 or less significant decimals and smaller than balance
+     * @throws IllegalArgumentException if amount is not valid (see isAmountValid() )
+     * @throws InsufficientFundsException if the account doesn't have enough to withdraw the given amount
      */
-    public void withdraw(double amount) throws InsufficientFundsException, IllegalArgumentException {
+    public void withdraw(double amount) throws InsufficientFundsException {
         if(!isAmountValid(amount)){
             throw new IllegalArgumentException("Can't withdraw a negative amount or one with more than 2 significant decimals");
         }
@@ -51,8 +54,9 @@ public class BankAccount {
 
     /**
      * @post increases the balance by amount if amount is non-negative and has 2 or less significant decimals
+     * @throws IllegalArgumentException if amount is not valid (see isAmountValid() )
      */
-    public void deposit(double amount) throws IllegalArgumentException {
+    public void deposit(double amount) {
         if(!isAmountValid(amount)){
             throw new IllegalArgumentException("Can't withdraw a negative amount or one with more than 2 significant decimals");
         } else {
@@ -61,9 +65,11 @@ public class BankAccount {
     }
 
     /**
-     * @post decreases the balance by amount and increases the balance of targetAccount by amount if amount is non-negative and has 2 or less significant decimals
+     * @post decreases the balance by amount and increases the balance of targetAccount by amount
+     * @throws IllegalArgumentException if amount is not valid (see isAmountValid() )
+     * @throws InsufficientFundsException if the account doesn't have enough to transfer the given amount out
      */
-    public void transfer(double amount, BankAccount targetAccount) throws IllegalArgumentException, InsufficientFundsException {
+    public void transfer(double amount, BankAccount targetAccount) throws InsufficientFundsException {
         this.withdraw(amount);
         targetAccount.deposit(amount);
     }
@@ -142,9 +148,5 @@ public class BankAccount {
         } else return Character.isLetter(email.charAt(email.length() - 1)) || Character.isDigit(email.charAt(email.length() - 1));
 
         }
-
-    public String getPassword() {
-        return password;
-    }
 }
 

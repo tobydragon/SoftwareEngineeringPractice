@@ -14,35 +14,28 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
 
     //----------------- BasicAPI methods -------------------------//
 
-    public boolean confirmCredentials(String acctId, String password) throws AccountNotFoundException {
-        if (!acctMap.containsKey(acctId)) throw new AccountNotFoundException("Specified account not found.");
-        return getAcctByID(acctId).getPassword().equals(password);
+    public boolean confirmCredentials(String email, String password) throws AccountNotFoundException {
+        return getAcctByID(email).getPassword().equals(password);
     }
 
-    public double checkBalance(String acctId) throws AccountNotFoundException {
-        if (!acctMap.containsKey(acctId)) throw new AccountNotFoundException("Specified account not found.");
-        return getAcctByID(acctId).getBalance();
+    public double checkBalance(String email) throws AccountNotFoundException {
+        return getAcctByID(email).getBalance();
     }
 
-    public void withdraw(String acctId, double amount) throws InsufficientFundsException, AccountNotFoundException{
-        if (!acctMap.containsKey(acctId)) throw new AccountNotFoundException("Specified account not found.");
-        getAcctByID(acctId).withdraw(amount);
+    public void withdraw(String email, double amount) throws InsufficientFundsException, AccountNotFoundException{
+        getAcctByID(email).withdraw(amount);
     }
 
-    public void deposit(String acctId, double amount) throws AccountNotFoundException{
-        if (!acctMap.containsKey(acctId)) throw new AccountNotFoundException("Specified account not found.");
-        getAcctByID(acctId).deposit(amount);
+    public void deposit(String email, double amount) throws AccountNotFoundException{
+        getAcctByID(email).deposit(amount);
     }
 
-    public void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws InsufficientFundsException, AccountNotFoundException {
-        if (!acctMap.containsKey(acctIdToWithdrawFrom)) throw new AccountNotFoundException("Specified account not found.");
-        if (!acctMap.containsKey(acctIdToDepositTo)) throw new AccountNotFoundException("Specified account not found.");
-        if (getAcctByID(acctIdToWithdrawFrom).getBalance() < amount) throw new InsufficientFundsException("Insufficient funds.");
-        getAcctByID(acctIdToWithdrawFrom).transfer(amount, getAcctByID(acctIdToDepositTo));
+    public void transfer(String emailToWithdrawFrom, String emailToDepositTo, double amount) throws InsufficientFundsException, AccountNotFoundException {
+        getAcctByID(emailToWithdrawFrom).transfer(amount, getAcctByID(emailToDepositTo));
     }
 
     public String transactionHistory(String acctId) {
-        return null;
+        return "";
     }
 
 
@@ -51,13 +44,14 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
 
 
     public void createAccount(String email, String password, double startingBalance) throws AccountAlreadyExistsException, IllegalArgumentException {
-        BankAccount ba = new BankAccount(email, password, startingBalance);
-        this.addAccount(ba, email);
+        this.addAccount(new BankAccount(email, password, startingBalance), email);
     }
 
-    public void closeAccount(String acctId) throws AccountNotFoundException, IllegalArgumentException{
-        getAcctByID(acctId);
-        acctMap.put(acctId, null);
+    public void closeAccount(String email) throws AccountNotFoundException, IllegalArgumentException{
+        if(!acctMap.containsKey(email)){
+            throw new AccountNotFoundException("Account with ID " + email + " not found!");
+        }
+        acctMap.remove(email);
     }
 
 
@@ -82,19 +76,29 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
 
     //------------------ Other useful methods -------------------------//
 
-    protected void addAccount(BankAccount ba, String id) throws AccountAlreadyExistsException{
-        if(acctMap.get(id) != null){
-            throw new AccountAlreadyExistsException("Account with ID " + id + " already exists!");
+    /**
+     * @param ba is the BankAccount to be added to the map
+     * @param email is a string describing an email address unique to the account to be deleted
+     * @post adds the given account to the list of accounts in the central bank
+     * @throws AccountAlreadyExistsException if the given email is already associated with an account
+     */
+    protected void addAccount(BankAccount ba, String email) throws AccountAlreadyExistsException{
+        if(acctMap.containsKey(email)){
+            throw new AccountAlreadyExistsException("Account with ID " + email + " already exists!");
         }
-        else acctMap.put(id, ba);
+        else acctMap.put(email, ba);
     }
 
-    protected BankAccount getAcctByID(String id) throws AccountNotFoundException{
-        BankAccount ba = acctMap.get(id);
-        if(ba != null){
-            return ba;
+    /**
+     * @param email is a string describing an email address unique to the account to be found
+     * @returns the account associated with the given email
+     * @throws AccountNotFoundException if the given email is not associated with an account
+     */
+    protected BankAccount getAcctByID(String email) throws AccountNotFoundException{
+        if(acctMap.containsKey(email)){
+            return acctMap.get(email);
         }
-        else throw new AccountNotFoundException("Account with ID " + id + " not found!");
+        else throw new AccountNotFoundException("Account with ID " + email + " not found!");
     }
 
 }
