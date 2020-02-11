@@ -5,7 +5,6 @@ import java.util.Collection;
 
 public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
 
-    private User[] users;
     private BankAccount[] accounts;
     private double netWorth;
     private int time;
@@ -20,7 +19,6 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
 
         int defaultArraySize = 10; //this may change
 
-        users = new User[defaultArraySize];
         accounts = new BankAccount[defaultArraySize];
         adminPassoword = "NotRobert";
         allHistory = new String[defaultArraySize];
@@ -151,10 +149,6 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
 
     //------------------ CentralBank Getters -------------------------//
 
-
-    public User[] getUsers() {
-        return users;
-    }
 
     public BankAccount[] getAccounts() {
         return accounts;
