@@ -44,4 +44,15 @@ public class CustomerCollectionTest {
         assertThrows(IllegalArgumentException.class, ()-> c1.getBalance("b"));
         assertThrows(IllegalArgumentException.class, ()-> c1.getBalance("bbb"));
     }
+
+    @Test
+    void closeCustomerTest()throws Exception{
+        CustomerCollection c1 = new CustomerCollection();
+        c1.addCustomer("bob", "password");
+        c1.addCustomer("bb", "password");
+        assertEquals(2, c1.getNumCustomers());
+        c1.closeCustomer("bob");
+        assertEquals(1, c1.getNumCustomers());
+        assertThrows(IllegalArgumentException.class, ()-> c1.closeAccount("bbb"));
+    }
 }
