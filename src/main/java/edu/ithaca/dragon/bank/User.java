@@ -1,17 +1,39 @@
-<<<<<<< HEAD
-=======
 package edu.ithaca.dragon.bank;
 
-/**
- * @deprecated We do not need this class
- */
 public class User {
+    private atmNum;
+    private String email;
     private String password;
     private BankAccount accounts[];
 
-    //ToDo what methods might we need?
-    //Todo Do we need this class?
 
-    //WE DON NOT NEED THIS CLASS
+String getEmail(){
+  return email;
 }
->>>>>>> abb63addd798d45fe4c0495f4575e573feceeb19
+String getPassword(){
+  return password;
+}
+void setEmail(String e){
+  email=e;
+}
+void setPassword(String pwd){
+  password=pwd;
+}
+#Teller Access Only
+void accessTeller(){
+
+  Scanner reader=new Scanner(System.in);
+  int selection;
+  selection=reader.nextInt();
+  if (selection==1){
+    for(int i=0;i<accounts.length;i++){
+      System.out.println(account[i].acctId +": "+account[i].type+": "+account[i].getBalance());
+    }
+  }
+  else if(selection==2){
+    AdvancedAPI.createAccount();
+  }
+
+}
+
+}
