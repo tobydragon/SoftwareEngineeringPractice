@@ -128,7 +128,12 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
      * @return calculated value
      */
     public double calcTotalAssets() {
-        return 0;
+        double sum = 0;
+        for(int i=0; i<numAccounts;i++){
+            sum += accounts[i].balance;
+        }
+        netWorth = sum;
+        return sum;
     }
 
     public Collection<String> findAcctIdsWithSuspiciousActivity() {
