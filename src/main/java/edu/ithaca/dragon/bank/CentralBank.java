@@ -70,6 +70,7 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
                 double roundedBalance = bd.doubleValue();
                 bankAccounts.get(acctId).setBalance(roundedBalance);
                 bankAccounts.get(acctId).newTransaction("Withdraw: " + amount + "\n");
+                bankAccounts.get(acctId).incTranCount();
             }
             else{
                 throw new InsufficientFundsException("Not enough funds for withdrawal.");
@@ -91,6 +92,7 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
 
             bankAccounts.get(acctId).setBalance(balance);
             bankAccounts.get(acctId).newTransaction("Deposit: " + amount + "\n");
+            bankAccounts.get(acctId).incTranCount();
 
         }
         else{
