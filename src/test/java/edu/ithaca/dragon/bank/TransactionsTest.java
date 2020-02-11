@@ -68,7 +68,8 @@ public class TransactionsTest {
         bank.withdraw("a@b.com",170);
         bank.withdraw("a@b.com",213.54);
         bank.withdraw("a@b.com",130.43);
-
+        bank.withdraw("a@b.com",400);
+                bank.transactionHistory(testAccountID);
 
 
         // With multiple transfers
@@ -80,6 +81,8 @@ public class TransactionsTest {
         bank.transfer(testAccountID,transferActID, 123.34);
         bank.transfer(testAccountID,transferActID, 22.97);
         bank.transfer(testAccountID,transferActID, 190);
+                bank.transactionHistory(testAccountID);
+                bank.transactionHistory(transferActID);
     }
 
     @Test
@@ -88,7 +91,9 @@ public class TransactionsTest {
         String testAccountID = "a@b.com";
         bank.createAccount(testAccountID, "password", 200, false, false);
 
-        testAccountID.isFrozen();
+        assertEquals(false, bank.isFrozen(testAccountID));
+                bank.freezeAccount(testAccountID);
+        assertEquals(true, testAccountID);
         //use bank account.isFrozen in the test assertion
     }
 
@@ -96,7 +101,18 @@ public class TransactionsTest {
     void unfreezeAcct() throws AccountAlreadyExistsException, AccountDoesNotExistException {
         CentralBank bank = new CentralBank();
         String testAccountID = "a@b.com";
-        bank.createAccount(testAccountID, "password", 200, false, false);
+        bank.createAccount(testAccountID, "password", 200, false, true);
 
+        assertEquals(true, bank.isFrozen(testAccountID));
+                bank.unfreezeAcct(testAccountID);
+        assertEquals(false, bank.isFrozen(testAccountID));
+
+        String frozeAccountID = "a@b.com";
+        bank.createAccount(frozeAccountID, "password", 200, false, false);
+
+        assertEquals(false, bank.isFrozen(frozeAccountID));
+                bank.freezeAccount(frozeAccountID);
+        assertEquals(true, frozeAccountID);
+                bank.unfreezeAcct(frozeAccountID);
     }
 }

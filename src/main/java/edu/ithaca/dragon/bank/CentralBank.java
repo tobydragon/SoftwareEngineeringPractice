@@ -1,9 +1,6 @@
 package edu.ithaca.dragon.bank;
 
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.HashMap;
+import java.util.*;
 
 public class CentralBank implements AdvancedAPI, AdminAPI {
 
@@ -120,13 +117,41 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
         //I recommend using the first character in each transaction string - it will be t, d, or w
         //You'll have to split the string by the comma delimiter
         //you can compare items in the list and see if there are too many withdraws/deposits together
-        for(int i = 0; i < accounts.size(); i++) {
-            if (transactionHistory(accounts.get(i)) == "w"){
+        Iterator<Map.Entry<String, String>> iterator = transactionHist.entrySet().iterator();
+        int wCount = 0;
+        int dCount = 0;
+        int tCount = 0;
 
+        while(iterator.hasNext()){
+            if (transactionHist.equals("w")){
+                wCount++;
+            }
+            else if(transactionHist.equals("d")){
+                dCount++;
+            }
+            else if(transactionHist.equals("t")){
+                tCount++;
+            }
+            else{
+                iterator.next();
             }
         }
+        if(wCount >= 5 && tCount >= 5){
+            System.out.println("You account has done" + wCount + " Withdraws" + tCount + " Transfers");
+        }
+        else if(wCount >= 5){
+            System.out.println("You account has done" + wCount + " Withdraws");
+        }
+        else{
+            System.out.println("You account has done" + tCount + " Transfers");
+        }
         return suspiciousAccts;
+    }
 
+    public boolean isFrozen(String acctId) throws AccountDoesNotExistException{
+        if (!accounts.containsKey(acctId)) throw new AccountDoesNotExistException("Account does not exist");
+        BankAccount account = accounts.get(acctId);
+        return account.isFrozen();
     }
 
     /**
@@ -149,7 +174,9 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
         */
         if (!accounts.containsKey(acctId)) throw new AccountDoesNotExistException("Account does not exist");
         BankAccount account = accounts.get(acctId);
-        account.freeze();
+        if(account.isFrozen() == false) {
+            account.freeze();
+        }
     }
 
     /**
@@ -162,6 +189,8 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
     public void unfreezeAcct(String acctId) throws AccountDoesNotExistException {
         if (!accounts.containsKey(acctId)) throw new AccountDoesNotExistException("Account does not exist");
         BankAccount account = accounts.get(acctId);
-        account.unfreeze();
+        if(account.isFrozen() == true) {
+            account.unfreeze();
+        }
     }
 }
