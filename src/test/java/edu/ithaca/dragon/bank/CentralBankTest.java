@@ -194,6 +194,28 @@ public class CentralBankTest {
     }
 
     @Test
+    void depositTest(){
+        CentralBank testBank = new CentralBank("Test Bank");
+
+        //normal cases
+        testBank.createAccount("1234", 50);
+        testBank.deposit("1234", 179.80);
+        assertEquals(229.80, testBank.checkBalance("1234"));
+        testBank.deposit("1234", 842.12);
+        assertEquals(1071.92, testBank.checkBalance("1234"));
+        testBank.deposit("1234", 5.30);
+        assertEquals(1077.22, testBank.checkBalance("1234"));
+
+        //negative amount/three decimals
+        testBank.createAccount("4321", 500);
+        assertThrows(IllegalArgumentException.class, () -> testBank.deposit("4321", -10));
+        assertThrows(IllegalArgumentException.class, () -> testBank.deposit("4321", -100));
+        assertThrows(IllegalArgumentException.class, () -> testBank.deposit("4321", -1000));
+        assertThrows(IllegalArgumentException.class, () -> testBank.deposit("4321", -10.101));
+    }
+
+
+    @Test
     //Integration tests on code that Cobi wrote
     void cobiIntegrationTest() {
         CentralBank centralBank1 = new CentralBank("Bank1");
