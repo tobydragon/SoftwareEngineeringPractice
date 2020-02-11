@@ -3,22 +3,28 @@ package edu.ithaca.dragon.bank;
 public class BankAccount {
 
     private String email;
+    private String password;
     private double balance;
 
     /**
      * @throws IllegalArgumentException if email or starting balance is invalid
      */
-    public BankAccount(String email, double startingBalance) {
+    public BankAccount(String email, String password, double startingBalance) {
         if (isEmailValid(email)) {
             this.email = email;
         } else {
             throw new IllegalArgumentException("Email address: " + email + " is invalid, cannot create account");
         }
+
+        this.password = password;
+
         if(isAmountValid(startingBalance)){
             this.balance = startingBalance;
         } else {
             throw new IllegalArgumentException("Starting balance: " + startingBalance + " is invalid, cannot create account");
         }
+
+
     }
 
     public double getBalance() {
@@ -70,10 +76,7 @@ public class BankAccount {
         if(amount < 0) {
             return false;
         }
-        else if((amount * 100) % 1 == 0){
-            return true;
-        }
-        else return false;
+        else return (amount * 100) % 1 == 0;
     }
 
 
@@ -136,12 +139,12 @@ public class BankAccount {
         } else if (!Character.isLetter(email.charAt(0))) {
             return false;
             //checks if last character is letter or number
-        } else if (!(Character.isLetter(email.charAt(email.length()-1)) || Character.isDigit(email.charAt(email.length()-1)))) {
-            return false;
-        } else {
-            return true;
-        }
+        } else return Character.isLetter(email.charAt(email.length() - 1)) || Character.isDigit(email.charAt(email.length() - 1));
 
         }
+
+    public String getPassword() {
+        return password;
     }
+}
 

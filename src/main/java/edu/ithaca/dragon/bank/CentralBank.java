@@ -14,23 +14,30 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
 
     //----------------- BasicAPI methods -------------------------//
 
-    public boolean confirmCredentials(String acctId, String password) {
-        return false;
+    public boolean confirmCredentials(String acctId, String password) throws AccountNotFoundException {
+        if (!acctMap.containsKey(acctId)) throw new AccountNotFoundException("Specified account not found.");
+        return getAcctByID(acctId).getPassword().equals(password);
     }
 
     public double checkBalance(String acctId) throws AccountNotFoundException {
+        if (!acctMap.containsKey(acctId)) throw new AccountNotFoundException("Specified account not found.");
         return getAcctByID(acctId).getBalance();
     }
 
     public void withdraw(String acctId, double amount) throws InsufficientFundsException, AccountNotFoundException{
+        if (!acctMap.containsKey(acctId)) throw new AccountNotFoundException("Specified account not found.");
         getAcctByID(acctId).withdraw(amount);
     }
 
     public void deposit(String acctId, double amount) throws AccountNotFoundException{
+        if (!acctMap.containsKey(acctId)) throw new AccountNotFoundException("Specified account not found.");
         getAcctByID(acctId).deposit(amount);
     }
 
     public void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws InsufficientFundsException, AccountNotFoundException {
+        if (!acctMap.containsKey(acctIdToWithdrawFrom)) throw new AccountNotFoundException("Specified account not found.");
+        if (!acctMap.containsKey(acctIdToDepositTo)) throw new AccountNotFoundException("Specified account not found.");
+        if (getAcctByID(acctIdToWithdrawFrom).getBalance() < amount) throw new InsufficientFundsException("Insufficient funds.");
         getAcctByID(acctIdToWithdrawFrom).transfer(amount, getAcctByID(acctIdToDepositTo));
     }
 
@@ -41,12 +48,14 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
 
     //----------------- AdvancedAPI methods -------------------------//
 
-    public void createAccount(String acctId, double startingBalance) throws AccountAlreadyExistsException{
-        BankAccount ba = new BankAccount("a@b.com", startingBalance);
-        addAccount(ba, acctId);
+
+
+    public void createAccount(String email, String password, double startingBalance) throws AccountAlreadyExistsException, IllegalArgumentException {
+        BankAccount ba = new BankAccount(email, password, startingBalance);
+        this.addAccount(ba, email);
     }
 
-    public void closeAccount(String acctId) throws AccountNotFoundException{
+    public void closeAccount(String acctId) throws AccountNotFoundException, IllegalArgumentException{
         getAcctByID(acctId);
         acctMap.put(acctId, null);
     }
