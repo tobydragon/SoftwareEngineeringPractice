@@ -16,6 +16,7 @@ public class Customer {
     public void deposit(double amount){}
     public void withdraw(double amount){}
     public double getBalance(){
+        if(checking == null)throw new IllegalArgumentException("No account");
         return checking.getBalance();
     }
     public boolean checkCredentials(String idIn, String passwordIn){
