@@ -3,14 +3,14 @@ package edu.ithaca.dragon.bank;
 import java.util.List;
 
 public class Checking implements Account {
-    private int acctId;
+    private String acctId;
     private String name;
     private String password;
     private double balance;
     private boolean frozen;
     private List<String []> history;
 
-    public Checking(int acctIdIn, String nameIn, String passwordIn, double startingBalance){
+    public Checking(String acctIdIn, String nameIn, String passwordIn, double startingBalance){
 
     }
 
