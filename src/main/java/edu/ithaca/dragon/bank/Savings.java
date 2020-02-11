@@ -53,10 +53,28 @@ public class Savings implements Account{
     }
 
     public void withdraw(String acctId, double amount) throws InsufficientFundsException{
-        //todo
+        if (acctId != this.acctId){
+            throw new IllegalArgumentException("This is not the correct account");
+        }
+        if (amount > balance){
+            throw new InsufficientFundsException("Insufficient funds for withdrawal");
+        }
+        if (amount <= 0){
+            throw new IllegalArgumentException("Cannot withdraw 0 or less");
+        }
+        if (amount > maxWithdrawal){
+            throw new IllegalArgumentException("Amount exceeds daily maximum withdrawal amount");
+        }
+        balance -= amount;
     }
 
     public void deposit(String acctId, double amount){
+        if (acctId != this.acctId){
+            throw new IllegalArgumentException("This is not the correct account");
+        }
+        if (amount <= 0){
+            throw new IllegalArgumentException("Cannot deposit 0 or less");
+        }        
         balance += amount;
     }
 

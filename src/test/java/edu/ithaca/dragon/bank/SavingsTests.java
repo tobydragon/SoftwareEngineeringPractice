@@ -46,7 +46,7 @@ public class SavingsTests {
         assertEquals(50, newSavings.checkBalance("1234567890"), 0.0001);
         newSavings.withdraw("1234567890", 30);
         assertEquals(20, newSavings.checkBalance("1234567890"));
-        assertThrows(InsufficientFundsException.class, ()-> newSavings.withdraw("1234567880", 20.01));
+        assertThrows(InsufficientFundsException.class, ()-> newSavings.withdraw("1234567890", 20.01));
         assertEquals(20, newSavings.checkBalance("1234567890"), 0.0001);
     }
 
@@ -58,7 +58,9 @@ public class SavingsTests {
         assertEquals(120, newSavings.checkBalance("1234567890"),0.0001);
         newSavings.deposit("1234567890", 40.05);
         assertEquals(160.05, newSavings.checkBalance("1234567890"),0.0001);
-
+        assertThrows(IllegalArgumentException.class, ()-> newSavings.deposit("1234567899", 10));
+        assertThrows(IllegalArgumentException.class, ()-> newSavings.deposit("1234567890", 0));
+        assertThrows(IllegalArgumentException.class, ()-> newSavings.deposit("1234567890", -10));
     }
 
 
