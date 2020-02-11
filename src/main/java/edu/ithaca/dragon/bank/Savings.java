@@ -26,7 +26,7 @@ public class Savings implements Account{
     }
 
     public void deposit(String acctId, double amount){
-        //todo
+        balance += amount;
     }
 
     public void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws InsufficientFundsException{
