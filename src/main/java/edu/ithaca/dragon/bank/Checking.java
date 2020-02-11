@@ -37,7 +37,7 @@ public class Checking implements Account {
         return name;
     }
 
-    public double checkBalance(String acctId){
+    public double checkBalance(String acctId) throws AcctFrozenException{
         return this.balance;
     }
 
@@ -64,7 +64,7 @@ public class Checking implements Account {
 
     public void deposit(String acctId, double amount) throws AcctFrozenException{
         if(frozen){
-            throw new AcctFrozenException("Cannot deposit into a forzen account");
+            throw new AcctFrozenException("Cannot deposit into a frozen account");
         }
         else {
             if (isAmountValid(amount)) {
@@ -76,13 +76,18 @@ public class Checking implements Account {
         }
     }
 
-    public String transactionHistory(String acctId){
-        String historyStr = "";
-        for (int i = 0; i < history.size(); i++) {
-            historyStr += history.get(i);
-            if (i < history.size()-1) historyStr += "; ";
+    public String transactionHistory(String acctId) throws AcctFrozenException{
+        if(frozen){
+            throw new AcctFrozenException("Cannot return from a frozen account");
         }
-        return historyStr;
+        else {
+            String historyStr = "";
+            for (int i = 0; i < history.size(); i++) {
+                historyStr += history.get(i);
+                if (i < history.size() - 1) historyStr += "; ";
+            }
+            return historyStr;
+        }
     }
 
     public static boolean isNameValid(String name){

@@ -35,7 +35,7 @@ public class CheckingTest {
     }
 
     @Test
-    void checkBalanceTest(){
+    void checkBalanceTest() throws AcctFrozenException{
         Checking checkingAcct = new Checking("1234567890", "Bob Lob", "dog123", 100);
         assertEquals(100, checkingAcct.checkBalance("1234567890"));
 
