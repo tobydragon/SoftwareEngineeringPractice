@@ -24,7 +24,17 @@ public class AdminTest {
 
     @Test
     void createSavingsForTellerTest () {
+        Admin admin = new Admin();
+        //create account with no balance
+        admin.createSavingsForTeller("1234567890", "Toby Dragon", "password", 0.0, 1.0, 100);
+        assertEquals("1234567890", admin.getAccount("1234567890").getAcctId());
 
+        //create account with balance
+        admin.createSavingsForTeller("0987654321", "Ali Erkan", "password", 100.0, 1.0, 100);
+        assertEquals("0987654321", admin.getAccount("0987654321").getAcctId());
+
+        //create account with invalid acctID
+        assertThrows(IllegalArgumentException.class, () -> admin.createSavingsForTeller("1234567890", "Sharon Stansfield", "password", 100.0, 1.0, 100));
     }
 
     @Test
