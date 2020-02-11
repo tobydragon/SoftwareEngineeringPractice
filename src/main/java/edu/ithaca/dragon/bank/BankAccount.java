@@ -133,7 +133,7 @@ public class BankAccount {
      * @return true if the amount to be checked is a valid amount or false if not valid
      */
     public static boolean isAmountValid(double amount){
-        if (amount <= 0){
+        if (amount < 0){
             return false;
         }
         String amountString = "" + amount;

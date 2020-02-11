@@ -44,6 +44,12 @@ public class CentralBankTest {
         teller.createAccount("a@b.com", 200,"Checking");
         String acctId = teller.getAccountId("a@b.com","Checking");
 
+        teller.deposit(acctId, 0); //though centsless, 0 is still a valid number
+        teller.deposit(acctId, .01); // minimum amount possible
+        teller.deposit(acctId, 100); // equivalence test
+
+        assertEquals(teller.checkBalance(acctId),300.01);
+
         assertThrows(IllegalArgumentException.class, ()-> teller.deposit(acctId,-100)); // invalid middle case (value)
         assertThrows(IllegalArgumentException.class, ()-> teller.deposit(acctId,-1)); // invalid border case (value)
         assertThrows(IllegalArgumentException.class, ()-> teller.deposit(acctId,100.001)); // invalid border case (decimal place limit)
