@@ -21,7 +21,8 @@ public class CustomerCollection {
     public void withdraw(String ID, double amount){}
 
     public double getBalance(String ID){
-        return -1234.00;
+        for(int x=0; x < customers.size(); x++)if(customers.get(x).getId()==ID)return customers.get(x).getBalance();
+        throw new IllegalArgumentException("No such Account");
     }
 
     public boolean checkCredentials(String ID, String password){
