@@ -20,6 +20,7 @@ public class ATM.java() implements AdvancedAPI{
           System.out.println("4). Transfer");
           System.out.println("5). TransferHistory");
           System.out.println("6). getAccountID");
+          System.out.println("7). contactTeller");
           menu=r.nextInt();
           if(menu==1){
             checkBalance(tempID);
@@ -37,6 +38,9 @@ public class ATM.java() implements AdvancedAPI{
             }
             else if(menu==6){
               getAccountId(Email,accountType)
+            }
+            else if(menu==7){
+              Teller(tempID.getAccountID)
             }
 
       }
