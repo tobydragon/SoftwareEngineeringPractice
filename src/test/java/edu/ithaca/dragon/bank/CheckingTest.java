@@ -22,4 +22,15 @@ public class CheckingTest {
         //balance with more than 2 decimal places
         assertThrows(IllegalArgumentException.class, () -> new Checking("1234567890", "Bob Loblaw", "dog123", 10.342));
     }
+
+    @Test
+    void isNameValidTest(){
+        assertTrue(Checking.isNameValid("Bob Loblaw"));
+        assertTrue(Checking.isNameValid("John M Labler"));
+        assertTrue(Checking.isNameValid("Steven M ELridge Smith"));
+
+        assertFalse(Checking.isNameValid("Flor"));
+        assertFalse(Checking.isNameValid("Bob John123"));
+        assertFalse(Checking.isNameValid("@Jerome Johnson"));
+    }
 }
