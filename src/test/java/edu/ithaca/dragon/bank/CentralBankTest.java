@@ -57,10 +57,26 @@ public class CentralBankTest {
     }
 
     @Test
+    /**
+     * This tests the integration of all 3 classes implemented by CentralBank
+     * It covers multiple functions which relate to each other and rely on their shared success
+     */
     void integrationTest1(){
         CentralBank theBank = new CentralBank();
-        AdvancedAPI Teller = theBank;
+        AdvancedAPI teller = theBank;
         BasicAPI atm = theBank;
+        AdminAPI bossMan = theBank;
+
+        teller.createAccount("a@b.com", 2, "Checking");
+        teller.createAccount("a@b.com", 2, "Savings");
+
+        atm.deposit(teller.getAccountId("a@b.com", "Checking"), 48);
+        assertEquals(50, teller.checkBalance(atm.getAccountId("a@b.com", "Checking")));
+
+        atm.deposit(atm.getAccountId("a@b.com", "Savings"), 98);
+        assertEquals(100, atm.checkBalance(atm.getAccountId("a@b.com", "Savings")));
+
+        assertEquals(150, bossMan.calcTotalAssets());
     }
 
     @Test
@@ -73,7 +89,6 @@ public class CentralBankTest {
 
         String[] emails = new String[]{"a@b.com", "a@b.com", "e@f.com", "g@h.com"};
         int[] balances = new int[]{200,200,200,200};
-        String[] expectedIds = new String[]{"1C", "2S", "3C", "4S"};
         String[] acctTypes = new String[]{"Checking","Savings"};
 
         for(int i=0; i< emails.length; i++) {

@@ -46,7 +46,7 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
      */
     public double checkBalance(String acctId) {
         for (int i = 0; i < numAccounts; i++){
-            if(accounts[i].acctId == acctId){
+            if(accounts[i].acctId.equals(acctId)){
                 return accounts[i].getBalance();
             }
         }
@@ -64,8 +64,9 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
      */
     public void deposit(String acctId, double amount) {
         for (int i = 0; i < numAccounts; i++){
-            if(accounts[i].acctId == acctId){
+            if(accounts[i].acctId.equals(acctId)){
                 accounts[i].deposit(amount);
+                return;
             }
         }
         throw new IllegalArgumentException("Account not found");
@@ -81,7 +82,7 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
 
     public String getAccountId(String email, String accountType){
         for (int i = 0; i < numAccounts; i++){
-            if(accounts[i].getEmail() == email && accounts[i].type == accountType){
+            if(accounts[i].getEmail().equals(email) && accounts[i].type.equals(accountType)){
                 return accounts[i].acctId;
             }
         }
