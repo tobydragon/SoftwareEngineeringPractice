@@ -61,8 +61,28 @@ public class CentralBankTest {
     }
 
     @Test
-    void depositTest() {
+    void depositTest() throws IllegalArgumentException{
+        CentralBank testBank = new CentralBank();
+        testBank.createAccount("User01", 100);
 
+        testBank.deposit("User01", 10);
+        assertEquals(110, testBank.checkBalance("User01"));
+
+        testBank.deposit("User01", 1);
+        assertEquals(111, testBank.checkBalance("User01"));
+
+        testBank.deposit("User01", 0);
+        assertEquals(111, testBank.checkBalance("User01"));
+
+        testBank.deposit("User01", 1.5);
+        assertEquals(112.5, testBank.checkBalance("User01"));
+
+        testBank.deposit("User01", 1.55);
+        assertEquals(114.05, testBank.checkBalance("User01"));
+
+        assertThrows(IllegalArgumentException.class, () -> testBank.deposit("User01", 1.555));
+
+        assertThrows(IllegalArgumentException.class, () -> testBank.deposit("User01", -1));
     }
 
     @Test
