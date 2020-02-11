@@ -110,6 +110,15 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
 
     @Override
     public String transactionHistory(String acctId) {
+        if(checkCustomerCollection(acctId) == false) {
+            BankAccount bankAccount = customerCollection.get(acctId);
+            int transCount = bankAccount.getTransferCount();
+            int depoCount = bankAccount.getDepositCount();
+            int withCount = bankAccount.getWithdrawCount();
+            int total = bankAccount.getDepositCount()+bankAccount.getTransferCount()+bankAccount.getWithdrawCount();
+            String transHistory = "Total number of transactions done on account: "+total + " (Deposits: " + depoCount+ " Withdraws: "+withCount+ " Transfers: "+transCount+")";
+            return transHistory;
+        }
         return null;
     }
 

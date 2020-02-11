@@ -90,6 +90,21 @@ public class CentralBankTest {
 
         cb.closeAccount("ABshouldFIGHTLoganPaul@DaZn.com");
         assertTrue(cb.checkCustomerCollection("ABshouldFIGHTLoganPaul@DaZn.com"));
+    }
+
+    @Test
+    void transactionHistoryTest() throws InsufficientFundsException {
+        CentralBank cb = new CentralBank();
+        cb.createAccount("LOLKrisHumphries@72daymarriage.com", 400, "CantKeepAKardashian");
+        cb.createAccount("LilYoungHova@WeRtheWorld.net", 200, "RapisBack2k2k");
+
+        cb.deposit("LOLKrisHumphries@72daymarriage.com",250);
+        cb.withdraw("LOLKrisHumphries@72daymarriage.com",300);
+        cb.transfer("LOLKrisHumphries@72daymarriage.com","LilYoungHova@WeRtheWorld.net",50);
+
+        cb.transactionHistory("LOLKrisHumphries@72daymarriage.com");
+        cb.transactionHistory("LilYoungHova@WeRtheWorld.net");
+
 
     }
 }

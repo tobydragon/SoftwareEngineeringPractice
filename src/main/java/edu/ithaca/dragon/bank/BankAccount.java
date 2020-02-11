@@ -63,6 +63,15 @@ public class BankAccount {
     public String getEmail(){
         return email;
     }
+    public int getDepositCount(){
+        return depositCount;
+    }
+    public int getWithdrawCount(){
+        return withdrawCount;
+    }
+    public int getTransferCount(){
+        return transferCount;
+    }
 
     /**
      * @post transfers an amount from one account to the other.
@@ -318,13 +327,4 @@ public class BankAccount {
         return validCharSet;
     }
 
-    private int getDepositCount(){
-        return depositCount;
-    }
-    private int getWithdrawCount(){
-        return withdrawCount;
-    }
-    private int getTransferCount(){
-        return transferCount;
-    }
 }
