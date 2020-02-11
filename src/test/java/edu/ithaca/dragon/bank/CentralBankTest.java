@@ -62,4 +62,23 @@ public class CentralBankTest {
         AdvancedAPI Teller = theBank;
         BasicAPI atm = theBank;
     }
+
+    @Test
+    void calcTotalAssetsTest(){
+        CentralBank theBank = new CentralBank();
+        AdvancedAPI teller = theBank;
+        AdminAPI bossMan = theBank;
+
+        assertEquals(0.0, bossMan.calcTotalAssets()); //No accounts, no money
+
+        String[] emails = new String[]{"a@b.com", "a@b.com", "e@f.com", "g@h.com"};
+        int[] balances = new int[]{200,200,200,200};
+        String[] expectedIds = new String[]{"1C", "2S", "3C", "4S"};
+        String[] acctTypes = new String[]{"Checking","Savings"};
+
+        for(int i=0; i< emails.length; i++) {
+            teller.createAccount(emails[i], balances[i], acctTypes[i%2]);
+            assertEquals((i+1)*200, bossMan.calcTotalAssets()); //200 per account
+        }
+    }
 }

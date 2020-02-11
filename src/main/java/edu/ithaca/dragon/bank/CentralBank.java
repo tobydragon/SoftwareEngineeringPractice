@@ -123,6 +123,10 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
 
     //------------------ edu.ithaca.dragon.bank.AdminAPI methods -------------------------//
 
+    /**
+     * Calculates the total assets stored in the bank and updates attribute netWorth
+     * @return calculated value
+     */
     public double calcTotalAssets() {
         return 0;
     }
