@@ -17,6 +17,8 @@ public class TellerTest {
         Teller acct= new Teller(myBank);
         acct.createAccount("Charles", 100, true);
         assertTrue(myBank.accounts.contains(myBank.getBankAccount("Charles")));
+        acct.createAccount("Fredric", 100, false);
+        assertTrue(myBank.accounts.contains(myBank.getBankAccount("Fredric")));
 
     }
 
@@ -26,9 +28,12 @@ public class TellerTest {
 
         Collection<User> users = new ArrayList<User>();
         Teller acct= new Teller(myBank);
-         acct.createAccount("Charles", 100, true);
+        acct.createAccount("Charles", 100, true);
         acct.closeAccount("Charles");
         assertThrows(IllegalArgumentException.class, ()-> myBank.accounts.contains(myBank.getBankAccount("Charles")));
+        acct.createAccount("Fredric", 100, false);
+        acct.closeAccount("Fredric");
+        assertThrows(IllegalArgumentException.class, ()-> myBank.accounts.contains(myBank.getBankAccount("Fredric")));
 
     }
 }
