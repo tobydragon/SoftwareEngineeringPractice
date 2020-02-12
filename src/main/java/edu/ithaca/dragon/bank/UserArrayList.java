@@ -48,7 +48,7 @@ public class UserArrayList {
      * @param account
      * @return copy of the removed Useraccount
      */
-    public UserAccount removeAccount(UserAccount account) throws IllegalArgumentException{
+    public UserAccount removeAccount(UserAccount account) throws NonExistentAccountException{
         //TODO might want to change to take userID
         //TODO remove associated bank accounts?
         if (userAccounts.indexOf(account) == -1){
