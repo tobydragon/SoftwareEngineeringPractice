@@ -143,7 +143,7 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
      * @param startingBalance
      * @throws IllegalArgumentException if ID already exists or balance isn't valid
      */
-    public void createAccount(String acctId, double startingBalance, String password) throws IllegalArgumentException{
+    public void createAccount(String acctId, double startingBalance, String password, boolean isSavings) throws IllegalArgumentException{
         if (bankAccounts.containsKey(acctId)) {
             throw new IllegalArgumentException("Account ID already exists");
         } else if (frozenAccounts.containsKey(acctId)) {
@@ -152,9 +152,12 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
             throw new IllegalArgumentException("Balance specified is not a valid amount");
         } else if (acctId.equals("") || acctId.contains(" ")) {
             throw new IllegalArgumentException("Must enter an ID");
-        } else {
+        } else if (!isSavings){
             BankAccount newAccount = new BankAccount(acctId,startingBalance, password);
             bankAccounts.put(acctId, newAccount);
+        } else {
+            SavingsAccount newSavingsAccount = new SavingsAccount(acctId,startingBalance,password, 5);
+            bankAccounts.put(acctId, newSavingsAccount);
         }
     }
 
