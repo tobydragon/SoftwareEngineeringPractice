@@ -53,7 +53,7 @@ public class BankAccount {
         return tranCount;
     }
 
-    public String getEmail(){
+    public String getId(){
         return id;
     }
 

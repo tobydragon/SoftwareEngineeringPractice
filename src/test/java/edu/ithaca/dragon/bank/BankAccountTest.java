@@ -21,164 +21,164 @@ class BankAccountTest {
         assertEquals(0.00, bankAccount4.getBalance());
     }
 
-    @Test
-    void depositTest() throws InsufficientFundsException {
-        BankAccount testAccount = new BankAccount("g@u.com", 1637.72, "password");
-
-        //positive number three decimals
-        assertThrows(IllegalArgumentException.class, ()-> testAccount.deposit(487.735));
-        assertThrows(IllegalArgumentException.class, ()-> testAccount.deposit(48.735));
-        assertThrows(IllegalArgumentException.class, ()-> testAccount.deposit(4.735));
-
-        //negative number three decimals
-        assertThrows(IllegalArgumentException.class, ()-> testAccount.deposit(-487.735));
-        assertThrows(IllegalArgumentException.class, ()-> testAccount.deposit(-48.735));
-        assertThrows(IllegalArgumentException.class, ()-> testAccount.deposit(-4.735));
-
-        //negative number no decimal
-        assertThrows(IllegalArgumentException.class, ()-> testAccount.deposit(-1));//border for negative amount 1 digit
-        assertThrows(IllegalArgumentException.class, ()-> testAccount.deposit(-10));//border for negative amount 2 digit
-        assertThrows(IllegalArgumentException.class, ()-> testAccount.deposit(-100));//border for negative amount 3 digit
-
-        //Positive number no decimals
-        BankAccount testAccount2 = new BankAccount("h@j.com", 5500.50, "password");
-
-        testAccount2.deposit(5.00); //single digit equivalence class
-        assertEquals(5505.50, testAccount2.getBalance());
-        testAccount2.withdraw(5.00);
-
-        testAccount2.deposit(50.00); //double digit equivalence class
-        assertEquals(5550.50, testAccount2.getBalance());
-        testAccount2.withdraw(50.00);
-
-        testAccount2.deposit(500.00);//triple digit equivalence class
-        assertEquals(6000.50, testAccount2.getBalance());
-        testAccount2.withdraw(500.00);
-
-        testAccount2.deposit(5000.00);//4 digit equivalence class
-        assertEquals(10500.50, testAccount2.getBalance());
-
-        //Positive number with decimals
-        BankAccount testAccount3 = new BankAccount("a@u.com", 3500.50, "password");
-
-        testAccount3.deposit(9.35);//1 digit equivalence class
-        assertEquals(3509.85, testAccount3.getBalance(), 1e-8);
-        testAccount3.withdraw(9.35);
-
-        testAccount3.deposit(87.29);// 2 digit equivalence class
-        assertEquals(3587.79, testAccount3.getBalance(), 1e-8);
-        testAccount3.withdraw(87.29);
-
-        testAccount3.deposit(416.12);//3 digit equivalence class
-        assertEquals(3916.62, testAccount3.getBalance(), 1e-8);
-        testAccount3.withdraw(416.12);
-
-        testAccount3.deposit(2945.67);
-        assertEquals(6446.17, testAccount3.getBalance(), 1e-8);
-    }
-
-    @Test
-    void transferTest() throws InsufficientFundsException {
-        BankAccount testAccount = new BankAccount("g@u.com", 1637.72, "password");
-        BankAccount transferHere = new BankAccount("d@k.com", 150.00, "password");
-
-        //positive number three decimals
-        assertThrows(IllegalArgumentException.class, ()-> testAccount.transfer(487.735, transferHere));//border for 3 digit
-        assertThrows(IllegalArgumentException.class, ()-> testAccount.transfer(48.735, transferHere));//border for 2 digit
-        assertThrows(IllegalArgumentException.class, ()-> testAccount.transfer(4.735, transferHere));//border for 1 digit
-
-        //negative number three decimals
-        assertThrows(IllegalArgumentException.class, ()-> testAccount.transfer(-487.735, transferHere));//border for negative 3 digit
-        assertThrows(IllegalArgumentException.class, ()-> testAccount.transfer(-48.735, transferHere));//border for negative 2 digit
-        assertThrows(IllegalArgumentException.class, ()-> testAccount.transfer(-4.735, transferHere));//border for negative 1 digit
-
-        //negative number no decimal
-        assertThrows(IllegalArgumentException.class, ()-> testAccount.transfer(-1, transferHere));//border for negative amount 1 digit
-        assertThrows(IllegalArgumentException.class, ()-> testAccount.transfer(-10, transferHere));//border for negative amount 2 digit
-        assertThrows(IllegalArgumentException.class, ()-> testAccount.transfer(-100, transferHere));//border for negative amount 3 digit
-
-        //Positive number no decimals
-        BankAccount testAccount2 = new BankAccount("h@j.com", 5500.50, "password");
-        BankAccount transferAccount2 = new BankAccount("t@n.com", 200, "password");
-
-        testAccount2.transfer(5.00, transferAccount2); //single digit equivalence class
-        assertEquals(205, transferAccount2.getBalance());
-        transferAccount2.withdraw(5.00);
-        testAccount.deposit(5.00);
-
-        testAccount2.transfer(50.00, transferAccount2); //double digit equivalence class
-        assertEquals(250, transferAccount2.getBalance());
-        transferAccount2.withdraw(50.00);
-        testAccount2.deposit(50.00);
-
-        testAccount2.transfer(500.00, transferAccount2);//triple digit equivalence class
-        assertEquals(700, transferAccount2.getBalance());
-        transferAccount2.withdraw(500.00);
-        testAccount2.deposit(500.00);
-
-        testAccount2.transfer(5000.00, transferAccount2);//4 digit equivalence class
-        assertEquals(5200, transferAccount2.getBalance());
-
-        //Positive number with decimals
-        BankAccount testAccount3 = new BankAccount("a@u.com", 3500.50, "password");
-        BankAccount transferAccount3 = new BankAccount("b@u.com", 1800.89, "password");
-
-        testAccount3.transfer(9.35, transferAccount3);//1 digit equivalence class
-        assertEquals(1810.24, transferAccount3.getBalance(), 1e-8);
-        transferAccount3.withdraw(9.35);
-
-        testAccount3.transfer(87.29, transferAccount3);// 2 digit equivalence class
-        assertEquals(1888.18, transferAccount3.getBalance(), 1e-8);
-        transferAccount3.withdraw(87.29);
-
-        testAccount3.transfer(416.12, transferAccount3);//3 digit equivalence class
-        assertEquals(2217.01, transferAccount3.getBalance(), 1e-8);
-        transferAccount3.withdraw(416.12);
-
-        testAccount3.transfer(2945.67, transferAccount3);// 4 digit equivalence class
-        assertEquals(4746.56, transferAccount3.getBalance(), 1e-8);
-    }
-
-    @Test
-    void withdrawTest() throws InsufficientFundsException {
-        BankAccount bankAccount = new BankAccount("a@f.com", 200.73, "password");
-        //assertEquals(200.73, bankAccount.getBalance(), 1e-8);//equivalence for amount greater than balance
-        assertThrows(InsufficientFundsException.class, ()-> bankAccount.withdraw(400));
-
-        assertThrows(IllegalArgumentException.class, ()-> bankAccount.withdraw(-100));//equivalence for negative amount
-
-        bankAccount.withdraw(50);
-        assertEquals(150.73, bankAccount.getBalance(), 1e-8);//equivalence for double digit amount
-
-        BankAccount bankAccount2 = new BankAccount("a@h.com", 300.27, "password");
-        assertThrows(InsufficientFundsException.class, ()-> bankAccount2.withdraw(301));//border for amount greater than balance
-
-        assertThrows(IllegalArgumentException.class, ()-> bankAccount2.withdraw(-1));//border for negative amount
-
-        bankAccount2.withdraw(150);
-        assertEquals(150.27, bankAccount2.getBalance(), 1e-8);//equivalence for triple digit (middle) amount
-
-
-        bankAccount2.withdraw(0);
-        assertEquals(150.27, bankAccount2.getBalance(), 1e-8);
-
-        BankAccount testAccount = new BankAccount("d@a.com", 1000.00, "password");
-        //positive number three decimals
-        assertThrows(IllegalArgumentException.class, ()-> testAccount.withdraw(487.735));
-        assertThrows(IllegalArgumentException.class, ()-> testAccount.withdraw(48.735));
-        assertThrows(IllegalArgumentException.class, ()-> testAccount.withdraw(4.735));
-
-        //negative number three decimals
-        assertThrows(IllegalArgumentException.class, ()-> testAccount.withdraw(-487.735));
-        assertThrows(IllegalArgumentException.class, ()-> testAccount.withdraw(-48.735));
-        assertThrows(IllegalArgumentException.class, ()-> testAccount.withdraw(-4.735));
-    }
+//    @Test
+//    void depositTest() throws InsufficientFundsException {
+//        BankAccount testAccount = new BankAccount("g@u.com", 1637.72, "password");
+//
+//        //positive number three decimals
+//        assertThrows(IllegalArgumentException.class, ()-> testAccount.deposit(487.735));
+//        assertThrows(IllegalArgumentException.class, ()-> testAccount.deposit(48.735));
+//        assertThrows(IllegalArgumentException.class, ()-> testAccount.deposit(4.735));
+//
+//        //negative number three decimals
+//        assertThrows(IllegalArgumentException.class, ()-> testAccount.deposit(-487.735));
+//        assertThrows(IllegalArgumentException.class, ()-> testAccount.deposit(-48.735));
+//        assertThrows(IllegalArgumentException.class, ()-> testAccount.deposit(-4.735));
+//
+//        //negative number no decimal
+//        assertThrows(IllegalArgumentException.class, ()-> testAccount.deposit(-1));//border for negative amount 1 digit
+//        assertThrows(IllegalArgumentException.class, ()-> testAccount.deposit(-10));//border for negative amount 2 digit
+//        assertThrows(IllegalArgumentException.class, ()-> testAccount.deposit(-100));//border for negative amount 3 digit
+//
+//        //Positive number no decimals
+//        BankAccount testAccount2 = new BankAccount("h@j.com", 5500.50, "password");
+//
+//        testAccount2.deposit(5.00); //single digit equivalence class
+//        assertEquals(5505.50, testAccount2.getBalance());
+//        testAccount2.withdraw(5.00);
+//
+//        testAccount2.deposit(50.00); //double digit equivalence class
+//        assertEquals(5550.50, testAccount2.getBalance());
+//        testAccount2.withdraw(50.00);
+//
+//        testAccount2.deposit(500.00);//triple digit equivalence class
+//        assertEquals(6000.50, testAccount2.getBalance());
+//        testAccount2.withdraw(500.00);
+//
+//        testAccount2.deposit(5000.00);//4 digit equivalence class
+//        assertEquals(10500.50, testAccount2.getBalance());
+//
+//        //Positive number with decimals
+//        BankAccount testAccount3 = new BankAccount("a@u.com", 3500.50, "password");
+//
+//        testAccount3.deposit(9.35);//1 digit equivalence class
+//        assertEquals(3509.85, testAccount3.getBalance(), 1e-8);
+//        testAccount3.withdraw(9.35);
+//
+//        testAccount3.deposit(87.29);// 2 digit equivalence class
+//        assertEquals(3587.79, testAccount3.getBalance(), 1e-8);
+//        testAccount3.withdraw(87.29);
+//
+//        testAccount3.deposit(416.12);//3 digit equivalence class
+//        assertEquals(3916.62, testAccount3.getBalance(), 1e-8);
+//        testAccount3.withdraw(416.12);
+//
+//        testAccount3.deposit(2945.67);
+//        assertEquals(6446.17, testAccount3.getBalance(), 1e-8);
+//    }
+//
+//    @Test
+//    void transferTest() throws InsufficientFundsException {
+//        BankAccount testAccount = new BankAccount("g@u.com", 1637.72, "password");
+//        BankAccount transferHere = new BankAccount("d@k.com", 150.00, "password");
+//
+//        //positive number three decimals
+//        assertThrows(IllegalArgumentException.class, ()-> testAccount.transfer(487.735, transferHere));//border for 3 digit
+//        assertThrows(IllegalArgumentException.class, ()-> testAccount.transfer(48.735, transferHere));//border for 2 digit
+//        assertThrows(IllegalArgumentException.class, ()-> testAccount.transfer(4.735, transferHere));//border for 1 digit
+//
+//        //negative number three decimals
+//        assertThrows(IllegalArgumentException.class, ()-> testAccount.transfer(-487.735, transferHere));//border for negative 3 digit
+//        assertThrows(IllegalArgumentException.class, ()-> testAccount.transfer(-48.735, transferHere));//border for negative 2 digit
+//        assertThrows(IllegalArgumentException.class, ()-> testAccount.transfer(-4.735, transferHere));//border for negative 1 digit
+//
+//        //negative number no decimal
+//        assertThrows(IllegalArgumentException.class, ()-> testAccount.transfer(-1, transferHere));//border for negative amount 1 digit
+//        assertThrows(IllegalArgumentException.class, ()-> testAccount.transfer(-10, transferHere));//border for negative amount 2 digit
+//        assertThrows(IllegalArgumentException.class, ()-> testAccount.transfer(-100, transferHere));//border for negative amount 3 digit
+//
+//        //Positive number no decimals
+//        BankAccount testAccount2 = new BankAccount("h@j.com", 5500.50, "password");
+//        BankAccount transferAccount2 = new BankAccount("t@n.com", 200, "password");
+//
+//        testAccount2.transfer(5.00, transferAccount2); //single digit equivalence class
+//        assertEquals(205, transferAccount2.getBalance());
+//        transferAccount2.withdraw(5.00);
+//        testAccount.deposit(5.00);
+//
+//        testAccount2.transfer(50.00, transferAccount2); //double digit equivalence class
+//        assertEquals(250, transferAccount2.getBalance());
+//        transferAccount2.withdraw(50.00);
+//        testAccount2.deposit(50.00);
+//
+//        testAccount2.transfer(500.00, transferAccount2);//triple digit equivalence class
+//        assertEquals(700, transferAccount2.getBalance());
+//        transferAccount2.withdraw(500.00);
+//        testAccount2.deposit(500.00);
+//
+//        testAccount2.transfer(5000.00, transferAccount2);//4 digit equivalence class
+//        assertEquals(5200, transferAccount2.getBalance());
+//
+//        //Positive number with decimals
+//        BankAccount testAccount3 = new BankAccount("7257", 3500.50, "password");
+//        BankAccount transferAccount3 = new BankAccount("8368", 1800.89, "password");
+//
+//        testAccount3.transfer(9.35, transferAccount3);//1 digit equivalence class
+//        assertEquals(1810.24, transferAccount3.getBalance(), 1e-8);
+//        transferAccount3.withdraw(9.35);
+//
+//        testAccount3.transfer(87.29, transferAccount3);// 2 digit equivalence class
+//        assertEquals(1888.18, transferAccount3.getBalance(), 1e-8);
+//        transferAccount3.withdraw(87.29);
+//
+//        testAccount3.transfer(416.12, transferAccount3);//3 digit equivalence class
+//        assertEquals(2217.01, transferAccount3.getBalance(), 1e-8);
+//        transferAccount3.withdraw(416.12);
+//
+//        testAccount3.transfer(2945.67, transferAccount3);// 4 digit equivalence class
+//        assertEquals(4746.56, transferAccount3.getBalance(), 1e-8);
+//    }
+//
+//    @Test
+//    void withdrawTest() throws InsufficientFundsException {
+//        BankAccount bankAccount = new BankAccount("5678", 200.73, "password");
+//        //assertEquals(200.73, bankAccount.getBalance(), 1e-8);//equivalence for amount greater than balance
+//        assertThrows(InsufficientFundsException.class, ()-> bankAccount.withdraw(400));
+//
+//        assertThrows(IllegalArgumentException.class, ()-> bankAccount.withdraw(-100));//equivalence for negative amount
+//
+//        bankAccount.withdraw(50);
+//        assertEquals(150.73, bankAccount.getBalance(), 1e-8);//equivalence for double digit amount
+//
+//        BankAccount bankAccount2 = new BankAccount("1234", 300.27, "password");
+//        assertThrows(InsufficientFundsException.class, ()-> bankAccount2.withdraw(301));//border for amount greater than balance
+//
+//        assertThrows(IllegalArgumentException.class, ()-> bankAccount2.withdraw(-1));//border for negative amount
+//
+//        bankAccount2.withdraw(150);
+//        assertEquals(150.27, bankAccount2.getBalance(), 1e-8);//equivalence for triple digit (middle) amount
+//
+//
+//        bankAccount2.withdraw(0);
+//        assertEquals(150.27, bankAccount2.getBalance(), 1e-8);
+//
+//        BankAccount testAccount = new BankAccount("4321", 1000.00, "password");
+//        //positive number three decimals
+//        assertThrows(IllegalArgumentException.class, ()-> testAccount.withdraw(487.735));
+//        assertThrows(IllegalArgumentException.class, ()-> testAccount.withdraw(48.735));
+//        assertThrows(IllegalArgumentException.class, ()-> testAccount.withdraw(4.735));
+//
+//        //negative number three decimals
+//        assertThrows(IllegalArgumentException.class, ()-> testAccount.withdraw(-487.735));
+//        assertThrows(IllegalArgumentException.class, ()-> testAccount.withdraw(-48.735));
+//        assertThrows(IllegalArgumentException.class, ()-> testAccount.withdraw(-4.735));
+//    }
 
     @Test
     void constructorTest() {
-        BankAccount bankAccount = new BankAccount("a@b.com", 200, "password");
+        BankAccount bankAccount = new BankAccount("4321", 200, "password");
 
-        assertEquals("a@b.com", bankAccount.getEmail());
+        assertEquals("4321", bankAccount.getId());
         assertEquals(200, bankAccount.getBalance());
         assertEquals("password", bankAccount.getPassword());
 
