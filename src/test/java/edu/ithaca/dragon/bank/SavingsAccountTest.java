@@ -52,7 +52,35 @@ public class SavingsAccountTest {
 
     @Test
     void compoundInterestTest(){
+        SavingsAccount account1 = new SavingsAccount("a@b.com", 1000, "s1");
+        account1.setInterestRate(10);
+        account1.compoundInterest();
+        assertEquals(1100, account1.getBalance()); // unit test valid equivalence class (valid starting amount, valid interest rate, # of times compounded border case)
+        account1.compoundInterest();
+        assertEquals(1210, account1.getBalance()); // unit test valid equivalence class (valid starting amount, valid interest rate, # of times compounded middle case)
+    }
 
+    @Test
+    void setDailyMaxTest() throws InsufficientFundsException{
+        SavingsAccount account1 = new SavingsAccount("a@b.com", 200, "s1");
+        assertThrows(IllegalArgumentException.class, ()-> account1.setDailyMax(-1)); // unit test invalid equivalence class (negative amount, middle case)
+        assertThrows(IllegalArgumentException.class, ()-> account1.setDailyMax(-0.01)); // unit test invalid equivalence class (negative amount, border case)
+        assertThrows(IllegalArgumentException.class, ()-> account1.setDailyMax(0.0001)); // unit test invalid equivalence class (more than 2 decimal places, middle case)
+        assertThrows(IllegalArgumentException.class, ()-> account1.setDailyMax(0.001)); // unit test invalid equivalence class (more than 2 decimal places, border case)
+        assertThrows(InsufficientFundsException.class, ()-> account1.setDailyMax(500)); // unit test invalid equivalence class (larger than original amount, middle case)
+        assertThrows(InsufficientFundsException.class, ()-> account1.setDailyMax(200.01)); // unit test invalid equivalence class (larger than original amount, border case)
+        account1.setDailyMax(1); // unit test valid equivalence class (positive amount, middle case)
+        assertEquals(1, account1.getDailyMax());
+        account1.setDailyMax(0.01); // unit test valid equivalence class (positive amount, border case)
+        assertEquals(0.01, account1.getDailyMax());
+        account1.setDailyMax(100.1); // unit test valid equivalence class (at most 2 decimal places, middle case)
+        assertEquals(100.1, account1.getDailyMax());
+        account1.setDailyMax(100.01); // unit test valid equivalence class (at most 2 decimal places, border case)
+        assertEquals(100.01, account1.getDailyMax());
+        account1.setDailyMax(100);  // unit test valid equivalence class (less than original amount, middle case)
+        assertEquals(100, account1.getDailyMax());
+        account1.setDailyMax(199.99);  // unit test valid equivalence class (less than original amount, border case)
+        assertEquals(199.99, account1.getDailyMax());
     }
 
     @Test
