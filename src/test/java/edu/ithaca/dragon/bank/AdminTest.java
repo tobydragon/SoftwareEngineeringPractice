@@ -39,22 +39,27 @@ public class AdminTest {
 
     @Test
     void freezeTest(){
+        Admin admin = new Admin();
         //freeze account with zero
-        Checking checkingTester = new Checking("1452569405", "Toby Dragon", "password", 0);
-        checkingTester.setFrozen(true);
+        admin.createCheckingForTeller("1452569405", "Toby Dragon", "password", 0);
+        admin.freezeAccount("1452569405");
+        Account checkingTester = admin.getAccount("1452569405");
         assertTrue(checkingTester.getFrozenStatus());
 
-        Savings savingsTester = new Savings("1029305967", "Doug Turnbull", "localify", 0, 5, 100);
-        savingsTester.setFrozen(true);
+        admin.createSavingsForTeller("1029305967", "Doug Turnbull", "localify", 0, 5, 100);
+        admin.freezeAccount("1029305967");
+        Account savingsTester = admin.getAccount("1029305967");
         assertTrue(savingsTester.getFrozenStatus());
 
         //freeze account with balance
-        checkingTester = new Checking("1452048605", "Ali Erkan", "networks", 100);
-        checkingTester.setFrozen(true);
+        admin.createCheckingForTeller("1452048605", "Ali Erkan", "networks", 100);
+        admin.freezeAccount("1452048605");
+        checkingTester = admin.getAccount("1452048605");
         assertTrue(checkingTester.getFrozenStatus());
 
-        savingsTester = new Savings("1021059277", "Sharon Stansfield", "virtual", 200, 5, 100);
-        savingsTester.setFrozen(true);
+        admin.createSavingsForTeller("1021059277", "Sharon Stansfield", "virtual", 200, 5, 100);
+        admin.freezeAccount("1021059277");
+        savingsTester = admin.getAccount("1021059277");
         assertTrue(savingsTester.getFrozenStatus());
     }
 
