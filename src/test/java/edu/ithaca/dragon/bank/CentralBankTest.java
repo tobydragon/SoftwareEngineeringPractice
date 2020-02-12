@@ -249,13 +249,15 @@ public class CentralBankTest {
         assertThrows(IllegalArgumentException.class, () -> centBank2.transactionHistory("01"));
 
         centBank2.deposit("01",350.0);
-
         assertEquals("Deposit: 350.0\n",centBank2.transactionHistory("01"));
 
         centBank2.withdraw("01", 250.0);
-
         assertEquals("Deposit: 350.0\nWithdraw: 250.0\n", centBank2.transactionHistory("01"));
+        assertEquals(2, centBank2.getTranCount("01"));
 
+        centBank2.closeAccount("01");
+        assertThrows(NullPointerException.class, () -> centBank2.transactionHistory("01"));
+        assertThrows(NullPointerException.class, () -> centBank2.getTranCount("01"));
     }
 
     @Test
