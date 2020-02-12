@@ -28,7 +28,7 @@ https://drive.google.com/file/d/1trWwSuI_EZDQS7okhx_-eaxDGJnFZIfd/view?usp=shari
 ### transaction History
 https://drive.google.com/file/d/15gvhmOdOeCC_dxNugqb--auLrixZQNqO/view?usp=sharing
 
-### What to do (Josue)
-Use  a check all money method for admin API, to be able to check how much money is in the bank entirely
-Adding more equivalent classes to tests
-To see another way of checking for suspicious activity, if possible
+### What to do
+update class diagram (Vera)
+Adding more equivalence classes to tests - check with accounts being frozen (Vera)
+To see another way of checking for suspicious activity, if possible - verifying identity on suspicious accounts (Josue), less hack-y way of determining suspicious accounts (Kate)
