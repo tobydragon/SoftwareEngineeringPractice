@@ -7,7 +7,7 @@ public class ATM implements BasicAPI {
     private CentralBank bank;
 
     public ATM(UserArrayList userAccounts, CentralBank bank){
-
+        //TODO need to only have one of each collection across bank/atm/teller
         this.userAccounts = userAccounts;
         this.bank = bank;
     }
