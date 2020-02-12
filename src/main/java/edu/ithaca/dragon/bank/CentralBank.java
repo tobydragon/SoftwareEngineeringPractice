@@ -117,23 +117,23 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
     public Collection<String> findAcctIdsWithSuspiciousActivity() {
         Collection<String> suspiciousAccts = new HashSet<>();
 
-        for (String acctId:transactionHist.keySet()) {
-            int wCount = 0;
-            int dCount = 0;
-            int tCount = 0;
-            String history = transactionHist.get(acctId);
-            String[] trans = history.split(",");
-            for(String t:trans) {
-                if (t.toCharArray()[0] == 'w') wCount++;
-                if (t.toCharArray()[0] == 'd') dCount++;
-                if (t.toCharArray()[0] == 't') tCount++;
-            }
-            //if there are a lot of withdraws out not interspersed with deposits
-            //or too many transfers, it's suspicious
-            if ((wCount >= 5 && dCount < 3) || tCount >= 5) {
-                suspiciousAccts.add(acctId);
-            }
-        }
+//        for (String acctId:transactionHist.keySet()) {
+//            int wCount = 0;
+//            int dCount = 0;
+//            int tCount = 0;
+//            String history = transactionHist.get(acctId);
+//            String[] trans = history.split(",");
+//            for(String t:trans) {
+//                if (t.toCharArray()[0] == 'w') wCount++;
+//                if (t.toCharArray()[0] == 'd') dCount++;
+//                if (t.toCharArray()[0] == 't') tCount++;
+//            }
+//            //if there are a lot of withdraws out not interspersed with deposits
+//            //or too many transfers, it's suspicious
+//            if ((wCount >= 5 && dCount < 3) || tCount >= 5) {
+//                suspiciousAccts.add(acctId);
+//            }
+//        }
 
         return suspiciousAccts;
     }
