@@ -183,7 +183,7 @@ public class AccountTest {
         a.setFrozen(false);
         assertThrows(AccountFrozenException.class, () -> a.transfer(b, 20));
         assertThrows(AccountFrozenException.class, () -> a.transfer(b, 50.85));
-        //Checking that Account Frozen has higher priority than other errors, with reciever frozen
+        //Checking that Account Frozen has higher priority than other errors, with receiver frozen
         assertThrows(AccountFrozenException.class, () -> a.transfer(b, 1000.01));
         assertThrows(AccountFrozenException.class, () -> a.transfer(b, 50000));
         assertThrows(AccountFrozenException.class, () -> a.transfer(b, -30));
