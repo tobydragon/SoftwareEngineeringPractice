@@ -4,12 +4,28 @@ import java.util.Collection;
 
 public interface AdminAPI {
 
-    public double calcTotalAssets();
+    /**
+     * @returns the sum of all the balances of all the accounts in the bank
+     */
+    public double calcTotalAssets();  //Not implemented
 
-    public Collection<String> findAcctIdsWithSuspiciousActivity();
+    /**
+     * @returns a collection of accounts deemed to be potentially suspicious TODO: Define what entails "suspicious"
+     */
+    public Collection<String> findAcctIdsWithSuspiciousActivity();  //Not implemented
 
-    public void freezeAccount(String acctId);
+    /**
+     * @param email is a string describing an email address unique to the account to be frozen
+     * @post money cannot be transferred into or out of the account until it is unfrozen
+     * @throws AccountNotFoundException if the given email is not associated with an account
+     */
+    public void freezeAccount(String email) throws AccountNotFoundException;  //Not implemented
 
-    public void unfreezeAcct(String acctId);
+    /**
+     * @param email is a string describing an email address unique to the account to be unfrozen
+     * @post allows money to be transferred into or out of an account again after being frozen
+     * @throws AccountNotFoundException if the given email is not associated with an account
+     */
+    public void unfreezeAcct(String email) throws AccountNotFoundException;  //Not implemented
 
 }
