@@ -27,3 +27,8 @@ https://drive.google.com/file/d/15HkojE-d_-JBS-pgklM1n1DOaKdMjhC1/view?usp=shari
 https://drive.google.com/file/d/1trWwSuI_EZDQS7okhx_-eaxDGJnFZIfd/view?usp=sharing
 ### transaction History
 https://drive.google.com/file/d/15gvhmOdOeCC_dxNugqb--auLrixZQNqO/view?usp=sharing
+
+### What to do (Josue)
+Use  a check all money method for admin API, to be able to check how much money is in the bank entirely
+Adding more equivalent classes to tests
+To see another way of checking for suspicious activity, if possible
