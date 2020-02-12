@@ -3,7 +3,6 @@ package edu.ithaca.dragon.bank;
 import java.util.Collection;
 
 public class Teller extends ATM implements AdvancedAPI {
-    CentralBank bank;
 
     public Teller(CentralBank bank) {
         super(bank);
@@ -24,6 +23,8 @@ public class Teller extends ATM implements AdvancedAPI {
 
 
         public void closeAccount (String acctId){
+            BankAccount acct=bank.getBankAccount(acctId);
+            bank.accounts.remove(acct);
 
         }
     }
