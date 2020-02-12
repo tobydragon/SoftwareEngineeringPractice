@@ -37,7 +37,7 @@ public class UserArrayListTest {
     }
 
     @Test
-    void getTotalAccountsTest(){
+    void getTotalAccountsTest() throws NonExistentAccountException{
         UserArrayList testList = new UserArrayList();
         for(int i = 0; i < 5; i++){
             UserAccount newAccount = new UserAccount("user" + Integer.toString(i),"pass" + Integer.toString(i),Integer.toString(i)+"@" + Integer.toString(i) + ".com",i);
@@ -51,7 +51,7 @@ public class UserArrayListTest {
     }
 
     @Test
-    void assignValidIDTest(){
+    void assignValidIDTest() throws NonExistentAccountException{
         UserArrayList testList = new UserArrayList();
         for(int i = 0; testList.getTotalNumberAccounts() < 5; i=i+2){
             UserAccount newAccount = new UserAccount("user" + Integer.toString(i),"pass" + Integer.toString(i),Integer.toString(i)+"@" + Integer.toString(i) + ".com",i);

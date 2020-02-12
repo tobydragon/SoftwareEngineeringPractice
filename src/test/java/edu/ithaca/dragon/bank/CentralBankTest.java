@@ -102,18 +102,23 @@ public class CentralBankTest {
     @Test
     void createBankAccountTest() throws NonExistentAccountException{
         CentralBank testBank = new CentralBank();
+        testBank.createUser("A", "B", "C@D.org", 1);
         testBank.createBankAccount(1, 100);
         assertEquals(100, testBank.checkBalance(1));
 
+        testBank.createUser("A", "B", "C@D.org", 2);
         testBank.createBankAccount(2, 1);
         assertEquals(1, testBank.checkBalance(2));
 
+        testBank.createUser("A", "B", "C@D.org", 3);
         testBank.createBankAccount(3, 1.000);
-        assertEquals(0, testBank.checkBalance(3));
+        assertEquals(1, testBank.checkBalance(3));
 
+        testBank.createUser("A", "B", "C@D.org", 4);
         testBank.createBankAccount(4, 0);
         assertEquals(0, testBank.checkBalance(4));
 
+        testBank.createUser("A", "B", "C@D.org", 5);
         assertThrows(IllegalArgumentException.class, ()-> testBank.createBankAccount(5, -1));
         assertThrows(IllegalArgumentException.class, ()-> testBank.createBankAccount(5, 1.234));
     }
@@ -121,8 +126,9 @@ public class CentralBankTest {
     @Test
     void closeAccountTest() throws NonExistentAccountException{
         CentralBank testBank = new CentralBank();
+        testBank.createUser("A", "B","C@D.edu", 1);
         testBank.createBankAccount(1, 100);
-        testBank.closeBankAccount(1);
+        testBank.closeBankAccount(1, 0);
         assertThrows(NonExistentAccountException.class, ()->testBank.checkBalance(1));
     }
 

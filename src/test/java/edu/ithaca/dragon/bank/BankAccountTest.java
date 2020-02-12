@@ -319,9 +319,12 @@ class BankAccountTest {
         CentralBank CentralBank1 = new CentralBank();
         CentralBank CentralBank2 = new CentralBank();
         CentralBank CentralBank3 = new CentralBank();
+        CentralBank1.createUser("A", "B", "C@D.com", 1);
         CentralBank1.createBankAccount(1,100);
+        CentralBank2.createUser("A", "B", "C@D.com", 2);
         CentralBank2.createBankAccount(2,0);
-        CentralBank3.createBankAccount(3,-100);
+        CentralBank3.createUser("A", "B", "C@D.com", 3);
+        assertThrows(IllegalArgumentException.class, ()->CentralBank3.createBankAccount(3,-100));
       //CheckBalanceTest
         //Testing the CheckBalance Method for a a standard return of a positive balance
         assertEquals(100, CentralBank1.checkBalance(1));

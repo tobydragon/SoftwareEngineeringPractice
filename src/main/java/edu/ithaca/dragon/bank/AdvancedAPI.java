@@ -4,7 +4,7 @@ package edu.ithaca.dragon.bank;
 public interface AdvancedAPI extends BasicAPI {
     public void createBankAccount(int acctId, double startingBalance)  throws NonExistentAccountException;
 
-    public void closeBankAccount(int acctId)  throws NonExistentAccountException;
+    public void closeBankAccount(int userID, int acctId)  throws NonExistentAccountException;
 
     public void createUserAccount(String username, String password, String email, int userID);
 
