@@ -347,7 +347,7 @@ class BankAccountTest {
 
         //AssertWithdrawTest
         //Testing the withdraw Method for a a standard withdraw of a positive amount
-        CentralBank1.withdraw(1,25);
+        CentralBank1.withdraw(1,50);
         assertEquals(75,CentralBank1.checkBalance(1));
         //Testing the Withdraw Method for a a standard return of a IllegalArugumentExcept since a negative amount is not possible
         assertThrows(IllegalArgumentException.class, ()-> CentralBank1.withdraw(1,-25));

@@ -15,8 +15,6 @@ public class CentralBankTest {
         assertFalse(testBank.confirmCredentials("user1","1pass")); //password wrong
         assertFalse(testBank.confirmCredentials("1resu","pass1")); //user wrong
         assertTrue(testBank.confirmCredentials("user1","pass1"));
-
-
     }
 
     @Test
@@ -124,7 +122,6 @@ public class CentralBankTest {
     void closeAccountTest() throws NonExistentAccountException{
         CentralBank testBank = new CentralBank();
         testBank.createBankAccount(1, 100);
-
         testBank.closeBankAccount(1);
         assertThrows(NonExistentAccountException.class, ()->testBank.checkBalance(1));
     }

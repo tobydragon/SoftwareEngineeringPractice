@@ -52,7 +52,7 @@ public class UserArrayList {
         //TODO might want to change to take userID
         //TODO remove associated bank accounts?
         if (userAccounts.indexOf(account) == -1){
-            throw new IllegalArgumentException("Account not in arraylist");
+            throw new NonExistentAccountException("Account not in arraylist");
         }
         UserAccount removedAccount = userAccounts.get(userAccounts.indexOf(account));
         userAccounts.remove(account);

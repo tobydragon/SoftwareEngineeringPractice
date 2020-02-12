@@ -31,9 +31,7 @@ public class UserArrayListTest {
 
         testList.removeAccount(testAcct1);
         assertThrows(NonExistentAccountException.class, () -> testList.findAccount(1));
-        assertThrows(NonExistentAccountException.class, () -> testList.findAccount("user1"));
-
-        assertThrows(IllegalArgumentException.class, () -> testList.removeAccount(testAcct4));
+        assertThrows(NonExistentAccountException.class, () -> testList.removeAccount(testAcct4));
 
 
     }
