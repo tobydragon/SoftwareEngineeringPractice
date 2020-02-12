@@ -8,6 +8,7 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
     private BankAccountCollection bankAccountCollection;
 
     public CentralBank(){
+        //TODO need to only have one of each collection across bank/atm/teller
         userAccounts = new UserArrayList();
         bankAccountCollection = new BankAccountCollection();
     }
