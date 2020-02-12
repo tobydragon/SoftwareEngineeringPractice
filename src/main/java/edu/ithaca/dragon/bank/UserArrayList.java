@@ -31,7 +31,7 @@ public class UserArrayList {
      * @param newAccount
      */
     public void validAddAccount(UserAccount newAccount){
-        assignValidID(newAccount);
+        userAccounts.add(new UserAccount(newAccount.getUsername(), newAccount.getPassword(), newAccount.getEmail(), userAccounts.size()));
     }
 
     /**
@@ -58,9 +58,5 @@ public class UserArrayList {
 
     public int getTotalNumberAccounts(){
         return userAccounts.size();
-    }
-
-    public void assignValidID(UserAccount newAccount){
-        userAccounts.add(new UserAccount(newAccount.getUsername(), newAccount.getPassword(), newAccount.getEmail(), userAccounts.size()));
     }
 }
