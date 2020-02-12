@@ -62,8 +62,8 @@ import static org.junit.jupiter.api.Assertions.*;
          assertThrows(IllegalAccessException.class,()-> b1.deposit(200));
          assertThrows(IllegalAccessException.class,()-> b1.withdraw(200));
 
-
-
+         //ID not found
+         assertThrows(IllegalArgumentException.class,()-> c1.freezeAccount("34"));
 
      }
 
@@ -79,6 +79,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
          c1.unfreezeAcct("BA1234");
          assertFalse(b1.getAcctFrozen());
+
+         //ID not found
+         assertThrows(IllegalArgumentException.class,()-> c1.unfreezeAcct("34"));
 
      }
 
@@ -118,9 +121,11 @@ import static org.junit.jupiter.api.Assertions.*;
      void confirmCredentialsTest(){
          CentralBank c1 = new CentralBank();
          c1.createAccount("b123",200,"1234@gmail.com","confirmCredentialsTest");
-         assertFalse(c1.confirmCredentials("123","122"));
          assertFalse(c1.confirmCredentials("b123","123"));
          assertTrue(c1.confirmCredentials("b123","confirmCredentialsTest"));
+
+         //ID not found
+         assertThrows(IllegalArgumentException.class,()-> c1.confirmCredentials("123","confirmCredentialsTest"));
 
      }
 
@@ -133,18 +138,23 @@ import static org.junit.jupiter.api.Assertions.*;
          CentralBank c2 = new CentralBank();
          c1.createAccount("b100",1,"123@ithaca.com","checkBalanceTest2");
          assertEquals(1,c1.checkBalance("b100"));
+
+         //ID not found
+         assertThrows(IllegalArgumentException.class,()-> c1.checkBalance("b1"));
      }
 
      @Test
      void withdrawTest() throws IllegalAccessException {
          CentralBank c1 = new CentralBank();
          c1.createAccount("b123",200,"1234@gmail.com","withdrawTest");
-//         assertThrows(IllegalAccessException.class,()-> c1.deposit("b123",300));
-//         assertThrows(IllegalAccessException.class,()-> c1.deposit("b123",-300));
          c1.withdraw("b123",100);
          assertEquals(100,c1.checkBalance("b123"));
          c1.withdraw("b123",50.55);
          assertEquals(49.45,c1.checkBalance("b123"));
+
+         //ID not found
+         assertThrows(IllegalArgumentException.class,()-> c1.withdraw("123",100));
+
      }
 
 
@@ -152,25 +162,23 @@ import static org.junit.jupiter.api.Assertions.*;
      void depositTest() throws IllegalAccessException {
          CentralBank c1 = new CentralBank();
          c1.createAccount("b123",200,"1234@gmail.com","depositTest");
-//         assertThrows(IllegalAccessException.class,()-> c1.deposit("b123",300));
-//         assertThrows(IllegalAccessException.class,()-> c1.deposit("b123",100.1018244));
-//         assertThrows(IllegalAccessException.class,()-> c1.deposit("b123",-300));
          c1.deposit("b123",100);
          assertEquals(300,c1.checkBalance("b123"));
          c1.deposit("b123",50.55);
          assertEquals(350.55,c1.checkBalance("b123"));
 
+         //ID not found
+         assertThrows(IllegalArgumentException.class,()-> c1.deposit("b12",300));
+
+
      }
 
      @Test
      void transferTest() throws IllegalAccessException {
-         //total assets test
          CentralBank c1 = new CentralBank();
          c1.createAccount("b123",200,"1234@gmail.com","depositTest");
          c1.createAccount("c321",150,"12@gmail.com","depositTest1");
-//         assertThrows(IllegalAccessException.class,()-> c1.deposit("b123",300));
-//         assertThrows(IllegalAccessException.class,()-> c1.deposit("b123",100.1018244));
-//         assertThrows(IllegalAccessException.class,()-> c1.deposit("b123",-300));
+
          c1.transfer("b123","c321",100);
          assertEquals(100,c1.checkBalance("b123"));
          assertEquals(250,c1.checkBalance("c321"));
@@ -178,6 +186,11 @@ import static org.junit.jupiter.api.Assertions.*;
          c1.transfer("c321", "b123",10.10);
          assertEquals(110.1,c1.checkBalance("b123"));
          assertEquals(239.9,c1.checkBalance("c321"));
+
+         //ID not found
+         assertThrows(IllegalArgumentException.class,()-> c1.deposit("b12",300));
+         assertThrows(IllegalArgumentException.class,()-> c1.deposit("123",300));
+
 
 
 
@@ -194,7 +207,9 @@ import static org.junit.jupiter.api.Assertions.*;
          c1.transfer("b123","c321",11);
          assertEquals("Withdraw: 10.0\nDeposit: 100.0\nCheck balance: 290.0\nTransfer: 11.0 to c321\nWithdraw: 11.0",c1.transactionHistory("b123"));
 
-
+         //ID not found
+         assertThrows(IllegalArgumentException.class,()-> c1.deposit("b12",300));
+         assertThrows(IllegalArgumentException.class,()-> c1.deposit("123",300));
      }
 
 
