@@ -15,6 +15,3 @@ TO - DO:
 
 CE - update sequence
     - tests for close account (with balance == 0 and != 0)
-
-LC - throw exception for findID
-    - update closeAccount function to check balance
