@@ -13,10 +13,6 @@
 
 TO - DO:
 
-SW - bank account not abstract - fix diagram
-    - make checking account class
-    - fix sequence diagram
-
 CE - update sequence
     - tests for close account (with balance == 0 and != 0)
 
