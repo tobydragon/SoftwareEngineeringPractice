@@ -26,9 +26,15 @@ public class SavingsAccountTest {
         SavingsAccount testAccount = new SavingsAccount("1234", 1000, "Password", 5);
 
         testAccount.compoundInterest();
+        assertEquals(1000, testAccount.getBalance());
+
+        testAccount.compoundInterest();
         assertEquals(1050, testAccount.getBalance());
 
         testAccount.compoundInterest();
-        assertEquals(1157.625, testAccount.getBalance());
+        assertEquals(1157.63, testAccount.getBalance());
+
+        testAccount.compoundInterest();
+        assertEquals(1340.10,testAccount.getBalance());
     }
 }
