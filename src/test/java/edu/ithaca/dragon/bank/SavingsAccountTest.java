@@ -19,7 +19,16 @@ public class SavingsAccountTest {
         assertThrows(IllegalArgumentException.class, () -> new SavingsAccount("4321", 100, "password", -5) );
         assertThrows(IllegalArgumentException.class, () -> new SavingsAccount("4321", 100, "password", 5.101) );
 
+    }
 
+    @Test
+    void compoundInterestTest(){
+        SavingsAccount testAccount = new SavingsAccount("1234", 1000, "Password", 5);
 
+        testAccount.compoundInterest();
+        assertEquals(1050, testAccount.getBalance());
+
+        testAccount.compoundInterest();
+        assertEquals(1157.625, testAccount.getBalance());
     }
 }

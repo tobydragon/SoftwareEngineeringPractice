@@ -4,6 +4,8 @@ public class SavingsAccount extends BankAccount {
 
     private double interest;
     private double withdrawLimit = 3;
+    private double balance;
+    private int daysPassed = 0;
 
     /**
      * @param id
@@ -13,6 +15,7 @@ public class SavingsAccount extends BankAccount {
      */
     public SavingsAccount(String id, double startingBalance, String password, double interestIn) {
         super(id, startingBalance, password);
+        this.balance = startingBalance;
         if (isAmountValid(interestIn)){
             interest = interestIn;
         }
