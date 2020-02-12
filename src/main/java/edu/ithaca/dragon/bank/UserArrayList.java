@@ -27,12 +27,19 @@ public class UserArrayList {
     }
 
     /**
+     * Adds a given userAccount to the arraylist after auto-assigning a valid userID to it.
+     * @param newAccount
+     */
+    public void validAddAccount(UserAccount newAccount){
+        assignValidID(newAccount);
+    }
+
+    /**
      * Adds a given userAccount to the arraylist
      * @param newAccount
      */
     public void addAccount(UserAccount newAccount){
-        //userAccounts.add(newAccount);
-        assignValidID(newAccount);
+        userAccounts.add(newAccount);
     }
 
     /**
