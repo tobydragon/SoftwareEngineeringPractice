@@ -35,4 +35,30 @@ public class UserArrayListTest {
 
 
     }
+
+    @Test
+    void getTotalAccountsTest(){
+        UserArrayList testList = new UserArrayList();
+        for(int i = 0; i < 5; i++){
+            UserAccount newAccount = new UserAccount("user" + Integer.toString(i),"pass" + Integer.toString(i),Integer.toString(i)+"@" + Integer.toString(i) + ".com",i);
+            testList.addAccount(newAccount);
+            assertEquals(i + 1, testList.getTotalNumberAccounts());
+        }
+        for(int i = 5; i > 0; i--){
+            testList.removeAccount(testList.findAccount(i-1));
+            assertEquals(i-1, testList.getTotalNumberAccounts());
+        }
+    }
+
+    @Test
+    void assignValidIDTest(){
+        UserArrayList testList = new UserArrayList();
+        for(int i = 0; testList.getTotalNumberAccounts() < 5; i=i+2){
+            UserAccount newAccount = new UserAccount("user" + Integer.toString(i),"pass" + Integer.toString(i),Integer.toString(i)+"@" + Integer.toString(i) + ".com",i);
+            testList.validAddAccount(newAccount);
+        }
+        for(int i = 0; i < 5; i++) {
+            assertEquals(i, testList.findAccount(i).getUserID());
+        }
+    }
 }

@@ -36,6 +36,14 @@ public class UserArrayList {
     }
 
     /**
+     * Adds a given userAccount to the arraylist after auto-assigning a valid userID to it.
+     * @param newAccount
+     */
+    public void validAddAccount(UserAccount newAccount){
+        userAccounts.add(new UserAccount(newAccount.getUsername(), newAccount.getPassword(), newAccount.getEmail(), userAccounts.size()));
+    }
+
+    /**
      * Adds a given userAccount to the arraylist
      * @param newAccount
      */
@@ -57,5 +65,9 @@ public class UserArrayList {
         UserAccount removedAccount = userAccounts.get(userAccounts.indexOf(account));
         userAccounts.remove(account);
         return removedAccount;
+    }
+
+    public int getTotalNumberAccounts(){
+        return userAccounts.size();
     }
 }
