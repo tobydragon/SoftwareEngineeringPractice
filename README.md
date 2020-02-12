@@ -8,4 +8,4 @@ Withdraw Sequence diagram BankTeller: https://drive.google.com/file/d/1V51DPsffU
 
 Withdraw Sequence diagram ATM: https://drive.google.com/file/d/1A6ZFq9g-vcnZ75FzZpjcJTqST8WIMkaQ/view?usp=sharing
 
-Depost Sequence Diagra BankTeller:https://drive.google.com/file/d/1yJNCy1H_MU2AL990FQnjaZPBFHO4EZJ_/view?usp=sharing
+Deposit Sequence Diagra BankTeller:https://drive.google.com/file/d/1yJNCy1H_MU2AL990FQnjaZPBFHO4EZJ_/view?usp=sharing
