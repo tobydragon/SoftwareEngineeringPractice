@@ -71,6 +71,7 @@ public class AdminTesttt {
         assertEquals(5500, admin.calcTotalAssets());
     }
 
+    //integration test
     @Test
     void findAcctIdsWithSuspiciousActivityTest() throws InsufficientFundsException {
         BankAccount acc1 = new CheckingAccount(1000, "acc1");
