@@ -4,9 +4,9 @@ import java.util.regex.Pattern;
 
 public class BankAccount {
 
-    protected String acctId;
-    protected String email;
-    protected double balance;
+    private String acctId;
+    private String email;
+    private double balance;
     protected String type;
 
     /**
@@ -144,5 +144,13 @@ public class BankAccount {
             }
         }
         return true;
+    }
+
+    public String getAcctId() {
+        return acctId;
+    }
+
+    public String getType() {
+        return type;
     }
 }
