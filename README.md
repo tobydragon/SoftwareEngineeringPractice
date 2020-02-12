@@ -19,3 +19,5 @@ Ideas for Improvement:
 -Use maybe a map for the customer collection. 
 
 -Throw particular exception.
+
+-Take createAccount and turn it into createCustomer and addAccountToCustomer
