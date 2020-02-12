@@ -7,3 +7,9 @@ link to Aidan's sequence diagram: https://drive.google.com/file/d/1L447NcwgO0Gbk
 * Use Case Diagram - https://drive.google.com/file/d/1OTOZ-MegXgHVpB8rYiUERVfmFXZhzAlF/view?usp=sharing
 * freeze account sequence diagram - https://drive.google.com/file/d/19AFoU-Of_jHAxNgIwXVeigCMnlGSpC1D/view?usp=sharing
 * unfreeze account sequence diagram - https://drive.google.com/file/d/1AA96lVdDmQhyHeB5tIYJtLMJNSpWDMh1/view?usp=sharing
+
+Plan for Friday:
+Update the class diagram to better include the user class.
+Update the use case diagram to include confirm credentials and check balances. As well as clarify "request report"
+Change our code to better implement the user. Change the code to work again with both the collection of bankaccount and user.
+
