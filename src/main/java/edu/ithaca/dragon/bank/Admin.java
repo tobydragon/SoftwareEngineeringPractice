@@ -79,6 +79,10 @@ public class Admin implements AdminAPI {
      */
     @Override
     public void unfreezeAcct(String acctId) throws IllegalArgumentException {
-
+        if (accounts.containsKey(acctId)){
+            accounts.get(acctId).setFrozen(false);
+        } else {
+            throw new IllegalArgumentException("Account ID invalid; cannot unfreeze an account that does not exist");
+        }
     }
 }
