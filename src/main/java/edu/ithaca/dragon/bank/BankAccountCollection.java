@@ -34,4 +34,8 @@ public class BankAccountCollection {
             return collection.get(userID).get(bankAccountIndex);
         }
     }
+
+    int getNumAccounts(int userID){
+        return collection.get(userID).size();
+    }
 }

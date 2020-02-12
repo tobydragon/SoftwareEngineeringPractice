@@ -39,9 +39,9 @@ public class UserArrayList {
      * @param account
      * @return copy of the removed Useraccount
      */
-    public UserAccount removeAccount(UserAccount account) throws IllegalArgumentException{ //TODO might want to change to take userID
+    public UserAccount removeAccount(UserAccount account) throws NonExistentAccountException{ //TODO might want to change to take userID
         if (userAccounts.indexOf(account) == -1){
-            throw new IllegalArgumentException("Account not in arraylist");
+            throw new NonExistentAccountException("Account not in arraylist");
         }
         UserAccount removedAccount = userAccounts.get(userAccounts.indexOf(account));
         userAccounts.remove(account);

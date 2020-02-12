@@ -319,9 +319,12 @@ class BankAccountTest {
         CentralBank CentralBank1 = new CentralBank();
         CentralBank CentralBank2 = new CentralBank();
         CentralBank CentralBank3 = new CentralBank();
+        CentralBank1.createUser("A", "B", "C@D.com", 1);
+        CentralBank2.createUser("B", "C", "D@E.com", 2);
+        CentralBank3.createUser("C", "D", "E@F.com", 3);
         CentralBank1.createAccount(1,100);
         CentralBank2.createAccount(2,0);
-        CentralBank3.createAccount(3,-100);
+        assertThrows(IllegalArgumentException.class, ()->CentralBank3.createAccount(3,-100));
       //CheckBalanceTest
         //Testing the CheckBalance Method for a a standard return of a positive balance
         assertEquals(100, CentralBank1.checkBalance(1));
@@ -347,7 +350,7 @@ class BankAccountTest {
 
         //AssertWithdrawTest
         //Testing the withdraw Method for a a standard withdraw of a positive amount
-        CentralBank1.withdraw(1,25);
+        CentralBank1.withdraw(1,50);
         assertEquals(75,CentralBank1.checkBalance(1));
         //Testing the Withdraw Method for a a standard return of a IllegalArugumentExcept since a negative amount is not possible
         assertThrows(IllegalArgumentException.class, ()-> CentralBank1.withdraw(1,-25));

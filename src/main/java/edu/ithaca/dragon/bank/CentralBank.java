@@ -22,24 +22,24 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
         return bankAccountCollection.retrieveAccount(userID, 0).getBalance();
     }
 
-    public double checkBalance(int userID, int acctId) {
-        return 0;
+    public double checkBalance(int userID, int acctId) throws NonExistentAccountException{
+        return bankAccountCollection.retrieveAccount(userID, acctId).getBalance();
     }
 
     public void withdraw(int userId, double amount) throws InsufficientFundsException, NonExistentAccountException{
         bankAccountCollection.retrieveAccount(userId, 0).withdraw(amount);
     }
 
-    public void withdraw(int userId, int bankAccID, double amount) throws InsufficientFundsException {
-
+    public void withdraw(int userId, int bankAccID, double amount) throws InsufficientFundsException, NonExistentAccountException {
+        bankAccountCollection.retrieveAccount(userId, bankAccID).withdraw(amount);
     }
 
     public void deposit(int userId, double amount) throws InsufficientFundsException, NonExistentAccountException{
         bankAccountCollection.retrieveAccount(userId, 0).deposit(amount);
     }
 
-    public void deposit(int userId, int bankAccID, double amount) throws InsufficientFundsException {
-        //TODO
+    public void deposit(int userId, int bankAccID, double amount) throws InsufficientFundsException, NonExistentAccountException {
+        bankAccountCollection.retrieveAccount(userId, bankAccID).deposit(amount);
     }
 
     public void transfer(int userIDFrom, int acctIdToWithdrawFrom, int userIDTo, int acctIdToDepositTo, double amount) throws InsufficientFundsException, NonExistentAccountException {
@@ -64,8 +64,8 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
         bankAccountCollection.addBankAccount(newAccount);
     }
 
-    public void closeAccount(int userId) {
-
+    public void closeAccount(int userId, int accID) throws NonExistentAccountException{
+        bankAccountCollection.removeBankAccount(userId, accID);
     }
 
 

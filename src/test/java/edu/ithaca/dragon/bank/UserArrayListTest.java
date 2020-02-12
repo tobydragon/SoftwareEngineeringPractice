@@ -18,7 +18,7 @@ public class UserArrayListTest {
         testList.addAccount(testAcct2);
         testList.addAccount(testAcct3);
 
-        assertThrows(IllegalArgumentException.class, () -> testList.findAccount(123));
+        assertThrows(NonExistentAccountException.class, () -> testList.findAccount(123));
         //Making sure all were actually added
         assertEquals(testList.findAccount(1).getUserID(), testAcct1.getUserID());
         assertEquals(testList.findAccount(2).getUserID(), testAcct2.getUserID());
@@ -27,9 +27,9 @@ public class UserArrayListTest {
         UserAccount testAcct4 = new UserAccount("user4","pass4","d@e.com",4);
 
         testList.removeAccount(testAcct1);
-        assertThrows(IllegalArgumentException.class, () -> testList.findAccount(1));
+        assertThrows(NonExistentAccountException.class, () -> testList.findAccount(1));
 
-        assertThrows(IllegalArgumentException.class, () -> testList.removeAccount(testAcct4));
+        assertThrows(NonExistentAccountException.class, () -> testList.removeAccount(testAcct4));
 
 
     }
