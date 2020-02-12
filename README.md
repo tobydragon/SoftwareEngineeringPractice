@@ -21,3 +21,7 @@ Ideas for Improvement:
 -Throw particular exception.
 
 -Take createAccount and turn it into createCustomer and addAccountToCustomer
+
+-Admin freeze/Unfreeze
+
+-Transfer
