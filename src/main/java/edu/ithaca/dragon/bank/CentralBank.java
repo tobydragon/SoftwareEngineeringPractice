@@ -113,11 +113,25 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
     public String transactionHistory(String acctId) {
         String transactions = bankAccounts.get(acctId).getTransHist();
         if (transactions == ""){
-            throw new IllegalArgumentException("There are no transactions logged");
+            throw new IllegalArgumentException("There are no transactions logged for this account");
+        }
+        else if(!checkAccountExists(acctId)){
+            throw new NullPointerException("This account does not exist");
         }
         else{
             return transactions;
         }
+    }
+
+    public int getTranCount(String acctId) throws NullPointerException{
+        if(!checkAccountExists(acctId)){
+            throw new NullPointerException("Account does not exist");
+        }
+        else{
+            int tranCount = bankAccounts.get(acctId).getTranCount();
+            return tranCount;
+        }
+
     }
 
 

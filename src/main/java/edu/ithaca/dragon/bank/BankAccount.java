@@ -49,6 +49,10 @@ public class BankAccount {
         return transactions;
     }
 
+    public int getTranCount(){
+        return tranCount;
+    }
+
     public String getEmail(){
         return id;
     }
