@@ -3,14 +3,18 @@ package edu.ithaca.dragon.bank;
 
 public class ATM implements BasicAPI {
 
-    UserArrayList userAccounts;
+    private UserArrayList userAccounts;
+    private CentralBank bank;
 
-    public ATM(UserArrayList userAccounts){
+    public ATM(UserArrayList userAccounts, CentralBank bank){
+        //TODO need to only have one of each collection across bank/atm/teller
         this.userAccounts = userAccounts;
+        this.bank = bank;
     }
 
-    public boolean confirmCredentials(int acctId, String password){
-        return false;
+    public boolean confirmCredentials(String username, String password){
+
+        return bank.confirmCredentials(username,password);
     }
 
     public double checkBalance(int userID) throws NonExistentAccountException{

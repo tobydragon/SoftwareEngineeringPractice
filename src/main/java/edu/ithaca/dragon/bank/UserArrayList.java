@@ -25,6 +25,15 @@ public class UserArrayList {
         }
         throw new NonExistentAccountException("Account not found"); //Throws error if account not found
     }
+    //Same as above, but finds by username
+    public UserAccount findAccount(String username) throws NonExistentAccountException {
+        for (int i = 0; i < userAccounts.size(); i++){
+            if (userAccounts.get(i).getUsername().equals(username)){
+                return userAccounts.get(i);
+            }
+        }
+        throw new NonExistentAccountException("Account not found"); //Throws error if account not found
+    }
 
     /**
      * Adds a given userAccount to the arraylist
@@ -39,7 +48,9 @@ public class UserArrayList {
      * @param account
      * @return copy of the removed Useraccount
      */
-    public UserAccount removeAccount(UserAccount account) throws NonExistentAccountException{ //TODO might want to change to take userID
+    public UserAccount removeAccount(UserAccount account) throws IllegalArgumentException{
+        //TODO might want to change to take userID
+        //TODO remove associated bank accounts?
         if (userAccounts.indexOf(account) == -1){
             throw new NonExistentAccountException("Account not in arraylist");
         }

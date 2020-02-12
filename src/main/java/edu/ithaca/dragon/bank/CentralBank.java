@@ -8,13 +8,24 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
     private BankAccountCollection bankAccountCollection;
 
     public CentralBank(){
+        //TODO need to only have one of each collection across bank/atm/teller
         userAccounts = new UserArrayList();
         bankAccountCollection = new BankAccountCollection();
     }
 
     //----------------- BasicAPI methods -------------------------//
 
-    public boolean confirmCredentials(int acctId, String password) {
+    public boolean confirmCredentials(String username, String password) {
+        try {
+            UserAccount account = userAccounts.findAccount(username);
+            //If username is wrong it will go to the catch and return false
+            if (account.getPassword().equals(password)) return true;
+        }
+        catch(Exception NonExistentAccountException){
+            return false;
+        }
+
+
         return false;
     }
 
@@ -58,16 +69,26 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
         userAccounts.addAccount(new UserAccount(userName, password, email, userID));
     }
 
-    public void createAccount(int userId, double startingBalance) throws NonExistentAccountException{
+    public void createBankAccount(int userId, double startingBalance) throws NonExistentAccountException{
         UserAccount currentAccount = userAccounts.findAccount(userId);
         BankAccount newAccount = new BankAccount(currentAccount.getEmail(), startingBalance, userId);
         bankAccountCollection.addBankAccount(newAccount);
     }
 
-    public void closeAccount(int userId, int accID) throws NonExistentAccountException{
-        bankAccountCollection.removeBankAccount(userId, accID);
+    public void closeBankAccount(int userId) {
+
     }
 
+    public void createUserAccount(String username, String password, String email, int userID){
+        UserAccount newAccount = new UserAccount(username, password, email, userID);
+        userAccounts.addAccount(newAccount);
+    }
+
+    public void closeUserAccount(int userId) throws IllegalArgumentException, NonExistentAccountException{
+        UserAccount removedAccount = userAccounts.findAccount(userId);
+        userAccounts.removeAccount(removedAccount);
+
+    }
 
     //------------------ AdminAPI methods -------------------------//
 
