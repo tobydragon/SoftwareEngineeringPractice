@@ -17,7 +17,7 @@ public class BankTeller implements AdvancedAPI {
         return customers.getBalance(acctId);
     }
 
-    public void withdraw(String acctId, double amount) throws InsufficientFundsException {
+    public void withdraw(String acctId, double amount) throws InsufficientFundsException, IllegalArgumentException {
         customers.withdraw(acctId, amount);
 
     }

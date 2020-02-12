@@ -16,7 +16,10 @@ public class Customer {
     public void deposit(double amount){
         checking.deposit(amount);
     }
-    public void withdraw(double amount){}
+    public void withdraw(double amount)throws IllegalArgumentException, InsufficientFundsException{
+        if(checking == null)throw new IllegalArgumentException("Account Not Created");
+        checking.withdraw(amount);
+    }
     public double getBalance(){
         if(checking == null)throw new IllegalArgumentException("No account");
         return checking.getBalance();

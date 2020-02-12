@@ -8,7 +8,6 @@ public class BankTellerTest {
 
     @Test
     void withdrawTest() throws Exception {
-        CustomerCollection newCol = new CustomerCollection();
         BankTeller bankAccount = new BankTeller();
 
         bankAccount.createAccount("a@b.com", "xyz", 200);
@@ -17,37 +16,32 @@ public class BankTellerTest {
         bankAccount.createAccount("e@f.com", "xyz", 10);
         bankAccount.createAccount("f@g.com", "xyz", 150);
 
-        bankAccount.withdraw("a@b.com", 200);
+        bankAccount.withdraw("a@b.com", 100);
 
         assertEquals(100, bankAccount.checkBalance("a@b.com"));
 
         //Equivalence Class Has balance
-        BankTeller bankAccount1 = new BankTeller();
-        bankAccount1.withdraw("a@b.com", 99);//valid withdraw
-        assertEquals(201, bankAccount1.checkBalance("a@b.com"));
-        bankAccount1.withdraw("a@b.com", 1);//valid withdraw edgecase
-        assertEquals(200, bankAccount1.checkBalance("a@b.com"));
-        bankAccount1.withdraw("a@b.com", 0.1);
-        assertEquals(199.9, bankAccount1.checkBalance("a@b.com"), 10);
-        bankAccount1.withdraw("a@b.com", 0.01);
-        assertEquals(199.89, bankAccount1.checkBalance("a@b.com"), 10);
-        assertThrows(InsufficientFundsException.class, () -> bankAccount1.withdraw("a@b.com", 201));
-        assertEquals(199.89, bankAccount1.checkBalance("a@b.com"), 10);
-        assertThrows(InsufficientFundsException.class, () -> bankAccount1.withdraw("a@b.com", 20100));
-        assertEquals(199.89, bankAccount1.checkBalance("a@b.com"), 10);
-        bankAccount1.withdraw("a@b.com", 199.89);//perfect withdraw edgecase
-        assertEquals(0, bankAccount1.checkBalance("a@b.com"), 10);
+        bankAccount.withdraw("a@b.com", 99);//valid withdraw
+        assertEquals(1, bankAccount.checkBalance("a@b.com"),10);
+        bankAccount.withdraw("b@c.com", 1);//valid withdraw edgecase
+        assertEquals(499, bankAccount.checkBalance("b@c.com"));
+        bankAccount.withdraw("c@d.com", 0.1);
+        assertEquals(999.9, bankAccount.checkBalance("c@d.com"), 10);
+        bankAccount.withdraw("a@b.com", 0.01);
+        assertEquals(0.99, bankAccount.checkBalance("a@b.com"), 10);
+        assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw("a@b.com", 201));
+        assertEquals(0.99, bankAccount.checkBalance("a@b.com"), 10);
+        assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw("a@b.com", 20100));
+        assertEquals(0.99, bankAccount.checkBalance("a@b.com"), 10);
+        bankAccount.withdraw("a@b.com", 0.99);//perfect withdraw edgecase
+        assertEquals(0, bankAccount.checkBalance("a@b.com"), 10);
 
-        //Equivalence Class No balance
-        BankTeller ba2 = new BankTeller();
-        assertThrows(InsufficientFundsException.class, () -> ba2.withdraw("a@b.com", 1));
-        assertEquals(0, ba2.checkBalance("a@b.com"));
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw("a@b.com", 0));
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw("a@b.com", 1.001));
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw("a@b.com", -14));
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw("a@b.com", -0.001));
 
-        BankTeller ba3 = new BankTeller();
-        assertThrows(IllegalArgumentException.class, () -> ba3.withdraw("a@b.com", 0));
-        assertThrows(IllegalArgumentException.class, () -> ba3.withdraw("a@b.com", 1.001));
-        assertThrows(IllegalArgumentException.class, () -> ba3.withdraw("a@b.com", -14));
-        assertThrows(IllegalArgumentException.class, () -> ba3.withdraw("a@b.com", -0.001));
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount.withdraw("asdfa", 100));
     }
     @Test
     void depositTest() throws Exception {

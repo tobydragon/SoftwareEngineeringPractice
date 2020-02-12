@@ -26,8 +26,8 @@ public class ATMTest {
         assertEquals(101, bankAccount.checkBalance("a@b.com"));
         bankAccount.withdraw("e@f.com", 1);
         assertEquals(299, bankAccount.checkBalance("e@f.com"));
-        bankAccount.withdraw("a@b.com", 199.89);
-        assertEquals(0.11, bankAccount.checkBalance("a@b.com"));
+        bankAccount.withdraw("a@b.com", 100.89);
+        assertEquals(0.11, bankAccount.checkBalance("a@b.com"), 10);
 
         assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw("a@b.com", 0));
         assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw("a@b.com", 1.001));
