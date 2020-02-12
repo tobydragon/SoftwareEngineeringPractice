@@ -8,4 +8,4 @@
 
 #SW Sequence Diagram: https://drive.google.com/file/d/1JFUCjxWpQ7p6xs8KKuwfl25wGQdMTHNj/view?usp=sharing
 
-#LC Sequence Diagram:
+#LC Sequence Diagram: https://drive.google.com/file/d/1JxTIFh9YG4WqagolynRPzfiFYXbgfIL1/view?usp=sharing
