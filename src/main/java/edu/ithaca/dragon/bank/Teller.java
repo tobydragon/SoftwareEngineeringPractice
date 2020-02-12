@@ -2,8 +2,8 @@ package edu.ithaca.dragon.bank;
 
 public class Teller extends ATM {
 
-    public Teller(UserArrayList userAccounts){
-        super(userAccounts); //calls ATM's constructor
+    public Teller(UserArrayList userAccounts, CentralBank bank){
+        super(userAccounts, bank); //calls ATM's constructor
     }
 //TODO use central bank
     public void createUserAccount(String username, String password, String email, int userID){

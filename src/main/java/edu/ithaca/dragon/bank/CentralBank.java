@@ -15,8 +15,14 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
     //----------------- BasicAPI methods -------------------------//
 
     public boolean confirmCredentials(String username, String password) {
-
-        //Try/catch with nonexistentaccountexception
+        try {
+            UserAccount account = userAccounts.findAccount(username);
+            //If username is wrong it will go to the catch and return false
+            if (account.getPassword().equals(password)) return true;
+        }
+        catch(Exception NonExistentAccountException){
+            return false;
+        }
 
 
         return false;

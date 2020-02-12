@@ -5,7 +5,8 @@ public class ATM implements BasicAPI {
 
     UserArrayList userAccounts;
 
-    public ATM(UserArrayList userAccounts){
+    public ATM(UserArrayList userAccounts, CentralBank bank){
+
         this.userAccounts = userAccounts;
     }
 
