@@ -20,6 +20,7 @@ public class SuspiciousTest {
         bank.createAccount("badguy@bank.com", "password", 500, false);
         bank.createAccount("accomplice@bank.com", "password", 500, true);
 
+        //just a variety of deposits and withdrawals
         bank.deposit("goodguy@bank.com", 1500);
         bank.deposit("goodguy@bank.com", 200);
         bank.withdraw("goodguy@bank.com", 702.50);
@@ -31,22 +32,23 @@ public class SuspiciousTest {
         bank.withdraw("goodguy@bank.com", 25.00);
         bank.deposit("goodguy@bank.com", 207.40);
 
+        //a withdraws and deposits with one big out there one
         bank.deposit("suspicious@bank.com", 500);
-        bank.withdraw("suspicious@bank.com", 600);
-        bank.deposit("suspicious@bank.com", 700);
-        bank.withdraw("suspicious@bank.com", 600);
+        bank.withdraw("suspicious@bank.com", 500);
         bank.deposit("suspicious@bank.com", 500);
-        bank.withdraw("suspicious@bank.com", 600);
-        bank.deposit("suspicious@bank.com", 1000);
-        bank.transfer("suspicious@bank.com", "okayokay@bank.com", 500);
-        bank.transfer("suspicious@bank.com", "okayokay@bank.com", 500);
-        bank.withdraw("suspicious@bank.com", 100);
-        bank.withdraw("suspicious@bank.com", 100);
-        bank.deposit("suspicious@bank.com", 700);
-        bank.deposit("suspicious@bank.com", 700);
-        bank.withdraw("suspicious@bank.com", 1500);
+        bank.withdraw("suspicious@bank.com", 500);
+        bank.deposit("suspicious@bank.com", 500);
+        bank.withdraw("suspicious@bank.com", 500);
+        bank.deposit("suspicious@bank.com", 500);
+        bank.withdraw("suspicious@bank.com", 500);
+        bank.withdraw("suspicious@bank.com", 500);
+        bank.deposit("suspicious@bank.com", 500);
+        bank.deposit("suspicious@bank.com", 500);
+        bank.withdraw("suspicious@bank.com", 1000);
+        //bank.deposit("suspicious@bank.com", 1000); - check with both withdraw and deposit as the out there thing
 
-        bank.deposit("okayokay@bank.com", 50000);
+        //selection of withdraws and transfers - should all be considered okay
+        bank.deposit("okayokay@bank.com", 50000); //big deposit but only one to get it started
         bank.withdraw("okayokay@bank.com", 1000);
         bank.transfer("okayokay@bank.com", "goodguy@bank.com", 500);
         bank.withdraw("okayokay@bank.com", 1000);
@@ -59,23 +61,12 @@ public class SuspiciousTest {
         bank.transfer("okayokay@bank.com", "goodguy@bank.com", 500);
         bank.withdraw("okayokay@bank.com", 1000);
 
-        bank.withdraw("badguy@bank.com", 100);
-        bank.deposit("badguy@bank.com", 100);
-        bank.withdraw("badguy@bank.com", 100);
-        bank.deposit("badguy@bank.com", 100);
-        bank.withdraw("badguy@bank.com", 100);
-        bank.deposit("badguy@bank.com", 100);
-        bank.withdraw("badguy@bank.com", 100);
-        bank.deposit("badguy@bank.com", 100);
-        bank.withdraw("badguy@bank.com", 100);
-        bank.deposit("badguy@bank.com", 100);
-        bank.withdraw("badguy@bank.com", 100);
-        bank.deposit("badguy@bank.com", 100);
+        //suspicious transfers - too much money going out
         bank.deposit("badguy@bank.com", 50000);
         bank.transfer("badguy@bank.com", "accomplice@bank.com", 10000);
+        bank.transfer("badguy@bank.com", "suspicious@bank.com", 10000);
         bank.transfer("badguy@bank.com", "accomplice@bank.com", 10000);
-        bank.transfer("badguy@bank.com", "accomplice@bank.com", 10000);
-        bank.transfer("badguy@bank.com", "accomplice@bank.com", 10000);
+        bank.transfer("badguy@bank.com", "suspicious@bank.com", 10000);
         bank.transfer("badguy@bank.com", "accomplice@bank.com", 10000);
 
         Collection<String> suspicious = new HashSet<>();
