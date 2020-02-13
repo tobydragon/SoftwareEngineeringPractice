@@ -9,3 +9,10 @@ Aidan Sequence Diagrams: https://drive.google.com/file/d/1PTMpw0oJyuMPyq0n3XtaLd
 Damel Sequence Diagrams:https://drive.google.com/file/d/15756P63yrY8S8mZ4j63jSvVcsJ2-adcQ/view?usp=sharing
 
 Cobi Sequence Diagrams: https://drive.google.com/file/d/1JSCEEiAHPZA61TeB2m-JlvqevmuESXX-/view?usp=sharing
+
+
+Things to fix:
+  Separate ATM, Teller, and Admin functions like their APIs
+  Update Diagrams
+  check if account is frozen or even exists function
+  write our own exceptions
