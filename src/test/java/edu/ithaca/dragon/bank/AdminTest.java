@@ -93,4 +93,32 @@ public class AdminTest {
         assertFalse(savingsTester.getFrozenStatus());
     }
 
+    @Test
+    void calcTotalAssetsTest () {
+
+        // create zero accounts
+        Admin admin = new Admin();
+        assertEquals(0, admin.calcTotalAssets());
+
+        // create all checking accounts
+        Admin checkingAdmin = new Admin();
+        checkingAdmin.createCheckingForTeller("1027584930", "ABC", "abc", 5.0);
+        checkingAdmin.createCheckingForTeller("1602839490", "DEF", "abc", 0.0);
+        checkingAdmin.createCheckingForTeller("1079602315", "GHI", "abc", 20.0);
+        assertEquals(25, checkingAdmin.calcTotalAssets());
+
+        // create all savings accounts
+        Admin savingsAdmin = new Admin();
+        savingsAdmin.createSavingsForTeller("1869944029", "JKL", "abc", 300.0, 10.4, 20);
+        assertEquals(300, savingsAdmin.calcTotalAssets());
+
+        // create mix of accounts
+        Admin mixedAdmin = new Admin();
+        mixedAdmin.createCheckingForTeller("1027584930", "ABC", "abc", 5.0);
+        mixedAdmin.createCheckingForTeller("1602839490", "DEF", "abc", 0.0);
+        mixedAdmin.createCheckingForTeller("1079602315", "GHI", "abc", 20.0);
+        savingsAdmin.createSavingsForTeller("1869944029", "JKL", "abc", 300.0, 10.4, 20);
+        assertEquals(325, mixedAdmin.calcTotalAssets());
+    }
+
 }
