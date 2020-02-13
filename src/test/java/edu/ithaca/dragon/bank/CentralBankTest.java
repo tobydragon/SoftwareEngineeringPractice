@@ -70,6 +70,11 @@ public class CentralBankTest {
         assertThrows(IllegalArgumentException.class, () -> newAccount.withdraw("email@test.com", 0.000001)); // border case
         assertThrows(IllegalArgumentException.class, () -> newAccount.withdraw("email@test.com", 92.498865));
         assertThrows(IllegalArgumentException.class, () -> newAccount.withdraw("email@test.com", 9999999.999999)); //border case
+
+        // Tests Frozen Exception
+        newAccount.deposit(newAccountID, 5);
+        newAccount.freezeAccount(newAccountID);
+        assertThrows(AccountFrozenException.class, () -> newAccount.withdraw(newAccountID, 5));
     }
 
     @Test
@@ -100,6 +105,10 @@ public class CentralBankTest {
         assertThrows(IllegalArgumentException.class, () -> newAccount.deposit("email@test.com", 0.000001)); // border case
         assertThrows(IllegalArgumentException.class, () -> newAccount.deposit("email@test.com", 92.498865));
         assertThrows(IllegalArgumentException.class, () -> newAccount.deposit("email@test.com", 9999999.999999)); //border case
+
+        // Tests Frozen Exception
+        newAccount.freezeAccount(newAccountID);
+        assertThrows(AccountFrozenException.class, () -> newAccount.deposit(newAccountID, 5));
     }
 
     @Test
@@ -138,6 +147,12 @@ public class CentralBankTest {
         assertThrows(IllegalArgumentException.class, () -> account.transfer(accountAID, accountBID, 0.000001)); // border case
         assertThrows(IllegalArgumentException.class, () -> account.transfer(accountAID, accountBID, 92.498865));
         assertThrows(IllegalArgumentException.class, () -> account.transfer(accountAID, accountBID, 9999999.999999)); //border case
+
+        // Tests Frozen Exception
+        account.freezeAccount(accountAID);
+        assertThrows(AccountFrozenException.class, () -> account.transfer(accountAID, accountBID, 5));
+        account.freezeAccount(accountBID);
+        assertThrows(AccountFrozenException.class, () -> account.transfer(accountBID, accountAID, 5));
     }
 
     @Test
@@ -312,7 +327,7 @@ public class CentralBankTest {
     }
 
     @Test
-    void veraIntegrationTest() throws AccountAlreadyExistsException, AccountDoesNotExistException, BalanceRemainingException, InsufficientFundsException, ExceedsMaxWithdrawalException {
+    void veraIntegrationTest() throws AccountAlreadyExistsException, AccountDoesNotExistException, BalanceRemainingException, InsufficientFundsException, ExceedsMaxWithdrawalException, AccountFrozenException {
         CentralBank test = new CentralBank();
         String testID = "test@email.com";
         test.createAccount(testID, "password", 200, false);
@@ -342,7 +357,7 @@ public class CentralBankTest {
 
 
     @Test
-    void veraDepositSystemTest() throws AccountAlreadyExistsException, AccountDoesNotExistException, BalanceRemainingException, InsufficientFundsException, ExceedsMaxWithdrawalException {
+    void veraDepositSystemTest() throws AccountAlreadyExistsException, AccountDoesNotExistException, InsufficientFundsException, ExceedsMaxWithdrawalException, AccountFrozenException {
         CentralBank test = new CentralBank();
         String testID = "test@email.com";
         test.createAccount(testID, "password", 200, false);
