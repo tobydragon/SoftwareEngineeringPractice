@@ -2,29 +2,16 @@ package edu.ithaca.dragon.bank;
 
 import org.junit.jupiter.api.Test;
 
+
 import static org.junit.jupiter.api.Assertions.*;
 
-class BankAccountTest {
+public class AccountTest {
 
     private static final double THRESHOLD = 0.001;
 
     @Test
-    void getBalanceTest() {
-        //negative balance
-        assertThrows(IllegalArgumentException.class, () -> new BankAccount("a@b.com", -200));
-
-        //non-negative balance
-        BankAccount bankAccount = new BankAccount("a@b.com", 0);
-        assertEquals(0, bankAccount.getBalance());
-
-        //non-negative balance
-        bankAccount = new BankAccount("a@b.com", 100);
-        assertEquals(100, bankAccount.getBalance());
-    }
-
-    @Test
-    void withdrawTest() throws InsufficientFundsException {
-        BankAccount bankAccount = new BankAccount("a@b.com", 1000);
+    void withdrawTest() throws InsufficientFundsException, AccountFrozenException{
+        Account bankAccount = new CheckingAccount(1000, "a@b.com");
 
         //non-negative amount less than or equal to balance with more than two decimal places
         assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(0.001));
@@ -54,6 +41,21 @@ class BankAccountTest {
         assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(-Double.MIN_VALUE));
         assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(-Double.MAX_VALUE));
 
+        bankAccount.setFrozen(true);
+        //Checking that you can't withdraw from frozen account
+        assertThrows(AccountFrozenException.class, () -> bankAccount.withdraw(0));
+        assertThrows(AccountFrozenException.class, () -> bankAccount.withdraw(100));
+
+        //Check that AccountFrozen has higher priority than illegal argument and insufficient funds
+        assertThrows(AccountFrozenException.class, () -> bankAccount.withdraw(5.1234));
+        assertThrows(AccountFrozenException.class, () -> bankAccount.withdraw(-50));
+        assertThrows(AccountFrozenException.class, () -> bankAccount.withdraw(1000.01));
+        assertThrows(AccountFrozenException.class, () -> bankAccount.withdraw(2000.1234));
+
+
+
+        bankAccount.setFrozen(false);
+
         //non-negative amount less than or equal to balance with two decimal places or less
         bankAccount.withdraw(0);
         assertEquals(1000, bankAccount.getBalance(), THRESHOLD);
@@ -68,8 +70,9 @@ class BankAccountTest {
     }
 
     @Test
-    void depositTest() {
-        BankAccount bankAccount = new BankAccount("a@b.com", 0);
+    void depositTest() throws AccountFrozenException {
+
+        Account bankAccount = new CheckingAccount( 0, "1");
 
         //non-negative amount with more than two decimal places
         assertThrows(IllegalArgumentException.class, () -> bankAccount.deposit(0.001));
@@ -101,12 +104,26 @@ class BankAccountTest {
         assertEquals(11, bankAccount.getBalance(), THRESHOLD);
         bankAccount.deposit(419.5);
         assertEquals(430.5, bankAccount.getBalance(), THRESHOLD);
+
+        bankAccount.setFrozen(true);
+        //Checking that account frozen gets thrown with basic deposits
+        assertThrows(AccountFrozenException.class, () -> bankAccount.deposit(0));
+        assertThrows(AccountFrozenException.class, () -> bankAccount.deposit(100));
+        assertThrows(AccountFrozenException.class, () -> bankAccount.deposit(50.53));
+
+        //Checking that account frozen has higher priority than IllegalArgument
+        assertThrows(AccountFrozenException.class, () -> bankAccount.deposit(-2));
+        assertThrows(AccountFrozenException.class, () -> bankAccount.deposit(100.1234));
+        assertThrows(AccountFrozenException.class, () -> bankAccount.deposit(-25.087));
+
+
+
     }
 
     @Test
-    void transferTest() throws InsufficientFundsException {
-        BankAccount a = new BankAccount("a@b.com", 1000);
-        BankAccount b = new BankAccount("a@b.com", 0);
+    void transferTest() throws InsufficientFundsException, AccountFrozenException {
+        Account a = new CheckingAccount(1000, "a@b.com");
+        Account b = new CheckingAccount(0, "a@b.com");
 
         //non-negative amount less than or equal to balance with more than two decimal places
         assertThrows(IllegalArgumentException.class, () -> a.transfer(b, 0.001));
@@ -151,117 +168,118 @@ class BankAccountTest {
         a.transfer(b, 1);
         assertEquals(0, a.getBalance(), THRESHOLD);
         assertEquals(1000, b.getBalance(), THRESHOLD);
+
+        //Setting a's balance back to 1000, and b's to 0
+        b.transfer(a, 1000);
+        //checking with the sender frozen
+        a.setFrozen(true);
+        assertThrows(AccountFrozenException.class, () -> a.transfer(b, 5));
+        assertThrows(AccountFrozenException.class, () -> a.transfer(b, 10.45));
+        //checking with both frozen
+        b.setFrozen(true);
+        assertThrows(AccountFrozenException.class, () -> a.transfer(b, 0));
+        assertThrows(AccountFrozenException.class, () -> a.transfer(b, 6.34));
+        //checking with only the receiver frozen
+        a.setFrozen(false);
+        assertThrows(AccountFrozenException.class, () -> a.transfer(b, 20));
+        assertThrows(AccountFrozenException.class, () -> a.transfer(b, 50.85));
+        //Checking that Account Frozen has higher priority than other errors, with receiver frozen
+        assertThrows(AccountFrozenException.class, () -> a.transfer(b, 1000.01));
+        assertThrows(AccountFrozenException.class, () -> a.transfer(b, 50000));
+        assertThrows(AccountFrozenException.class, () -> a.transfer(b, -30));
+        assertThrows(AccountFrozenException.class, () -> a.transfer(b, 0.12345));
+        //Checking that Account Frozen has higher priority than other errors with both frozen
+        a.setFrozen(true);
+        assertThrows(AccountFrozenException.class, () -> a.transfer(b, 1000.01));
+        assertThrows(AccountFrozenException.class, () -> a.transfer(b, 50000));
+        assertThrows(AccountFrozenException.class, () -> a.transfer(b, -30));
+        assertThrows(AccountFrozenException.class, () -> a.transfer(b, 0.12345));
+        //Checking that Account Frozen has higher priority than other errors with sender frozen
+        assertThrows(AccountFrozenException.class, () -> a.transfer(b, 1000.01));
+        assertThrows(AccountFrozenException.class, () -> a.transfer(b, 50000));
+        assertThrows(AccountFrozenException.class, () -> a.transfer(b, -30));
+        assertThrows(AccountFrozenException.class, () -> a.transfer(b, 0.12345));
+
+
+
     }
 
     @Test
-    void isEmailValidTest() {
-        //valid prefix and domain
-        assertTrue(BankAccount.isEmailValid("a@b.com"));
-        //missing prefix and/or domain
-        assertFalse(BankAccount.isEmailValid(""));
+    void constructorTest() {
+        Account bankAccount = new CheckingAccount( 200, "1");
 
-        //prefix with underscore, period, or dash not followed by one or more letter or number
-        assertFalse(BankAccount.isEmailValid("abc-@mail.com"));
-        //prefix with underscore, period, or dash followed by one or more letter or number
-        assertTrue(BankAccount.isEmailValid("abc-d@mail.com"));
-        //prefix with underscore, period, or dash not followed by one or more letter or number
-        assertFalse(BankAccount.isEmailValid("abc..def@mail.com"));
-        //prefix with underscore, period, or dash followed by one or more letter or number
-        assertTrue(BankAccount.isEmailValid("abc.def@mail.com"));
-        //prefix with underscore, period, or dash not preceded by one or more letter or number
-        assertFalse(BankAccount.isEmailValid(".abc@mail.com"));
-        //valid prefix and domain
-        assertTrue(BankAccount.isEmailValid("abc@mail.com"));
-        //prefix with invalid character
-        assertFalse(BankAccount.isEmailValid("abc#def@mail.com"));
-        //prefix with underscore, period, or dash followed by one or more letter or number
-        assertTrue(BankAccount.isEmailValid("abc_def@mail.com"));
-        //last portion of the domain without at least two characters
-        assertFalse(BankAccount.isEmailValid("abc.def@mail.c"));
-        //last portion of the domain with at least two characters
-        assertTrue(BankAccount.isEmailValid("abc.def@mail.cc"));
-        //domain with invalid character
-        assertFalse(BankAccount.isEmailValid("abc.def@mail#archive.com"));
-        //domain with period or dash followed by one or more letter or number
-        assertTrue(BankAccount.isEmailValid("abc.def@mail-archive.com"));
-        //last portion of the domain without at least two characters
-        assertFalse(BankAccount.isEmailValid("abc.def@mail"));
-        //last portion of the domain with at least two characters
-        assertTrue(BankAccount.isEmailValid("abc.def@mail.org"));
-        //domain with period or dash not followed by one or more letter or number
-        assertFalse(BankAccount.isEmailValid("abc.def@mail..com"));
-        //prefix with underscore, period, or dash followed by one or more letter or number
-        assertTrue(BankAccount.isEmailValid("abc.def@mail.com"));
+        assertEquals(200, bankAccount.getBalance());
+
+        //non-negative balance with two decimal places or less
+        bankAccount = new CheckingAccount( 0, "1");
+        assertEquals(0, bankAccount.getBalance(), THRESHOLD);
+        bankAccount = new CheckingAccount( 0.01, "1");
+        assertEquals(0.01, bankAccount.getBalance(), THRESHOLD);
+        bankAccount = new CheckingAccount( 0.99, "1");
+        assertEquals(0.99, bankAccount.getBalance(), THRESHOLD);
+        bankAccount = new CheckingAccount( 9876.5, "1");
+        assertEquals(9876.5, bankAccount.getBalance(), THRESHOLD);
+        bankAccount = new CheckingAccount(248, "1");
+        assertEquals(248, bankAccount.getBalance(), THRESHOLD);
+
+        //non-negative balance with more than two decimal places
+        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount(0.001, "1"));
+        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount(0.9999, "1"));
+        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount( 369.333, "1"));
+        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount( Double.MAX_VALUE, "1"));
+        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount( Double.MIN_VALUE, "1"));
+
+        //negative balance with two decimal places or less
+        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount( -0.01, "1"));
+        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount( -0.99, "1"));
+        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount( -10.2, "1"));
+        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount( -125, "1"));
+
+        //negative balance with more than two decimal places
+        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount( -0.001, "1"));
+        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount( -0.9999, "1"));
+        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount( -369.333, "1"));
+        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount( -Double.MAX_VALUE, "1"));
+        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount( -Double.MIN_VALUE, "1"));
+
+        //for now assuming any non-empty string is a valid id, may have to update these tests later
+        bankAccount = new CheckingAccount(50, "1");
+        assertEquals("1", bankAccount.getID());
+        bankAccount = new CheckingAccount(50, "abc");
+        assertEquals("abc", bankAccount.getID());
+
+        //checking with emptyString, illegal argument for balance takes precedence
+        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount( -0.001, ""));//Bad balance takes precedence
+        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount( 50, ""));
+
     }
 
     @Test
     void isAmountValidTest() {
         //non-negative amount with two decimal points or less
-        assertTrue(BankAccount.isAmountValid(0));
-        assertTrue(BankAccount.isAmountValid(0.01));
-        assertTrue(BankAccount.isAmountValid(0.99));
-        assertTrue(BankAccount.isAmountValid(250));
-        assertTrue(BankAccount.isAmountValid(1234.50));
+        assertTrue(Account.isAmountValid(0));
+        assertTrue(Account.isAmountValid(0.01));
+        assertTrue(Account.isAmountValid(0.99));
+        assertTrue(Account.isAmountValid(250));
+        assertTrue(Account.isAmountValid(1234.50));
 
         //non-negative amount with more than two decimal points
-        assertFalse(BankAccount.isAmountValid(0.001));
-        assertFalse(BankAccount.isAmountValid(0.9999));
-        assertFalse(BankAccount.isAmountValid(536.125));
-        assertFalse(BankAccount.isAmountValid(Double.MIN_VALUE));
-        assertFalse(BankAccount.isAmountValid(Double.MAX_VALUE));
+        assertFalse(Account.isAmountValid(0.001));
+        assertFalse(Account.isAmountValid(0.9999));
+        assertFalse(Account.isAmountValid(536.125));
+        assertFalse(Account.isAmountValid(Double.MIN_VALUE));
+        assertFalse(Account.isAmountValid(Double.MAX_VALUE));
 
         //negative amount with two decimal points or less
-        assertFalse(BankAccount.isAmountValid(-0.01));
-        assertFalse(BankAccount.isAmountValid(-0.99));
-        assertFalse(BankAccount.isAmountValid(-120));
-        assertFalse(BankAccount.isAmountValid(-946.5));
+        assertFalse(Account.isAmountValid(-0.01));
+        assertFalse(Account.isAmountValid(-0.99));
+        assertFalse(Account.isAmountValid(-120));
+        assertFalse(Account.isAmountValid(-946.5));
 
         //negative amount with more than two decimal points
-        assertFalse(BankAccount.isAmountValid(-0.001));
-        assertFalse(BankAccount.isAmountValid(-0.9999));
-        assertFalse(BankAccount.isAmountValid(-Double.MIN_VALUE));
-        assertFalse(BankAccount.isAmountValid(-Double.MAX_VALUE));
-    }
-
-    @Test
-    void constructorTest() {
-        BankAccount bankAccount = new BankAccount("a@b.com", 200);
-
-        assertEquals("a@b.com", bankAccount.getEmail());
-        assertEquals(200, bankAccount.getBalance());
-        //check for exception thrown correctly
-        assertThrows(IllegalArgumentException.class, () -> new BankAccount("", 100));
-
-        //non-negative balance with two decimal places or less
-        bankAccount = new BankAccount("a@b.com", 0);
-        assertEquals(0, bankAccount.getBalance(), THRESHOLD);
-        bankAccount = new BankAccount("a@b.com", 0.01);
-        assertEquals(0.01, bankAccount.getBalance(), THRESHOLD);
-        bankAccount = new BankAccount("a@b.com", 0.99);
-        assertEquals(0.99, bankAccount.getBalance(), THRESHOLD);
-        bankAccount = new BankAccount("a@b.com", 9876.5);
-        assertEquals(9876.5, bankAccount.getBalance(), THRESHOLD);
-        bankAccount = new BankAccount("a@b.com", 248);
-        assertEquals(248, bankAccount.getBalance(), THRESHOLD);
-
-        //non-negative balance with more than two decimal places
-        assertThrows(IllegalArgumentException.class, () -> new BankAccount("a@b.com", 0.001));
-        assertThrows(IllegalArgumentException.class, () -> new BankAccount("a@b.com", 0.9999));
-        assertThrows(IllegalArgumentException.class, () -> new BankAccount("a@b.com", 369.333));
-        assertThrows(IllegalArgumentException.class, () -> new BankAccount("a@b.com", Double.MAX_VALUE));
-        assertThrows(IllegalArgumentException.class, () -> new BankAccount("a@b.com", Double.MIN_VALUE));
-
-        //negative balance with two decimal places or less
-        assertThrows(IllegalArgumentException.class, () -> new BankAccount("a@b.com", -0.01));
-        assertThrows(IllegalArgumentException.class, () -> new BankAccount("a@b.com", -0.99));
-        assertThrows(IllegalArgumentException.class, () -> new BankAccount("a@b.com", -10.2));
-        assertThrows(IllegalArgumentException.class, () -> new BankAccount("a@b.com", -125));
-
-        //negative balance with more than two decimal places
-        assertThrows(IllegalArgumentException.class, () -> new BankAccount("a@b.com", -0.001));
-        assertThrows(IllegalArgumentException.class, () -> new BankAccount("a@b.com", -0.9999));
-        assertThrows(IllegalArgumentException.class, () -> new BankAccount("a@b.com", -369.333));
-        assertThrows(IllegalArgumentException.class, () -> new BankAccount("a@b.com", -Double.MAX_VALUE));
-        assertThrows(IllegalArgumentException.class, () -> new BankAccount("a@b.com", -Double.MIN_VALUE));
+        assertFalse(Account.isAmountValid(-0.001));
+        assertFalse(Account.isAmountValid(-0.9999));
+        assertFalse(Account.isAmountValid(-Double.MIN_VALUE));
+        assertFalse(Account.isAmountValid(-Double.MAX_VALUE));
     }
 }

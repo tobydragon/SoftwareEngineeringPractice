@@ -1,33 +1,27 @@
 package edu.ithaca.dragon.bank;
 
-import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.regex.Pattern;
 
-public class BankAccount {
+public abstract class Account {
+    protected double balance;
+    protected boolean isFrozen;
+    protected Collection<User> users;
+    protected String id;
 
-    private String email;
-    private double balance;
 
-    /**
-     * @throws IllegalArgumentException if email is invalid, or startingBalance is negative or has more than 2 decimal places
-     */
-    public BankAccount(String email, double startingBalance) {
-        if (!isEmailValid(email)) {
-            throw new IllegalArgumentException("Email address: " + email + " is invalid, cannot create account");
-        } else if (!isAmountValid(startingBalance)) {
+    public Account(double startingBalance, String id) {
+        if (!isAmountValid(startingBalance)) {
             throw new IllegalArgumentException("Starting balance: " + startingBalance + " is invalid, cannot create account");
-        } else {
-            this.email = email;
-            this.balance = startingBalance;
         }
-    }
-
-    public double getBalance(){
-        return balance;
-    }
-
-    public String getEmail(){
-        return email;
+        else if (id.equals("")){
+            throw new IllegalArgumentException("ID cannot be an empty string");
+        }
+        else {
+            this.balance = startingBalance;
+            this.isFrozen = false;
+            this.id = id;
+        }
     }
 
     /**
@@ -36,8 +30,11 @@ public class BankAccount {
      * @throws IllegalArgumentException if amount is negative or has more than 2 decimals
      * @throws InsufficientFundsException if amount is larger than balance
      */
-    public void withdraw(double amount) throws InsufficientFundsException {
-        if (!isAmountValid(amount)) {
+    public void withdraw(double amount) throws InsufficientFundsException, AccountFrozenException{
+        if (isFrozen){
+            throw new AccountFrozenException("Account is frozen");
+        }
+        else if (!isAmountValid(amount)) {
             throw new IllegalArgumentException("Amount: " + amount + " is invalid, cannot withdraw");
         } else if (amount > balance) {
             throw new InsufficientFundsException("Not enough money");
@@ -51,8 +48,11 @@ public class BankAccount {
      * @param amount quantity to increase balance by
      * @throws IllegalArgumentException if amount is negative or has more than 2 decimal places
      */
-    public void deposit(double amount) {
-        if (!isAmountValid(amount)) {
+    public void deposit(double amount) throws AccountFrozenException{
+        if (isFrozen){
+            throw new AccountFrozenException("Account is frozen");
+        }
+        else if (!isAmountValid(amount)) {
             throw new IllegalArgumentException("Amount: " + amount + " is invalid, cannot deposit");
         } else {
             balance += amount;
@@ -61,25 +61,47 @@ public class BankAccount {
 
     /**
      * withdraws amount from balance and deposits it into to's balance
-     * @param to BankAccount who's balance will be deposited into
+     * @param toAccount BankAccount who's balance will be deposited into
      * @param amount quantity to withdraw from balance and deposit into to's balance
      * @throws IllegalArgumentException if amount is negative or has more than 2 decimals
      * @throws InsufficientFundsException if amount is larger than balance
      */
-    public void transfer(BankAccount to, double amount) throws InsufficientFundsException {
-        if (!isAmountValid(amount)) {
+    public void transfer(Account toAccount, double amount) throws InsufficientFundsException, AccountFrozenException {
+        if (this.isFrozen || toAccount.isFrozen){
+            throw new AccountFrozenException("Account is frozen");
+        }
+        else if (!isAmountValid(amount)) {
             throw new IllegalArgumentException("Amount: " + amount + " is invalid, cannot transfer");
         } else if (amount > balance) {
             throw new InsufficientFundsException("Not enough money");
         } else {
             withdraw(amount);
-            to.deposit(amount);
+            toAccount.deposit(amount);
         }
     }
 
-    public static boolean isEmailValid(String email) {
-        String regex = "[\\w-]+(\\.[\\w]+)*(?<!-)@[\\w-]+(\\.[\\w]+)*(\\.[a-z]{2,})";
-        return Pattern.compile(regex).matcher(email).matches();
+    public String getCredentials() {
+        return "";
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public String getHistory() {
+        return "";
+    }
+
+    public boolean getFrozenStatus(){
+        return isFrozen;
+    }
+
+    public  void setFrozen(boolean frozenStatus){
+        isFrozen = frozenStatus;
+    }
+
+    public String getID(){
+        return id;
     }
 
     /**
