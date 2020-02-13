@@ -4,7 +4,7 @@ import java.util.Collection;
 
 public interface AdminAPI {
 
-    public double calcTotalAssets();
+    public double calcTotalAssets() throws AcctFrozenException;
 
     public Collection<String> findAcctIdsWithSuspiciousActivity();
 

@@ -94,7 +94,7 @@ public class AdminTest {
     }
 
     @Test
-    void calcTotalAssetsTest () {
+    void calcTotalAssetsTest () throws AcctFrozenException, IllegalArgumentException {
 
         // create zero accounts
         Admin admin = new Admin();
@@ -102,22 +102,22 @@ public class AdminTest {
 
         // create all checking accounts
         Admin checkingAdmin = new Admin();
-        checkingAdmin.createCheckingForTeller("1027584930", "ABC", "abc", 5.0);
-        checkingAdmin.createCheckingForTeller("1602839490", "DEF", "abc", 0.0);
-        checkingAdmin.createCheckingForTeller("1079602315", "GHI", "abc", 20.0);
+        checkingAdmin.createCheckingForTeller("1027584930", "ABC DEF", "abc", 5.0);
+        checkingAdmin.createCheckingForTeller("1602839490", "DEF GHI", "abc", 0.0);
+        checkingAdmin.createCheckingForTeller("1079602315", "GHI JKL", "abc", 20.0);
         assertEquals(25, checkingAdmin.calcTotalAssets());
 
         // create all savings accounts
         Admin savingsAdmin = new Admin();
-        savingsAdmin.createSavingsForTeller("1869944029", "JKL", "abc", 300.0, 10.4, 20);
+        savingsAdmin.createSavingsForTeller("1869944029", "JKL MNO", "abc", 300.0, 10.4, 20);
         assertEquals(300, savingsAdmin.calcTotalAssets());
 
         // create mix of accounts
         Admin mixedAdmin = new Admin();
-        mixedAdmin.createCheckingForTeller("1027584930", "ABC", "abc", 5.0);
-        mixedAdmin.createCheckingForTeller("1602839490", "DEF", "abc", 0.0);
-        mixedAdmin.createCheckingForTeller("1079602315", "GHI", "abc", 20.0);
-        savingsAdmin.createSavingsForTeller("1869944029", "JKL", "abc", 300.0, 10.4, 20);
+        mixedAdmin.createCheckingForTeller("1027584930", "ABC DEF", "abc", 5.0);
+        mixedAdmin.createCheckingForTeller("1602839490", "DEF GHI", "abc", 0.0);
+        mixedAdmin.createCheckingForTeller("1079602315", "GHI JKL", "abc", 20.0);
+        mixedAdmin.createSavingsForTeller("1869944029", "JKL MNO", "abc", 300.0, 10.4, 20);
         assertEquals(325, mixedAdmin.calcTotalAssets());
     }
 
