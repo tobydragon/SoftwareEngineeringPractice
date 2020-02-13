@@ -35,34 +35,58 @@ public class CentralBank implements AdvancedAPI, AdminAPI, BasicAPI {
 
     //----------------- BasicAPI methods -------------------------//
 
-    public boolean confirmCredentials(String acctId, String password) {
-        if(findAccountWithId(acctId)!= null && findAccountWithId(acctId).getAcctPass()==password){
-            return true;
+    public boolean confirmCredentials(String acctId, String password) throws IllegalArgumentException {
+        if(findAccountWithId(acctId)==null){
+            throw new IllegalArgumentException("confirmCredentials: Can not find ID");
         }else{
-            return false;
+            if(findAccountWithId(acctId)!= null && findAccountWithId(acctId).getAcctPass()==password){
+                return true;
+            }else{
+                return false;
+            }
         }
 
     }
 
-    public double checkBalance(String acctId) {
-        return findAccountWithId(acctId).getBalance();
+    public double checkBalance(String acctId) throws IllegalArgumentException {
+        if(findAccountWithId(acctId)==null){
+            throw new IllegalArgumentException("checkBalance: Can not find ID");
+        }else{
+            return findAccountWithId(acctId).getBalance();
+        }
     }
 
     public void withdraw(String acctId, double amount) throws IllegalArgumentException, IllegalAccessException {
-        findAccountWithId(acctId).withdraw(amount);
+        if(findAccountWithId(acctId)==null){
+            throw new IllegalArgumentException("withdraw: Can not find ID");
+        }else{
+            findAccountWithId(acctId).withdraw(amount);
+        }
     }
 
     public void deposit(String acctId, double amount) throws IllegalAccessException {
-        findAccountWithId(acctId).deposit(amount);
+        if(findAccountWithId(acctId)==null){
+            throw new IllegalArgumentException("deposit: Can not find ID");
+        }else{
+            findAccountWithId(acctId).deposit(amount);
+        }
     }
 
-    public void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws  IllegalAccessException {
-        findAccountWithId(acctIdToWithdrawFrom).transfer(amount,findAccountWithId(acctIdToDepositTo));
+    public void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws  IllegalArgumentException,IllegalAccessException {
+        if(findAccountWithId(acctIdToWithdrawFrom)==null||findAccountWithId(acctIdToDepositTo)==null){
+            throw new IllegalArgumentException("transfer: Can not find ID");
+        }else{
+            findAccountWithId(acctIdToWithdrawFrom).transfer(amount,findAccountWithId(acctIdToDepositTo));
+        }
     }
 
-    public String transactionHistory(String acctId) {
-        String history = findAccountWithId(acctId).getHistory().toString().replace(", ","\n").replace("[","").replace("]","");
-        return history;
+    public String transactionHistory(String acctId)throws IllegalArgumentException {
+        if(findAccountWithId(acctId)==null){
+            throw new IllegalArgumentException("transactionHistory: Can not find ID");
+        }else{
+            String history = findAccountWithId(acctId).getHistory().toString().replace(", ","\n").replace("[","").replace("]","");
+            return history;
+        }
     }
 
 
@@ -77,10 +101,16 @@ public class CentralBank implements AdvancedAPI, AdminAPI, BasicAPI {
 
     }
 
-    public void closeAccount(String acctId) {
-        BankAccount b = findAccountWithId(acctId);
-        accountList.remove(b);
-        accountCount --;
+    public void closeAccount(String acctId) throws IllegalArgumentException {
+        if(findAccountWithId(acctId)==null) {
+            throw new IllegalArgumentException("closeAccount: Can not find ID");
+        }else if(findAccountWithId(acctId).getBalance()!=0){
+            throw new IllegalArgumentException("closeAccount: balance greater than 0");
+        }else{
+            BankAccount b = findAccountWithId(acctId);
+            accountList.remove(b);
+            accountCount --;
+        }
     }
 
 
@@ -113,15 +143,22 @@ public class CentralBank implements AdvancedAPI, AdminAPI, BasicAPI {
         return null;}
     }
 
-    public void freezeAccount(String acctId) {
-        BankAccount b = findAccountWithId(acctId);
-        b.setAcctFrozen(true);
-
+    public void freezeAccount(String acctId) throws IllegalArgumentException {
+        if(findAccountWithId(acctId)==null){
+            throw new IllegalArgumentException("freezeAccount: Can not find ID");
+        }else {
+            BankAccount b = findAccountWithId(acctId);
+            b.setAcctFrozen(true);
+        }
     }
 
-    public void unfreezeAcct(String acctId) {
-        BankAccount b = findAccountWithId(acctId);
-        b.setAcctFrozen(false);
+    public void unfreezeAcct(String acctId) throws IllegalArgumentException{
+        if(findAccountWithId(acctId)==null){
+            throw new IllegalArgumentException("unfreezeAcct: Can not find ID");
+        }else {
+            BankAccount b = findAccountWithId(acctId);
+            b.setAcctFrozen(false);
+        }
     }
 
     public static void main(String [] args){
