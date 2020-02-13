@@ -9,7 +9,9 @@
 [Sequence Diagrams](https://drive.google.com/file/d/1DDU6xHk5p2GxctTS-8zssBviHr1isZig/view?usp=sharing)
 ## Plan
 Elias:  ATM & Teller - finish adding method bodies (calling central bank methods) and tests; remove userArraylist and instead have currentUser which is updated in confirmCredentials (update its tests), confirmCredentials returns user account?
+
 Eugene: Admin
+
 Watson: BankAccounts - Saving and Checking, flagged and frozen booleans
 
 After those are done:
