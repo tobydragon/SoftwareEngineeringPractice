@@ -17,6 +17,7 @@ public class SuspiciousTest {
         bank.createAccount("goodguy@bank.com", "password", 500, false);
         bank.createAccount("okayokay@bank.com", "password", 500, false);
         bank.createAccount("suspicious@bank.com", "password", 500, false);
+        bank.createAccount("suspicious2@bank.com", "password", 500, true);
         bank.createAccount("badguy@bank.com", "password", 500, false);
         bank.createAccount("accomplice@bank.com", "password", 500, true);
 
@@ -45,7 +46,20 @@ public class SuspiciousTest {
         bank.deposit("suspicious@bank.com", 500);
         bank.deposit("suspicious@bank.com", 500);
         bank.withdraw("suspicious@bank.com", 1000);
-        //bank.deposit("suspicious@bank.com", 1000); - check with both withdraw and deposit as the out there thing
+
+        //another one but this time it is a small deposit instead of a big withdraw (to test both ends)
+        bank.deposit("suspicious2@bank.com", 500);
+        bank.withdraw("suspicious2@bank.com", 500);
+        bank.deposit("suspicious2@bank.com", 500);
+        bank.withdraw("suspicious2@bank.com", 500);
+        bank.deposit("suspicious2@bank.com", 500);
+        bank.withdraw("suspicious2@bank.com", 500);
+        bank.deposit("suspicious2@bank.com", 500);
+        bank.withdraw("suspicious2@bank.com", 500);
+        bank.withdraw("suspicious2@bank.com", 500);
+        bank.deposit("suspicious2@bank.com", 500);
+        bank.deposit("suspicious2@bank.com", 500);
+        bank.deposit("suspicious2@bank.com", 100);
 
         //selection of withdraws and transfers - should all be considered okay
         bank.deposit("okayokay@bank.com", 50000); //big deposit but only one to get it started
@@ -71,6 +85,7 @@ public class SuspiciousTest {
 
         Collection<String> suspicious = new HashSet<>();
         suspicious.add("suspicious@bank.com");
+        suspicious.add("suspicious2@bank.com");
         suspicious.add("badguy@bank.com");
         suspicious.add("accomplice@bank.com");
         assertEquals(suspicious, bank.findAcctIdsWithSuspiciousActivity());
