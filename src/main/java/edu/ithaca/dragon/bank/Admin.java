@@ -2,6 +2,7 @@ package edu.ithaca.dragon.bank;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 
 public class Admin implements AdminAPI {
     private HashMap<String, Account> accounts;
@@ -45,8 +46,22 @@ public class Admin implements AdminAPI {
      * @return double of balance in the bank
      */
     @Override
-    public double calcTotalAssets() {
-        return 0;
+    public double calcTotalAssets() throws AcctFrozenException {
+        if (accounts.size() == 0){
+            return 0;
+        } else {
+            double totalAssets = 0;
+            for (Account toCheck : accounts.values()) {
+                if (toCheck.getFrozenStatus()) {
+                    toCheck.setFrozen(false);
+                    totalAssets += toCheck.checkBalance(toCheck.getAcctId());
+                    toCheck.setFrozen(true);
+                } else {
+                    totalAssets += toCheck.checkBalance(toCheck.getAcctId());
+                }
+            }
+            return totalAssets;
+        }
     }
 
     /**

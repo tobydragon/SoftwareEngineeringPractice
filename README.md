@@ -14,3 +14,8 @@ Class Diagram: https://drive.google.com/file/d/1UJcjYeK8KQpGEVkPTTIj7UvZEWOI9qwM
 Sequence Diagrams: https://drive.google.com/file/d/1ERmSFQ6JHAgPMtCmaHBkvQJ1MQipghoV/view?usp=sharing
 https://drive.google.com/file/d/1fEIvmBCA4iPbAsOygiYkEIbXpAX-0B8k/view?usp=sharing
 https://drive.google.com/file/d/1nMFETB5c7O48rgw3eJfdzH1d97Htkako/view?usp=sharing
+
+## Plan for 2/14
+Tim: Finish Admin Methods (excluding Suspicious Activity) and Improve Testing
+Mike: Improve Tests for Savings and Implementation for ATM/Teller
+Elon: Implementation for ATM/Teller
