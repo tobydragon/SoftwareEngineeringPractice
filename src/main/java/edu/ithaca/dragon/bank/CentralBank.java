@@ -34,18 +34,20 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
     }
 
     public void withdraw(String acctId, double amount) throws InsufficientFundsException,
-            AccountDoesNotExistException, ExceedsMaxWithdrawalException {
+            AccountDoesNotExistException, ExceedsMaxWithdrawalException, AccountFrozenException {
         if (!accounts.containsKey(acctId)) throw new AccountDoesNotExistException("Account with this id does not exists");
         BankAccount account = accounts.get(acctId);
+        if (account.isFrozen()) throw new AccountFrozenException("This account is frozen");
         account.withdraw(amount);
         // Added
         String trans = "withdraw " + String.format("%.2f", amount);
         addToHistory(trans, acctId);
     }
 
-    public void deposit(String acctId, double amount) throws AccountDoesNotExistException {
+    public void deposit(String acctId, double amount) throws AccountDoesNotExistException, AccountFrozenException {
         if (!accounts.containsKey(acctId)) throw new AccountDoesNotExistException("Account with this id does not exists");
         BankAccount account = accounts.get(acctId);
+        if (account.isFrozen()) throw new AccountFrozenException("This account is frozen");
         account.deposit(amount);
         // Added
         String trans = "deposit " + String.format("%.2f", amount);
@@ -53,11 +55,12 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
     }
 
     public void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount)
-            throws InsufficientFundsException, AccountDoesNotExistException, ExceedsMaxWithdrawalException {
+            throws InsufficientFundsException, AccountDoesNotExistException, ExceedsMaxWithdrawalException, AccountFrozenException {
         if (!accounts.containsKey(acctIdToWithdrawFrom)) throw new AccountDoesNotExistException("Account with this id does not exists");
         if (!accounts.containsKey(acctIdToDepositTo)) throw new AccountDoesNotExistException("Account with this id does not exists");
         BankAccount accountW = accounts.get(acctIdToWithdrawFrom);
         BankAccount accountD = accounts.get(acctIdToDepositTo);
+        if (accountW.isFrozen()) throw new AccountFrozenException("This account is frozen");
 
         BankAccount.transfer(accountD, accountW, amount);
         // Added
