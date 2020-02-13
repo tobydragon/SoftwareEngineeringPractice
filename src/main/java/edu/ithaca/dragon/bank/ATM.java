@@ -3,36 +3,33 @@ package edu.ithaca.dragon.bank;
 
 public class ATM implements BasicAPI {
 
-    private UserArrayList userAccounts;
-    private CentralBank bank;
+    private UserAccount currentAccount;
+    public CentralBank bank;
 
-    public ATM(UserArrayList userAccounts, CentralBank bank){
-        //TODO need to only have one of each collection across bank/atm/teller
-        this.userAccounts = userAccounts;
+    public ATM(CentralBank bank){
         this.bank = bank;
     }
+    public UserAccount confirmCredentials(String username, String password) throws NonExistentAccountException{
 
-    public boolean confirmCredentials(String username, String password){
-
-        return bank.confirmCredentials(username,password);
+        currentAccount = bank.confirmCredentials(username,password);
+        return currentAccount;
     }
 
-    public double checkBalance(int userID) throws NonExistentAccountException{
-        BankAccount testAcct = new BankAccount("a@b.com", 1,1234); //TODO redo to use acct collection later
-        //test for push
-        return testAcct.getBalance();
+    public double checkBalance(int userId, int acctId) throws NonExistentAccountException{
+        //ignores userId param
+        return bank.checkBalance(currentAccount.getUserID(), acctId);
 
     }
     public void withdraw(int acctId, double amount) throws InsufficientFundsException, NonExistentAccountException{
-
+        bank.withdraw(currentAccount.getUserID(), acctId ,amount);
     }
 
     public void deposit(int acctId, double amount) throws InsufficientFundsException, NonExistentAccountException{
-
+        bank.deposit(currentAccount.getUserID(),acctId,amount);
     }
 
-    public void transfer(int userIDFrom, int acctIdToWithdrawFrom, int userIDTo, int acctIdToDepositTo, double amount) throws InsufficientFundsException{
-
+    public void transfer(int userIDFrom, int acctIdToWithdrawFrom, int userIDTo, int acctIdToDepositTo, double amount) throws InsufficientFundsException, NonExistentAccountException{
+        bank.transfer(userIDFrom, acctIdToWithdrawFrom, userIDTo, acctIdToDepositTo,amount);
     }
 
     public String transactionHistory(int acctId){

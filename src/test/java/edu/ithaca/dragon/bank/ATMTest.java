@@ -6,30 +6,39 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ATMTest {
 
-    @Test
-    void checkBalanceTest() throws NonExistentAccountException{
-        UserArrayList userAccounts = new UserArrayList();
+    @Test //Because ATM just calls central bank's functions mostly, only limited testing needed here - see CentralbankTest
+    void allTests() throws NonExistentAccountException, InsufficientFundsException{
         CentralBank bank = new CentralBank();
-        UserAccount testAccount = new UserAccount("username","password","a@b.com",123);
-        userAccounts.addAccount(testAccount);
-        ATM atm = new ATM(userAccounts,bank); //TODO redo these tests later?
-        assertEquals(1, atm.checkBalance(123));
+        bank.createUser("A", "Password", "a@b.com", 1);
+        bank.createBankAccount(1, 100);
+        ATM atm = new ATM(bank);
+        atm.confirmCredentials("A","Password"); //setting currentUser
+
+        //Check balance
+        assertEquals(100, atm.checkBalance(1, 0));
+        assertThrows(NonExistentAccountException.class, ()-> atm.checkBalance(3,5));
+
+        //ConfirmCred
+        assertEquals(1,atm.confirmCredentials("A","Password").getUserID());
+        assertThrows(NonExistentAccountException.class, ()-> atm.confirmCredentials("a","pass"));
+
+        //withdraw
+        atm.withdraw(0, 10);
+        assertEquals(90,atm.checkBalance(1,0));
+        assertThrows(InsufficientFundsException.class, ()-> atm.withdraw(0,1000));
+
+        //deposit
+        atm.deposit(0, 11);
+        assertEquals(101, atm.checkBalance(1,0));
+
+        //transfer
+        bank.createUser("B", "Password2", "b@c.com", 2);
+        bank.createBankAccount(2, 100);
+        atm.transfer(1,0, 2, 0, 50);
+        assertEquals(51, atm.checkBalance(1,0));
+        atm.confirmCredentials("B","Password2");//Logging in to second account
+        assertEquals(150, atm.checkBalance(2,0));
+
+        //TODO transaction history tests if/when that's done
     }
-
-    @Test
-    void confirmCredentialsTest(){
-        UserArrayList userAccounts = new UserArrayList();
-        CentralBank bank = new CentralBank();
-        UserAccount testAccount = new UserAccount("username","password","a@b.com",123);
-        userAccounts.addAccount(testAccount);
-        bank.createUser("username","password","a@b.com",123);
-        //TODO will need to redo once userArraylists are connected between atm/bank/teller
-        ATM atm = new ATM(userAccounts,bank);
-
-        //using CentralBank's confirmCredentials so not as much testing needed
-        assertTrue(atm.confirmCredentials("username","password"));
-        assertFalse(atm.confirmCredentials("user","pass"));
-
-    }
-
 }
