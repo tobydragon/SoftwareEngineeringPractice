@@ -151,6 +151,8 @@ public class CentralBankTest {
         // Tests Frozen Exception
         account.freezeAccount(accountAID);
         assertThrows(AccountFrozenException.class, () -> account.transfer(accountAID, accountBID, 5));
+        account.freezeAccount(accountBID);
+        assertThrows(AccountFrozenException.class, () -> account.transfer(accountBID, accountAID, 5));
     }
 
     @Test
