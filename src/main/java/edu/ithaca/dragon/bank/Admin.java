@@ -38,7 +38,11 @@ public class Admin implements AdminAPI {
     }
 
     public void closeAccount(String acctId) throws IllegalArgumentException, AcctFrozenException {
-
+        if (accounts.containsKey(acctId)){
+            accounts.remove(acctId);
+        } else {
+            throw new IllegalArgumentException("Cannot close an account that does not exist");
+        }
     }
 
     /**
