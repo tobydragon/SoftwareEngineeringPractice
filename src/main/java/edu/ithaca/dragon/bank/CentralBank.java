@@ -61,6 +61,7 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
         BankAccount accountW = accounts.get(acctIdToWithdrawFrom);
         BankAccount accountD = accounts.get(acctIdToDepositTo);
         if (accountW.isFrozen()) throw new AccountFrozenException("This account is frozen");
+        if (accountD.isFrozen()) throw new AccountFrozenException("This account is frozen");
 
         BankAccount.transfer(accountD, accountW, amount);
         // Added
