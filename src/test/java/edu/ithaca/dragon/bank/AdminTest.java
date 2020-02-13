@@ -121,4 +121,30 @@ public class AdminTest {
         assertEquals(325, mixedAdmin.calcTotalAssets());
     }
 
+    @Test
+    void closeAccountTest() throws AcctFrozenException, IllegalArgumentException {
+        Admin admin = new Admin();
+
+        // close an account that doesnt exist
+        assertThrows(IllegalArgumentException.class, () -> admin.closeAccount("0123456789"));
+
+        // close a frozen account
+        admin.createCheckingForTeller("1920597820", "first last", "namename", 20.0);
+        admin.freezeAccount("1920597820");
+        admin.closeAccount("1920597820");
+        assertThrows(IllegalArgumentException.class, () -> admin.getAccount("1920597820"));
+
+        // close a checking account
+        admin.createCheckingForTeller("1699552120", "first fist", "namename", 0.0);
+        admin.freezeAccount("1699552120");
+        admin.closeAccount("1699552120");
+        assertThrows(IllegalArgumentException.class, () -> admin.getAccount("1699552120"));
+
+        // close a savings account
+        admin.createSavingsForTeller("1133557799", "list last", "namename", 20.0, 5, 1);
+        admin.freezeAccount("1133557799");
+        admin.closeAccount("1133557799");
+        assertThrows(IllegalArgumentException.class, () -> admin.getAccount("1133557799"));
+    }
+
 }
