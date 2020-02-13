@@ -114,26 +114,85 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
         return total;
     }
 
+    private static double mean(List<Double> list) {
+        double sum = 0.0;
+        for(double num : list) {
+            sum += num;
+        }
+        return sum/list.size();
+    }
+
+    private static double standardDeviation(List<Double> list) {
+        double sum = 0.0, standardDeviation = 0.0;
+        int length = list.size();
+        for(double num : list) {
+            sum += num;
+        }
+        double mean = sum/length;
+        for(double num : list) {
+            standardDeviation += Math.pow(num - mean, 2);
+        }
+        return Math.sqrt(standardDeviation/length);
+    }
+
+    public boolean isSuspicious(List<Double> transactions) {
+        double mean = mean(transactions);
+        double sd = standardDeviation(transactions);
+
+        for(double d:transactions) {
+            double high = mean + (2*sd);
+            double low = mean - (2*sd);
+            if (d > high || d < low) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public Collection<String> findAcctIdsWithSuspiciousActivity() {
         Collection<String> suspiciousAccts = new HashSet<>();
 
-//        for (String acctId:transactionHist.keySet()) {
-//            int wCount = 0;
-//            int dCount = 0;
-//            int tCount = 0;
-//            String history = transactionHist.get(acctId);
-//            String[] trans = history.split(",");
-//            for(String t:trans) {
-//                if (t.toCharArray()[0] == 'w') wCount++;
-//                if (t.toCharArray()[0] == 'd') dCount++;
-//                if (t.toCharArray()[0] == 't') tCount++;
-//            }
-//            //if there are a lot of withdraws out not interspersed with deposits
-//            //or too many transfers, it's suspicious
-//            if ((wCount >= 5 && dCount < 3) || tCount >= 5) {
-//                suspiciousAccts.add(acctId);
-//            }
-//        }
+        for (String acctId:transactionHist.keySet()) {
+
+            List<Double> ws = new ArrayList<>();
+            List<Double> ds = new ArrayList<>();
+
+            Set<String> taccts = new HashSet<>();
+            double transferTotal = 0;
+
+            String history = transactionHist.get(acctId);
+            String[] transactions = history.split(",");
+            for(String t:transactions) {
+                if (t.toCharArray()[0] == 'w') {
+                    String[] withdrawal = t.split(" ");
+                    double amount = Double.parseDouble(withdrawal[1]);
+                    ws.add(amount);
+                }
+                if (t.toCharArray()[0] == 'd') {
+                    String[] deposit = t.split(" ");
+                    double amount = Double.parseDouble(deposit[1]);
+                    ds.add(amount);
+                }
+                if (t.toCharArray()[0] == 't') {
+                    String[] transfer = t.split(" "); //1 - to or from, 2 - account, 3 - amount
+                    double amount = Double.parseDouble(transfer[3]);
+                    if (transfer[1].toCharArray()[0] == 't') {
+                        taccts.add(transfer[2]);
+                        transferTotal += amount;
+                    }
+                }
+            }
+
+            //account is suspicious if any withdraws or deposits are more than 2s.d. off the average
+            if (isSuspicious(ws) || isSuspicious(ds)) suspiciousAccts.add(acctId);
+            //or if more money than is left in the account was transfered (all involved accounts are suspicious)
+            if (transferTotal > accounts.get(acctId).getBalance()) {
+                suspiciousAccts.add(acctId);
+                for(String id:taccts) suspiciousAccts.add(id);
+            }
+
+
+        }
 
         return suspiciousAccts;
     }
@@ -155,13 +214,6 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
      */
     public void freezeAccount(String acctId) throws AccountDoesNotExistException {
         // Object.Freeze = freezes object and stops any changes
-        /*
-        for(int i = 0; i < accounts.size(); i++){
-            if(accounts[i].equals(acctId)){
-                accounts[i].freeze();
-            }
-        }
-        */
         if (!accounts.containsKey(acctId)) throw new AccountDoesNotExistException("Account does not exist");
         BankAccount account = accounts.get(acctId);
         if(account.isFrozen() == false) {
