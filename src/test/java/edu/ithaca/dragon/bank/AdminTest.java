@@ -156,6 +156,21 @@ public class AdminTest {
         teller.deposit("xyz", 0.13);
         assertEquals(1199.58, admin.calcTotalAssets());
 
+        //Going to add a new account and make sure unfreeze account works as expected
+
+        teller.createAccount("new", 300.42);
+        assertEquals(1500, admin.calcTotalAssets());
+        assertThrows(AccountFrozenException.class, ()->teller.transfer("abc", "new",50));
+        assertThrows(AccountFrozenException.class, ()->teller.transfer("new", "abc",50));
+        admin.unfreezeAcct("abc");
+        teller.transfer("abc", "new", 100);
+        assertEquals(1500, admin.calcTotalAssets());
+        teller.deposit("abc", 150);
+        assertEquals(1650, admin.calcTotalAssets());
+        teller.withdraw("abc", 200);
+        assertEquals(1450, admin.calcTotalAssets());
+
+
     }
 
 
