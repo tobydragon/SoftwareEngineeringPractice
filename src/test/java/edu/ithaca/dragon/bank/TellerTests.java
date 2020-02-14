@@ -7,20 +7,25 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TellerTests {
 
     @Test
-    public void userAccountTests() throws NonExistentAccountException{
-        //TODO redo these tests with new central bank/teller structure
-//        //tests opening/closing user accounts (not bank accounts)
-//        UserArrayList testList = new UserArrayList();
-//        UserAccount testAcct1 = new UserAccount("user1","pass1","a@b.com",1);
-//        UserAccount testAcct2 = new UserAccount("user2","pass2","b@c.com",2);
-//        UserAccount testAcct3 = new UserAccount("user3","pass3","c@d.com",3);
-//
-//        Teller testTeller = new Teller(testList);
-//
-//        testTeller.createUserAccount("user1","pass1","a@b.com",1);
-//        testTeller.closeUserAccount(1);
-//        assertThrows(NonExistentAccountException.class, () -> testTeller.closeUserAccount(1));
-//        //A little basic but not much else to cover with current plans
+    public void createCloseAccountTests() throws NonExistentAccountException{
+        CentralBank bank = new CentralBank();
+
+        Teller teller = new Teller(bank);
+        teller.createUserAccount("A", "Password", "a@b.com", 1);
+        teller.createBankAccount(1, 100);
+
+        //insuring the new accounts exist by doing things to them
+        assertEquals(1, bank.confirmCredentials("A","Password").getUserID());
+        assertEquals(100, bank.checkBalance(1, 0));
+
+        teller.closeBankAccount(1, 0);
+        assertThrows(NonExistentAccountException.class, ()-> bank.checkBalance(1,0));
+        assertThrows(NonExistentAccountException.class, ()-> bank.deposit(1,0, 100));
+
+        teller.closeUserAccount(1);
+        assertThrows(NonExistentAccountException.class, ()-> bank.confirmCredentials("A","Password"));
+
+        //TODO not implemented yet, closing user should also close its bank accounts (and test it)
     }
 
 }

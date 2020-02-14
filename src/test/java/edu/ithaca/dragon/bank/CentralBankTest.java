@@ -7,14 +7,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class CentralBankTest {
     @Test
-    void confirmCredentialsTest() {
+    void confirmCredentialsTest() throws NonExistentAccountException{
         //TODO add more?
         CentralBank testBank = new CentralBank();
         testBank.createUserAccount("user1","pass1","a@b.com",1);
-        assertFalse(testBank.confirmCredentials("usr1","pass")); //both wrong
-        assertFalse(testBank.confirmCredentials("user1","1pass")); //password wrong
-        assertFalse(testBank.confirmCredentials("1resu","pass1")); //user wrong
-        assertTrue(testBank.confirmCredentials("user1","pass1"));
+        assertThrows(NonExistentAccountException.class, () -> testBank.confirmCredentials("user","pass") ); //both wrong
+        assertThrows(NonExistentAccountException.class, () -> testBank.confirmCredentials("user1","1pass")); //password wrong
+        assertThrows(NonExistentAccountException.class, () -> testBank.confirmCredentials("1resu","pass1")); //user wrong
+        assertEquals(testBank.confirmCredentials("user1","pass1").getUserID(), 1);
     }
 
     @Test

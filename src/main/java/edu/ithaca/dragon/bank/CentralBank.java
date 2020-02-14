@@ -15,18 +15,18 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
 
     //----------------- BasicAPI methods -------------------------//
 
-    public boolean confirmCredentials(String username, String password) {
+    public UserAccount confirmCredentials(String username, String password) throws NonExistentAccountException {
         try {
             UserAccount account = userAccounts.findAccount(username);
             //If username is wrong it will go to the catch and return false
-            if (account.getPassword().equals(password)) return true;
+            if (account.getPassword().equals(password)) return account;
         }
         catch(Exception NonExistentAccountException){
-            return false;
+            throw new NonExistentAccountException("Account not found");
         }
 
 
-        return false;
+        throw new NonExistentAccountException("Credentials incorrect");
     }
 
     public double checkBalance(int userID) throws NonExistentAccountException{
@@ -45,7 +45,7 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
         bankAccountCollection.retrieveAccount(userId, bankAccID).withdraw(amount);
     }
 
-    public void deposit(int userId, double amount) throws InsufficientFundsException, NonExistentAccountException{
+    public void deposit(int userId, double amount) throws NonExistentAccountException{
         bankAccountCollection.retrieveAccount(userId, 0).deposit(amount);
     }
 
@@ -75,8 +75,8 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
         bankAccountCollection.addBankAccount(newAccount);
     }
 
-    public void closeBankAccount(int userId, int accID) throws NonExistentAccountException{
-        bankAccountCollection.removeBankAccount(userId, accID);
+    public void closeBankAccount(int userId, int acctID) throws NonExistentAccountException{
+        bankAccountCollection.removeBankAccount(userId, acctID);
     }
 
     public void createUserAccount(String username, String password, String email, int userID){
@@ -89,6 +89,7 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
         userAccounts.removeAccount(removedAccount);
 
     }
+
 
     //------------------ AdminAPI methods -------------------------//
 
