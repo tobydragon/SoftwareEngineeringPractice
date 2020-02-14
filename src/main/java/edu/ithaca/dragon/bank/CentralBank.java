@@ -160,15 +160,20 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
         }
         return false;
     }
-    public void confirmActivity (String customerAct, Collection<String> suspiciousAccts) {
-            if (customerAct.equals("y")) {
-                System.out.println("Then you have nothing to worry about");
-                suspiciousAccts.clear();
-            }
-            else {
-                System.out.println("Your account will be taken care of then. These are the suspicious purchases and charges");
+
+    public Collection<String> confirmActivity (Map<String, String> accountResponses) throws IllegalArgumentException {
+        Collection<String> theRealBadOnes = new HashSet<>();
+        for(String acct:accountResponses.keySet()) {
+            if (accountResponses.get(acct) == "Y") {
+                //account cleared
+            } else if (accountResponses.get(acct) == "N") {
+                theRealBadOnes.add(acct);
+            } else {
+                throw new IllegalArgumentException("Response must be Y or N");
             }
         }
+        return theRealBadOnes;
+    }
 
     public Collection<String> findAcctIdsWithSuspiciousActivity() {
         Collection<String> suspiciousAccts = new HashSet<>();
@@ -211,15 +216,10 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
                 suspiciousAccts.add(acctId);
                 for (String id : taccts) suspiciousAccts.add(id);
             }
-            if (isSuspicious(ws) || isSuspicious(ds) || transferTotal > accounts.get(acctId).getBalance()) {
-                Scanner actMessage = new Scanner(System.in);
-                System.out.println("Have you done any of these purchases(y or n): ");
-                String actResponse = actMessage.nextLine();
-                confirmActivity(actResponse, suspiciousAccts);
-                }
-            }
-        return suspiciousAccts;
+
         }
+        return suspiciousAccts;
+    }
 
 
     public boolean isFrozen(String acctId) throws AccountDoesNotExistException{

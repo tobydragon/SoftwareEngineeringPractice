@@ -4,8 +4,10 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Map;
+import java.util.HashMap;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class SuspiciousTest {
 
@@ -89,6 +91,22 @@ public class SuspiciousTest {
         suspicious.add("badguy@bank.com");
         suspicious.add("accomplice@bank.com");
         assertEquals(suspicious, bank.findAcctIdsWithSuspiciousActivity());
+
+        Map<String, String> responses = new HashMap<>();
+        //ask account owners if they are responsible for suspicious activity
+        responses.put("suspicious@bank.com", "Y");
+        responses.put("suspicious2@bank.com", "N");
+        responses.put("badguy@bank.com", "Maybe");
+        responses.put("accomplice@bank.com", "Y");
+
+        assertThrows(IllegalArgumentException.class, ()-> bank.confirmActivity(responses));
+
+        responses.replace("badguy@bank.com", "N");
+
+        suspicious.clear();
+        suspicious.add("suspicious2@bank.com");
+        suspicious.add("badguy@bank.com");
+        assertEquals(suspicious, bank.confirmActivity(responses));
 
 
     }
