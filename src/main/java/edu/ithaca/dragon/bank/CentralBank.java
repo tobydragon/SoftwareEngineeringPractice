@@ -10,15 +10,17 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
 
     //----------------- BasicAPI methods -------------------------//
 
-    public boolean confirmCredentials(String acctId, String password) throws AccountDoesNotExistException{
-        if (!accounts.containsKey(acctId)) throw new AccountDoesNotExistException("Account with this id does not exists");
+    public boolean confirmCredentials(String acctId, String password) throws AccountDoesNotExistException {
+        if (!accounts.containsKey(acctId))
+            throw new AccountDoesNotExistException("Account with this id does not exists");
         BankAccount account = accounts.get(acctId);
         if (account.getPassword().equals(password)) return true;
         else return false;
     }
 
     public double checkBalance(String acctId) throws AccountDoesNotExistException {
-        if (!accounts.containsKey(acctId)) throw new AccountDoesNotExistException("Account with this id does not exists");
+        if (!accounts.containsKey(acctId))
+            throw new AccountDoesNotExistException("Account with this id does not exists");
         BankAccount account = accounts.get(acctId);
         return account.getBalance();
     }
@@ -35,7 +37,8 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
 
     public void withdraw(String acctId, double amount) throws InsufficientFundsException,
             AccountDoesNotExistException, ExceedsMaxWithdrawalException, AccountFrozenException {
-        if (!accounts.containsKey(acctId)) throw new AccountDoesNotExistException("Account with this id does not exists");
+        if (!accounts.containsKey(acctId))
+            throw new AccountDoesNotExistException("Account with this id does not exists");
         BankAccount account = accounts.get(acctId);
         if (account.isFrozen()) throw new AccountFrozenException("This account is frozen");
         account.withdraw(amount);
@@ -45,7 +48,8 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
     }
 
     public void deposit(String acctId, double amount) throws AccountDoesNotExistException, AccountFrozenException {
-        if (!accounts.containsKey(acctId)) throw new AccountDoesNotExistException("Account with this id does not exists");
+        if (!accounts.containsKey(acctId))
+            throw new AccountDoesNotExistException("Account with this id does not exists");
         BankAccount account = accounts.get(acctId);
         if (account.isFrozen()) throw new AccountFrozenException("This account is frozen");
         account.deposit(amount);
@@ -56,8 +60,10 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
 
     public void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount)
             throws InsufficientFundsException, AccountDoesNotExistException, ExceedsMaxWithdrawalException, AccountFrozenException {
-        if (!accounts.containsKey(acctIdToWithdrawFrom)) throw new AccountDoesNotExistException("Account with this id does not exists");
-        if (!accounts.containsKey(acctIdToDepositTo)) throw new AccountDoesNotExistException("Account with this id does not exists");
+        if (!accounts.containsKey(acctIdToWithdrawFrom))
+            throw new AccountDoesNotExistException("Account with this id does not exists");
+        if (!accounts.containsKey(acctIdToDepositTo))
+            throw new AccountDoesNotExistException("Account with this id does not exists");
         BankAccount accountW = accounts.get(acctIdToWithdrawFrom);
         BankAccount accountD = accounts.get(acctIdToDepositTo);
         if (accountW.isFrozen()) throw new AccountFrozenException("This account is frozen");
@@ -72,7 +78,8 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
     }
 
     public String transactionHistory(String acctId) throws AccountDoesNotExistException, AccountAlreadyExistsException, InsufficientFundsException, ExceedsMaxWithdrawalException {
-        if (!accounts.containsKey(acctId)) throw new AccountDoesNotExistException("Account with this id does not exists");
+        if (!accounts.containsKey(acctId))
+            throw new AccountDoesNotExistException("Account with this id does not exists");
         BankAccount account = accounts.get(acctId);
         return transactionHist.get(acctId);
     }
@@ -81,7 +88,8 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
     //----------------- AdvancedAPI methods -------------------------//
 
     public void createAccount(String acctId, String password, double startingBalance, boolean savings) throws AccountAlreadyExistsException, IllegalArgumentException {
-        if (accounts.containsKey(acctId)) throw new AccountAlreadyExistsException("Account with this id already exists");
+        if (accounts.containsKey(acctId))
+            throw new AccountAlreadyExistsException("Account with this id already exists");
 
         BankAccount account;
         if (savings) account = new SavingsAccount(acctId, password, startingBalance);
@@ -111,7 +119,7 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
         if (accounts.keySet().size() == 0) throw new AccountDoesNotExistException("Bank does not contain accounts");
 
         double total = 0;
-        for (BankAccount account:accounts.values()) {
+        for (BankAccount account : accounts.values()) {
             total += account.getBalance();
         }
 
@@ -120,32 +128,32 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
 
     private static double mean(List<Double> list) {
         double sum = 0.0;
-        for(double num : list) {
+        for (double num : list) {
             sum += num;
         }
-        return sum/list.size();
+        return sum / list.size();
     }
 
     private static double standardDeviation(List<Double> list) {
         double sum = 0.0, standardDeviation = 0.0;
         int length = list.size();
-        for(double num : list) {
+        for (double num : list) {
             sum += num;
         }
-        double mean = sum/length;
-        for(double num : list) {
+        double mean = sum / length;
+        for (double num : list) {
             standardDeviation += Math.pow(num - mean, 2);
         }
-        return Math.sqrt(standardDeviation/length);
+        return Math.sqrt(standardDeviation / length);
     }
 
     public boolean isSuspicious(List<Double> transactions) {
         double mean = mean(transactions);
         double sd = standardDeviation(transactions);
 
-        for(double d:transactions) {
-            double high = mean + (2*sd);
-            double low = mean - (2*sd);
+        for (double d : transactions) {
+            double high = mean + (2 * sd);
+            double low = mean - (2 * sd);
             if (d > high || d < low) {
                 return true;
             }
@@ -156,7 +164,7 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
     public Collection<String> findAcctIdsWithSuspiciousActivity() {
         Collection<String> suspiciousAccts = new HashSet<>();
 
-        for (String acctId:transactionHist.keySet()) {
+        for (String acctId : transactionHist.keySet()) {
 
             List<Double> ws = new ArrayList<>();
             List<Double> ds = new ArrayList<>();
@@ -166,7 +174,7 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
 
             String history = transactionHist.get(acctId);
             String[] transactions = history.split(",");
-            for(String t:transactions) {
+            for (String t : transactions) {
                 if (t.toCharArray()[0] == 'w') {
                     String[] withdrawal = t.split(" ");
                     double amount = Double.parseDouble(withdrawal[1]);
@@ -192,14 +200,26 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
             //or if more money than is left in the account was transfered (all involved accounts are suspicious)
             if (transferTotal > accounts.get(acctId).getBalance()) {
                 suspiciousAccts.add(acctId);
-                for(String id:taccts) suspiciousAccts.add(id);
+                for (String id : taccts) suspiciousAccts.add(id);
             }
+            if (isSuspicious(ws) || isSuspicious(ds) || transferTotal > accounts.get(acctId).getBalance()) {
+                Scanner actMessage = new Scanner(System.in);
+                System.out.println("Have you done any of these purchases(y or n): ");
 
-
+                String actAnswer = actMessage.nextLine();
+                if (actAnswer.equals("y")) {
+                    System.out.println("Then you have nothing to worry about");
+                    suspiciousAccts.clear();
+                    return suspiciousAccts;
+                } else {
+                    System.out.println("We will freeze you account due to the activity");
+                    return suspiciousAccts;
+                }
+            }
         }
-
         return suspiciousAccts;
     }
+
 
     public boolean isFrozen(String acctId) throws AccountDoesNotExistException{
         if (!accounts.containsKey(acctId)) throw new AccountDoesNotExistException("Account does not exist");
