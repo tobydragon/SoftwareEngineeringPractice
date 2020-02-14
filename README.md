@@ -11,7 +11,4 @@
 #LC Sequence Diagram: https://drive.google.com/file/d/1JxTIFh9YG4WqagolynRPzfiFYXbgfIL1/view?usp=sharing
 
 
-TO - DO:
 
-CE - update sequence
-    - tests for close account (with balance == 0 and != 0)
