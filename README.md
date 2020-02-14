@@ -6,6 +6,8 @@ UML Diagram:  https://drive.google.com/file/d/1-U7TtnJOI9wa1QnNsFQtt6SM-FXgUX0C/
 
 Sequence Diagram for basic access functions (createAccount, closeAccount, deposit, withdraw, transfer, checkBalance):  https://drive.google.com/file/d/1cJ8KqJIR0ezbQfFehOFGwUzyCia5UH9L/view?usp=sharing
 
+State Diagram:  https://drive.google.com/file/d/1HaHTeqxhZsZKZNttXKPx6NMYEn-MHN7C/view?usp=sharing
+
 Questions for Toby:
  - 
 
