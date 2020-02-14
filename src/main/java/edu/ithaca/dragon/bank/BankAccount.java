@@ -6,7 +6,7 @@ public class BankAccount {
 
     private String acctId;
     private String email;
-    private double balance;
+    protected double balance;
     protected String type;
 
     /**
@@ -137,6 +137,7 @@ public class BankAccount {
         if (amount < 0 || amount*1000%10 !=0){
             return false;
         }
+        
         return true;
     }
 
