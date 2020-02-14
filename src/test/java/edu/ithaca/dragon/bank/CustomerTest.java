@@ -73,8 +73,8 @@ public class CustomerTest {
         Customer c2 = new Customer("bob", "1");
         c2.createAccount(200);
         assertEquals(200, c2.getBalance());
-        assertThrows(Exception.class, ()->c2.createAccount(200));
-        assertThrows(Exception.class, ()->c2.createAccount(300));
+        assertThrows(IllegalArgumentException.class, ()->c2.createAccount(200));
+        assertThrows(IllegalArgumentException.class, ()->c2.createAccount(300));
         Customer c3 = new Customer("bob", "1");
         assertThrows(IllegalArgumentException.class, ()-> c3.createAccount(100.001));
         assertThrows(IllegalArgumentException.class, ()-> c3.createAccount(-100));

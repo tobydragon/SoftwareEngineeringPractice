@@ -10,11 +10,11 @@ public class BankTellerTest {
     void withdrawTest() throws Exception {
         BankTeller bankAccount = new BankTeller();
 
-        bankAccount.createAccount("a@b.com", "xyz", 200);
-        bankAccount.createAccount("b@c.com", "xyz", 500);
-        bankAccount.createAccount("c@d.com", "xyz", 1000);
-        bankAccount.createAccount("e@f.com", "xyz", 10);
-        bankAccount.createAccount("f@g.com", "xyz", 150);
+        bankAccount.createCustomerWithAccount("a@b.com", "xyz", 200);
+        bankAccount.createCustomerWithAccount("b@c.com", "xyz", 500);
+        bankAccount.createCustomerWithAccount("c@d.com", "xyz", 1000);
+        bankAccount.createCustomerWithAccount("e@f.com", "xyz", 10);
+        bankAccount.createCustomerWithAccount("f@g.com", "xyz", 150);
 
         bankAccount.withdraw("a@b.com", 100);
 
@@ -48,7 +48,7 @@ public class BankTellerTest {
     void depositTest() throws Exception {
         //Equivalence class: valid amount-positive int
         BankTeller bt1 = new BankTeller();
-        bt1.createAccount("Mari", "love12", 100);
+        bt1.createCustomerWithAccount("Mari", "love12", 100);
         bt1.deposit("Mari", 100);
         assertEquals(200, bt1.checkBalance("Mari"));
 
@@ -75,44 +75,76 @@ public class BankTellerTest {
     void checkBalanceTest() throws Exception {
         //Equivalence class: valid amount-positive int
         BankTeller bt1 = new BankTeller();
-        bt1.createAccount("Mari", "love12", 100);
+        bt1.createCustomerWithAccount("Mari", "love12", 100);
 
         assertEquals(100, bt1.checkBalance("Mari"));
 
         //Equivalence Class- 0 starting balance
-        bt1.createAccount("Ami", "yes101", 0);
+        bt1.createCustomerWithAccount("Ami", "yes101", 0);
 
         assertEquals(0, bt1.checkBalance("Ami"));
 
         //Equivalence Class- balance >1000
-        bt1.createAccount("Houry", "101NP", 5000);
+        bt1.createCustomerWithAccount("Houry", "101NP", 5000);
 
         assertEquals(5000, bt1.checkBalance("Houry"));
     }
 
-    void testCreateAccount() throws Exception {
+    @Test
+    void testCreateCustomerWithAccount() throws IllegalArgumentException {
         BankTeller b1 = new BankTeller();
         assertEquals(0, b1.getNumCustomers());
-        b1.createAccount("bob", "password", 100);
+        b1.createCustomerWithAccount("bob", "password", 100);
+        assertEquals(100, b1.checkBalance("bob"));
         assertEquals(1, b1.getNumCustomers());
-        b1.createAccount("bb", "password", 100);
+        b1.createCustomerWithAccount("bb", "password", 100);
+        assertEquals(100, b1.checkBalance("bb"));
         assertEquals(2, b1.getNumCustomers());
 
-        assertThrows(IllegalArgumentException.class, () -> b1.createAccount("bb", "password", 100));
-        assertThrows(IllegalArgumentException.class, () -> b1.createAccount("b", "password", -100));
-        assertThrows(IllegalArgumentException.class, () -> b1.createAccount("b", "password", 100.001));
+        assertThrows(IllegalArgumentException.class, () -> b1.createCustomerWithAccount("bb", "password", 100));
+        assertThrows(IllegalArgumentException.class, () -> b1.createCustomerWithAccount("b", "password", -100));
+        assertThrows(IllegalArgumentException.class, () -> b1.createCustomerWithAccount("b", "password", 100.001));
     }
 
     @Test
-    void testCloseAccount() throws Exception {
+    void testCreateCustomer() throws IllegalArgumentException{
         BankTeller b1 = new BankTeller();
-        b1.createAccount("bob", "password", 100);
-        b1.createAccount("bb", "password", 100);
+        assertEquals(0, b1.getNumCustomers());
+        b1.createCustomer("bob", "password");
+        assertEquals(1, b1.getNumCustomers());
+        b1.createCustomer("bb", "password");
         assertEquals(2, b1.getNumCustomers());
-        b1.closeAccount("bob");
+
+        assertThrows(IllegalArgumentException.class, ()-> b1.createCustomer("bob", "pwasdawaerd"));
+    }
+
+    @Test
+    void testAddAccount() throws IllegalArgumentException{
+        BankTeller b1 = new BankTeller();
+        b1.createCustomer("bob", "password");
+        b1.createCustomer("bb", "password");
+        b1.createCustomer("b", "pasdfawrod");
+        b1.addAccount("bob", 100);
+        assertEquals(100, b1.checkBalance("bob"));
+        b1.addAccount("bb", 0);
+        assertEquals(0, b1.checkBalance("bb"));
+        b1.addAccount("b", 10000);
+        assertEquals(10000, b1.checkBalance("b"));
+
+        assertThrows(IllegalArgumentException.class, ()-> b1.addAccount("bob", 100));
+
+    }
+
+    @Test
+    void testCloseCustomer() throws IllegalArgumentException {
+        BankTeller b1 = new BankTeller();
+        b1.createCustomerWithAccount("bob", "password", 100);
+        b1.createCustomerWithAccount("bb", "password", 100);
+        assertEquals(2, b1.getNumCustomers());
+        b1.closeCustomer("bob");
         assertEquals(1, b1.getNumCustomers());
 
-        assertThrows(IllegalArgumentException.class, () -> b1.closeAccount("bob"));
+        assertThrows(IllegalArgumentException.class, () -> b1.closeCustomer("bob"));
     }
 
     @Test
