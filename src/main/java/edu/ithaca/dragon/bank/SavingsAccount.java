@@ -20,6 +20,12 @@ public class SavingsAccount extends BankAccount{
     }
 
 
+    /**
+     * Transfers money between accounts
+     * @throws IllegalArgumentException if the amount to transfer is less than or equal to 0
+     * @throws IllegalArgumentException if the account to transfer to is the same as the account being transferred from
+     * @throws InsufficientFundsException if the amount to transfer is greater than or equal to the remaining withdrawal limit
+     */
     @Override
     public void transfer(BankAccount account, double amount) throws InsufficientFundsException {
         //TODO
@@ -53,6 +59,10 @@ public class SavingsAccount extends BankAccount{
 
     public double getDailyMax(){
         return this.dailyMax;
+    }
+
+    public double getWithdrawnToday(){
+        return this.withdrawnToday;
     }
 
 }

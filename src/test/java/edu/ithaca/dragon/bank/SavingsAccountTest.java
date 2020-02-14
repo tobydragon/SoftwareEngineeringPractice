@@ -101,18 +101,50 @@ public class SavingsAccountTest {
         account3.setDailyMax(10);
         account3.withdraw(5); // unit test valid equivalence class (valid withdraw amount, middle case)
         assertEquals(195, account3.getBalance());
+        assertEquals(5, account2.getWithdrawnToday());
         SavingsAccount account4 = new SavingsAccount("a@b.com", 200, "s4");
         account4.withdraw(10); // unit test valid equivalence class (valid withdraw amount, border case)
         assertEquals(190, account4.getBalance());
+        assertEquals(10, account2.getWithdrawnToday());
         SavingsAccount account5 = new SavingsAccount("a@b.com", 200, "s5");
         account5.withdraw(0.01); // unit test valid equivalence class (valid withdraw amount, border case)
         assertEquals(199.99, account5.getBalance());
-        
+        assertEquals(0.01, account2.getWithdrawnToday());
+        SavingsAccount account6 = new SavingsAccount("a@b.com", 200, "s6");
+        account6.withdraw(5);
+        assertEquals(195, account6.getBalance());
+        assertEquals(5, account2.getWithdrawnToday());
+        account6.withdraw(5);
+        assertEquals(190, account6.getBalance());
+        assertEquals(10, account2.getWithdrawnToday());
     }
 
     @Test
-    void transferTest(){
-        assertFalse(true);
+    void transferTest() throws IllegalArgumentException, InsufficientFundsException{
+        SavingsAccount account1 = new SavingsAccount("a@b.com", 200, "s1");
+        SavingsAccount account2 = new SavingsAccount("c@d.com", 200, "s2");
+        account1.setDailyMax(10);
+        account2.setDailyMax(10);
+        assertThrows(IllegalArgumentException.class, ()-> account1.transfer(account2, -10)); // unit test invalid equivalence class (negative value, middle case)
+        assertThrows(IllegalArgumentException.class, ()-> account1.transfer(account2, -0.01)); // unit test invalid equivalence class (negative value, border case)
+        assertThrows(IllegalArgumentException.class, ()-> account1.transfer(account2, 0)); // unit test invalid equivalence class (zero value, middle case)
+        assertThrows(IllegalArgumentException.class, ()-> account2.transfer(account1, 0.00001)); // unit test invalid equivalence class (decimal place limit, middle case)
+        assertThrows(IllegalArgumentException.class, ()-> account2.transfer(account1, 0.001)); // unit test invalid equivalence class (decimal place limit, border case)
+        assertThrows(IllegalArgumentException.class, ()-> account1.transfer(account1, 10)); // unit test invalid equivalence class (invalid account to transfer to, middle case)
+        assertThrows(InsufficientFundsException.class, ()-> account2.transfer(account1, 20)); // unit test invalid equivalence class (larger than limit, middle case)
+        assertThrows(InsufficientFundsException.class, ()-> account2.transfer(account1, 10.01)); // unit test invalid equivalence class (larger than limit, border case)
+        account1.transfer(account2, 5); // unit test valid equivalence class (valid amount, middle case)
+        assertEquals(195, account1.getBalance());
+        assertEquals(205, account2.getBalance());
+        assertEquals(5, account1.getWithdrawnToday());
+        account2.transfer(account1, 10); // unit test valid equivalence class (valid amount, border case)
+        assertEquals(205, account1.getBalance());
+        assertEquals(195, account2.getBalance());
+        assertEquals(10, account2.getWithdrawnToday());
+        account1.transfer(account2, 0.01); // unit test valid equivalence class (valid amount, border case)
+        assertEquals(204.99, account1.getBalance());
+        assertEquals(195.01, account2.getBalance());
+        assertEquals(5.01, account1.getWithdrawnToday());
     }
 
 }
