@@ -41,16 +41,22 @@ public class BankTeller implements AdvancedAPI {
     public String transactionHistory(String acctId) {
         return null;
     }
-    
 
-    public void createAccount(String acctId, String password, double startingBalance) throws IllegalArgumentException {
+    public void createCustomer(String acctId, String password) throws IllegalArgumentException {
         customers.addCustomer(acctId, password);
-        customers.createAccount(acctId, startingBalance);
+    }
+
+    public void addAccount(String actID, double startingBalance) throws IllegalArgumentException{
+        customers.createAccount(actID, startingBalance);
+    }
+
+    public void createCustomerWithAccount(String actID, String password, double startingBalance) throws IllegalArgumentException{
+        customers.addCustomer(actID, password);
+        customers.createAccount(actID, startingBalance);
 
     }
 
-
-    public void closeAccount(String acctId) throws IllegalArgumentException {
+    public void closeCustomer(String acctId) throws IllegalArgumentException {
         customers.closeCustomer(acctId);
     }
 
