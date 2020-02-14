@@ -15,7 +15,7 @@ public class SavingsAccount extends BankAccount{
     }
 
     @Override
-    public void withdraw(double amount) throws InsufficientFundsException {
+    public void withdraw(double amount) throws IllegalArgumentException, InsufficientFundsException {
         //TODO
     }
 
@@ -44,6 +44,8 @@ public class SavingsAccount extends BankAccount{
      * @throws IllegalArgumentException if the amount to withdraw is less than or equal to 0
      * @throws IllegalArgumentException if the amount to withdraw has more than 2 decimal places of precision
      * @throws InsufficientFundsException if the amount to withdraw is greater than the starting amount
+     * @throws InsufficientFundsException if the amount to withdraw is greater than the current balance
+     * @throws InsufficientFundsException if the amount to withdraw is greater than what is left to withdraw
      */
     public void setDailyMax(double max) throws InsufficientFundsException{
 

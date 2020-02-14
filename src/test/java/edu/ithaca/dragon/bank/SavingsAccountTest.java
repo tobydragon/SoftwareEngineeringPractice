@@ -84,8 +84,30 @@ public class SavingsAccountTest {
     }
 
     @Test
-    void withdrawTest(){
-        assertFalse(true);
+    void withdrawTest() throws IllegalArgumentException, InsufficientFundsException{
+        SavingsAccount account1 = new SavingsAccount("a@b.com", 200, "s1");
+        assertThrows(IllegalArgumentException.class, ()-> account1.withdraw(-10)); // unit test invalid equivalence class (negative amount, middle case)
+        assertThrows(IllegalArgumentException.class, ()-> account1.withdraw(-0.01)); // unit test invalid equivalence class (negative amount, border case)
+        assertThrows(IllegalArgumentException.class, ()-> account1.withdraw(0.00001)); // unit test invalid equivalence class (decimal places more than 2, middle case)
+        assertThrows(IllegalArgumentException.class, ()-> account1.withdraw(0.001)); // unit test invalid equivalence class (decimal places more than 2, border case)
+        assertThrows(InsufficientFundsException.class, ()-> account1.withdraw(300)); // unit test invalid equivalence class (larger than account amount, middle case)
+        assertThrows(InsufficientFundsException.class, ()-> account1.withdraw(200.01)); // unit test invalid equivalence class (larger than account amount, border case)
+        assertThrows(IllegalArgumentException.class, ()-> account1.withdraw(0)); // unit test invalid equivalence class (invalid amount, middle case)
+        SavingsAccount account2 = new SavingsAccount("a@b.com", 200, "s2");
+        account2.setDailyMax(10);
+        assertThrows(InsufficientFundsException.class, ()-> account2.withdraw(20)); // unit test invalid equivalence class (larger than remaining portion of daily max, middle case)
+        assertThrows(InsufficientFundsException.class, ()-> account2.withdraw(10.01)); // unit test invalid equivalence class (larger than remaining portion of daily max, border case)
+        SavingsAccount account3 = new SavingsAccount("a@b.com", 200, "s3");
+        account3.setDailyMax(10);
+        account3.withdraw(5); // unit test valid equivalence class (valid withdraw amount, middle case)
+        assertEquals(195, account3.getBalance());
+        SavingsAccount account4 = new SavingsAccount("a@b.com", 200, "s4");
+        account4.withdraw(10); // unit test valid equivalence class (valid withdraw amount, border case)
+        assertEquals(190, account4.getBalance());
+        SavingsAccount account5 = new SavingsAccount("a@b.com", 200, "s5");
+        account5.withdraw(0.01); // unit test valid equivalence class (valid withdraw amount, border case)
+        assertEquals(199.99, account5.getBalance());
+        
     }
 
     @Test
