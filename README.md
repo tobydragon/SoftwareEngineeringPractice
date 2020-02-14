@@ -14,8 +14,6 @@ Deposit Sequence Diagram ATM: https://drive.google.com/file/d/1MtKO5KAOeuZTXJ0wA
 
 Ideas for Improvement:
 
--The customer should be renamed. Only the customer collection should implement the API.
-
 -Use maybe a map for the customer collection. 
 
 -Throw particular exception.
