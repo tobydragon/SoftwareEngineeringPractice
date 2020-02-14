@@ -21,6 +21,11 @@ public class Savings implements Account{
         if (startingBalance < 0){
             throw new IllegalArgumentException("Balance cannot be negative");
         }
+        String checkDouble = Double.toString(startingBalance);
+        int indexDecimal = checkDouble.indexOf('.');
+        if (!(checkDouble.length() - indexDecimal <= 3)){
+            throw new IllegalArgumentException("Balance cannot have more than 2 decimal places");
+        }
         if (!isAmountValid(interestRateIn)){
             throw new IllegalArgumentException("Interest rate cannot be less than or equal to 0");
         }

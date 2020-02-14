@@ -454,13 +454,16 @@ public class TellerTests {
         savings.setFrozen(true);
         assertThrows(AcctFrozenException.class, ()-> finalTeller.closeAccount("0987654321"));
 
+        checking.setFrozen(false);
+        savings.setFrozen(false);
+
         //close checking
         finalTeller.closeAccount("1234567890");
-        assertEquals(null, finalTeller.admin.getAccount("1234567890"));
+        assertThrows(IllegalArgumentException.class, ()-> finalTeller.admin.getAccount("1234567890"));
 
         //close savings
         finalTeller.closeAccount("0987654321");
-        assertEquals(null, finalTeller.admin.getAccount("0987654321"));
+        assertThrows(IllegalArgumentException.class, ()-> finalTeller.admin.getAccount("0987654321"));
 
 
     }
