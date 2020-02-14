@@ -14,37 +14,62 @@ public class ATMTest {
     }
 
     @Test
-    void checkBalanceTest() {
+    void checkBalanceTest() throws AccountFrozenException {
         CentralBank bank = new CentralBank();
-        bank.getAccounts().put("abc", new CheckingAccount(100, "abc"));
         ATM a = new ATM(bank);
-
-        assertEquals(100, a.checkBalance("abc"));
+        // id does not exist
+        assertThrows(NullPointerException.class, () -> a.checkBalance(""));
+        // 0 balance
+        bank.getAccounts().put("0", new CheckingAccount(0, "0"));
+        assertEquals(0, a.checkBalance("0"));
+        // non 0 balance
+        bank.getAccounts().get("0").deposit(100);
+        assertEquals(100, a.checkBalance("0"));
     }
 
     @Test
     void withdrawTest() throws InsufficientFundsException, AccountFrozenException{
         CentralBank bank = new CentralBank();
-        bank.getAccounts().put("abc", new CheckingAccount(100, "abc"));
         ATM a = new ATM(bank);
 
+        // id does not exist
+        assertThrows(IllegalArgumentException.class, () -> a.withdraw( "0", 0));
+
+        // withdraw 0 from account
+        bank.getAccounts().put("0", new CheckingAccount(0, "0"));
+        a.withdraw("0", 0);
+        assertEquals(0, a.checkBalance("0"));
+
+        // withdraw more than balance
+        assertThrows(InsufficientFundsException.class, () -> a.withdraw("0", 1));
+
+        // withdraw entire balance
+        bank.getAccounts().put("1", new CheckingAccount(1, "1"));
+        a.withdraw("1", 1);
+        assertEquals(0, a.checkBalance("1"));
+
+        // withdraw partial balance
+        bank.getAccounts().put("abc", new CheckingAccount(100, "abc"));
         a.withdraw("abc", 50);
         assertEquals(50, a.checkBalance("abc"));
-        assertThrows(InsufficientFundsException.class, () -> a.withdraw("abc", 100));
-        assertThrows(IllegalArgumentException.class, () -> a.withdraw( "help", 100));
-
     }
 
     @Test
     void depositTest() throws AccountFrozenException{
         CentralBank bank = new CentralBank();
-        bank.getAccounts().put("abc", new CheckingAccount(100, "abc"));
         ATM a = new ATM(bank);
+        // id does not exist
+        assertThrows(IllegalArgumentException.class, () -> a.deposit( "0", 0));
 
+        // deposit 0
+        bank.getAccounts().put("0", new CheckingAccount(0, "0"));
+        a.deposit("0", 0);
+        assertEquals(0, a.checkBalance("0"));
+
+        // deposit non 0
+        bank.getAccounts().put("abc", new CheckingAccount(100, "abc"));
         a.deposit("abc", 100);
         assertEquals(200, a.checkBalance("abc"));
-        assertThrows(IllegalArgumentException.class, () -> a.deposit( "help", 100));
-
     }
 
     @Test
