@@ -12,6 +12,7 @@ Questions for Toby:
 
 TODO:
  - Sequence Diagrams for confirmCredentials, freeze/unfreeze, calcTotalAssets
+ - Refactor BankAccount to CheckingAccount
 
 Orion's list:
  - Sequence Diagram for confirmCredentials
