@@ -5,14 +5,14 @@ public interface BasicAPI {
 
     boolean confirmCredentials(String acctId, String password) throws AcctFrozenException;
 
-    double checkBalance(String acctId) throws AcctFrozenException;
+    double checkBalance(String acctId, String password) throws AcctFrozenException;
 
-    void withdraw(String acctId, double amount) throws InsufficientFundsException, AcctFrozenException;
+    void withdraw(String acctId, String password, double amount) throws InsufficientFundsException, AcctFrozenException;
 
-    void deposit(String acctId, double amount) throws AcctFrozenException;
+    void deposit(String acctId, String password, double amount) throws AcctFrozenException;
 
     void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws InsufficientFundsException, AcctFrozenException;
 
-    String transactionHistory(String acctId) throws AcctFrozenException;
+    String transactionHistory(String acctId, String password) throws AcctFrozenException;
 
 }

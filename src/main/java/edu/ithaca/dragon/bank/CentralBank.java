@@ -11,17 +11,17 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
         return false;
     }
 
-    public double checkBalance(String acctId) {
+    public double checkBalance(String acctId, String password) {
         int num1 = 5;
         int num2 = 5;
         return num1 + num2;
     }
 
-    public void withdraw(String acctId, double amount) throws InsufficientFundsException {
+    public void withdraw(String acctId, String password, double amount) throws InsufficientFundsException {
 
     }
 
-    public void deposit(String acctId, double amount) throws IllegalArgumentException {
+    public void deposit(String acctId, String password, double amount) throws IllegalArgumentException {
 
     }
 
@@ -29,7 +29,7 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
 
     }
 
-    public String transactionHistory(String acctId) {
+    public String transactionHistory(String acctId, String password) {
         return null;
     }
 

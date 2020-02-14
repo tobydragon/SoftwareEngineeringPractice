@@ -14,5 +14,8 @@ public interface Account {
 
     String getAcctId();
 
+    String getAcctPassword();
+
     boolean getFrozenStatus();
+
     }
