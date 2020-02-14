@@ -2,8 +2,9 @@ package edu.ithaca.dragon.bank;
 
 public class ATM implements BasicAPI{
 
+    public Admin admin = new Admin();
+
     public boolean confirmCredentials(String acctId, String password) throws IllegalArgumentException, AcctFrozenException{
-        Admin admin = new Admin();
         Account acct = admin.getAccount(acctId);
         if (acct == null){
             throw new IllegalArgumentException("Account not found");
@@ -19,7 +20,6 @@ public class ATM implements BasicAPI{
     }
 
     public double checkBalance(String acctId, String password) throws IllegalArgumentException, AcctFrozenException{
-        Admin admin = new Admin();
         if (!confirmCredentials(acctId, password)){
             throw new IllegalArgumentException("ID and Password incorrect");
         }
@@ -29,7 +29,6 @@ public class ATM implements BasicAPI{
     }
 
     public void withdraw(String acctId, String password, double amount) throws IllegalArgumentException, InsufficientFundsException, AcctFrozenException {
-        Admin admin = new Admin();
         if (!confirmCredentials(acctId, password)){
             throw new IllegalArgumentException("ID and Password incorrect");
         }
@@ -38,7 +37,6 @@ public class ATM implements BasicAPI{
     }
 
     public void deposit(String acctId, String password, double amount) throws IllegalArgumentException, AcctFrozenException{
-        Admin admin = new Admin();
         if (!confirmCredentials(acctId, password)){
             throw new IllegalArgumentException("ID and Password incorrect");
         }
@@ -46,16 +44,20 @@ public class ATM implements BasicAPI{
         acctToCheck.deposit(acctId,amount);
     }
 
-    public void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws IllegalArgumentException, InsufficientFundsException, AcctFrozenException{
-        Admin admin = new Admin();
+    public void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, String passToWithdrawFrom, String passToDepositTo,double amount) throws IllegalArgumentException, InsufficientFundsException, AcctFrozenException{
+        if (!confirmCredentials(acctIdToWithdrawFrom, passToWithdrawFrom) || !confirmCredentials(acctIdToDepositTo,passToDepositTo)){
+            throw new IllegalArgumentException("One of the accounts is not valid");
+        }
         Account acctFrom = admin.getAccount(acctIdToWithdrawFrom);
         Account acctTo = admin.getAccount(acctIdToDepositTo);
+        if (acctFrom.getFrozenStatus() || acctTo.getFrozenStatus()){
+            throw new AcctFrozenException("One of the accounts is frozen");
+        }
         acctFrom.withdraw(acctIdToWithdrawFrom, amount);
         acctTo.deposit(acctIdToDepositTo,amount);
     }
 
     public String transactionHistory(String acctId, String password) throws IllegalArgumentException, AcctFrozenException{
-        Admin admin = new Admin();
         if (!confirmCredentials(acctId, password)){
             throw new IllegalArgumentException("ID and Password incorrect");
         }

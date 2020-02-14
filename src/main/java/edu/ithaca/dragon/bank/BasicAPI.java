@@ -11,7 +11,7 @@ public interface BasicAPI {
 
     void deposit(String acctId, String password, double amount) throws AcctFrozenException;
 
-    void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws InsufficientFundsException, AcctFrozenException;
+    void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, String passToWithdrawFrom, String passToDepositTo,double amount) throws InsufficientFundsException, AcctFrozenException;
 
     String transactionHistory(String acctId, String password) throws AcctFrozenException;
 

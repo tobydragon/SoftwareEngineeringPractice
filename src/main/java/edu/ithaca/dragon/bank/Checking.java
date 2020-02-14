@@ -61,7 +61,7 @@ public class Checking implements Account {
                 throw new IllegalArgumentException("Amount is not valid");
             } else {
                 balance -= amount;
-                history.add("withdraw of " + String.valueOf(amount));
+                history.add("withdrawal of " + String.valueOf(amount));
             }
         }
     }

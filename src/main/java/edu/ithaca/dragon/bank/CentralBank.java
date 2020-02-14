@@ -25,7 +25,7 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
 
     }
 
-    public void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws InsufficientFundsException {
+    public void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, String passToWithdrawFrom, String passToDepositTo,double amount) throws InsufficientFundsException {
 
     }
 
