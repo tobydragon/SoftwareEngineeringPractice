@@ -46,7 +46,7 @@ public class ATMTest {
 
         ATM atm =new ATM(c1);
 
-       atm.deposit("Mari",100);
+        atm.deposit("Mari",100);
         assertEquals(200, atm.checkBalance("Mari"));
 
         atm.deposit("Mari",1);
@@ -69,8 +69,6 @@ public class ATMTest {
     @Test
     void checkBalanceTest() throws Exception {
         //Equivalence Class-valid balance
-
-
         CustomerCollection c1 = new CustomerCollection();
         c1.addCustomer("Mari", "love12");
         c1.createAccount("Mari", 100);
@@ -90,6 +88,30 @@ public class ATMTest {
         c1.createAccount("Houry", 5000);
 
         assertEquals(5000, atm.checkBalance("Houry"));
+    }
+    @Test
+    void transferTest() throws Exception{
+        CustomerCollection newCol = new CustomerCollection();
+        newCol.addCustomer("a@b.com", "xyz");
+        newCol.createAccount("a@b.com", 100);
+        newCol.addCustomer("b@c.com", "xyz");
+        newCol.createAccount("b@c.com", 600);
 
+        newCol.transfer("a@b.com", "b@c.com", 50);
+        assertEquals(50, newCol.getBalance("a@b.com"));
+        assertEquals(650, newCol.getBalance("b@c.com"));
+
+        newCol.addCustomer("c@b.com", "xyz");
+        newCol.createAccount("c@b.com", 0);
+        newCol.addCustomer("z@r.com", "xyz");
+        newCol.createAccount("z@r.com", 200);
+
+        assertThrows(InsufficientFundsException.class, ()->newCol.transfer("c@b.com", "z@r.com", 300));
+
+        assertThrows(IllegalArgumentException.class, ()->newCol.transfer("a@b.com", "b@c.com", -1));
+        assertThrows(IllegalArgumentException.class, ()->newCol.transfer("a@b.com", "b@c.com", -500));
+        assertThrows(IllegalArgumentException.class, ()->newCol.transfer("a@b.com", "b@c.com", -500.654));
+        assertThrows(IllegalArgumentException.class, ()->newCol.transfer("a@b.com", "b@c.com", 0));
+        assertThrows(IllegalArgumentException.class, ()->newCol.transfer("a@b.com", "b@c.com", 300.5654));
     }
 }

@@ -1,11 +1,9 @@
 package edu.ithaca.dragon.bank;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class CustomerCollection {
     private HashMap<String, Customer> customers;
-
 
     public CustomerCollection(){
         customers = new HashMap<>();
@@ -30,6 +28,15 @@ public class CustomerCollection {
         if(customers.get(ID)== null)throw new IllegalArgumentException("Account doesn't exist");
         return customers.get(ID).getBalance();
 
+    }
+
+    public void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws InsufficientFundsException, IllegalArgumentException {
+        if(amount < 0 || (amount * 100) % 1 != 0)
+            throw new IllegalArgumentException("invalid input");
+        else{
+            customers.get(acctIdToWithdrawFrom).withdraw(amount);
+            customers.get(acctIdToDepositTo).deposit(amount);;
+        }
     }
 
     public boolean checkCredentials(String ID, String password){
