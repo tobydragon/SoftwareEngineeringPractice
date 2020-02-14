@@ -54,8 +54,5 @@ class AccountTest {
         CheckingAccount account2  = new CheckingAccount("a@c.cm", 0);
         assertThrows(InsufficientFundsException.class, ()-> account2.withdraw(1));
         assertEquals(0, account2.getBalance());
-
-
-
     }
 }

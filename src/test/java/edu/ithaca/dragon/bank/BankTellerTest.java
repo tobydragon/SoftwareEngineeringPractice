@@ -43,6 +43,7 @@ public class BankTellerTest {
 
         assertThrows(IllegalArgumentException.class, ()-> bankAccount.withdraw("asdfa", 100));
     }
+
     @Test
     void depositTest() throws Exception {
         //Equivalence class: valid amount-positive int
@@ -68,7 +69,6 @@ public class BankTellerTest {
 
         //Equivalence Class-IllegalArgumentException  more than 2 decimal places
         assertThrows(IllegalArgumentException.class, () -> bt1.deposit("Mari", 1.908));
-
     }
 
     @Test
@@ -88,9 +88,7 @@ public class BankTellerTest {
         bt1.createAccount("Houry", "101NP", 5000);
 
         assertEquals(5000, bt1.checkBalance("Houry"));
-
     }
-
 
     void testCreateAccount() throws Exception {
         BankTeller b1 = new BankTeller();
@@ -116,5 +114,30 @@ public class BankTellerTest {
 
         assertThrows(IllegalArgumentException.class, () -> b1.closeAccount("bob"));
     }
-}
 
+    @Test
+    void transferTest() throws Exception{
+        BankTeller bankAccount = new BankTeller();
+
+        bankAccount.createAccount("a@b.com", "xyz", 200);
+        bankAccount.createAccount("b@c.com", "xyz", 500);
+        bankAccount.createAccount("c@d.com", "xyz", 1000);
+        bankAccount.createAccount("e@f.com", "xyz", 10);
+        bankAccount.createAccount("z@y.com", "xyz", 150);
+        bankAccount.createAccount("d@j.com", "xyz", 1);
+        bankAccount.createAccount("a@v.com", "xyz", 0);
+
+        bankAccount.transfer("a@b.com", "b@c.com", 100);
+        assertEquals(100, bankAccount.checkBalance("a@b.com"));
+        assertEquals(600, bankAccount.checkBalance("b@c.com"));
+
+        assertThrows(InsufficientFundsException.class, ()->bankAccount.transfer("a@v.com", "e@f.com", 300));
+
+        assertThrows(IllegalArgumentException.class, ()->bankAccount.transfer("c@d.com", "e@f.com", -1));
+        assertThrows(IllegalArgumentException.class, ()->bankAccount.transfer("a@v.com", "d@j.com", -500));
+        assertThrows(IllegalArgumentException.class, ()->bankAccount.transfer("a@v.com", "d@j.com", -500.8979));
+        assertThrows(IllegalArgumentException.class, ()->bankAccount.transfer("d@j.com", "e@f.com", 938.845));
+        assertThrows(IllegalArgumentException.class, ()->bankAccount.transfer("d@j.com", "e@f.com", 0));
+        assertThrows(InsufficientFundsException.class, ()->bankAccount.transfer("z@y.com", "c@d.com", 938.84));
+    }
+}

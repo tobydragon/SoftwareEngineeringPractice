@@ -6,9 +6,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="SoftwareEngineeringPracticePartner" />
         <module name="SoftwareEngineeringPractice" />
+        <module name="SoftwareEngineeringPracticePartner" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="SoftwareEngineeringPractice" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>

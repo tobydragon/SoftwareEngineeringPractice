@@ -30,13 +30,16 @@ public class ATM implements BasicAPI {
         }
         else {
             throw new IllegalArgumentException("invalid amount ");
-
         }
-
     }
 
-    public void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws InsufficientFundsException {
-
+    public void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws InsufficientFundsException, IllegalArgumentException {
+        if(amount < 0 || (amount * 100) % 1 != 0)
+            throw new IllegalArgumentException("invalid input");
+        else{
+            customers.withdraw(acctIdToWithdrawFrom, amount);
+            customers.deposit( acctIdToDepositTo,  amount);;
+        }
     }
 
     public String transactionHistory(String acctId) {
