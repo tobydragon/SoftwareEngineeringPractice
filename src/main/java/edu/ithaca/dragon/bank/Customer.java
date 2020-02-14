@@ -16,20 +16,23 @@ public class Customer {
     public void deposit(double amount){
         checking.deposit(amount);
     }
+
     public void withdraw(double amount)throws IllegalArgumentException, InsufficientFundsException{
         if(checking == null)throw new IllegalArgumentException("Account Not Created");
         checking.withdraw(amount);
     }
+
     public double getBalance(){
         if(checking == null)throw new IllegalArgumentException("No account");
         return checking.getBalance();
     }
+
     public boolean checkCredentials(String idIn, String passwordIn){
         return false;
     }
 
-    public void createAccount(double startingBalance) throws Exception{
-        if(checking != null)throw new Exception("Account already Exists");
+    public void createAccount(double startingBalance) throws IllegalArgumentException{
+        if(checking != null)throw new IllegalArgumentException("Account already Exists");
         if(!CheckingAccount.isAmountValid(startingBalance)) throw new IllegalArgumentException("Invalid Starting balance");
         checking = new CheckingAccount(id, startingBalance);
     }

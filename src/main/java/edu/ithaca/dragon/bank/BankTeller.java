@@ -1,5 +1,6 @@
 package edu.ithaca.dragon.bank;
 
+
 public class BankTeller implements AdvancedAPI {
     private CustomerCollection customers;
 
@@ -42,7 +43,7 @@ public class BankTeller implements AdvancedAPI {
     }
     
 
-    public void createAccount(String acctId, String password, double startingBalance) throws Exception {
+    public void createAccount(String acctId, String password, double startingBalance) throws IllegalArgumentException {
         customers.addCustomer(acctId, password);
         customers.createAccount(acctId, startingBalance);
 
