@@ -1,6 +1,7 @@
 package edu.ithaca.dragon.bank;
 
 import java.util.ArrayList;
+import java.time.LocalDateTime;
 
 public class BankAccount {
 
@@ -8,7 +9,6 @@ public class BankAccount {
     private double balance;
     private boolean frozen = false;
     public ArrayList<Transaction> transactionHistory = new ArrayList<Transaction>();
-    //.
 
     /**
      * @post creates a bank account object
@@ -38,6 +38,8 @@ public class BankAccount {
     public String getAcctId() {
         return acctId;
     }
+
+    public ArrayList<Transaction> getTransactionHistory() { return transactionHistory; }
 
     public void setFrozen(boolean frozen) {
         this.frozen = frozen;
@@ -86,13 +88,14 @@ public class BankAccount {
         }
 
         else{
+            double oldBalance = this.balance;
+            balance -= amount;
+
             boolean flag = false;
-            if(amount > balance/2) {
+            if(amount > oldBalance/2) {
                 flag = true;
             }
-            transactionHistory.add(new Transaction(this.balance, -amount, flag));
-
-            balance -= amount;
+            transactionHistory.add(new Transaction(oldBalance, -amount, balance, LocalDateTime.now(), flag));
         }
     }
 
@@ -111,13 +114,14 @@ public class BankAccount {
         }
 
         else {
+            double oldBalance = this.balance;
+            balance += amount;
+
             boolean flag = false;
-            if(amount > (balance*2)) {
+            if(amount > (oldBalance*2)) {
                 flag = true;
             }
-            transactionHistory.add(new Transaction(this.balance, amount, flag));
-
-            balance += amount;
+            transactionHistory.add(new Transaction(oldBalance, amount, balance, LocalDateTime.now(), flag));
         }
     }
 
