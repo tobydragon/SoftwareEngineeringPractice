@@ -10,7 +10,7 @@ public class SavingsAccount extends BankAccount{
         super(email, startingBalance, id);
         super.type="Savings";
     }
-    public void compoundInterest(){
+    public void applyCompoundInterest(){
         //TODO
     }
 

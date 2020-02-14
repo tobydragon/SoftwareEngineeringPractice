@@ -51,12 +51,12 @@ public class SavingsAccountTest {
     }
 
     @Test
-    void compoundInterestTest(){
+    void applyCompoundInterestTest(){
         SavingsAccount account1 = new SavingsAccount("a@b.com", 1000, "s1");
         account1.setInterestRate(10);
-        account1.compoundInterest();
+        account1.applyCompoundInterest();
         assertEquals(1100, account1.getBalance()); // unit test valid equivalence class (valid starting amount, valid interest rate, # of times compounded border case)
-        account1.compoundInterest();
+        account1.applyCompoundInterest();
         assertEquals(1210, account1.getBalance()); // unit test valid equivalence class (valid starting amount, valid interest rate, # of times compounded middle case)
     }
 
