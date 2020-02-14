@@ -12,28 +12,28 @@ public class TellerTest {
     @Test
     void createAccountTest() {
         CentralBank myBank = new CentralBank();
-
         Collection<User> users = new ArrayList<User>();
+        User charles = new User("Charles","123");
         Teller acct= new Teller(myBank);
-        acct.createAccount("Charles", 100, true);
-        assertTrue(myBank.accounts.contains(myBank.getBankAccount("Charles")));
-        acct.createAccount("Fredric", 100, false);
-        assertTrue(myBank.accounts.contains(myBank.getBankAccount("Fredric")));
+        acct.createAccount(charles,"CharlesSaves", 100, true);
+        assertTrue(myBank.accounts.contains(myBank.getBankAccount("CharlesSaves")));
+        acct.createAccount(charles,"CharlesChecking", 100, false);
+        assertTrue(myBank.accounts.contains(myBank.getBankAccount("CharlesChecking")));
 
     }
 
     @Test
     void CloseAccountTest() {
         CentralBank myBank = new CentralBank();
-
+        User charles = new User("Charles","123");
         Collection<User> users = new ArrayList<User>();
         Teller acct= new Teller(myBank);
-        acct.createAccount("Charles", 100, true);
-        acct.closeAccount("Charles");
-        assertThrows(IllegalArgumentException.class, ()-> myBank.accounts.contains(myBank.getBankAccount("Charles")));
-        acct.createAccount("Fredric", 100, false);
-        acct.closeAccount("Fredric");
-        assertThrows(IllegalArgumentException.class, ()-> myBank.accounts.contains(myBank.getBankAccount("Fredric")));
+        acct.createAccount(charles,"CharlesSaves", 100, true);
+        acct.closeAccount(charles,"CharlesSaves");
+        assertThrows(IllegalArgumentException.class, ()-> myBank.accounts.contains(myBank.getBankAccount("CharlesSaves")));
+        acct.createAccount(charles,"CharlesChecking", 100, false);
+        acct.closeAccount(charles,"CharlesChecking");
+        assertThrows(IllegalArgumentException.class, ()-> myBank.accounts.contains(myBank.getBankAccount("CharlesChecking")));
 
     }
 }
