@@ -101,22 +101,25 @@ public class SavingsAccountTest {
         account3.setDailyMax(10);
         account3.withdraw(5); // unit test valid equivalence class (valid withdraw amount, middle case)
         assertEquals(195, account3.getBalance());
-        assertEquals(5, account2.getWithdrawnToday());
+        assertEquals(5, account3.getWithdrawnToday());
         SavingsAccount account4 = new SavingsAccount("a@b.com", 200, "s4");
+        account4.setDailyMax(10);
         account4.withdraw(10); // unit test valid equivalence class (valid withdraw amount, border case)
         assertEquals(190, account4.getBalance());
-        assertEquals(10, account2.getWithdrawnToday());
+        assertEquals(10, account4.getWithdrawnToday());
         SavingsAccount account5 = new SavingsAccount("a@b.com", 200, "s5");
+        account5.setDailyMax(10);
         account5.withdraw(0.01); // unit test valid equivalence class (valid withdraw amount, border case)
         assertEquals(199.99, account5.getBalance());
-        assertEquals(0.01, account2.getWithdrawnToday());
+        assertEquals(0.01, account5.getWithdrawnToday());
         SavingsAccount account6 = new SavingsAccount("a@b.com", 200, "s6");
+        account6.setDailyMax(10);
         account6.withdraw(5);
         assertEquals(195, account6.getBalance());
-        assertEquals(5, account2.getWithdrawnToday());
+        assertEquals(5, account6.getWithdrawnToday());
         account6.withdraw(5);
         assertEquals(190, account6.getBalance());
-        assertEquals(10, account2.getWithdrawnToday());
+        assertEquals(10, account6.getWithdrawnToday());
     }
 
     @Test

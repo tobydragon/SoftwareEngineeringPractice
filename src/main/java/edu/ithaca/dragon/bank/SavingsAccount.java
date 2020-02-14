@@ -10,13 +10,23 @@ public class SavingsAccount extends BankAccount{
         super(email, startingBalance, id);
         super.type="Savings";
     }
+
     public void applyCompoundInterest(){
-        //TODO
+        double nextBalance = super.balance * (1 + (this.interestRate / 100));
+        this.balance = nextBalance;
     }
 
     @Override
     public void withdraw(double amount) throws IllegalArgumentException, InsufficientFundsException {
-        //TODO
+        if(!isAmountValid(amount) || amount == 0){
+            throw new IllegalArgumentException("Invalid amount");
+        }
+        double nextWithdrawRemain = (this.dailyMax - (this.withdrawnToday + amount));
+        if(amount > this.balance || nextWithdrawRemain < 0){
+            throw new InsufficientFundsException("Insufficient amount to withdraw");
+        }
+        this.withdrawnToday = this.withdrawnToday + amount;
+        this.balance -= amount;
     }
 
 
@@ -28,7 +38,18 @@ public class SavingsAccount extends BankAccount{
      */
     @Override
     public void transfer(BankAccount account, double amount) throws InsufficientFundsException {
-        //TODO
+        if(!isAmountValid(amount) || amount == 0){
+            throw new IllegalArgumentException("Invalid amount");
+        }
+        if(account == this){
+            throw new IllegalArgumentException("Same account being transferred to");
+        }
+        if(amount > (this.dailyMax - this.withdrawnToday)){
+            throw new InsufficientFundsException("Insufficient funds to withdraw");
+        }
+        this.withdrawnToday += amount;
+        this.balance -= amount;
+        account.deposit(amount);
     }
 
     /**
@@ -38,7 +59,13 @@ public class SavingsAccount extends BankAccount{
      * @throws IllegalArgumentException if the input rate to set has more than 2 decimal places precision
      */
     public void setInterestRate(double rate){
-
+        if(!isAmountValid(rate)){
+            throw new IllegalArgumentException("Invalid rate");
+        }
+        if(rate <= 0 || rate > 99.99){
+            throw new IllegalArgumentException("Invalid rate");
+        }
+        this.interestRate = rate;
     }
 
     public double getInterestRate(){
@@ -51,10 +78,15 @@ public class SavingsAccount extends BankAccount{
      * @throws IllegalArgumentException if the amount to withdraw has more than 2 decimal places of precision
      * @throws InsufficientFundsException if the amount to withdraw is greater than the starting amount
      * @throws InsufficientFundsException if the amount to withdraw is greater than the current balance
-     * @throws InsufficientFundsException if the amount to withdraw is greater than what is left to withdraw
      */
     public void setDailyMax(double max) throws InsufficientFundsException{
-
+        if(!isAmountValid(max)){
+            throw new IllegalArgumentException("Invalid max");
+        }
+        if(max > this.balance){
+            throw new InsufficientFundsException("Not enough funds left to withdraw");
+        }
+        this.dailyMax = max;
     }
 
     public double getDailyMax(){

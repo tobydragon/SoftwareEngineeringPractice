@@ -6,7 +6,7 @@ public class BankAccount {
 
     private String acctId;
     private String email;
-    private double balance;
+    protected double balance;
     protected String type;
 
     /**
