@@ -134,9 +134,8 @@ public class BankAccount {
      * @return true if the amount to be checked is a valid amount or false if not valid
      */
     public static boolean isAmountValid(double amount){
-        if (amount < 0){
+        if (amount < 0 || amount*1000%10 !=0){
             return false;
-          
         }
 
         String amountString = "" + amount;
@@ -145,7 +144,7 @@ public class BankAccount {
         if (amountStringDecimalString.length() > 2){
             return false;
         }
-
+      
         return true;
     }
 
