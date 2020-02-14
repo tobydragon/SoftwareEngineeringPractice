@@ -1,9 +1,12 @@
 package edu.ithaca.dragon.bank;
 
+import java.util.ArrayList;
+
 public class BankAccount {
 
-    private String email, password;
-    private double balance;
+    protected String email, password;
+    protected double balance;
+    protected ArrayList<AccountEvent> history;
 
     /**
      * @throws IllegalArgumentException if email or starting balance is invalid
@@ -34,6 +37,13 @@ public class BankAccount {
 
     public String getPassword() {
         return password;
+    }
+
+    /**
+     * @returns a textual representation of the history of the account
+     */
+    public String getHistory(){
+        return "";
     }
 
     /**
@@ -83,6 +93,13 @@ public class BankAccount {
             return false;
         }
         else return (amount * 100) % 1 == 0;
+    }
+
+    /**
+     * @return true if any account events in history are suspicious
+     */
+    public static boolean checkSuspicious(){
+        return false;
     }
 
 

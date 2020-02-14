@@ -214,4 +214,34 @@ class BankAccountTest {
         assertThrows(IllegalArgumentException.class, ()-> new BankAccount("a@b.com", "pass",100.234));
     }
 
+    @Test
+    void checkSuspiciousTest() throws InsufficientFundsException {
+        BankAccount bankAccount = new BankAccount("a@b.com","pass",200);
+        bankAccount.withdraw(50.0);
+        assertFalse(bankAccount.checkSuspicious());  //Checking normal not suspicious case
+
+        bankAccount = new BankAccount("a@b.com","pass",200);
+        bankAccount.withdraw(150.0);
+        assertTrue(bankAccount.checkSuspicious());  //Checking normal suspicious case
+
+        //More detailed tests for checking suspicious or not suspicious events exists in AccountEventTest.java
+    }
+
+    @Test
+    void getHistoryTest() throws InsufficientFundsException{
+        BankAccount bankAccount = new BankAccount("a@b.com","pass",200);
+        bankAccount.withdraw(50.0);
+        assertEquals("Withdraw 50.0", bankAccount.getHistory());
+
+        bankAccount.deposit(100);
+        assertEquals("Withdraw 50.0\nDeposit 100", bankAccount.getHistory());
+
+        BankAccount bankAccount1 = new BankAccount("a@b.com","pass",200);
+        bankAccount1.transfer(30.3, bankAccount);
+        assertEquals("Withdraw 50.0\nDeposit 100\nTransfer in 30.3", bankAccount.getHistory());
+
+        bankAccount.transfer(67.3, bankAccount1);
+        assertEquals("Withdraw 50.0\nDeposit 100\nTransfer in 30.3\nTransfer out 67.3", bankAccount.getHistory());
+    }
+
 }
