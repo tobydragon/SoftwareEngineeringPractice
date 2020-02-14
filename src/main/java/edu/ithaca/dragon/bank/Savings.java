@@ -21,11 +21,19 @@ public class Savings implements Account{
         if (startingBalance < 0){
             throw new IllegalArgumentException("Balance cannot be negative");
         }
-        if (interestRateIn <= 0){
+        String checkDouble = Double.toString(startingBalance);
+        int indexDecimal = checkDouble.indexOf('.');
+        if (!(checkDouble.length() - indexDecimal <= 3)){
+            throw new IllegalArgumentException("Balance cannot have more than 2 decimal places");
+        }
+        if (!isAmountValid(interestRateIn)){
             throw new IllegalArgumentException("Interest rate cannot be less than or equal to 0");
         }
-        if (maxWithdrawalIn <= 0){
+        if (!isAmountValid(maxWithdrawalIn)){
             throw new IllegalArgumentException("Max withdrawal cannot be less than or equal to 0");
+        }
+        if (!isNameValid(nameIn)){
+            throw new IllegalArgumentException("Invalid name");
         }
         acctId = acctIdIn;
         name = nameIn;
@@ -49,6 +57,10 @@ public class Savings implements Account{
         return frozen;
     }
 
+    public String getAcctPassword(){
+        return password;
+    }
+
     public double checkBalance(String acctId) throws AcctFrozenException {
         if (frozen){
             throw new AcctFrozenException("Account is frozen");
@@ -69,7 +81,7 @@ public class Savings implements Account{
         if (amount > balance){
             throw new InsufficientFundsException("Insufficient funds for withdrawal");
         }
-        if (amount <= 0){
+        if (!isAmountValid(amount)){
             throw new IllegalArgumentException("Cannot withdraw 0 or less");
         }
         if (amount > maxWithdrawal){
@@ -86,7 +98,7 @@ public class Savings implements Account{
         if (acctId != this.acctId){
             throw new IllegalArgumentException("This is not the correct account");
         }
-        if (amount <= 0){
+        if (!isAmountValid(amount)){
             throw new IllegalArgumentException("Cannot deposit 0 or less");
         }        
         balance += amount;
@@ -117,6 +129,38 @@ public class Savings implements Account{
             throw new IllegalArgumentException("This is not the correct account");
         }
         balance += (balance * (interestRate/100));
+    }
+
+    public static boolean isNameValid(String name){
+        if (name.length() < 3) return false;
+
+        int spaceCount = 0;
+        //check there's at least one space
+        for (int i = 0; i < name.length()-1; i++){
+            if(name.charAt(i) == ' '){
+                spaceCount++;
+            }
+        }
+        if(spaceCount < 1) return false;
+
+        for (int i = 0; i < name.length(); i++){
+            if(Character.isLetter(name.charAt(i)) || name.charAt(i) == ' '){
+                continue;
+            }
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean isAmountValid(double amount){
+        if (amount <= 0){
+            return false;
+        }
+
+        // check number of decimal places
+        String checkDouble = Double.toString(amount);
+        int indexDecimal = checkDouble.indexOf('.');
+        return checkDouble.length() - indexDecimal <= 3;
     }
 
     public void setFrozen(boolean value){

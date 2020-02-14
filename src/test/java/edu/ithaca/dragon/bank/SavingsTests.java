@@ -9,18 +9,20 @@ public class SavingsTests {
 
     @Test
     void constructorTests(){
-        assertThrows(IllegalArgumentException.class, ()-> new Savings("123456780", "Mike", "hjdsj328", 500, 4, 125));
-        assertThrows(IllegalArgumentException.class, ()-> new Savings("1234567890", "Mike", "hjdsj328", -500, 4, 125));
-        assertThrows(IllegalArgumentException.class, ()-> new Savings("1234567890", "Mike", "hjdsj328", 500, -4, 125));
-        assertThrows(IllegalArgumentException.class, ()-> new Savings("1234567890", "Mike", "hjdsj328", 500, 4, -125));
-        Savings newSavings = new Savings("1234567890", "Mike", "dheg", 100, 2, 80);
+        assertThrows(IllegalArgumentException.class, ()-> new Savings("123456780", "Mike Santo", "hjdsj328", 500, 4, 125));
+        assertThrows(IllegalArgumentException.class, ()-> new Savings("1234567890", "Mike Santo", "hjdsj328", -500, 4, 125));
+        assertThrows(IllegalArgumentException.class, ()-> new Savings("1234567890", "Mike Santo", "hjdsj328", 500, -4, 125));
+        assertThrows(IllegalArgumentException.class, ()-> new Savings("1234567890", "Mike Santo", "hjdsj328", 500, 0, 125));
+        assertThrows(IllegalArgumentException.class, ()-> new Savings("1234567890", "Mike Santo", "hjdsj328", 500, 4, -125));
+        assertThrows(IllegalArgumentException.class, ()-> new Savings("1234567890", "Mike Santo", "hjdsj328", 500, 4, 0));
+        Savings newSavings = new Savings("1234567890", "Mike Santo", "dheg", 100, 2, 80);
         assertEquals("1234567890", newSavings.getAcctId());
-        assertEquals("Mike", newSavings.getName());
+        assertEquals("Mike Santo", newSavings.getName());
     }
 
     @Test
     void checkBalanceTests() throws AcctFrozenException {
-        Savings newSavings = new Savings("1234567890", "Mike", "jdsakjh23u329", 100, 3, 50);
+        Savings newSavings = new Savings("1234567890", "Mike Santo", "jdsakjh23u329", 100, 3, 50);
         assertEquals(100, newSavings.checkBalance("1234567890"), 0.009);
         newSavings.deposit("1234567890", 20);
         assertEquals(120, newSavings.checkBalance("1234567890"),0.009);
@@ -33,7 +35,7 @@ public class SavingsTests {
 
     @Test
     void withdrawTests() throws InsufficientFundsException, AcctFrozenException {
-        Savings newSavings = new Savings("1234567890", "Mike", "dg38g8qw", 100, 5, 30);
+        Savings newSavings = new Savings("1234567890", "Mike Santo", "dg38g8qw", 100, 5, 30);
         newSavings.withdraw("1234567890", 20);
         assertEquals(80, newSavings.checkBalance("1234567890"), 0.009);
         newSavings.withdraw("1234567890", 30);
@@ -56,7 +58,7 @@ public class SavingsTests {
 
     @Test
     void depositTests() throws AcctFrozenException {
-        Savings newSavings = new Savings("1234567890", "Mike", "jdsakjh23u329", 100, 3, 50);
+        Savings newSavings = new Savings("1234567890", "Mike Santo", "jdsakjh23u329", 100, 3, 50);
         assertEquals(100, newSavings.checkBalance("1234567890"), 0.009);
         newSavings.deposit("1234567890", 20);
         assertEquals(120, newSavings.checkBalance("1234567890"),0.009);
@@ -73,7 +75,7 @@ public class SavingsTests {
     @Test
     void transactionHistoryTests() throws InsufficientFundsException, AcctFrozenException {
         //this also acts as an integration test
-        Savings newSavings = new Savings("1234567890", "Mike", "bfuid3b", 300, 2, 120);
+        Savings newSavings = new Savings("1234567890", "Mike Santo", "bfuid3b", 300, 2, 120);
         newSavings.deposit("1234567890", 20);
         newSavings.deposit("1234567890", 40);
         newSavings.withdraw("1234567890", 90);
@@ -87,7 +89,7 @@ public class SavingsTests {
 
     @Test
     void compoundInterestTests() throws AcctFrozenException {
-        Savings newSavings = new Savings("1234567890", "Mike", "fduiewh9uf", 200, 3, 40);
+        Savings newSavings = new Savings("1234567890", "Mike Santo", "fduiewh9uf", 200, 3, 40);
         newSavings.compoundInterest("1234567890");
         assertEquals(206, newSavings.checkBalance("1234567890"), 0.009);
         newSavings.compoundInterest("1234567890");
@@ -101,7 +103,7 @@ public class SavingsTests {
 
     @Test
     void setFrozenTests(){
-        Savings newSavings = new Savings("1234567890", "Mike", "fduiewh9uf", 200, 3, 40);
+        Savings newSavings = new Savings("1234567890", "Mike Santo", "fduiewh9uf", 200, 3, 40);
         newSavings.setFrozen(true);
         assertEquals(true, newSavings.getFrozenStatus());
         newSavings.setFrozen(false);

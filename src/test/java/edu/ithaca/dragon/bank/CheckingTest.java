@@ -140,26 +140,26 @@ public class CheckingTest {
         //check withdraw
         checkingAcct = new Checking("1234567890", "Bob James", "frog", 200);
         checkingAcct.withdraw("1234567890", 50);
-        assertEquals("withdraw of 50.0", checkingAcct.transactionHistory("1234567890"));
+        assertEquals("withdrawal of 50.0", checkingAcct.transactionHistory("1234567890"));
 
         //check deposit then withdraw
         checkingAcct = new Checking("1234567890", "Bob James", "frog", 200);
         checkingAcct.deposit("1234567890", 50);
         checkingAcct.withdraw("1234567890", 30.25);
-        assertEquals("deposit of 50.0; withdraw of 30.25", checkingAcct.transactionHistory("1234567890"));
+        assertEquals("deposit of 50.0; withdrawal of 30.25", checkingAcct.transactionHistory("1234567890"));
 
         //check withdraw then deposit
         checkingAcct = new Checking("1234567890", "Bob James", "frog", 200);
         checkingAcct.withdraw("1234567890", 145);
         checkingAcct.deposit("1234567890", 90);
-        assertEquals("withdraw of 145.0; deposit of 90.0", checkingAcct.transactionHistory("1234567890"));
+        assertEquals("withdrawal of 145.0; deposit of 90.0", checkingAcct.transactionHistory("1234567890"));
 
         //check three withdraws in a row
         checkingAcct = new Checking("1234567890", "Bob James", "frog", 200);
         checkingAcct.withdraw("1234567890", 50);
         checkingAcct.withdraw("1234567890", 14);
         checkingAcct.withdraw("1234567890", 54.5);
-        assertEquals("withdraw of 50.0; withdraw of 14.0; withdraw of 54.5", checkingAcct.transactionHistory("1234567890"));
+        assertEquals("withdrawal of 50.0; withdrawal of 14.0; withdrawal of 54.5", checkingAcct.transactionHistory("1234567890"));
 
         //check five deposits in a row
         checkingAcct = new Checking("1234567890", "Bob James", "frog", 200);
