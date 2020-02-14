@@ -137,14 +137,7 @@ public class BankAccount {
         if (amount < 0 || amount*1000%10 !=0){
             return false;
         }
-
-        String amountString = "" + amount;
-        int amountStringDecimals = amountString.lastIndexOf(".");
-        String amountStringDecimalString = amountString.substring(amountStringDecimals + 1);
-        if (amountStringDecimalString.length() > 2){
-            return false;
-        }
-      
+        
         return true;
     }
 
