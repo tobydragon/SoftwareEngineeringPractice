@@ -57,6 +57,7 @@ public class BankAccount {
         return email;
     }
 
+
     /**
      * @post reduces the balance by amount if amount is non-negative and smaller than balance
      * @param amount the amount to withdraw
@@ -135,14 +136,47 @@ public class BankAccount {
     public static boolean isAmountValid(double amount){
         if (amount < 0){
             return false;
+          
         }
-        String amountString = "" + amount;
-        if (amountString.indexOf(".") != -1){
-            String decimalPlaces = amountString.substring(amountString.indexOf(".") + 1);
-            if (decimalPlaces.length() > 2){
+
+        if (email.charAt(0) == '-' || email.charAt(atsym - 1) == '-')
+            return false;
+
+        if (email.charAt(0) == '.' || email.charAt(atsym - 1) == '.')
+            return false;
+
+        String domain = email.substring(atsym + 1);
+        int period = domain.indexOf('.');
+
+        if (period == -1)
+            return false;
+
+        int pdcount = 0;
+        for (int i = 0; i < domain.length(); i++) {
+            if (domain.charAt(i) == '@')
                 return false;
+            else if (domain.charAt(i) == '.')
+                pdcount++;
+        }
+
+        if (pdcount != 1)
+            return false;
+        if (domain.substring(period).length() < 2)
+            return false;
+        for (int i = 0; i < email.length(); i++) {
+            if (email.charAt(i) == '#')
+                return false;
+            else if (email.charAt(i) == ' ')
+                return false;
+            else if (email.charAt(i) == '.') {
+                if (email.charAt(i + 1) == '.')
+                    return false;
+            } else if (email.charAt(i) == '-') {
+                if (email.charAt(i + 1) == '-')
+                    return false;
             }
         }
+
         return true;
     }
 
@@ -153,4 +187,5 @@ public class BankAccount {
     public String getType() {
         return type;
     }
+
 }
