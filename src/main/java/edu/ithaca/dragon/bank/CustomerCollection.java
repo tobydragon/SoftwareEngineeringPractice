@@ -36,7 +36,7 @@ public class CustomerCollection {
         return false;
     }
 
-    public void createAccount(String actID, double startingBalance) throws Exception{
+    public void createAccount(String actID, double startingBalance) throws IllegalArgumentException{
         if(customers.get(actID)== null)throw new IllegalArgumentException("Account doesn't exist");
         customers.get(actID).createAccount(startingBalance);
     }

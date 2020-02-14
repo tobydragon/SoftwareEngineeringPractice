@@ -33,13 +33,13 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
 
     //----------------- AdvancedAPI methods -------------------------//
 
-    public void createAccount(String acctId, String password, double startingBalance) {
+    public void createCustomerWithAccount(String actID, String password, double startingBalance) throws IllegalArgumentException{}
 
-    }
+    public void createCustomer(String acctId, String password) throws IllegalArgumentException{}
 
-    public void closeAccount(String acctId) {
+    public void addAccount(String actID, double startingBalance) throws IllegalArgumentException{}
 
-    }
+    public void closeCustomer(String acctId){}
 
 
     //------------------ AdminAPI methods -------------------------//
