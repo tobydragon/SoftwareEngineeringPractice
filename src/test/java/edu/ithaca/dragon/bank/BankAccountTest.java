@@ -234,14 +234,14 @@ class BankAccountTest {
         assertEquals("Withdraw 50.0", bankAccount.getHistory());
 
         bankAccount.deposit(100);
-        assertEquals("Withdraw 50.0\nDeposit 100", bankAccount.getHistory());
+        assertEquals("Withdraw 50.0\nDeposit 100.0", bankAccount.getHistory());
 
         BankAccount bankAccount1 = new BankAccount("a@b.com","pass",200);
         bankAccount1.transfer(30.3, bankAccount);
-        assertEquals("Withdraw 50.0\nDeposit 100\nTransfer in 30.3", bankAccount.getHistory());
+        assertEquals("Withdraw 50.0\nDeposit 100.0\nTransfer in 30.3", bankAccount.getHistory());
 
         bankAccount.transfer(67.3, bankAccount1);
-        assertEquals("Withdraw 50.0\nDeposit 100\nTransfer in 30.3\nTransfer out 67.3", bankAccount.getHistory());
+        assertEquals("Withdraw 50.0\nDeposit 100.0\nTransfer in 30.3\nTransfer out 67.3", bankAccount.getHistory());
     }
 
 }

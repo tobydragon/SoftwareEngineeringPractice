@@ -12,7 +12,7 @@ public interface AdminAPI {
     /**
      * @returns a collection of accounts deemed to be potentially suspicious TODO: Define what entails "suspicious"
      */
-    public Collection<String> findAcctIdsWithSuspiciousActivity();  //Not implemented
+    public Collection<String> findAcctIdsWithSuspiciousActivity();  //Implemented
 
     /**
      * @param email is a string describing an email address unique to the account to be frozen

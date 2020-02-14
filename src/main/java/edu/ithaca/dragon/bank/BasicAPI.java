@@ -50,6 +50,6 @@ public interface BasicAPI {
      * @returns a string representing the entire account's history
      * @throws AccountNotFoundException if the given email is not associated with an account
      */
-    String transactionHistory(String email) throws AccountNotFoundException;  //Not implemented
+    String transactionHistory(String email) throws AccountNotFoundException;  //Implemented
 
 }
