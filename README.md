@@ -16,9 +16,9 @@ CheckBalance: https://drive.google.com/file/d/1qvuUbZFFMz1hRPeWzUJRTMKfd1Rn9HRv/
 
 Code Review Notes
 -
--
--
--
--
--
+- Include multiplicities on UML (Friday)
+- Build up the functions (Friday)
+- User Diagram
+- HashMap Lookup instead of arrays
+- Transaction Histiories
 -
