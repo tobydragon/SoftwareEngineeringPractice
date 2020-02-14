@@ -160,6 +160,15 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
         }
         return false;
     }
+    public void confirmActivity (String customerAct, Collection<String> suspiciousAccts) {
+            if (customerAct.equals("y")) {
+                System.out.println("Then you have nothing to worry about");
+                suspiciousAccts.clear();
+            }
+            else {
+                System.out.println("Your account will be taken care of then. These are the suspicious purchases and charges");
+            }
+        }
 
     public Collection<String> findAcctIdsWithSuspiciousActivity() {
         Collection<String> suspiciousAccts = new HashSet<>();
@@ -205,20 +214,12 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
             if (isSuspicious(ws) || isSuspicious(ds) || transferTotal > accounts.get(acctId).getBalance()) {
                 Scanner actMessage = new Scanner(System.in);
                 System.out.println("Have you done any of these purchases(y or n): ");
-
-                String actAnswer = actMessage.nextLine();
-                if (actAnswer.equals("y")) {
-                    System.out.println("Then you have nothing to worry about");
-                    suspiciousAccts.clear();
-                    return suspiciousAccts;
-                } else {
-                    System.out.println("We will freeze you account due to the activity");
-                    return suspiciousAccts;
+                String actResponse = actMessage.nextLine();
+                confirmActivity(actResponse, suspiciousAccts);
                 }
             }
-        }
         return suspiciousAccts;
-    }
+        }
 
 
     public boolean isFrozen(String acctId) throws AccountDoesNotExistException{
