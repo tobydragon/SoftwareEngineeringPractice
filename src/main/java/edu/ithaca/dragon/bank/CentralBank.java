@@ -161,6 +161,9 @@ public class CentralBank implements AdvancedAPI, AdminAPI, BasicAPI {
         }
     }
 
+    public static void main(String [] args){
+
+    }
 
 
 }

@@ -20,16 +20,6 @@ import static org.junit.jupiter.api.Assertions.*;
          assertEquals(3,c1.accountCount());
 
 
-         //close account
-         c1.closeAccount("b123");
-         assertEquals(2,c1.accountCount());
-
-         //create multiple accounts
-         //CE: Multiple account test can also go in the add/delete account tests
-         c1.closeAccount("b00");
-         c1.closeAccount("b13");
-         assertEquals(0,c1.accountCount());
-
 
      }
 
@@ -210,6 +200,42 @@ import static org.junit.jupiter.api.Assertions.*;
          //ID not found
          assertThrows(IllegalArgumentException.class,()-> c1.deposit("b12",300));
          assertThrows(IllegalArgumentException.class,()-> c1.deposit("123",300));
+     }
+
+     @Test
+     void closeAccountTest() throws IllegalAccessException {
+         CentralBank c1 = new CentralBank();
+         c1.createAccount("b123", 200, "jim@gmail.com","centralBankConstuctorTest1");
+         c1.createAccount("b00", 200, "pam@gmail.com","centralBankConstuctorTest2");
+         c1.createAccount("b13", 200, "kelly@gmail.com","centralBankConstuctorTest3");
+         assertEquals(3,c1.accountCount());
+
+
+         //Account Balance !0
+         assertThrows(IllegalArgumentException.class, ()-> c1.closeAccount("b123"));
+         assertEquals(3,c1.accountCount());
+
+         //No Account ID
+         assertThrows(IllegalArgumentException.class, ()-> c1.closeAccount("falseID"));
+         assertEquals(3,c1.accountCount());
+
+         //Valid close -- Set balance to zero and close
+         BankAccount b1 = c1.findAccountWithId("b123");
+         b1.withdraw(200);
+
+         BankAccount b2 = c1.findAccountWithId("b00");
+         b2.withdraw(200);
+
+         BankAccount b3 = c1.findAccountWithId("b13");
+         b3.withdraw(200);
+
+
+         c1.closeAccount("b00");
+         c1.closeAccount("b13");
+         c1.closeAccount("b123");
+         assertEquals(0,c1.accountCount());
+
+
      }
 
 
