@@ -1,5 +1,6 @@
 package edu.ithaca.dragon.bank;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,8 +35,8 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
         getAcctByID(emailToWithdrawFrom).transfer(amount, getAcctByID(emailToDepositTo));
     }
 
-    public String transactionHistory(String acctId) {
-        return "";
+    public String transactionHistory(String acctId) throws AccountNotFoundException {
+        return getAcctByID(acctId).getHistory();
     }
 
 
@@ -62,7 +63,12 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
     }
 
     public Collection<String> findAcctIdsWithSuspiciousActivity() {
-        return null;
+        Collection<String> suspiciousAcctIds = new ArrayList<String>();
+        acctMap.forEach((id, acct) -> {
+            if(acct.checkSuspicious())
+                suspiciousAcctIds.add(id);
+        });
+        return suspiciousAcctIds;
     }
 
     public void freezeAccount(String acctId) {

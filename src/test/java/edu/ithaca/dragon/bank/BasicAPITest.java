@@ -78,7 +78,7 @@ class BasicAPITest {
 
         atm.deposit("a@c.com", 50);
 
-        assertEquals("Deposit 50", atm.transactionHistory("a@c.com"));
+        assertEquals("Deposit 50.0", atm.transactionHistory("a@c.com"));
     }
 
 }

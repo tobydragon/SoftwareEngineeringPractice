@@ -10,7 +10,7 @@ public interface AdminAPI {
     public double calcTotalAssets();  //Not implemented
 
     /**
-     * @returns a collection of accounts deemed to be potentially suspicious TODO: Define what entails "suspicious"
+     * @returns a collection of accounts deemed to be suspicious(withdrew or transferred out more than half their value at one time)
      */
     public Collection<String> findAcctIdsWithSuspiciousActivity();  //Implemented
 
