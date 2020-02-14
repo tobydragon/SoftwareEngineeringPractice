@@ -16,7 +16,7 @@ public interface BasicAPI {
      * @returns the current balance of the account as a double
      * @throws AccountNotFoundException if the given email is not associated with an account
      */
-    double checkBalance(String email) throws AccountNotFoundException;  //Implemented
+    double checkBalance(String email) throws AccountNotFoundException;
 
     /**
      * @param email is a string describing an email address unique to the account to be withdrawn from

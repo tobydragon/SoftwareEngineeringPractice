@@ -11,10 +11,10 @@ Questions for Toby:
  - 
 
 TODO:
- - Sequence Diagrams for all use cases that are implemented
+ - Sequence Diagrams for confirmCredentials, freeze/unfreeze, calcTotalAssets
 
 Orion's list:
- - Done!
+ - Sequence Diagram for confirmCredentials
 
 Gabe's list:
  - Freeze/Unfreeze
