@@ -1,19 +1,28 @@
 package edu.ithaca.dragon.bank;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class Transaction {
 
-    private double balance;
+    private double oldBalance;
     private double transactionAmount;
+    private double newBalance;
     private boolean flagSuspicious;
+    //private LocalDateTime transactionTime = LocalDateTime.now();
+    private String transactionTime;
 
-    public Transaction(double balanceIn, double transactionAmountIn, boolean flagSuspiciousIn) {
-        this.balance = balanceIn;
+    public Transaction(double oldBalanceIn, double transactionAmountIn, double newBalanceIn, LocalDateTime transactionTimeIn, boolean flagSuspiciousIn) {
+        this.oldBalance = oldBalanceIn;
         this.transactionAmount = transactionAmountIn;
+        this.newBalance = newBalanceIn;
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm:ss");
+        this.transactionTime = transactionTimeIn.format(format);
         this.flagSuspicious = flagSuspiciousIn;
     }
 
     public double getBalance() {
-        return this.balance;
+        return this.oldBalance;
     }
 
     public double getTransactionAmount() {
@@ -25,6 +34,7 @@ public class Transaction {
     }
 
     public String toString() {
-        return balance + " " + transactionAmount + " " + flagSuspicious;
+        return "Balance before: " + oldBalance + " Transaction amount: " + transactionAmount +
+                " Balance after: " + newBalance + " Time: " + transactionTime + " Suspicious: " + flagSuspicious + "\n";
     }
 }
