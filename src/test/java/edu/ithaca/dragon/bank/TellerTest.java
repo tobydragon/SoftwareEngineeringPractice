@@ -19,7 +19,9 @@ public class TellerTest {
         assertTrue(myBank.accounts.contains(myBank.getBankAccount("Charles")));
         acct.createAccount("Fredric", 100, false);
         assertTrue(myBank.accounts.contains(myBank.getBankAccount("Fredric")));
-
+        /*
+        assertTrue(myBank.users.contains("Charles"));
+        */
     }
 
     @Test
