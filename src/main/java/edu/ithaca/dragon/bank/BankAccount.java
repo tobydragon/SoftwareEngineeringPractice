@@ -139,42 +139,11 @@ public class BankAccount {
           
         }
 
-        if (email.charAt(0) == '-' || email.charAt(atsym - 1) == '-')
+        String amountString = "" + amount;
+        int amountStringDecimals = amountString.lastIndexOf(".");
+        String amountStringDecimalString = amountString.substring(amountStringDecimals + 1);
+        if (amountStringDecimalString.length() > 2){
             return false;
-
-        if (email.charAt(0) == '.' || email.charAt(atsym - 1) == '.')
-            return false;
-
-        String domain = email.substring(atsym + 1);
-        int period = domain.indexOf('.');
-
-        if (period == -1)
-            return false;
-
-        int pdcount = 0;
-        for (int i = 0; i < domain.length(); i++) {
-            if (domain.charAt(i) == '@')
-                return false;
-            else if (domain.charAt(i) == '.')
-                pdcount++;
-        }
-
-        if (pdcount != 1)
-            return false;
-        if (domain.substring(period).length() < 2)
-            return false;
-        for (int i = 0; i < email.length(); i++) {
-            if (email.charAt(i) == '#')
-                return false;
-            else if (email.charAt(i) == ' ')
-                return false;
-            else if (email.charAt(i) == '.') {
-                if (email.charAt(i + 1) == '.')
-                    return false;
-            } else if (email.charAt(i) == '-') {
-                if (email.charAt(i + 1) == '-')
-                    return false;
-            }
         }
 
         return true;
