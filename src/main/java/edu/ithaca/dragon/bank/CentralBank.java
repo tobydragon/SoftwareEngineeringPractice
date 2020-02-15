@@ -59,10 +59,12 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
      * Takes money out of the user account
      * @param acctId
      * @param amount
-     * @throws InsufficientFundsException if amount is more than balance
+     * @throws InsufficientFundsException if amount is more than balance or account does not exist
      */
     public void withdraw(String acctId, double amount) throws InsufficientFundsException {
-        if(BankAccount.isAmountValid(amount)){
+        if (!bankAccounts.containsKey(acctId)) {
+            throw new IllegalArgumentException("Account not found");
+        } else if(BankAccount.isAmountValid(amount)){
             double balance = bankAccounts.get(acctId).getBalance();
             if (amount <= balance){
                 balance -= amount;
@@ -82,7 +84,9 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
     }
 
     public void deposit(String acctId, double amount) {
-        if (BankAccount.isAmountValid(amount)){
+        if (!bankAccounts.containsKey(acctId)) {
+            throw new IllegalArgumentException("Account not found");
+        } else if (BankAccount.isAmountValid(amount)){
             double balance = bankAccounts.get(acctId).getBalance();
             balance += amount;
 

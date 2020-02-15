@@ -192,6 +192,9 @@ public class CentralBankTest {
         assertThrows(IllegalArgumentException.class, () -> testBank.withdraw("4321", -100));
         assertThrows(IllegalArgumentException.class, () -> testBank.withdraw("4321", -1000));
         assertThrows(IllegalArgumentException.class, () -> testBank.withdraw("4321", 200.101)); //three decimal places
+
+        //throws exception if account does not exist
+        assertThrows(IllegalArgumentException.class, () -> testBank.withdraw("321", 80.6));
     }
 
     @Test
@@ -213,6 +216,9 @@ public class CentralBankTest {
         assertThrows(IllegalArgumentException.class, () -> testBank.deposit("4321", -100));
         assertThrows(IllegalArgumentException.class, () -> testBank.deposit("4321", -1000));
         assertThrows(IllegalArgumentException.class, () -> testBank.deposit("4321", -10.101));
+
+        //throws exception if account does not exist
+        assertThrows(IllegalArgumentException.class, () -> testBank.deposit("999", 500));
     }
 
     @Test
@@ -238,6 +244,12 @@ public class CentralBankTest {
         assertThrows(IllegalArgumentException.class, () -> testBank.transfer("1234", "4321", -1000));
         assertThrows(IllegalArgumentException.class, () -> testBank.transfer("1234", "4321", -10));
         assertThrows(IllegalArgumentException.class, () -> testBank.transfer("1234", "4321", -1.502));
+
+        //throws exception if sending account does not exist
+        assertThrows(IllegalArgumentException.class, () -> testBank.transfer("9081", "1234", 89.18));
+
+        //throws exception if receiving account does not exist
+        assertThrows(IllegalArgumentException.class, () -> testBank.transfer("4321", "1190", 1.70));
 
     }
 
