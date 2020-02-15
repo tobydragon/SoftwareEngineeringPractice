@@ -1,0 +1,27 @@
+Test Script
+
+1) Enter ID and password for account that is not frozen
+    a) Check that it then displays balance
+    b) When it asks for action, type in withdraw
+        1) Input invalid amount
+            a) Check that it says invalid amount and asks for amount again
+        2) Enter valid amount
+            a) Check that it shows new balance and asks for more actions
+    c) When it asks for action, type in deposit
+         1) Input invalid amount
+            a) Check that it says invalid amount and asks for amount again
+         2) Enter valid amount
+            a) Check that it shows new balance and asks for more actions
+    d) When it asks for action, type in transfer
+         1) Input invalid amount
+            a) Check that it says invalid amount and asks for transfer input again
+         2) Invalid account to send to
+            b) Check that it says invalid account and asks for transfer input again
+         2) Enter valid amount and account ID
+            a) Check that it shows new balance and asks for more actions
+    e) When it asks for action, type in log out
+2) Enter invalid ID or password for account
+    a) Check that it says that you entered invalid credentials
+    b) Check that it asks you to log in again
+3) Enter ID and password for a frozen account
+    a) Check that it says to contact customer service at 1-888-555-1212.

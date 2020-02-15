@@ -263,4 +263,11 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
         }
     }
 
+    public HashMap<String, BankAccount> getBankAccounts() {
+        return bankAccounts;
+    }
+
+    public HashMap<String, BankAccount> getFrozenAccounts() {
+        return frozenAccounts;
+    }
 }
