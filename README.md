@@ -9,6 +9,8 @@ withdraw|
 isamountValid|
 constructor & withdraw fix|
 
+## State Diagram
+https://drive.google.com/file/d/1m5j35LRq72yF9nyUcwhDXzw6YOA8erVH/view?usp=sharing
 
 ## Use case diagram
 https://drive.google.com/file/d/1TXZWUqjglYdvIWnGJZOIDj6Fb4FZD_c_/view?usp=sharing
