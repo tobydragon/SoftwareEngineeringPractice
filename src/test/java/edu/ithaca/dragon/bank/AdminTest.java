@@ -160,4 +160,18 @@ public class AdminTest {
         assertThrows(IllegalArgumentException.class, () -> admin.getAccount("1133557799"));
     }
 
+    public static Admin createTestAdmin(){
+        Admin admin = new Admin();
+
+        admin.createCheckingForTeller("1111111111", "Bob James", "dog123", 300);
+        admin.createCheckingForTeller("2222222222", "John Smith", "frog456", 700);
+        admin.createCheckingForTeller("3333333333", "Jane Doe", "iluvmoney111", 400);
+
+        admin.createSavingsForTeller("4444444444", "Tommy Lee", "narwhals33", 375, 5, 600);
+        admin.createSavingsForTeller("5555555555", "Susan Crawford", "cheesybeans456", 650, 3, 800);
+        admin.createSavingsForTeller("6666666666", "Arthur Stonemason", "beagle777", 800, 7, 1000);
+
+        return admin;
+    }
+
 }
