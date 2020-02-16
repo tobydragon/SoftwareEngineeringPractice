@@ -1,5 +1,7 @@
 # SoftwareEngineeringPractice
 
+Link to state diagram: https://drive.google.com/file/d/1BPTHJmOLGr9hiQ0BJnvLTYXEDLRx6saK/view?usp=sharing
+
 link to Ioan's sequence diagram: https://drive.google.com/file/d/1fHwd0fRkoscI03Zu2G8p7B5D6bBiBh87/view?usp=sharing
 link to Aidan's sequence diagram: https://drive.google.com/file/d/1L447NcwgO0GbktDt5HXLOZCDhwc7hFZX/view?usp=sharing
 
