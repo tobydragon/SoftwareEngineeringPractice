@@ -6,6 +6,18 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class CentralBankTest {
 
+
+    public static BasicAPI createTestBank() throws AccountAlreadyExistsException, AccountDoesNotExistException {
+        CentralBank test = new CentralBank();
+        test.createAccount("first@bank.com", "password1", 100, false);
+        test.createAccount("second@bank.com", "password2", 200, true);
+        test.createAccount("third@bank.com", "password3", 300, false);
+        test.freezeAccount("third@bank.com");
+
+        return test;
+    }
+
+
     @Test
     void confirmCredentialsTest() throws AccountDoesNotExistException, AccountAlreadyExistsException {
         CentralBank bank = new CentralBank();
