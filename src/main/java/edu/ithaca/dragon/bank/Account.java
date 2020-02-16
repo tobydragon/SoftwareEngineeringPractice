@@ -18,10 +18,14 @@ public abstract class Account {
         else if (id.equals("")){
             throw new IllegalArgumentException("ID cannot be an empty string");
         }
+        else if (password.equals("")){
+            throw new IllegalArgumentException("Password must be at least 1 character");
+        }
         else {
             this.balance = startingBalance;
             this.isFrozen = false;
             this.id = id;
+            this.password = password;
         }
     }
 

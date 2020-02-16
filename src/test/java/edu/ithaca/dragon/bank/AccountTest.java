@@ -256,7 +256,7 @@ public class AccountTest {
         bankAccount = new CheckingAccount(50, "abc", "abcDEF123!");
         assertEquals("abcDEF123!", bankAccount.getPassword());
         bankAccount = new CheckingAccount(50, "abc", "1"); //1 character password ok
-        assertEquals("abcDEF123!", bankAccount.getPassword());
+        assertEquals("1", bankAccount.getPassword());
         assertThrows(IllegalArgumentException.class, () -> new CheckingAccount(50, "abc", ""));
 
     }
