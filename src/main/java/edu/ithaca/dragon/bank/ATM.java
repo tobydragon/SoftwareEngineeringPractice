@@ -1,5 +1,8 @@
 package edu.ithaca.dragon.bank;
 
+import java.util.HashMap;
+import java.util.Iterator;
+
 public class ATM implements BasicAPI {
 
     protected CentralBank centralBank;
@@ -10,7 +13,21 @@ public class ATM implements BasicAPI {
 
     @Override
     public boolean confirmCredentials(String acctId, String password) {
-        return false;
+        HashMap<String, Account> accounts = (HashMap<String, Account>) centralBank.getAccounts();
+        if (!accounts.containsKey(acctId)){
+            return false;
+        }
+        else{
+            Account account = accounts.get(acctId);
+            if (account.getPassword().equals(password)){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+
+
     }
 
     @Override
