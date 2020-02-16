@@ -7,8 +7,13 @@ import java.util.Iterator;
 public class Admin implements AdminAPI {
     private HashMap<String, Account> accounts;
 
+    public ATM atm;
+    public Teller teller;
+
     public Admin(){
         this.accounts = new HashMap<>();
+        this.atm = new ATM(this);
+        this.teller = new Teller(this);
     }
 
     public Account getAccount (String acctId) throws IllegalArgumentException {

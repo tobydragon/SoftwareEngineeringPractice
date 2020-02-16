@@ -2,6 +2,12 @@ package edu.ithaca.dragon.bank;
 
 public class Teller extends ATM implements AdvancedAPI {
 
+    private Admin admin;
+
+    public Teller(Admin adminIn){
+        super(adminIn);
+        admin = adminIn;
+    }
 
     /**
      *

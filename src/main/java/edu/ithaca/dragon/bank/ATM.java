@@ -2,7 +2,11 @@ package edu.ithaca.dragon.bank;
 
 public class ATM implements BasicAPI{
 
-    public Admin admin = new Admin();
+    public Admin admin;
+
+    public ATM(Admin adminIn){
+        admin = adminIn;
+    }
 
     public boolean confirmCredentials(String acctId, String password) throws IllegalArgumentException, AcctFrozenException{
         Account acct = admin.getAccount(acctId);
