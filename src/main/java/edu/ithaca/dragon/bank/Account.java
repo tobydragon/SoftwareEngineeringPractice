@@ -8,9 +8,10 @@ public abstract class Account {
     protected boolean isFrozen;
     protected Collection<User> users;
     protected String id;
+    protected String password;
 
 
-    public Account(double startingBalance, String id) {
+    public Account(double startingBalance, String id, String password) {
         if (!isAmountValid(startingBalance)) {
             throw new IllegalArgumentException("Starting balance: " + startingBalance + " is invalid, cannot create account");
         }
@@ -102,6 +103,14 @@ public abstract class Account {
 
     public String getID(){
         return id;
+    }
+
+    public void setPassword(String password){
+        this.password = password;
+    }
+
+    public String getPassword(){
+        return this.password;
     }
 
     /**

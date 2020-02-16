@@ -13,7 +13,7 @@ public class UserTest {
 
     @Test
     void addAccountTest() {
-        Account a = new CheckingAccount(100, "a@b.com");
+        Account a = new CheckingAccount(100, "a@b.com", "password");
         User u = new User();
 
         u.addAccount(a);
@@ -22,7 +22,7 @@ public class UserTest {
 
     @Test
     void removeAccountTest() {
-        Account a = new CheckingAccount(100, "a@b.com");
+        Account a = new CheckingAccount(100, "a@b.com", "password");
         User u = new User();
 
         assertThrows(IllegalArgumentException.class, () -> u.getAccount(""));
@@ -34,7 +34,7 @@ public class UserTest {
 
     @Test
     void getAccountTest() {
-        Account a = new CheckingAccount(100, "a@b.com");
+        Account a = new CheckingAccount(100, "a@b.com", "password");
         User u = new User();
 
         u.addAccount(a);
@@ -49,8 +49,8 @@ public class UserTest {
     void IntegrationTest() throws InsufficientFundsException, AccountFrozenException{
         String idA = "a@c.com";
         String idB = "b@c.com";
-        Account a = new CheckingAccount(100, idA);
-        Account b = new CheckingAccount(200, idB);
+        Account a = new CheckingAccount(100, idA, "password");
+        Account b = new CheckingAccount(200, idB, "password");
         User u = new User();
 
         u.addAccount(a);

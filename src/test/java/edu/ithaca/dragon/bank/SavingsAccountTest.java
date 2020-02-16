@@ -9,7 +9,7 @@ public class SavingsAccountTest {
 
     @Test
     void withdrawTest() throws InsufficientFundsException, AccountFrozenException{
-        Account a = new SavingsAccount(30, 0.5, 20, "a@b.com");
+        Account a = new SavingsAccount(30, 0.5, 20, "a@b.com", "password");
 
         a.withdraw(10);
         assertEquals(20, a.getBalance());
@@ -22,7 +22,7 @@ public class SavingsAccountTest {
 
     @Test
     void calcInterestTest() {
-        SavingsAccount a = new SavingsAccount(100, 0.5, 20, "a@b.com");
+        SavingsAccount a = new SavingsAccount(100, 0.5, 20, "a@b.com", "password");
 
         a.calculateInterest();
         assertEquals(150, a.getBalance());

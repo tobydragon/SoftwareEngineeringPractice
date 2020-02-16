@@ -17,7 +17,7 @@ public class CentralBankTest {
     @Test
     void withdrawTest() throws InsufficientFundsException, AccountFrozenException{
         CentralBank bank = new CentralBank();
-        bank.getAccounts().put("abc", new CheckingAccount(100, "abc"));
+        bank.getAccounts().put("abc", new CheckingAccount(100, "abc", "password"));
 
         bank.withdraw("abc", 50);
         assertEquals(50, bank.checkBalance("abc"));
@@ -31,7 +31,7 @@ public class CentralBankTest {
     @Test
     void depositTest() throws AccountFrozenException{
         CentralBank bank = new CentralBank();
-        bank.getAccounts().put("abc", new CheckingAccount(100, "abc"));
+        bank.getAccounts().put("abc", new CheckingAccount(100, "abc", "password"));
 
 
         bank.deposit("abc", 100);
@@ -45,8 +45,8 @@ public class CentralBankTest {
     @Test
     void transferTest() throws InsufficientFundsException, AccountFrozenException{
         CentralBank bank = new CentralBank();
-        bank.getAccounts().put("abc", new CheckingAccount(100, "abc"));
-        bank.getAccounts().put("def", new CheckingAccount(100, "def"));
+        bank.getAccounts().put("abc", new CheckingAccount(100, "abc", "password"));
+        bank.getAccounts().put("def", new CheckingAccount(100, "def", "password"));
 
         bank.transfer("abc", "def", 50);
         assertEquals(50, bank.checkBalance("abc"));

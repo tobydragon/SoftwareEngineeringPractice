@@ -19,8 +19,8 @@ public class AdminTest {
         Admin admin = new Admin(null);
         assertEquals(null, admin.getBank());
         Map<String, Account> testCollection = new HashMap<>();
-        testCollection.put("1234", new CheckingAccount(50, "1234"));
-        testCollection.put("123", new CheckingAccount(100,"123"));
+        testCollection.put("1234", new CheckingAccount(50, "1234", "password"));
+        testCollection.put("123", new CheckingAccount(100,"123", "password"));
         CentralBank testBank = new CentralBank();
         testBank.setAccounts(testCollection);
         admin = new Admin(testBank);
@@ -30,8 +30,8 @@ public class AdminTest {
 
     @Test
     void freezeAccountTest() {
-        Account abcAcc = new CheckingAccount(500, "abc");
-        Account xyzAcc = new CheckingAccount(500, "xyz");
+        Account abcAcc = new CheckingAccount(500, "abc", "password");
+        Account xyzAcc = new CheckingAccount(500, "xyz", "password");
         Map<String, Account>  collection = new HashMap<>();
         collection.put(abcAcc.getID(), abcAcc);
         collection.put(xyzAcc.getID(), xyzAcc);
@@ -60,8 +60,8 @@ public class AdminTest {
 
     @Test
     void unFreezeAccountTest() {
-        Account abcAcc = new CheckingAccount(500, "abc");
-        Account xyzAcc = new CheckingAccount(500, "xyz");
+        Account abcAcc = new CheckingAccount(500, "abc", "password");
+        Account xyzAcc = new CheckingAccount(500, "xyz", "password");
         Map<String, Account>  collection = new HashMap<>();
         collection.put(abcAcc.getID(), abcAcc);
         collection.put(xyzAcc.getID(), xyzAcc);
@@ -97,14 +97,14 @@ public class AdminTest {
         //Checking with no accounts
         assertEquals(0, admin.calcTotalAssets());
         //Checking with one account
-        testBank.getAccounts().put("abc", new CheckingAccount(100, "abc"));
+        testBank.getAccounts().put("abc", new CheckingAccount(100, "abc", "password"));
         assertEquals(100, admin.calcTotalAssets());
         //Checking with multiple accounts
-        testBank.getAccounts().put("xyz", new CheckingAccount(50.65, "xyz"));
-        testBank.getAccounts().put("def",new CheckingAccount(156, "def"));
+        testBank.getAccounts().put("xyz", new CheckingAccount(50.65, "xyz", "password"));
+        testBank.getAccounts().put("def",new CheckingAccount(156, "def", "password"));
         assertEquals(306.65, admin.calcTotalAssets());
         //Check when there is an account with 0 assets
-        testBank.getAccounts().put("ghi", new CheckingAccount(0, "ghi"));
+        testBank.getAccounts().put("ghi", new CheckingAccount(0, "ghi", "password"));
         assertEquals(306.65, admin.calcTotalAssets());
     }
 

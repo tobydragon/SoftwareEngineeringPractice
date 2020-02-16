@@ -5,8 +5,8 @@ public class SavingsAccount extends Account {
     private double maximumWithdrawal;
 
 
-    public SavingsAccount(double startingBalance, double interestRate, double maximumWithdrawal, String id) {
-        super(startingBalance, id);
+    public SavingsAccount(double startingBalance, double interestRate, double maximumWithdrawal, String id, String password) {
+        super(startingBalance, id, password);
         this.interestRate = interestRate;
         this.maximumWithdrawal = maximumWithdrawal;
     }

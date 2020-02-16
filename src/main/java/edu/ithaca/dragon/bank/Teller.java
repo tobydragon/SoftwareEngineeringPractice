@@ -11,7 +11,7 @@ public class Teller extends ATM implements AdvancedAPI {
 
     @Override
     public void createAccount(String acctId, double startingBalance) {
-        centralBank.getAccounts().put(acctId, new CheckingAccount(startingBalance, acctId));
+        centralBank.getAccounts().put(acctId, new CheckingAccount(startingBalance, acctId, "password")); //default password for account created by teller is password, user can change that if they want
     }
 
     @Override
