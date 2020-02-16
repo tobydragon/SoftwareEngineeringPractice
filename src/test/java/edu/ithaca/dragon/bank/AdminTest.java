@@ -7,6 +7,22 @@ import static org.junit.jupiter.api.Assertions.*;
 public class AdminTest {
 
     @Test
+    void getAccountTest() {
+        Admin admin = new Admin();
+
+        // get account when there is nothing
+        assertThrows(IllegalArgumentException.class, () -> admin.getAccount("1234567890"));
+
+        // get checking account
+        admin.createCheckingForTeller("1234567890", "Toby Dragon", "password", 0.0);
+        assertNotEquals(null, admin.getAccount("1234567890"));
+
+        // get savings account
+        admin.createSavingsForTeller("0987654321", "Ali Erkan", "password", 100.0, 1.0, 100);
+        assertNotEquals(null, "0987654321");
+    }
+
+    @Test
     void createCheckingForTellerTest () throws IllegalArgumentException {
         Admin admin = new Admin();
         //create account with no balance
@@ -131,18 +147,15 @@ public class AdminTest {
         // close a frozen account
         admin.createCheckingForTeller("1920597820", "first last", "namename", 20.0);
         admin.freezeAccount("1920597820");
-        admin.closeAccount("1920597820");
-        assertThrows(IllegalArgumentException.class, () -> admin.getAccount("1920597820"));
+        assertThrows(AcctFrozenException.class, () -> admin.closeAccount("1920597820"));
 
         // close a checking account
         admin.createCheckingForTeller("1699552120", "first fist", "namename", 0.0);
-        admin.freezeAccount("1699552120");
         admin.closeAccount("1699552120");
         assertThrows(IllegalArgumentException.class, () -> admin.getAccount("1699552120"));
 
         // close a savings account
         admin.createSavingsForTeller("1133557799", "list last", "namename", 20.0, 5, 1);
-        admin.freezeAccount("1133557799");
         admin.closeAccount("1133557799");
         assertThrows(IllegalArgumentException.class, () -> admin.getAccount("1133557799"));
     }
