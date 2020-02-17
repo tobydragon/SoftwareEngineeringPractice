@@ -28,11 +28,25 @@ public class CheckingAccountTest {
         assertThrows(IllegalArgumentException.class, ()-> centralBank1.createAccount("a@b.com", 200, "checking")); // integration test invalid equivalence class (invalid account type, border case)
         assertThrows(IllegalArgumentException.class, ()-> centralBank1.createAccount("a@b.com", 200, "Check")); // integration test invalid equivalence class (invalid account type, border case)
         assertThrows(IllegalArgumentException.class, ()-> centralBank1.createAccount("a@b.com", 200,"Funding")); // integration test invalid equivalence class (invalid account type, middle case)
+
+        centralBank1.createAccount("a@b.com", 200, "Checking"); // integration test valid equivalence class (valid starting balance, middle case)
+        assertEquals(200, centralBank1.getAccounts()[0].getBalance());
+        centralBank1.createAccount("a@b.com", 0.01, "Checking"); // integration test valid equivalence class (valid starting balance, border case)
+        assertEquals(0.01, centralBank1.getAccounts()[1].getBalance());
     }
 
     @Test
-    void withdrawTest(){
-        assertFalse(true);
+    void withdrawTest() throws InsufficientFundsException{
+        CheckingAccount account1 = new CheckingAccount("a@b.com", 200, "c1");
+        assertThrows(IllegalArgumentException.class, ()-> account1.withdraw(-10)); // unit test invalid equivalence class (negative amount, middle case)
+        assertThrows(IllegalArgumentException.class, ()-> account1.withdraw(-0.01)); // unit test invalid equivalence class (negative amount, border case)
+        assertThrows(IllegalArgumentException.class, ()-> account1.withdraw(0.00001)); // unit test invalid equivalence class (decimal places more than 2, middle case)
+        assertThrows(IllegalArgumentException.class, ()-> account1.withdraw(0.001)); // unit test invalid equivalence class (decimal places more than 2, border case)
+        assertThrows(InsufficientFundsException.class, ()-> account1.withdraw(300)); // unit test invalid equivalence class (larger than account amount, middle case)
+        assertThrows(InsufficientFundsException.class, ()-> account1.withdraw(200.01)); // unit test invalid equivalence class (larger than account amount, border case)
+        assertThrows(IllegalArgumentException.class, ()-> account1.withdraw(0)); // unit test invalid equivalence class (invalid amount, middle case)
+        account1.withdraw(100); // unit test valid equivalence class (valid withdraw amount, middle case)
+        assertEquals(100, account1.getBalance());
     }
 
     @Test
