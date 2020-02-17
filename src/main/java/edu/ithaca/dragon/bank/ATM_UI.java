@@ -18,19 +18,22 @@ public class ATM_UI {
             if(currentUIState == ATMUIState.Login) {
                 handleLoginUI();
             } else if(currentUIState == ATMUIState.Frozen) {
-                System.out.println("Frozen");
-                return;
+                handleFrozenUI();
             } else if(currentUIState == ATMUIState.MainLoggedIn) {
                 System.out.println("Logged In");
                 return;
             } else if(currentUIState == ATMUIState.Logout) {
-
+                System.out.println("Logout");
+                return;
             } else if(currentUIState == ATMUIState.Deposit) {
-
+                System.out.println("Deposit");
+                return;
             } else if(currentUIState == ATMUIState.Withdraw) {
-
+                System.out.println("Withdraw");
+                return;
             } else if(currentUIState == ATMUIState.Transfer) {
-
+                System.out.println("Transfer");
+                return;
             }
         }
     }
@@ -83,5 +86,26 @@ public class ATM_UI {
                 System.out.println("Incorrect ID and/or Password");
             }
         } while(!hasLoggedin);
+    }
+
+    static void handleFrozenUI() {
+        boolean hasLoggedOut = false;
+
+        do {
+            System.out.println( "*************************************************\n" +
+                                "               Your account is Frozen            \n" +
+                                "     You are not allowed to take any action      \n" +
+                                "        Please contact Customer Service at       \n" +
+                                "                  1-888-555-1212                 \n");
+
+            System.out.print("Enter 'Logout' to logout: ");
+            String entry = in.next();
+            if(entry.toLowerCase().equals("logout")) {
+                currentUIState = ATMUIState.Logout;
+                return;
+            } else {
+
+            }
+        } while(!hasLoggedOut);
     }
 }
