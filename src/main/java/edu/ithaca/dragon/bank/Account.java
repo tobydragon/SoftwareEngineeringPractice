@@ -23,7 +23,8 @@ public abstract class Account {
         }
         else {
             this.balance = startingBalance;
-            this.isFrozen = false;
+            this.isFrozen
+                    = false;
             this.id = id;
             this.password = password;
         }

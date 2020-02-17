@@ -10,6 +10,7 @@ public class ATM_UI {
     private static  CentralBank bank;
     private static ATMUIState currentUIState;
     private static Scanner in;
+    private static Account currentAccount;
 
     public static void main(String[] args) {
         initializeATM();
@@ -20,20 +21,15 @@ public class ATM_UI {
             } else if(currentUIState == ATMUIState.Frozen) {
                 handleFrozenUI();
             } else if(currentUIState == ATMUIState.MainLoggedIn) {
-                System.out.println("Logged In");
-                return;
+                handleLoggedInUI();
             } else if(currentUIState == ATMUIState.Logout) {
-                System.out.println("Logout");
-                return;
+                handleLoggedOutUI();
             } else if(currentUIState == ATMUIState.Deposit) {
-                System.out.println("Deposit");
-                return;
+                handleDepositUI();
             } else if(currentUIState == ATMUIState.Withdraw) {
-                System.out.println("Withdraw");
-                return;
+                handleWithdrawUI();
             } else if(currentUIState == ATMUIState.Transfer) {
-                System.out.println("Transfer");
-                return;
+                handleTransferUI();
             }
         }
     }
@@ -75,6 +71,7 @@ public class ATM_UI {
             System.out.print("\nPassword: ");
             String pass = in.next();
             if(atm.confirmCredentials(id, pass)) {
+                currentAccount = atm.getAccount(id);
                 if(atm.getAccount(id).isFrozen) {
                     currentUIState = ATMUIState.Frozen;
                     return;
@@ -103,9 +100,70 @@ public class ATM_UI {
             if(entry.toLowerCase().equals("logout")) {
                 currentUIState = ATMUIState.Logout;
                 return;
-            } else {
-
             }
         } while(!hasLoggedOut);
+    }
+
+    static void handleLoggedInUI() {
+        boolean hasLoggedOut = false;
+
+        do {
+            System.out.println( "*************************************************\n" +
+                    "               Welcome " + currentAccount.getID() + "            \n" +
+                    "        You may now Withdraw, Deposit, Transfer, or Logout      \n" +
+                    "        Please enter the number corresponding to your choice       \n" +
+                    "                                  \n");
+
+            System.out.print("Enter your choice (1 = Withdraw, 2 = Deposit, 3 = Transfer, 4 = Logout): ");
+            int entry = in.nextInt();
+            if(entry == 1) {
+                currentUIState = ATMUIState.Withdraw;
+                return;
+            } else if(entry == 2) {
+                currentUIState = ATMUIState.Deposit;
+                return;
+            } else if(entry == 3) {
+                currentUIState = ATMUIState.Transfer;
+                return;
+            } else if(entry == 4) {
+                currentUIState = ATMUIState.Logout;
+                return;
+            } else {
+                System.out.println("Incorrect Input");
+            }
+        } while(!hasLoggedOut);
+    }
+
+    static void handleLoggedOutUI() {
+        boolean hasLoggedOut = false;
+
+        do {
+            System.out.println( "*************************************************\n" +
+                    "               Thank you for your service            \n" +
+                    "                  Enter 'Done' to exit                 \n");
+
+            System.out.print("Enter 'Done' to exit: ");
+            String entry = in.next();
+            if(entry.toLowerCase().equals("done")) {
+                currentAccount = null;
+                currentUIState = ATMUIState.Login;
+                return;
+            }
+        } while(!hasLoggedOut);
+    }
+
+    static void handleWithdrawUI() {
+        System.out.println("Withdraw");
+        currentUIState = ATMUIState.MainLoggedIn;
+    }
+
+    static void handleDepositUI() {
+        System.out.println("Deposit");
+        currentUIState = ATMUIState.MainLoggedIn;
+    }
+
+    static void handleTransferUI() {
+        System.out.println("Transfer");
+        currentUIState = ATMUIState.MainLoggedIn;
     }
 }
