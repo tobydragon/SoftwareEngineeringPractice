@@ -1,0 +1,37 @@
+Test Script
+
+1) Type ID as "123" and hit enter, type password as "password" and hit enter
+    a) Check that it then displays balance of 500.00
+    b) When it asks for action, type in "withdraw" and hit enter
+        1) Type -5.00 and hit enter
+            a) Check that it says "invalid amount" and asks for amount again
+        2) Type 700.108 and hit enter
+            a) Check that it says "invalid amount" and asks for amount again
+        3) Type 501.00 and hit enter
+            a) Check that it says "insufficient funds" and asks for amount again
+        3) Type 50.00
+            a) Check that it shows new balance of 450.00 and asks for more actions
+    c) When it asks for action, type in "deposit" and hit enter
+         1) Type -9.901 and hit enter
+            a) Check that it says invalid amount and asks for amount again
+         2) Type 26.7812 and hit enter
+            a) Check that it says invalid amount and asks for amount again
+         2) Enter 100.5
+            a) Check that it shows new balance of 550.50 and asks for more actions
+    d) When it asks for action, type in "transfer"
+         1) Type -10.5 and hit enter, type in "456" as account ID and hit enter
+            a) Check that it says "invalid amount" and asks for transfer input again
+         2) Type 500.112244 and hit enter, type in "456" as account ID and hit enter
+            a) Check that it says "invalid amount" and asks for transfer input again
+         3) Type 750.75 and hit enter, type in "456" as account ID and hit enter
+            a) Check that it says "insufficient funds" and asks for transfer input again
+         4) Type 100.50 and hit enter, type in "901" as account ID and hit enter
+            b) Check that it says "invalid account" and asks for transfer input again
+         5) Type 100.50 and hit enter, type in "456" as account ID and hit enter
+            a) Check that it shows new balance of 450.00 and asks for more actions
+    e) When it asks for action, type in "log out"
+2) Type ID as "555" and hit enter, type password as "ithaca" and hit enter
+    a) Check that it says that you entered invalid credentials
+    b) Check that it asks you to log in again
+3) Type ID as "789" and hit enter, type password as "comp345" and hit enter
+    a) Check that it says to contact customer service at 1-888-555-1212.
