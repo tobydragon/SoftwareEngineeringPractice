@@ -21,3 +21,4 @@ Code Review Notes
 - HashMap Lookup instead of arrays
 - Transaction Histories
 - ATM User Interface
+- Sequence Diagram
