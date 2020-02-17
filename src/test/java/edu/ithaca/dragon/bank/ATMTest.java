@@ -96,5 +96,44 @@ public class ATMTest {
         assertThrows(IllegalArgumentException.class,() -> atm.deposit("christian",100.0005));
     }
 
+    @Test
+    void transferTest() throws IllegalArgumentException, InsufficientFundsException{
+        BankAccount sender = new CheckingAccount(500, "christian");
+        BankAccount reciever = new SavingsAccount(0, "martano");
+        CentralBank myBank = new CentralBank();
+        myBank.accounts.add(sender);
+        myBank.accounts.add(reciever);
+        ATM atm = new ATM(myBank);
+        //successfull transfer
+        atm.transfer("christian","martano",100);
+        assertEquals(400, sender.getBalance());
+        assertEquals(100, reciever.getBalance());
+
+        //transfer with change
+        atm.transfer("christian","martano", 1.50);
+        assertEquals(398.50, sender.getBalance());
+        assertEquals(101.50, reciever.getBalance());
+
+        //0 dollars transfered
+        atm.transfer("christian","martano", 0);
+        assertEquals(398.50, sender.getBalance());
+        assertEquals(101.50, reciever.getBalance());
+
+        //negative amount trying to be transfered
+        assertThrows(IllegalArgumentException.class, ()->atm.transfer("christian","martano", -1));
+
+        //invalid input check
+        assertThrows(IllegalArgumentException.class, ()-> atm.transfer("christian","martano", 100.0005));
+
+        //trying to transfer insufficent funds
+        assertThrows(InsufficientFundsException.class, ()->atm.transfer("christian","martano", 500));
+
+        //checks to be sure illegal argument is thrown rather than insufficient funds when both are valid
+        assertThrows(IllegalArgumentException.class, ()->atm.transfer("christian","martano", 500.0005));
+
+        //invalid email
+        assertThrows(IllegalArgumentException.class, ()->atm.transfer("christiann","martano", 500));
+    }
+
 
 }

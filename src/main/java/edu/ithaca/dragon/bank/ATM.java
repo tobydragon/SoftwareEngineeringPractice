@@ -1,13 +1,14 @@
 package edu.ithaca.dragon.bank;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
-public class ATM implements BasicAPI{
+public class ATM implements BasicAPI {
     CentralBank bank;
 
-    public ATM(CentralBank bank){
-        this.bank=bank;
+    public ATM(CentralBank bank) {
+        this.bank = bank;
     }
 
     public boolean confirmCredentials(String username, String password) {
@@ -36,27 +37,26 @@ public class ATM implements BasicAPI{
     }
 
 
-    public void withdraw(String acctId, double amount) throws InsufficientFundsException,IllegalArgumentException {
+    public void withdraw(String acctId, double amount) throws InsufficientFundsException, IllegalArgumentException {
         Iterator<BankAccount> itr = this.bank.accounts.iterator();
         while (itr.hasNext()) {
             BankAccount current = itr.next();
             if (current.getAcctId() == acctId) {
-                if (current.getBalance()<amount){
+                if (current.getBalance() < amount) {
                     throw new InsufficientFundsException("Not enough funds");
                 }
-                if (current.isAmountValid(amount)){
-                    double balance=current.getBalance();
-                    balance-=amount;
+                if (current.isAmountValid(amount)) {
+                    double balance = current.getBalance();
+                    balance -= amount;
                     current.setBalance(balance);
+                    return;
                 }
-                if (!current.isAmountValid(amount)){
+                if (!current.isAmountValid(amount)) {
                     throw new IllegalArgumentException("Invalid Amount");
                 }
             }
-            else{
-                throw new IllegalArgumentException("invalid account id");
-            }
         }
+        throw new IllegalArgumentException("invalid account id");
 
     }
 
@@ -65,27 +65,72 @@ public class ATM implements BasicAPI{
         while (itr.hasNext()) {
             BankAccount current = itr.next();
             if (current.getAcctId() == acctId) {
-                if (current.isAmountValid(amount)){
-                    double balance=current.getBalance();
-                    balance+=amount;
+                if (current.isAmountValid(amount)) {
+                    double balance = current.getBalance();
+                    balance += amount;
                     current.setBalance(balance);
+                    return;
                 }
-                if (!current.isAmountValid(amount)){
+                if (!current.isAmountValid(amount)) {
                     throw new IllegalArgumentException("Invalid Amount");
                 }
-            }
-            else{
-                throw new IllegalArgumentException("invalid account id");
+
             }
         }
+        throw new IllegalArgumentException("invalid account id");
+
     }
 
     public void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws InsufficientFundsException {
+        int count = 0;
+        Iterator<BankAccount> itr = this.bank.accounts.iterator();
+        while (itr.hasNext()) {
+            BankAccount current = itr.next();
+            if (current.getAcctId() == acctIdToWithdrawFrom) {
+                if (!current.isAmountValid(amount)) {
+                    throw new IllegalArgumentException("Invalid Amount");
+                }
+                if (current.getBalance() < amount) {
+                    throw new InsufficientFundsException("Not enough funds");
+                }
+                if (current.isAmountValid(amount)) {
+                    double balance = current.getBalance();
+                    balance -= amount;
+                    current.setBalance(balance);
+                    count += 1;
+                }
+            }
+
+            if (current.getAcctId() == acctIdToDepositTo) {
+                if (!current.isAmountValid(amount)) {
+                    throw new IllegalArgumentException("Invalid Amount");
+                }
+
+                if (current.isAmountValid(amount)) {
+                    double balance = current.getBalance();
+                    balance += amount;
+                    current.setBalance(balance);
+                    count += 1;
+                }
+            }
+        }
+        if (count == 2) {
+            return;
+        } else {
+            throw new IllegalArgumentException("invalid account id");
+        }
 
     }
 
-    public String transactionHistory(String acctId) {
-        return null;
+    public ArrayList transactionHistory(String acctId) {
+        Iterator<BankAccount> itr = this.bank.accounts.iterator();
+        while (itr.hasNext()) {
+            BankAccount current = itr.next();
+            if (current.getAcctId() == acctId) {
+                return current.getTransactionHistory();
+            }
+        }
+        throw new IllegalArgumentException("Invalid account id");
     }
-
 }
+
