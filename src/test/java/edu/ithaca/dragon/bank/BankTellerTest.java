@@ -151,13 +151,14 @@ public class BankTellerTest {
     void transferTest() throws Exception{
         BankTeller bankAccount = new BankTeller();
 
-        bankAccount.createAccount("a@b.com", "xyz", 200);
-        bankAccount.createAccount("b@c.com", "xyz", 500);
-        bankAccount.createAccount("c@d.com", "xyz", 1000);
-        bankAccount.createAccount("e@f.com", "xyz", 10);
-        bankAccount.createAccount("z@y.com", "xyz", 150);
-        bankAccount.createAccount("d@j.com", "xyz", 1);
-        bankAccount.createAccount("a@v.com", "xyz", 0);
+        bankAccount.createCustomer("a@b.com", "xyz");
+        bankAccount.addAccount("a@b.com", 200);
+        bankAccount.createCustomerWithAccount("b@c.com", "xyz", 500);
+        bankAccount.createCustomerWithAccount("c@d.com", "xyz", 1000);
+        bankAccount.createCustomerWithAccount("e@f.com", "xyz", 10);
+        bankAccount.createCustomerWithAccount("z@y.com", "xyz", 150);
+        bankAccount.createCustomerWithAccount("d@j.com", "xyz", 1);
+        bankAccount.createCustomerWithAccount("a@v.com", "xyz", 0);
 
         bankAccount.transfer("a@b.com", "b@c.com", 100);
         assertEquals(100, bankAccount.checkBalance("a@b.com"));
