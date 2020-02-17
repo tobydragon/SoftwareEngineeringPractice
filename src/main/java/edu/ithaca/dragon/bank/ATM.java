@@ -42,6 +42,10 @@ public class ATM implements BasicAPI {
         while (itr.hasNext()) {
             BankAccount current = itr.next();
             if (current.getAcctId() == acctId) {
+                if (!current.isAmountValid(amount)) {
+                    throw new IllegalArgumentException("Invalid Amount");
+                }
+
                 if (current.getBalance() < amount) {
                     throw new InsufficientFundsException("Not enough funds");
                 }
@@ -50,9 +54,6 @@ public class ATM implements BasicAPI {
                     balance -= amount;
                     current.setBalance(balance);
                     return;
-                }
-                if (!current.isAmountValid(amount)) {
-                    throw new IllegalArgumentException("Invalid Amount");
                 }
             }
         }
