@@ -106,6 +106,22 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
         }
         throw new IllegalArgumentException("Account not found");
     }
+    public SavingsAccount findSavingsAcct(String acctId){
+        for (int i = 0; i < numAccounts; i++){
+            if(accounts[i].getAcctId().equals(acctId)){
+                return (SavingsAccount) accounts[i];
+            }
+        }
+        throw new IllegalArgumentException("Account not found");
+    }
+    public CheckingAccount findCheckingAcct(String acctId){
+        for (int i = 0; i < numAccounts; i++){
+            if(accounts[i].getAcctId().equals(acctId)){
+                return (CheckingAccount) accounts[i];
+            }
+        }
+        throw new IllegalArgumentException("Account not found");
+    }
 
 
     //----------------- edu.ithaca.dragon.bank.AdvancedAPI methods -------------------------//
@@ -134,7 +150,14 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
         else{
             throw new IllegalArgumentException("AcctType must be either Savings or Checking");
         }
+    }
 
+    public void setDailyMax(String acctId, float amount) throws InsufficientFundsException{
+        SavingsAccount acct = findSavingsAcct(acctId);
+        acct.setDailyMax(amount);
+    }
+    public void setDailyMax(String email, String type, float amount) throws InsufficientFundsException{
+        setDailyMax(getAccountId(email,type),amount);
     }
 
     public void addNewEmail(String email){
