@@ -53,12 +53,24 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
         return checkBalance(getAccountId(email, type));
     }
 
+    /**
+     * Withdraws from the given acct
+     * @param acctId Identifier to either savings or checking acct
+     * @param amount amount to be withdrawn
+     * @throws InsufficientFundsException
+     */
     public void withdraw(String acctId, double amount) throws InsufficientFundsException {
-
+        String type = findAcct(acctId).type;
+        if (type.equals("Savings")){
+            findSavingsAcct(acctId).withdraw(amount);
+        }
+        else{
+            findAcct(acctId).withdraw(amount);
+        }
     }
 
     public void withdraw(String email, String type, double amount) throws InsufficientFundsException {
-
+        withdraw(getAccountId(email,type),amount);
     }
 
     /**

@@ -82,14 +82,16 @@ public class CentralBankTest {
         teller.withdraw(email,savings,.01);
         assertEquals(999.99, teller.checkBalance(email,savings));
 
-        assertThrows(IllegalArgumentException.class, ()-> teller.deposit(email, savings,100)); // valid amount but past daily max
+        SavingsAccount savingsAccount = teller.findSavingsAcct(teller.getAccountId(email,savings));
 
-        assertThrows(IllegalArgumentException.class, ()-> teller.deposit(email, savings,-100)); // invalid middle case (value)
-        assertThrows(IllegalArgumentException.class, ()-> teller.deposit(email, savings,-1)); // invalid border case (value)
-        assertThrows(IllegalArgumentException.class, ()-> teller.deposit(email, savings,100.001)); // invalid border case (decimal place limit)
-        assertThrows(IllegalArgumentException.class, ()-> teller.deposit(email, savings,100.00001)); // invalid middle case (decimal place limit)
-        assertThrows(IllegalArgumentException.class, ()-> teller.deposit(email, savings,-100.001)); // invalid case (middle value, border decimal place limit)
-        assertThrows(IllegalArgumentException.class, ()-> teller.deposit(email, savings,-100.00001)); // invalid middle case (value, decimal place limit)
+        assertThrows(InsufficientFundsException.class, ()-> teller.withdraw(email, savings,100)); // valid amount but past daily max
+
+        assertThrows(IllegalArgumentException.class, ()-> teller.withdraw(email, savings,-100)); // invalid middle case (value)
+        assertThrows(IllegalArgumentException.class, ()-> teller.withdraw(email, savings,-1)); // invalid border case (value)
+        assertThrows(IllegalArgumentException.class, ()-> teller.withdraw(email, savings,100.001)); // invalid border case (decimal place limit)
+        assertThrows(IllegalArgumentException.class, ()-> teller.withdraw(email, savings,100.00001)); // invalid middle case (decimal place limit)
+        assertThrows(IllegalArgumentException.class, ()-> teller.withdraw(email, savings,-100.001)); // invalid case (middle value, border decimal place limit)
+        assertThrows(IllegalArgumentException.class, ()-> teller.withdraw(email, savings,-100.00001)); // invalid middle case (value, decimal place limit)
 
         assertThrows(IllegalArgumentException.class, ()-> teller.deposit("YOLO",100)); //Checks incorrect acctId
     }

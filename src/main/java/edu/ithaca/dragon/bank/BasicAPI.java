@@ -28,4 +28,8 @@ public interface BasicAPI {
     String getAccountId(String email, String type);
 
     BankAccount findAcct(String AcctId);
+
+    SavingsAccount findSavingsAcct(String acctId);
+
+    CheckingAccount findCheckingAcct(String acctId);
 }
