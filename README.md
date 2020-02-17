@@ -11,3 +11,14 @@
 #LC Sequence Diagram: https://drive.google.com/file/d/1JxTIFh9YG4WqagolynRPzfiFYXbgfIL1/view?usp=sharing
 
 #State Diagram: https://drive.google.com/file/d/1m1u95Ge5G9UpjO7fgMXEDMtFKyo6z2ls/view?usp=sharing
+
+
+TO DO:
+
+SW: finish scripts
+    create static central bank method
+
+
+CE: ATMUI class
+
+LC: ATMUI test class
