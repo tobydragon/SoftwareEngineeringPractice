@@ -45,6 +45,8 @@ public class BankAccount {
         this.frozen = frozen;
     }
 
+    public void setBalance(double balance){ this.balance=balance; }
+
     /**
      * @post checks if inputted dollar amount is a valid dollar amount
      *
