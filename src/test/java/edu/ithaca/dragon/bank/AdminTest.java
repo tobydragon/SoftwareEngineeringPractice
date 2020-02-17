@@ -163,13 +163,14 @@ public class AdminTest {
     public static Admin createTestAdmin(){
         Admin admin = new Admin();
 
-        admin.createCheckingForTeller("1111111111", "Bob James", "dog123", 300);
+        admin.createCheckingForTeller("1111111111", "Bob James", "dog123", 500);
         admin.createCheckingForTeller("2222222222", "John Smith", "frog456", 700);
         admin.createCheckingForTeller("3333333333", "Jane Doe", "iluvmoney111", 400);
 
-        admin.createSavingsForTeller("4444444444", "Tommy Lee", "narwhals33", 375, 5, 600);
-        admin.createSavingsForTeller("5555555555", "Susan Crawford", "cheesybeans456", 650, 3, 800);
-        admin.createSavingsForTeller("6666666666", "Arthur Stonemason", "beagle777", 800, 7, 1000);
+        admin.createSavingsForTeller("4444444444", "Bob James", "narwhals33", 450, 5, 250);
+        admin.createSavingsForTeller("5555555555", "John Smith", "cheesybeans456", 650, 3, 800);
+        admin.freezeAccount("5555555555");
+        admin.createSavingsForTeller("6666666666", "Jane Doe", "beagle777", 800, 7, 125);
 
         return admin;
     }
