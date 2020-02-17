@@ -1,9 +1,12 @@
 package edu.ithaca.dragon.bank;
 
+import java.util.ArrayList;
+
 public class BankAccount {
 
-    private String email, password;
-    private double balance;
+    protected String email, password;
+    protected double balance;
+    protected ArrayList<AccountEvent> history;
 
     /**
      * @throws IllegalArgumentException if email or starting balance is invalid
@@ -22,6 +25,8 @@ public class BankAccount {
         } else {
             throw new IllegalArgumentException("Starting balance: " + startingBalance + " is invalid, cannot create account");
         }
+
+        this.history = new ArrayList<AccountEvent>();
     }
 
     public double getBalance() {
@@ -37,17 +42,36 @@ public class BankAccount {
     }
 
     /**
+     * @returns a textual representation of the history of the account
+     */
+    public String getHistory(){
+        String stringHistory = "";
+        for(int i = 0; i < history.size(); i++){
+            stringHistory += history.get(i);
+            if(i != history.size() - 1)
+                stringHistory += "\n";
+        }
+        return stringHistory;
+    }
+
+    /**
      * @post reduces the balance by amount if amount is non-negative and has 2 or less significant decimals and smaller than balance
      * @throws IllegalArgumentException if amount is not valid (see isAmountValid() )
      * @throws InsufficientFundsException if the account doesn't have enough to withdraw the given amount
      */
+
     public void withdraw(double amount) throws InsufficientFundsException {
+        withdraw(amount, "Withdraw");
+    }
+
+    public void withdraw(double amount, String name) throws InsufficientFundsException {
         if(!isAmountValid(amount)){
             throw new IllegalArgumentException("Can't withdraw a negative amount or one with more than 2 significant decimals");
         }
         if (amount > balance) {
             throw new InsufficientFundsException("Cant withdraw more than you have in your account");
         } else {
+            history.add(new AccountEvent(name, amount, this.balance));
             balance -= amount;
         }
     }
@@ -56,10 +80,16 @@ public class BankAccount {
      * @post increases the balance by amount if amount is non-negative and has 2 or less significant decimals
      * @throws IllegalArgumentException if amount is not valid (see isAmountValid() )
      */
+
     public void deposit(double amount) {
+        deposit(amount, "Deposit");
+    }
+
+    public void deposit(double amount, String name) {
         if(!isAmountValid(amount)){
             throw new IllegalArgumentException("Can't withdraw a negative amount or one with more than 2 significant decimals");
         } else {
+            history.add(new AccountEvent(name, amount, this.balance));
             balance += amount;
         }
     }
@@ -70,8 +100,8 @@ public class BankAccount {
      * @throws InsufficientFundsException if the account doesn't have enough to transfer the given amount out
      */
     public void transfer(double amount, BankAccount targetAccount) throws InsufficientFundsException {
-        this.withdraw(amount);
-        targetAccount.deposit(amount);
+        this.withdraw(amount, "Transfer out");
+        targetAccount.deposit(amount, "Transfer in");
     }
 
     /**
@@ -83,6 +113,17 @@ public class BankAccount {
             return false;
         }
         else return (amount * 100) % 1 == 0;
+    }
+
+    /**
+     * @return true if any account events in history are suspicious
+     */
+    public boolean checkSuspicious(){
+        for(int i = 0; i < history.size(); i++){
+            if(history.get(i).suspicious)
+                return true;
+        }
+        return false;
     }
 
 

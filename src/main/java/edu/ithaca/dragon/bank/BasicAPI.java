@@ -9,14 +9,14 @@ public interface BasicAPI {
      * @returns true if the given password matches the one from the account, false if not
      * @throws AccountNotFoundException if the given email is not associated with an account
      */
-    boolean confirmCredentials(String email, String password) throws AccountNotFoundException;  //Implemented
+    boolean confirmCredentials(String email, String password) throws AccountNotFoundException;
 
     /**
      * @param email is a string describing an email address unique to the account to be checked
      * @returns the current balance of the account as a double
      * @throws AccountNotFoundException if the given email is not associated with an account
      */
-    double checkBalance(String email) throws AccountNotFoundException;  //Implemented
+    double checkBalance(String email) throws AccountNotFoundException;
 
     /**
      * @param email is a string describing an email address unique to the account to be withdrawn from
@@ -25,7 +25,7 @@ public interface BasicAPI {
      * @throws AccountNotFoundException if the given email is not associated with an account
      * @throws InsufficientFundsException if the given account does not have enough money to withdraw the given amount
      */
-    void withdraw(String email, double amount) throws InsufficientFundsException, AccountNotFoundException;  //Implemented
+    void withdraw(String email, double amount) throws InsufficientFundsException, AccountNotFoundException;
 
     /**
      * @param email is a string describing an email address unique to the account to be deposited to
@@ -33,7 +33,7 @@ public interface BasicAPI {
      * @post the account's balance is increased by the given amount
      * @throws AccountNotFoundException if the given email is not associated with an account
      */
-    void deposit(String email, double amount) throws AccountNotFoundException;  //Implemented
+    void deposit(String email, double amount) throws AccountNotFoundException;
 
     /**
      * @param emailToWithdrawFrom is a string describing an email address unique to the account to be withdrawn from
@@ -43,13 +43,13 @@ public interface BasicAPI {
      * @throws AccountNotFoundException if either of the given emails is not associated with an account
      * @throws InsufficientFundsException if the account to withdraw from does not have enough money to withdraw the given amount
      */
-    void transfer(String emailToWithdrawFrom, String emailToDepositTo, double amount) throws InsufficientFundsException, AccountNotFoundException;  //Implemented
+    void transfer(String emailToWithdrawFrom, String emailToDepositTo, double amount) throws InsufficientFundsException, AccountNotFoundException;
 
     /**
      * @param email is a string describing an email address unique to the account to get the history from
      * @returns a string representing the entire account's history
      * @throws AccountNotFoundException if the given email is not associated with an account
      */
-    String transactionHistory(String email) throws AccountNotFoundException;  //Not implemented
+    String transactionHistory(String email) throws AccountNotFoundException;
 
 }

@@ -68,4 +68,17 @@ class BasicAPITest {
         assertThrows(AccountNotFoundException.class, () -> atm.transfer("2", "0", 100));  //Tests transferring from an account that doesn't exist
     }
 
+    @Test
+    void transactionHistoryTest() throws AccountAlreadyExistsException, AccountNotFoundException {
+        CentralBank bank = new CentralBank();
+        AdvancedAPI teller = bank;
+        BasicAPI atm = bank;
+
+        teller.createAccount("a@c.com", "pass",  200);
+
+        atm.deposit("a@c.com", 50);
+
+        assertEquals("Deposit 50.0", atm.transactionHistory("a@c.com"));
+    }
+
 }
