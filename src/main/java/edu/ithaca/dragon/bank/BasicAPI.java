@@ -15,4 +15,6 @@ public interface BasicAPI {
 
     String transactionHistory(String acctId) throws AccountDoesNotExistException, AccountAlreadyExistsException, InsufficientFundsException, ExceedsMaxWithdrawalException;
 
+    boolean isFrozen(String acctId) throws AccountDoesNotExistException;
+
 }

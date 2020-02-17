@@ -12,11 +12,15 @@ public class AtmUITest {
      * Testing Script
      * should open asking for login
      * enter account id: "false@bank.com"
-     * should show account does not exist
+     * should ask for password
+     * enter "password1"
+     * should say bad credentials and try again
      * enter account id: "first@bank.com"
      * should ask for password
      * enter "password"
-     * should say incorrect and enter again
+     * should say bad credentials and try again
+     * enter account id: "first@bank.com"
+     * should ask for password
      * enter "password1"
      * should display balance of 100
      * should say possible commands: withdraw deposit transfer logout
