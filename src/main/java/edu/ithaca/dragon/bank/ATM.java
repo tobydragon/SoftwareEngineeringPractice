@@ -52,6 +52,15 @@ public class ATM implements BasicAPI {
     }
 
     @Override
+    public Account getAccount(String acctID) {
+        if(centralBank.getAccounts().containsKey(acctID)) {
+            return centralBank.getAccounts().get(acctID);
+        } else {
+            throw new IllegalArgumentException("Account does not exist");
+        }
+    }
+
+    @Override
     public String transactionHistory(String acctId) {
         return null;
     }

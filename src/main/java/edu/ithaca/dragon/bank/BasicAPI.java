@@ -13,6 +13,8 @@ public interface BasicAPI {
 
     void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws InsufficientFundsException, AccountFrozenException;
 
+    Account getAccount(String acctId);
+
     String transactionHistory(String acctId);
 
 }
