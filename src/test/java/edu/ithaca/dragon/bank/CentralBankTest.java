@@ -309,8 +309,6 @@ public class CentralBankTest {
         assertTrue(centralBank1.checkAccountExists("999")); //integration test between createAccount, freezeAccount, unfreezeAccount
         assertFalse(centralBank1.checkFrozenAccountExists("999"));
 
-
-
     }
 
     @Test
