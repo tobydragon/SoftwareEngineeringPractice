@@ -15,8 +15,7 @@
 
 TO DO:
 
-SW: finish scripts
-    create static central bank method
+SW: create static central bank method
 
 
 CE: ATMUI class

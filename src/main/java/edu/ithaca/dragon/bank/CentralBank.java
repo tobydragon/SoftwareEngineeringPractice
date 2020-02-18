@@ -13,6 +13,20 @@ public class CentralBank implements AdvancedAPI, AdminAPI, BasicAPI {
 
     }
 
+    public static CentralBank CentralBankUI(){
+        BankAccount account1 = new BankAccount("a@b.com","B000", "000000", 200.00);
+        BankAccount account2 = new BankAccount("a@c.com", "B001" , "000000", 100.00);
+
+        CentralBank c1 = new CentralBank();
+
+        c1.accountList.add(account1);
+        c1.accountCount ++;
+        c1.accountList.add(account2);
+        c1.accountCount ++;
+
+        return c1;
+    }
+
     public int accountCount(){
         return accountCount;
     }
@@ -94,7 +108,7 @@ public class CentralBank implements AdvancedAPI, AdminAPI, BasicAPI {
 
     public void createAccount(String acctId, double startingBalance, String emailIn, String accPassword) {
         accountCount +=1;
-        BankAccount b = new BankAccount(emailIn, startingBalance);
+        BankAccount b = new BankAccount(emailIn, acctId, accPassword, startingBalance);
         b.setAcctId(acctId);
         b.setAcctPass(accPassword);
         accountList.add(b);
@@ -161,9 +175,6 @@ public class CentralBank implements AdvancedAPI, AdminAPI, BasicAPI {
         }
     }
 
-    public static void main(String [] args){
-
-    }
 
 
 }
