@@ -2,7 +2,7 @@ package edu.ithaca.dragon.bank;
 
 import java.util.Scanner;
 
-enum ATMUIState {Login, Logout, Frozen, Account, Menu, Withdraw, Deposit, Transfer}
+enum ATMUIState {Login, Frozen, Account, Menu, Withdraw, Deposit, Transfer}
 
 public class ATMUI {
 
@@ -25,8 +25,6 @@ public class ATMUI {
                 Menu();
             } else if(currentState == ATMUIState.Frozen) {
                 Frozen();
-            } else if(currentState == ATMUIState.Logout) {
-                Logout();
             } else if(currentState == ATMUIState.Deposit) {
                 Deposit();
             } else if(currentState == ATMUIState.Withdraw) {
@@ -75,28 +73,59 @@ public class ATMUI {
     }
 
     static void Menu() {
-
+        System.out.println("Current balance: " + currentAccount.getBalance() + ". Would you like to withdraw, deposit, transfer, or logout?");
+        String action = in.nextLine();
+        if(action.equalsIgnoreCase("withdraw")) {
+            currentState = ATMUIState.Withdraw;
+        } else if (action.equalsIgnoreCase("deposit")) {
+            currentState = ATMUIState.Deposit;
+        } else if (action.equalsIgnoreCase("transfer")) {
+            currentState = ATMUIState.Transfer;
+        } else if (action.equalsIgnoreCase("logout")) {
+            System.out.println("Thank you for banking with us today.");
+            currentState = ATMUIState.Login;
+        } else {
+            System.out.println("Error: invalid command, please try again.");
+            currentState = ATMUIState.Menu;
+        }
     }
 
     static void Frozen() {
-
-    }
-
-
-    static void Logout() {
-
+        System.out.println("This account is currently frozen due to suspicious activity. " +
+                "For more information, please contact customer service at 1-888-555-1212.");
+        currentState = ATMUIState.Login;
     }
 
     static void Withdraw()  throws InsufficientFundsException{
-
+        System.out.println("Enter amount to withdraw: ");
+        double amount = in.nextDouble();
+        currentAccount.withdraw(amount);
+        System.out.println("Withdraw successful. New balance: " + currentAccount.getBalance());
+        currentState = ATMUIState.Menu;
     }
 
-    static void Deposit()  {
-
-
+    static void Deposit() throws InsufficientFundsException {
+        System.out.println("Enter amount to deposit: ");
+        double amount = in.nextDouble();
+        currentAccount.Deposit(amount);
+        System.out.println("Deposit successful. New balance: " + currentAccount.getBalance());
+        currentState = ATMUIState.Menu;
     }
 
     static void Transfer() {
-
+        System.out.println("Enter accountID to transfer to: ");
+        String accIDTo = in.nextLine();
+        try {
+            BankAccount accTo = bank.getBankAccount(accIDTo);
+            System.out.println("Enter amount to transfer: ");
+            double amount = in.nextDouble();
+            currentAccount.Transfer(accTo, amount);
+            System.out.println("Transfer successful. New balance: " + currentAccount.getBalance());
+            currentState = ATMUIState.Login;
+        }
+        catch (Exception e){
+            System.out.println("Error: invalid account ID, please try again.");
+            currentState = ATMUIState.Transfer;
+        }
     }
 }
