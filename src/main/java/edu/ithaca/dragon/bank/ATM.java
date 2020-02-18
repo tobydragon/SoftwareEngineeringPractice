@@ -13,9 +13,6 @@ public class ATM implements BasicAPI{
         if (acct == null){
             throw new IllegalArgumentException("Account not found");
         }
-        if (acct.getFrozenStatus()){
-            throw new AcctFrozenException("This account is frozen.");
-        }
         if (acct.getAcctPassword() != password){
             return false;
         }
@@ -28,6 +25,9 @@ public class ATM implements BasicAPI{
             throw new IllegalArgumentException("ID and Password incorrect");
         }
         Account acctToCheck = admin.getAccount(acctId);
+        if (acctToCheck.getFrozenStatus()){
+            throw new AcctFrozenException("Account is frozen");
+        }
         return acctToCheck.checkBalance(acctId);
 
     }
@@ -37,6 +37,9 @@ public class ATM implements BasicAPI{
             throw new IllegalArgumentException("ID and Password incorrect");
         }
         Account acctToCheck = admin.getAccount(acctId);
+        if (acctToCheck.getFrozenStatus()){
+            throw new AcctFrozenException("Account is frozen");
+        }
         acctToCheck.withdraw(acctId,amount);
     }
 
@@ -45,6 +48,9 @@ public class ATM implements BasicAPI{
             throw new IllegalArgumentException("ID and Password incorrect");
         }
         Account acctToCheck = admin.getAccount(acctId);
+        if (acctToCheck.getFrozenStatus()){
+            throw new AcctFrozenException("Account is frozen");
+        }
         acctToCheck.deposit(acctId,amount);
     }
 
@@ -66,6 +72,9 @@ public class ATM implements BasicAPI{
             throw new IllegalArgumentException("ID and Password incorrect");
         }
         Account acctToCheck = admin.getAccount(acctId);
+        if (acctToCheck.getFrozenStatus()){
+            throw new AcctFrozenException("Account is frozen");
+        }
         return acctToCheck.transactionHistory(acctId);
     }
 }
