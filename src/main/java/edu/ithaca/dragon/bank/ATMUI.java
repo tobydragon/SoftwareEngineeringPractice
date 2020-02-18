@@ -92,13 +92,13 @@ public class ATMUI {
     }
     public static ATM ATMTest() {
         CustomerCollection c1 = new CustomerCollection();
-        c1.addCustomer("Bob", "Password");
-        c1.createAccount("Bob", 200);
-        c1.addCustomer("Sheila", "pw1");
-        c1.createAccount("Sheila", 300);
-        c1.toggleFreeze("Sheila");
-        c1.addCustomer("Baby", "ThisHereBe");
-        c1.createAccount("Baby", 20000);
+        c1.addCustomer("mdiallo", "password");
+        c1.createAccount("mdiallo", 100);
+        c1.addCustomer("def", "xyz");
+        c1.createAccount("def", 300);
+        c1.toggleFreeze("def");
+        c1.addCustomer("abc", "xyz");
+        c1.createAccount("abc", 20000);
 
         return new ATM(c1);
     }
