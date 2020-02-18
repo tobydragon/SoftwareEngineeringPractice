@@ -14,6 +14,20 @@ public class ATMUI {
     private static Scanner in;
 
     public static void main(String[] args) throws IllegalArgumentException,InsufficientFundsException {
+        User christian = new User("christian","123");
+        User aidan = new User("aidan","123");
+        User ioan = new User("ioan","123");
+        BankAccount christianacct = new CheckingAccount(1000, "christian");
+        BankAccount aidanacct = new CheckingAccount(1000, "aidan");
+        BankAccount ioanacct = new CheckingAccount(1000, "ioan");
+        CentralBank myBank = new CentralBank();
+        myBank.accounts.add(christianacct);
+        myBank.accounts.add(aidanacct);
+        myBank.accounts.add(ioanacct);
+        myBank.users.add(christian);
+        myBank.users.add(aidan);
+        myBank.users.add(ioan);
+        bank = myBank;
         atm = new ATM(bank);
         currentState = ATMUIState.Login;
         in = new Scanner(System.in);
@@ -41,9 +55,9 @@ public class ATMUI {
 
     static void Login() {
         System.out.println("Please enter your username and password: ");
-        System.out.print("Username: ");
+        System.out.print("Username:");
         String username = in.nextLine();
-        System.out.print("\nPassword: ");
+        System.out.print("\nPassword:");
         String password = in.nextLine();
 
         if(atm.confirmCredentials(username, password)) {
@@ -99,7 +113,7 @@ public class ATMUI {
     static void Withdraw()  throws InsufficientFundsException{
         System.out.println("Enter amount to withdraw: ");
         double amount = in.nextDouble();
-        currentAccount.withdraw(amount);
+        atm.withdraw(currentAccount.getAcctId(),amount);
         System.out.println("Withdraw successful. New balance: " + currentAccount.getBalance());
         currentState = ATMUIState.Menu;
     }
@@ -107,7 +121,7 @@ public class ATMUI {
     static void Deposit() throws InsufficientFundsException {
         System.out.println("Enter amount to deposit: ");
         double amount = in.nextDouble();
-        currentAccount.Deposit(amount);
+        atm.deposit(currentAccount.getAcctId(),amount);
         System.out.println("Deposit successful. New balance: " + currentAccount.getBalance());
         currentState = ATMUIState.Menu;
     }
@@ -119,9 +133,9 @@ public class ATMUI {
             BankAccount accTo = bank.getBankAccount(accIDTo);
             System.out.println("Enter amount to transfer: ");
             double amount = in.nextDouble();
-            currentAccount.Transfer(accTo, amount);
+            atm.transfer(currentAccount.getAcctId(),accIDTo,amount);
             System.out.println("Transfer successful. New balance: " + currentAccount.getBalance());
-            currentState = ATMUIState.Login;
+            currentState = ATMUIState.Menu;
         }
         catch (Exception e){
             System.out.println("Error: invalid account ID, please try again.");
