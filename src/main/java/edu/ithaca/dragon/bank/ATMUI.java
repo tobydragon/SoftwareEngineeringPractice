@@ -8,7 +8,7 @@ public class ATMUI {
         Scanner input = new Scanner(System.in);
         String cmd;
         String userName = null;
-        ATM atm = ATMUI.ATMTest();
+        ATM atm = ATMTest();
         BasicAPI testATM = atm;
         do {
             System.out.println("Please Enter User Name: ");
