@@ -19,9 +19,9 @@ class BankAccountTest {
         //assertEquals(0,bankAccount3.getBalance());
 
         //positive balance equivalence class
-        BankAccount bankAccount = new BankAccount("a@b.com", 200);
+        BankAccount bankAccount = new BankAccount("a@b.com", "B000", "000000", 200);
         assertEquals(200, bankAccount.getBalance());
-        BankAccount bankAccount4 = new BankAccount("a@b.com", 5);
+        BankAccount bankAccount4 = new BankAccount("a@b.com", "B000", "000000", 5);
         assertEquals(5,bankAccount4.getBalance());
     }
 
@@ -30,7 +30,7 @@ class BankAccountTest {
 
 
         //part of non-negative and smaller equivalence class
-        BankAccount bankAccount = new BankAccount("a@b.com", 200);
+        BankAccount bankAccount = new BankAccount("a@b.com", "B000", "000000", 200);
         bankAccount.withdraw(100);
         assertEquals(100, bankAccount.getBalance());
         //bankAccount.withdraw(0);
@@ -39,7 +39,7 @@ class BankAccountTest {
         assertEquals(95,bankAccount.getBalance());
 
         //non-negative and larger equivalence class
-        BankAccount bankAccount1 = new BankAccount("a@b.com",200);
+        BankAccount bankAccount1 = new BankAccount("a@b.com","B000", "000000", 200);
         bankAccount1.withdraw(500);
         assertEquals(200,bankAccount1.getBalance());
         bankAccount1.withdraw(1000);
@@ -64,7 +64,7 @@ class BankAccountTest {
         //decimal tests
         //negatives and 3 decimals
 
-        BankAccount bankAccount4 = new BankAccount("a@b.com",200);
+        BankAccount bankAccount4 = new BankAccount("a@b.com","B000", "000000", 200);
 
         assertThrows(IllegalArgumentException.class, ()->bankAccount4.withdraw(0.00));
         assertThrows(IllegalArgumentException.class, ()->bankAccount4.withdraw(0.000));
@@ -86,7 +86,7 @@ class BankAccountTest {
     @Test
 
     void acctIDTest(){
-        BankAccount bankAccount = new BankAccount("a@b.com", 200);
+        BankAccount bankAccount = new BankAccount("a@b.com", "B000", "000000", 200);
         assertEquals("B000", bankAccount.getAcctId());
 
         String testString = "C123";
@@ -96,7 +96,7 @@ class BankAccountTest {
 
     @Test
     void suspActivityTest(){
-        BankAccount b1 = new BankAccount("a@b.com", 200);
+        BankAccount b1 = new BankAccount("a@b.com", "B000", "000000", 200);
         assertFalse(b1.getSusAct());
 
         b1.setSusAct(true);
@@ -106,29 +106,29 @@ class BankAccountTest {
 
     @Test
     void constructorTest() {
-        BankAccount bankAccount = new BankAccount("a@b.com", 200);
+        BankAccount bankAccount = new BankAccount("a@b.com", "B000", "000000", 200);
 
         assertEquals("a@b.com", bankAccount.getEmail());
         assertEquals(200, bankAccount.getBalance());
         assertFalse(bankAccount.getAcctFrozen());
         //check for exception thrown correctly
-        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", 100));
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", "B000", "000000", 100));
 
         //check for exception thrown correctly for decimal balance
         //negative 3 decimal
-        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", 0.00));
-        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", 0.000));
-        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", .001));
-        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", .999));
-        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", -.01));
-        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", -.99));
-        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", -.001));
-        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", -.999));
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", "B000", "000000", 0.00));
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", "B000", "000000", 0.000));
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", "B000", "000000", .001));
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", "B000", "000000", .999));
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", "B000", "000000", -.01));
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", "B000", "000000", -.99));
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", "B000", "000000", -.001));
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", "B000", "000000", -.999));
     }
 
     @Test
     void acctFrozenTest()throws IllegalAccessException{
-        BankAccount bankAccount = new BankAccount("a@b.com", 200);
+        BankAccount bankAccount = new BankAccount("a@b.com", "B000", "000000", 200);
         assertFalse(bankAccount.getAcctFrozen());
 
         bankAccount.setAcctFrozen(true); //freeze
@@ -136,14 +136,14 @@ class BankAccountTest {
 
         assertThrows(IllegalAccessException.class, () -> bankAccount.deposit(200));
         assertThrows(IllegalAccessException.class, () -> bankAccount.withdraw(1));
-        assertThrows(IllegalAccessException.class, () -> bankAccount.transfer(1, new BankAccount("bob@b.com",200)));
+        assertThrows(IllegalAccessException.class, () -> bankAccount.transfer(1, new BankAccount("bob@b.com","B000", "000000", 200)));
 
 
     }
 
     @Test
     void acctUnfrozenTest(){
-        BankAccount bankAccount = new BankAccount("a@b.com", 200);
+        BankAccount bankAccount = new BankAccount("a@b.com", "B000", "000000", 200);
         assertFalse(bankAccount.getAcctFrozen());
 
         bankAccount.setAcctFrozen(true); //freeze
@@ -187,7 +187,7 @@ class BankAccountTest {
 
     @Test
     void isAmountValidTest(){
-        BankAccount bankAccount = new BankAccount("a@b.com", 200);
+        BankAccount bankAccount = new BankAccount("a@b.com", "B000", "000000", 200);
         //equivalence classes:
         //positive and 2 decimal place amounts
         assertTrue(BankAccount.isAmountValid(.01));
@@ -219,7 +219,7 @@ class BankAccountTest {
 
         //positive numbers
         //no decimal, or decimal of 2 places
-        BankAccount bankAccount = new BankAccount("a@b.com", 200);
+        BankAccount bankAccount = new BankAccount("a@b.com", "B000", "000000", 200);
         bankAccount.deposit(200);
         assertEquals(400, bankAccount.getBalance());
         bankAccount.deposit(1);
@@ -230,7 +230,7 @@ class BankAccountTest {
         assertTrue(bankAccount.getBalance()-402 < .1);
 
         //decimal of 3 places
-        BankAccount bankAccount1 = new BankAccount("a@b.com", 200);
+        BankAccount bankAccount1 = new BankAccount("a@b.com", "B000", "000000", 200);
         assertThrows(IllegalArgumentException.class, ()-> bankAccount1.deposit(.001));
         assertThrows(IllegalArgumentException.class, ()-> bankAccount1.deposit(.999));
 
@@ -257,8 +257,8 @@ class BankAccountTest {
         //equivalence classes:
         // positive, negative, 0
 
-        BankAccount bankAccount1 = new BankAccount("a@b.com",100);
-        BankAccount bankAccount2 = new BankAccount("b@a.com", 500);
+        BankAccount bankAccount1 = new BankAccount("a@b.com","B000", "000000", 100);
+        BankAccount bankAccount2 = new BankAccount("b@a.com", "B000", "000000", 500);
 
         //positive numbers
         //no decimal, or decimal of 2 places, within available balance

@@ -16,11 +16,11 @@ public class BankAccount {
     /**
      * @throws IllegalArgumentException if email is invalid
      */
-    public BankAccount(String email, double startingBalance) {
+    public BankAccount(String email, String acctId, String acctPass, double startingBalance) {
         this.acctFrozen = false;
         this.susAct= false;
-        this.acctId = "B000";
-        this.acctPass = "000000";
+        this.acctId = acctId;
+        this.acctPass = acctPass;
         if (isEmailValid(email) && isAmountValid(startingBalance)) {
             this.email = email;
             this.balance = startingBalance;

@@ -6,7 +6,7 @@ public class checkingAccount extends BankAccount {
      * @param startingBalance
      * @throws IllegalArgumentException if email is invalid
      */
-    public checkingAccount(String email, double startingBalance) {
-        super(email, startingBalance);
+    public checkingAccount(String email, String acctId, String acctPass, double startingBalance) {
+        super(email, acctId, acctPass, startingBalance);
     }
 }

@@ -218,8 +218,9 @@ public class ATMUI {
 
     public static void main(String[] args) throws IOException, IllegalAccessException {
         CentralBank c1 = new CentralBank();
-        c1.createAccount("abc",200,"a@b.com","123");
-        c1.createAccount("BA2",200, "b@p.com", "barns");
+        c1 = c1.CentralBankUI();
+        //c1.createAccount("abc",200,"a@b.com","123");
+        //c1.createAccount("BA2",200, "b@p.com", "barns");
         System.out.println(c1.accountList.toString());
 
         BasicAPI ap = c1;
