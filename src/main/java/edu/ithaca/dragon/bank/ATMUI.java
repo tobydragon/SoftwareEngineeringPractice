@@ -18,7 +18,6 @@ public class ATMUI {
     public ATMUI(BasicAPI apiIN){
         this.basAPI = apiIN;
         this.currState = State.NOTLOGGED;
-
     }
 
     public boolean acctFrozenCheck(String acctID){
