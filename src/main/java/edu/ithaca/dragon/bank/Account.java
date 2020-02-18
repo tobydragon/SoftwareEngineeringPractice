@@ -18,4 +18,6 @@ public interface Account {
 
     boolean getFrozenStatus();
 
+    String getName();
+
     }
