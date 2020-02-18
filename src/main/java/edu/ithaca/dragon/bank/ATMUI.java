@@ -8,7 +8,12 @@ enum ATMUIState {Login, Frozen, Account, Menu, Withdraw, Deposit, Transfer}
     TEST SCRIPT FOR THE UI:
     When asked for the username, input 'ioan'
     When asked for the password, input '123'
-
+    when asked for the ID, input 'ioan'
+    withdraw 2000, should give an error
+    withdraw 100, should pass
+    deposit 1000, should pass,
+    transfer 200 to account ID 'aidan' should pass
+    log out
      */
 
 public class ATMUI {
