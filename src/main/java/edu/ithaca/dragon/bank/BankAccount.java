@@ -1,6 +1,7 @@
 package edu.ithaca.dragon.bank;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 public class BankAccount {
 
@@ -8,7 +9,7 @@ public class BankAccount {
     private double balance;
     private int userID; //same userID data is used for UserAccounts
     //public String TransactionHistory;
-    public ArrayList<String> TransactionHistory;
+    public ArrayList<String>  TransactionHistory = new ArrayList<String>() ;
 
     /**
      * @post The constructor of the BankAccount class
