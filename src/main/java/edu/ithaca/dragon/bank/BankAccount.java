@@ -72,6 +72,9 @@ public class BankAccount {
                 balance -= amount;
                 history.add("Withdraw: " + amount);
             }
+            else{
+                throw new IllegalArgumentException("withdraw amount: " + amount + " is invalid, amount cannot be withdrawn");
+            }
         }else{
             throw new IllegalArgumentException("withdraw amount: " + amount + " is invalid, amount cannot be withdrawn");
         }
