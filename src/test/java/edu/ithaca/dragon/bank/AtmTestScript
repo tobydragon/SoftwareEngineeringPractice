@@ -1,4 +1,4 @@
-
+TestScripts
 
 //deposit
 starting balance- $100
@@ -46,6 +46,20 @@ Login with valid credentials: username-“abc” password-“xyz”
 If not frozen: display options are transfer, deposit, withdraw, and current balance
 Select transfer- it should ask for an amount to transfer and a valid account (“def”) you want to transfer the money to.
 Enter in $500 for transfer
+Should be successful
+Display options are showed again transfer, deposit, withdraw, and current balance
+Current balance would be $200 after transfer
+Logout
+
+//Transfer : no insufficient balance, but more than two decimals
+Starting balance- $700
+Login with valid credentials: username-“abc” password-“xyz”
+If not frozen: display options are transfer, deposit, withdraw, and current balance
+Select transfer- it should ask for an amount to transfer and a valid account (“def”) you want to transfer the money to.
+Enter in $500.78586 for transfer
+Illegal input error occurs telling only two decimal places could be entered
+Display options are showed again transfer, deposit, withdraw, and current balance
+Enter in $500.78 for transfer
 Should be successful
 Display options are showed again transfer, deposit, withdraw, and current balance
 Current balance would be $200 after transfer
