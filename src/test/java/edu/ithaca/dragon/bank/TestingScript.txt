@@ -1,0 +1,18 @@
+All tests should begin with typing "Login a@b.com password"
+
+All tests should end with the command "Logout" followed by the command "Quit"
+
+Testing Withdraw:
+After logging in type:  "Withdraw 50" and press enter, the output should be:  "Your new balance is: 50.0  Please enter any additional commands or Logout to log out."
+Next type:  "Withdraw -50" and press enter, the output should be:  "Cannot withdraw a negative number!  Please enter any additional commands or Logout to log out"
+Next type:  "Withdraw 150" and press enter, the output should be:  "Cannot withdraw more than is in your account!  Please enter any additional commands or Logout to log out"
+
+Testing Deposit:
+After logging in type:  "Deposit 50" and press enter, the output should be:  "Your new balance is: 150.0  Please enter any additional commands or Logout to log out."
+Next type:  "Deposit -50" and press enter, the output should be:  "Cannot deposit a negative number!  Please enter any additional commands or Logout to log out"
+
+Testing Transfer:
+After logging in type:  "Transfer 50 a@c.com" and press enter, the output should be:  "Your new balance is: 50.0  Please enter any additional commands or Logout to log out."
+After logging in type:  "Transfer 50 a@z.com" and press enter, the output should be:  "Cannot find the account to transfer to!  Please enter any additional commands or Logout to log out."
+After logging in type:  "Transfer 150 a@c.com" and press enter, the output should be:  "Cannot transfer more than you have in your account!  Please enter any additional commands or Logout to log out."
+After logging in type:  "Transfer -50 a@c.com" and press enter, the output should be:  "Cannot transfer a negative value!  Please enter any additional commands or Logout to log out."
