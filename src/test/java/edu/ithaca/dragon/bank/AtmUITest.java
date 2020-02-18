@@ -44,7 +44,11 @@ public class AtmUITest {
      * should ask again for commands
      * enter "transfer"
      * should ask for account id
-     * enter "haha@wrong.com" //Josue: it prompts to amount wanted then says bad credentials
+     * enter "haha@wrong.com"
+     * should accept and ask for amount
+     * enter "0.010101"
+     * should say invalid and ask again
+     * enter "5"
      * should say invalid and ask again
      * enter "second@bank.com"
      * should accept and ask for amount
@@ -63,14 +67,18 @@ public class AtmUITest {
      * enter "transfer"
      * should ask for account id
      * enter "third@bank.com"
-     * should reject and say that account is frozen and ask again //Josue: it asks for amount and then prints bad credentials
+     * should accept and ask for amount
+     * enter "10.0"
+     * should reject and say that account is frozen and asks user to select command again
+     * enter "transfer"
      * enter "second@bank.com"
-     * should say that you can't transfer to yourself, idiot, and ask again
+     * should accept and ask for amount
+     * enter "10.0"
+     * should say that you can't transfer to yourself, idiot, and sends user back to commands screen
      * enter "first@bank.com"
      * should accept and ask for an amount
      * enter "210.00"
-     * should say insufficient funds and ask again
-     * enter "cancel"
+     * should say insufficient funds and send user back to commands screen
      * should return to first screen - balance of 205.00 and ask for commands
      * enter "deposit"
      * should ask for amount
@@ -79,7 +87,8 @@ public class AtmUITest {
      * enter "withdraw"
      * should ask for amount
      * enter "600.01"
-     * should say that exceeds maximum withdrawal and ask again //Josue: sends user back to homepage, would have to enter withdraw again
+     * should say that exceeds maximum withdrawal and asks user to select command again
+     * enter "withdraw"
      * enter "205"
      * should accept and return to balance of 500 (changed from 700), ask for commands
      * enter "logout"
@@ -87,14 +96,18 @@ public class AtmUITest {
      * enter "third@bank.com"
      * should ask for password
      * enter "password3"
-     * should show screen that says account is frozen call customer service //Josue: instead sends user to to login again
+     * should show screen that says account is frozen call customer service
      * should also have a line for commands
      * enter "withdraw"
-     * should say that you can't do that while the account is frozen
+     * enter "10"
+     * should say that you can't do that while the account is frozen, asks user to select command again
      * enter "transfer"
-     * should say that you can't do that while the account is frozen
+     * enter "first@bank.com"
+     * enter "10"
+     * should say that you can't do that while the account is frozen, asks user to select command again
      * enter "deposit"
-     * should say that you can't do that while the account is frozen
+     * enter "10"
+     * should say that you can't do that while the account is frozen, asks user to select command again
      * enter "logout"
      * should return to login option
      */

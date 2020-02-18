@@ -66,9 +66,13 @@ public class AtmUI {
                 System.out.println("Input error. Exiting.");
                 System.exit(1);
             }
-            catch (AccountDoesNotExistException | AccountFrozenException | IllegalArgumentException e) {
+            catch (AccountDoesNotExistException | IllegalArgumentException e) {
                 // Added Josue
                 System.out.println("Account error, bad credentials and try again");
+            }
+            catch (AccountFrozenException e) {
+                System.out.println("You cannot deposit, account is frozen.");
+                transactionComplete = true;
             }
             finally {
                 if (!transactionComplete) {
@@ -94,9 +98,13 @@ public class AtmUI {
                 System.out.println("Input error. Exiting.");
                 System.exit(1);
             }
-            catch (AccountDoesNotExistException | AccountFrozenException | IllegalArgumentException e) {
+            catch (AccountDoesNotExistException | IllegalArgumentException e) {
                 // Added Josue
                 System.out.println("Account error, bad credentials and try again");
+            }
+            catch (AccountFrozenException e) {
+                System.out.println("You cannot withdraw, account is frozen.");
+                transactionComplete = true;
             }
             catch (InsufficientFundsException e) {
                 System.out.println("Insufficient funds. Transaction cancelled.");
@@ -121,6 +129,11 @@ public class AtmUI {
                 System.out.println("Enter the account id to transfer to.");
                 String acctId = reader.readLine();
                 if (acctId.equals("exit")) exit();
+                if (acctId.equals(currentId)) {
+                    System.out.println("You cannot transfer funds to yourself");
+                    transactionComplete = true;
+                    break;
+                }
 
                 System.out.println("Enter the amount to be transfered.");
                 String amtStr = reader.readLine();
@@ -139,7 +152,7 @@ public class AtmUI {
                 System.out.println("Account error, bad credentials and try again");
             }
             catch (AccountFrozenException e) {
-                System.out.println("Given account is frozen. Transaction cancelled.");
+                System.out.println("You cannot transfer, account is frozen.");
                 transactionComplete = true;
             }
             catch (InsufficientFundsException e) {
@@ -176,21 +189,18 @@ public class AtmUI {
                 try {
                     if (atm.isFrozen(currentId)) {
                         System.out.println("This account has been frozen and cannot be accessed" +
-                                "For assistance, call customer service at 1-888-555-1212");
-                        logout();
+                                " For assistance, call customer service at 1-888-555-1212");
                     }
-                    else {
-                        System.out.println("Your balance is " + String.format("%.2f", atm.checkBalance(currentId)));
-                        System.out.println("Enter a command: deposit, withdraw, transfer or logout");
-                        String command = reader.readLine();
+                    System.out.println("Your balance is " + String.format("%.2f", atm.checkBalance(currentId)));
+                    System.out.println("Enter a command: deposit, withdraw, transfer or logout");
+                    String command = reader.readLine();
 
-                        if (command.equals("deposit")) deposit(reader);
-                        else if (command.equals("withdraw")) withdraw(reader);
-                        else if (command.equals("transfer")) transfer(reader);
-                        else if (command.equals("logout")) logout();
-                        else if (command.equals("exit")) exit();
-                        else System.out.println("Invalid command. Try again.");
-                    }
+                    if (command.equals("deposit")) deposit(reader);
+                    else if (command.equals("withdraw")) withdraw(reader);
+                    else if (command.equals("transfer")) transfer(reader);
+                    else if (command.equals("logout")) logout();
+                    else if (command.equals("exit")) exit();
+                    else System.out.println("Invalid command. Try again.");
                 }
                 catch (IOException e) {
                     System.out.println("Input error. Exiting.");
