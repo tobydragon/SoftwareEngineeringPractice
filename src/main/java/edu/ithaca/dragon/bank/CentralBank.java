@@ -27,8 +27,8 @@ public class CentralBank implements AdvancedAPI, AdminAPI, BasicAPI {
                 return accountList.get(i);
             }
         }
-
-        return null;
+        throw new NullPointerException("Null Pointer - ID not found");
+        //return null;
 
     }
 
