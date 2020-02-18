@@ -7,9 +7,7 @@ public class ATMUITest {
         CentralBank testBank = new CentralBank("NewBank");
         ATMUI testAtmUI = new ATMUI(testBank);
 
-        //user with savings and checking
         testBank.createAccount("tester1", 1000.0,"password", false);
-        testBank.createAccount("tester1", 5000.0, "password",true);
 
         //user with just checking
         testBank.createAccount("tester2", 2500.0,"password",false);
@@ -19,6 +17,5 @@ public class ATMUITest {
 
 
         testAtmUI.logIn();
-
     }
 }
