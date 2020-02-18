@@ -15,8 +15,6 @@
 
 TO DO:
 
-SW: create static central bank method
-
 
 CE: ATMUI class
 
