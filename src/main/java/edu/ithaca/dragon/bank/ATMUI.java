@@ -4,6 +4,13 @@ import java.util.Scanner;
 
 enum ATMUIState {Login, Frozen, Account, Menu, Withdraw, Deposit, Transfer}
 
+    /*
+    TEST SCRIPT FOR THE UI:
+    When asked for the username, input 'ioan'
+    When asked for the password, input '123'
+
+     */
+
 public class ATMUI {
 
     private static CentralBank bank;

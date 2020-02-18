@@ -12,11 +12,15 @@ public class ATM implements BasicAPI {
     }
 
     public boolean confirmCredentials(String username, String password) {
+
         Iterator<User> itr = this.bank.users.iterator();
         while (itr.hasNext()) {
             User current = itr.next();
-            if (current.getUsername() == username) {
-                if (current.getPassword() == password) {
+            System.out.println(current.getUsername());
+            System.out.println(username);
+            if (current.getUsername().equals(username)) {
+                System.out.println("hi");
+                if (current.getPassword().equals(password)) {
                     return true;
                 }
             }
