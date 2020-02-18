@@ -7,6 +7,8 @@ public interface BasicAPI {
 
     boolean confirmCredentials(String acctId, String password);
 
+    User getUser(String username, String password);
+
     double checkBalance(String acctId);
 
     void withdraw(String acctId, double amount) throws InsufficientFundsException;

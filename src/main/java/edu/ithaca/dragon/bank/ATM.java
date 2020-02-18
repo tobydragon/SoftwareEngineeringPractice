@@ -25,6 +25,19 @@ public class ATM implements BasicAPI {
         return false;
     }
 
+    public User getUser(String username, String password) {
+        Iterator<User> itr = this.bank.users.iterator();
+        while (itr.hasNext()) {
+            User current = itr.next();
+            if (current.getUsername() == username) {
+                if (current.getPassword() == password) {
+                    return current;
+                }
+            }
+        }
+        return null;
+    }
+
     public double checkBalance(String acctId) {
         Iterator<BankAccount> itr = this.bank.accounts.iterator();
         while (itr.hasNext()) {

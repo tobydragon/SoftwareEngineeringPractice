@@ -2,7 +2,7 @@ package edu.ithaca.dragon.bank;
 
 import java.util.Scanner;
 
-enum ATMUIState {Login, Logout, Frozen, Menu, Withdraw, Deposit, Transfer}
+enum ATMUIState {Login, Logout, Frozen, Account, Menu, Withdraw, Deposit, Transfer}
 
 public class ATMUI {
 
@@ -10,6 +10,7 @@ public class ATMUI {
     private static BasicAPI atm;
     private static ATMUIState currentState;
     private static BankAccount currentAccount;
+    private static User currentUser;
     private static Scanner in;
 
     public static void main(String[] args) throws IllegalArgumentException,InsufficientFundsException {
@@ -32,6 +33,8 @@ public class ATMUI {
                 Withdraw();
             } else if(currentState == ATMUIState.Transfer) {
                 Transfer();
+            } else if(currentState == ATMUIState.Account) {
+                Account();
             }
         }
     }
@@ -39,7 +42,36 @@ public class ATMUI {
 
 
     static void Login() {
+        System.out.println("Please enter your username and password: ");
+        System.out.print("Username: ");
+        String username = in.nextLine();
+        System.out.print("\nPassword: ");
+        String password = in.nextLine();
 
+        if(atm.confirmCredentials(username, password)) {
+            currentUser = atm.getUser(username, password);
+            currentState = ATMUIState.Account;
+        }
+        else {
+            System.out.println("Error: invalid credentials, please try again.");
+            currentState = ATMUIState.Login;
+        }
+    }
+
+    static void Account() {
+        System.out.println("Enter account ID: ");
+        String accID = in.nextLine();
+        try {
+            currentAccount = currentUser.getBankAccount(accID);
+            if(currentAccount.isFrozen()) {
+                currentState = ATMUIState.Frozen;
+            }
+            else {
+                currentState = ATMUIState.Menu;
+            }
+        } catch (Exception e){
+            System.out.println("Error: invalid account ID, please try again.");
+        }
     }
 
     static void Menu() {
