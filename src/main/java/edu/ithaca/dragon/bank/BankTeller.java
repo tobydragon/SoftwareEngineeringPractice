@@ -70,6 +70,11 @@ public class BankTeller implements AdvancedAPI {
         return customers.getNumCustomers();
 
     }
+
+    public boolean isFrozen(String actId) throws IllegalArgumentException{
+        return customers.getFrozen(actId);
+    }
+
     public static boolean isAmountValid(double amountIn){
         if (amountIn < 0) return false;
         double scale = Math.pow(10, 9);

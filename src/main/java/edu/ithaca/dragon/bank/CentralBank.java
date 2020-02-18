@@ -30,6 +30,8 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
         return null;
     }
 
+    public boolean isFrozen(String actId) throws IllegalArgumentException{return false;}
+
 
     //----------------- AdvancedAPI methods -------------------------//
 

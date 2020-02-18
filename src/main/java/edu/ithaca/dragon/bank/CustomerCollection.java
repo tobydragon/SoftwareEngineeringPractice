@@ -14,7 +14,7 @@ public class CustomerCollection {
         customers.put(idIn, new Customer(idIn, passwordIn));
     }
 
-    public void deposit(String ID, double amount){
+    public void deposit(String ID, double amount) throws IllegalArgumentException{
         if(customers.get(ID)== null)throw new IllegalArgumentException("Account doesn't exist");
         customers.get(ID).deposit(amount);
     }
@@ -31,17 +31,16 @@ public class CustomerCollection {
     }
 
     public void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws InsufficientFundsException, IllegalArgumentException {
-        if(amount < 0 || (amount * 100) % 1 != 0)
-            throw new IllegalArgumentException("invalid input");
-        else{
-            customers.get(acctIdToWithdrawFrom).withdraw(amount);
-            customers.get(acctIdToDepositTo).deposit(amount);;
-        }
+        if(customers.get(acctIdToDepositTo) == null ) throw new IllegalArgumentException("No such deposit account");
+        if( customers.get(acctIdToWithdrawFrom)==null) throw new IllegalArgumentException("No such withdraw account");
+        customers.get(acctIdToWithdrawFrom).withdraw(amount);
+        customers.get(acctIdToDepositTo).deposit(amount);
+
     }
 
     public boolean checkCredentials(String ID, String password){
         if(customers.get(ID) == null) throw new IllegalArgumentException(("Account does not exist"));
-        return customers.get(ID).getPassword()==password;
+        return customers.get(ID).getPassword().equals(password);
     }
 
     public void createAccount(String actID, double startingBalance) throws IllegalArgumentException{
