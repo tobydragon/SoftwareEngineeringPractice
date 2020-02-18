@@ -16,6 +16,7 @@ public class ATMUITest {
         Scanner sc = new Scanner(System.in);
         String output;
 
+        System.out.println("Type Login [email] [password] to begin!");
         do{
             String input = sc.nextLine();
             output = testUI.parse(input);
@@ -25,6 +26,9 @@ public class ATMUITest {
     }
 
     private static void SetUpBank(AdvancedAPI setupTeller) {
-
+        try {
+            setupTeller.createAccount("a@b.com", "password", 100);
+            setupTeller.createAccount("a@c.com", "secret", 100);
+        }catch(Exception e){};
     }
 }
