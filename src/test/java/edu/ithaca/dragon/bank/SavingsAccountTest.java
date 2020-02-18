@@ -51,6 +51,19 @@ public class SavingsAccountTest {
     }
 
     @Test
+    void depositTest(){
+        SavingsAccount account1 = new SavingsAccount("a@b.com", 200, "s1");
+        assertThrows(IllegalArgumentException.class, ()-> account1.deposit(-100)); // integration test invalid equivalence class (negative amount, middle case)
+        assertThrows(IllegalArgumentException.class, ()-> account1.deposit(-0.01)); // integration test invalid equivalence class (negative amount, border case)
+        assertThrows(IllegalArgumentException.class, ()-> account1.deposit(0.000001)); // integration test invalid equivalence class (too many decimal places, middle case)
+        assertThrows(IllegalArgumentException.class, ()-> account1.deposit(0.001)); // integration test invalid equivalence class (too many decimal places, border case)
+        account1.deposit(100); // integration test valid equivalence class (valid amount, middle case)
+        assertEquals(300, account1.getBalance());
+        account1.deposit(0.01); // integration test valid equivalence class (valid amount, border case)
+        assertEquals(300.01, account1.getBalance());
+    }
+
+    @Test
     void applyCompoundInterestTest(){
         SavingsAccount account1 = new SavingsAccount("a@b.com", 1000, "s1");
         account1.setInterestRate(10);
@@ -92,7 +105,6 @@ public class SavingsAccountTest {
         assertThrows(IllegalArgumentException.class, ()-> account1.withdraw(0.001)); // unit test invalid equivalence class (decimal places more than 2, border case)
         assertThrows(InsufficientFundsException.class, ()-> account1.withdraw(300)); // unit test invalid equivalence class (larger than account amount, middle case)
         assertThrows(InsufficientFundsException.class, ()-> account1.withdraw(200.01)); // unit test invalid equivalence class (larger than account amount, border case)
-        assertThrows(IllegalArgumentException.class, ()-> account1.withdraw(0)); // unit test invalid equivalence class (invalid amount, middle case)
         SavingsAccount account2 = new SavingsAccount("a@b.com", 200, "s2");
         account2.setDailyMax(10);
         assertThrows(InsufficientFundsException.class, ()-> account2.withdraw(20)); // unit test invalid equivalence class (larger than remaining portion of daily max, middle case)
@@ -130,7 +142,6 @@ public class SavingsAccountTest {
         account2.setDailyMax(10);
         assertThrows(IllegalArgumentException.class, ()-> account1.transfer(account2, -10)); // unit test invalid equivalence class (negative value, middle case)
         assertThrows(IllegalArgumentException.class, ()-> account1.transfer(account2, -0.01)); // unit test invalid equivalence class (negative value, border case)
-        assertThrows(IllegalArgumentException.class, ()-> account1.transfer(account2, 0)); // unit test invalid equivalence class (zero value, middle case)
         assertThrows(IllegalArgumentException.class, ()-> account2.transfer(account1, 0.00001)); // unit test invalid equivalence class (decimal place limit, middle case)
         assertThrows(IllegalArgumentException.class, ()-> account2.transfer(account1, 0.001)); // unit test invalid equivalence class (decimal place limit, border case)
         assertThrows(IllegalArgumentException.class, ()-> account1.transfer(account1, 10)); // unit test invalid equivalence class (invalid account to transfer to, middle case)
