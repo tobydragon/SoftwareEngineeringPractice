@@ -3,8 +3,6 @@ package edu.ithaca.dragon.bank;
 import java.util.Scanner;
 
 public class ATMUI {
-    private int actionCount;
-    private BankAccount account;
     private CentralBank bank;
     private Scanner sc;
 
