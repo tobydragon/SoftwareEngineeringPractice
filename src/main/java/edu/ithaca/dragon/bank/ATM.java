@@ -16,10 +16,7 @@ public class ATM implements BasicAPI {
         Iterator<User> itr = this.bank.users.iterator();
         while (itr.hasNext()) {
             User current = itr.next();
-            System.out.println(current.getUsername());
-            System.out.println(username);
             if (current.getUsername().equals(username)) {
-                System.out.println("hi");
                 if (current.getPassword().equals(password)) {
                     return true;
                 }
@@ -33,8 +30,8 @@ public class ATM implements BasicAPI {
         Iterator<User> itr = this.bank.users.iterator();
         while (itr.hasNext()) {
             User current = itr.next();
-            if (current.getUsername() == username) {
-                if (current.getPassword() == password) {
+            if (current.getUsername().equals(username)) {
+                if (current.getPassword().equals(password)) {
                     return current;
                 }
             }
@@ -46,7 +43,7 @@ public class ATM implements BasicAPI {
         Iterator<BankAccount> itr = this.bank.accounts.iterator();
         while (itr.hasNext()) {
             BankAccount current = itr.next();
-            if (current.getAcctId() == acctId) {
+            if (current.getAcctId().equals(acctId)) {
                 return current.getBalance();
             }
         }
@@ -58,7 +55,7 @@ public class ATM implements BasicAPI {
         Iterator<BankAccount> itr = this.bank.accounts.iterator();
         while (itr.hasNext()) {
             BankAccount current = itr.next();
-            if (current.getAcctId() == acctId) {
+            if (current.getAcctId().equals(acctId)) {
                 if (!current.isAmountValid(amount)) {
                     throw new IllegalArgumentException("Invalid Amount");
                 }
@@ -104,7 +101,7 @@ public class ATM implements BasicAPI {
         Iterator<BankAccount> itr = this.bank.accounts.iterator();
         while (itr.hasNext()) {
             BankAccount current = itr.next();
-            if (current.getAcctId() == acctIdToWithdrawFrom) {
+            if (current.getAcctId().equals(acctIdToWithdrawFrom)) {
                 if (!current.isAmountValid(amount)) {
                     throw new IllegalArgumentException("Invalid Amount");
                 }
@@ -119,7 +116,7 @@ public class ATM implements BasicAPI {
                 }
             }
 
-            if (current.getAcctId() == acctIdToDepositTo) {
+            if (current.getAcctId().equals(acctIdToDepositTo)) {
                 if (!current.isAmountValid(amount)) {
                     throw new IllegalArgumentException("Invalid Amount");
                 }
@@ -144,7 +141,7 @@ public class ATM implements BasicAPI {
         Iterator<BankAccount> itr = this.bank.accounts.iterator();
         while (itr.hasNext()) {
             BankAccount current = itr.next();
-            if (current.getAcctId() == acctId) {
+            if (current.getAcctId().equals(acctId)) {
                 return current.getTransactionHistory();
             }
         }
