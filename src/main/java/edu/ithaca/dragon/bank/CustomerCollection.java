@@ -40,7 +40,8 @@ public class CustomerCollection {
     }
 
     public boolean checkCredentials(String ID, String password){
-        return false;
+        if(customers.get(ID) == null) throw new IllegalArgumentException(("Account does not exist"));
+        return customers.get(ID).getPassword()==password;
     }
 
     public void createAccount(String actID, double startingBalance) throws IllegalArgumentException{
@@ -55,6 +56,16 @@ public class CustomerCollection {
 
     public int getNumCustomers(){
         return customers.size();
+    }
+
+    public void toggleFreeze(String actID){
+        if(customers.get(actID)== null)throw new IllegalArgumentException("Account doesn't exist");
+        customers.get(actID).toggleFreeze();
+    }
+
+    public boolean getFrozen(String actID){
+        if(customers.get(actID)== null)throw new IllegalArgumentException("Account doesn't exist");
+        return customers.get(actID).getFrozen();
     }
 
 }

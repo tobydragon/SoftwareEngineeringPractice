@@ -91,4 +91,12 @@ public class Customer {
         validChar.add('.');
         return validChar;
     }
+
+    public void toggleFreeze(){
+        checking.toggleFrozen();
+    }
+
+    public boolean getFrozen(){
+        return checking.getFrozen();
+    }
 }
