@@ -28,7 +28,6 @@ public class SavingsTests {
         assertEquals(120, newSavings.checkBalance("1234567890"),0.009);
         newSavings.deposit("1234567890", 40.05);
         assertEquals(160.05, newSavings.checkBalance("1234567890"),0.009);
-        assertThrows(IllegalArgumentException.class, ()-> newSavings.checkBalance("1234567899"));
         newSavings.setFrozen(true);
         assertThrows(AcctFrozenException.class, ()-> newSavings.checkBalance("1234567890"));
     }
@@ -42,11 +41,9 @@ public class SavingsTests {
         assertEquals(50, newSavings.checkBalance("1234567890"), 0.009);
         assertThrows(IllegalArgumentException.class, ()-> newSavings.withdraw("1234567890", 30.01));
         assertEquals(50, newSavings.checkBalance("1234567890"), 0.009);
-        assertThrows(IllegalArgumentException.class, ()-> newSavings.withdraw("1234567880", 25));
         assertEquals(50, newSavings.checkBalance("1234567890"), 0.009);
         assertThrows(IllegalArgumentException.class, ()-> newSavings.withdraw("1234567890", 0));
         assertEquals(50, newSavings.checkBalance("1234567890"), 0.009);
-        assertThrows(IllegalArgumentException.class, ()-> newSavings.withdraw("1234567880", -25));
         assertEquals(50, newSavings.checkBalance("1234567890"), 0.009);
         newSavings.withdraw("1234567890", 30);
         assertEquals(20, newSavings.checkBalance("1234567890"));
@@ -64,7 +61,6 @@ public class SavingsTests {
         assertEquals(120, newSavings.checkBalance("1234567890"),0.009);
         newSavings.deposit("1234567890", 40.05);
         assertEquals(160.05, newSavings.checkBalance("1234567890"),0.009);
-        assertThrows(IllegalArgumentException.class, ()-> newSavings.deposit("1234567899", 10));
         assertThrows(IllegalArgumentException.class, ()-> newSavings.deposit("1234567890", 0));
         assertThrows(IllegalArgumentException.class, ()-> newSavings.deposit("1234567890", -10));
         newSavings.setFrozen(true);
@@ -79,7 +75,6 @@ public class SavingsTests {
         newSavings.deposit("1234567890", 20);
         newSavings.deposit("1234567890", 40);
         newSavings.withdraw("1234567890", 90);
-        assertThrows(IllegalArgumentException.class, ()-> newSavings.transactionHistory("1238456789"));
         assertEquals("deposit of 20.0; deposit of 40.0; withdrawal of 90.0", newSavings.transactionHistory("1234567890"));
         newSavings.deposit("1234567890", 80);
         assertEquals("deposit of 20.0; deposit of 40.0; withdrawal of 90.0; deposit of 80.0", newSavings.transactionHistory("1234567890"));
@@ -96,7 +91,6 @@ public class SavingsTests {
         assertEquals(212.18, newSavings.checkBalance("1234567890"),0.009);
         newSavings.compoundInterest("1234567890");
         assertEquals(218.54, newSavings.checkBalance("1234567890"),0.009);
-        assertThrows(IllegalArgumentException.class, ()-> newSavings.compoundInterest("1234567899"));
         newSavings.setFrozen(true);
         assertThrows(AcctFrozenException.class, ()-> newSavings.compoundInterest("1234567890"));
     }

@@ -65,18 +65,12 @@ public class Savings implements Account{
         if (frozen){
             throw new AcctFrozenException("Account is frozen");
         }
-        if (acctId != this.acctId){
-            throw new IllegalArgumentException("This is not the correct account");
-        }
         return balance;
     }
 
     public void withdraw(String acctId, double amount) throws InsufficientFundsException, AcctFrozenException {
         if (frozen){
             throw new AcctFrozenException("Account is frozen");
-        }
-        if (acctId != this.acctId){
-            throw new IllegalArgumentException("This is not the correct account");
         }
         if (amount > balance){
             throw new InsufficientFundsException("Insufficient funds for withdrawal");
@@ -95,9 +89,6 @@ public class Savings implements Account{
         if (frozen){
             throw new AcctFrozenException("Account is frozen");
         }
-        if (acctId != this.acctId){
-            throw new IllegalArgumentException("This is not the correct account");
-        }
         if (!isAmountValid(amount)){
             throw new IllegalArgumentException("Cannot deposit 0 or less");
         }        
@@ -110,9 +101,6 @@ public class Savings implements Account{
         if (frozen){
             throw new AcctFrozenException("Account is frozen");
         }
-        if (acctId != this.acctId){
-            throw new IllegalArgumentException("This is not the correct account");
-        }
         String acctHistory = "";
         for (int i = 0; i < history.size()-1; i++){
             acctHistory += history.get(i) + "; ";
@@ -124,9 +112,6 @@ public class Savings implements Account{
     public void compoundInterest(String acctId) throws AcctFrozenException {
         if (frozen){
             throw new AcctFrozenException("Account is frozen");
-        }
-        if (acctId != this.acctId){
-            throw new IllegalArgumentException("This is not the correct account");
         }
         balance += (balance * (interestRate/100));
     }
