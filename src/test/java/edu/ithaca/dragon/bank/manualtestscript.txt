@@ -1,0 +1,79 @@
+Test that demonstrates a successful login, deposit and transfer process:
+User has both a checking and savings account
+Checking id: 1111111111; pass: dog123; balance: 500
+Savings id: 4444444444; pass: narwhals33; balance: 450; maxWithdraw: 250
+User logs into checking account with correct info
+Current balance should display as $500
+User requests deposit of $350
+Current balance should display as $850
+User requests to transfer $400 to their savings
+User enters correct info for both accounts
+Current balance should display as $450
+User logs out of checking account
+User logs into savings with correct info
+Current balance should display as $850
+User logs out
+Test that demonstrates a user attempting to transfer to a frozen account:
+User has both a checking and savings account
+Checking id: 2222222222; pass: frog456; balance: 700
+Savings id: 5555555555; pass: cheesybeans456; balance: 650; maxWithdraw: 800
+Savings account is frozen
+User logs into checking with correct info
+User requests to transfer $150 from checking to savings
+User inputs correct info
+Error message should be printed telling user one of the accounts is frozen
+User logs out of checking
+User logs into savings with correct info
+Error message prints telling user the account is frozen, and to call the help number
+
+Test that demonstrates a user attempting login and transfer with wrong info:
+User has both a checking and savings account
+Checking id: 1111111111; pass: dog123; balance: 500
+Savings id: 4444444444; pass: narwhals33; balance: 450; maxWithdraw: 250
+User logs into checking with correct id, password “dog12”
+Should print error message and ask to try again
+User correctly logs in
+User requests to transfer $100 to savings
+Correct info for checking, enters savings id as “00000000000”, some password
+Current balance should display as $500
+User successfully tries again with correct info
+Current balance should display as $400
+User logs out
+Test that demonstrates a withdraw attempt with insufficient funds:
+User has a checking account
+Checking id: 3333333333; pass: iluvmoney111; balance: 400
+User logs into checking account with correct info
+Requests withdrawal of $500
+Error message prints telling user that the amount exceeds their balance
+Current balance should display as $400
+User logs out
+Test demonstrating a transfer attempt with the source account having insufficient funds:
+User has both a checking and savings account
+Checking id: 1111111111; pass: dog123; balance: 500
+Savings id: 4444444444; pass: comp345; balance: 450; maxWithdraw: 250
+User requests to transfer $550 from checking to savings
+Error message prints telling user that the amount exceeds their balance
+Current balance should display as $500
+User logs out
+Test demonstrating a withdraw attempt from savings that exceeds maxWithdraw:
+User has a savings account
+Savings id: 6666666666; pass: beagle777; balance: 800; maxWithdraw: 125
+User requests to withdraw $150
+Error message prints telling user the amount exceeds their maxWithdraw
+Current balance should display as $800
+User logs out
+Test demonstrating a user attempting a transaction with a negative number:
+User has a checking account
+Checking id: 1111111111; pass: dog123; balance: 500
+User logs into checking account with correct info
+Requests withdrawal of -$600
+Error message prints telling user the amount is invalid
+User logs out
+Test demonstrating a user attempting a transaction with a value with more than 2 decimal places:
+User has a checking account
+Checking id: 111111111; pass: dog123; balance: 500
+User logs into checking account with correct info
+Requests a deposit of $40.45069
+Error message prints telling user the amount is invalid
+User logs out
+

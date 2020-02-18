@@ -13,7 +13,7 @@ public class ATM implements BasicAPI{
         if (acct == null){
             throw new IllegalArgumentException("Account not found");
         }
-        if (acct.getAcctPassword() != password){
+        if (!acct.getAcctPassword().equals(password)){
             return false;
         }
         return true;
