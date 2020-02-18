@@ -38,7 +38,10 @@ public class AtmUI {
                 System.out.println("Input error. Exiting.");
                 System.exit(1);
             }
-            catch (AccountDoesNotExistException e) {}
+            catch (AccountDoesNotExistException e) {
+                // Added Josue
+                System.out.println("Account error, bad credentials and try again");
+            }
             finally {
                 if (!loggedIn) {
                     System.out.println("Login information incorrect. Please try again.");
@@ -63,7 +66,10 @@ public class AtmUI {
                 System.out.println("Input error. Exiting.");
                 System.exit(1);
             }
-            catch (AccountDoesNotExistException | AccountFrozenException | IllegalArgumentException e) {}
+            catch (AccountDoesNotExistException | AccountFrozenException | IllegalArgumentException e) {
+                // Added Josue
+                System.out.println("Account error, bad credentials and try again");
+            }
             finally {
                 if (!transactionComplete) {
                     System.out.println("Invalid amount. Please try again.");
@@ -88,7 +94,10 @@ public class AtmUI {
                 System.out.println("Input error. Exiting.");
                 System.exit(1);
             }
-            catch (AccountDoesNotExistException | AccountFrozenException | IllegalArgumentException e) {}
+            catch (AccountDoesNotExistException | AccountFrozenException | IllegalArgumentException e) {
+                // Added Josue
+                System.out.println("Account error, bad credentials and try again");
+            }
             catch (InsufficientFundsException e) {
                 System.out.println("Insufficient funds. Transaction cancelled.");
                 transactionComplete = true;
@@ -125,7 +134,10 @@ public class AtmUI {
                 System.out.println("Input error. Exiting.");
                 System.exit(1);
             }
-            catch (AccountDoesNotExistException | IllegalArgumentException e) {}
+            catch (AccountDoesNotExistException | IllegalArgumentException e) {
+                // Added Josue
+                System.out.println("Account error, bad credentials and try again");
+            }
             catch (AccountFrozenException e) {
                 System.out.println("Given account is frozen. Transaction cancelled.");
                 transactionComplete = true;
@@ -184,7 +196,10 @@ public class AtmUI {
                     System.out.println("Input error. Exiting.");
                     System.exit(1);
                 }
-                catch (AccountDoesNotExistException e) {}
+                catch (AccountDoesNotExistException e) {
+                    // Added Josue
+                    System.out.println("Account error, bad credentials and try again");
+                }
             }
         }
     }
