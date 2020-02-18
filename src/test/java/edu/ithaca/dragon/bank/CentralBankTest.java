@@ -136,4 +136,23 @@ public class CentralBankTest {
             assertEquals((i+1)*200, bossMan.calcTotalAssets()); //200 per account
         }
     }
+    @Test
+    void confirmCredentialsTest(){
+        CentralBank myBank = new CentralBank();
+        BasicAPI atm = myBank;
+        AdvancedAPI teller = myBank;
+
+        String[] emails = new String[]{"a@b.com", "a@b.com", "e@f.com", "g@h.com"};
+        int[] balances = new int[]{100,200,300,400};
+        String[] expectedIds = new String[]{"1C", "2S", "3C", "4S"};
+        String[] acctTypes = new String[]{"Checking","Savings"};
+        String[] passwords = new String[]{"aa", "bb", "cc", "dd"};
+
+        for(int i=0; i< emails.length; i++) {
+            teller.createAccount(emails[i], balances[i], acctTypes[i%2]);
+            myBank.addPassword(passwords[i]);
+            assertTrue(atm.confirmCredentials(emails[i],passwords[i]));
+        }
+
+    }
 }
