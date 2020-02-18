@@ -11,7 +11,7 @@ public class ATMUI {
         sc = new Scanner(System.in);
     }
 
-    public void logIn(){
+    public void logIn() throws InsufficientFundsException {
         String acctId;
         String password;
         System.out.println("Hi! Please type in your Account ID below:");
@@ -32,7 +32,7 @@ public class ATMUI {
         }
     }
     
-    public void frozenAcctMessage(){
+    public void frozenAcctMessage() throws InsufficientFundsException {
         System.out.println("Your account is frozen.");
         System.out.println("Please contact customer service: 1-888-555-1212.");
         System.out.println("Logout (l): ");
@@ -44,7 +44,7 @@ public class ATMUI {
         }
     }
     
-    public void displayBalance(String acctId){
+    public void displayBalance(String acctId) throws InsufficientFundsException {
         double balance = bank.checkBalance(acctId);
         System.out.println("Balance: $" + balance);
         System.out.println("withdraw(w), deposit(d), transfer(t), or quit(q)");
@@ -62,16 +62,24 @@ public class ATMUI {
         }
     }
     
-    public void withdraw(String acctId){
-        //TODO
+    public void withdraw(String acctId) throws InsufficientFundsException {
+        System.out.println("How much would you like to withdraw?");
+        double amount = sc.nextDouble();
+        bank.withdraw(acctId,amount);
     }
 
     public void deposit(String acctId){
-        //TODO
+        System.out.println("How much would you like to deposit?");
+        double amount = sc.nextDouble();
+        bank.deposit(acctId,amount);
     }
 
-    public void transfer(String acctId){
-        //TODO
+    public void transfer(String acctId) throws InsufficientFundsException {
+        System.out.println("How much would you like to transfer?");
+        double amount = sc.nextDouble();
+        System.out.println("What is the account ID of the account you are transferring to?");
+        String transferTo = sc.nextLine();
+        bank.transfer(acctId, transferTo, amount);
     }
 
 }
