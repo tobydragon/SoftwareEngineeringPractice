@@ -38,6 +38,11 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
     //----------------- edu.ithaca.dragon.bank.BasicAPI methods -------------------------//
 
     public boolean confirmCredentials(String email, String password) {
+        for (int i = 0; i < numEmails; i++) {
+            if(emails[i] == email && passwords[i] == password){
+                return true;
+            }
+        }
         return false;
     }
 

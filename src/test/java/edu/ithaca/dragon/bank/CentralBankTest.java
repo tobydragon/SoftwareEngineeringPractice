@@ -1,6 +1,7 @@
 package edu.ithaca.dragon.bank;
 
 import org.junit.jupiter.api.Test;
+import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -144,14 +145,14 @@ public class CentralBankTest {
 
         String[] emails = new String[]{"a@b.com", "a@b.com", "e@f.com", "g@h.com"};
         int[] balances = new int[]{100,200,300,400};
-        String[] expectedIds = new String[]{"1C", "2S", "3C", "4S"};
         String[] acctTypes = new String[]{"Checking","Savings"};
         String[] passwords = new String[]{"aa", "bb", "cc", "dd"};
 
         for(int i=0; i< emails.length; i++) {
             teller.createAccount(emails[i], balances[i], acctTypes[i%2]);
             myBank.addPassword(passwords[i]);
-            assertTrue(atm.confirmCredentials(emails[i],passwords[i]));
+            Boolean result = atm.confirmCredentials(emails[i],passwords[i]);
+            assertTrue(result);
         }
 
     }
