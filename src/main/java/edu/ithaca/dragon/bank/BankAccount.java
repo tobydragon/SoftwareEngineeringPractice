@@ -1,10 +1,14 @@
 package edu.ithaca.dragon.bank;
 
+import java.util.ArrayList;
+
 public class BankAccount {
 
     private String email;
     private double balance;
     private int userID; //same userID data is used for UserAccounts
+    //public String TransactionHistory;
+    public ArrayList<String> TransactionHistory;
 
     /**
      * @post The constructor of the BankAccount class
@@ -69,6 +73,8 @@ public class BankAccount {
         }
         if (amount <= balance) {
              balance -= amount;
+            String transaction ="withdraw";
+            addToTransactionHistory(transaction,amount);
         }else {
             throw new InsufficientFundsException("Not enough money");
         }
@@ -100,6 +106,8 @@ public class BankAccount {
     public void transfer(double amount, BankAccount otherAccount) throws InsufficientFundsException, IllegalArgumentException{
         withdraw(amount);
         otherAccount.deposit(amount);
+        String transaction ="transfer";
+        addToTransactionHistory(transaction,amount);
     }
 
     /**
@@ -113,6 +121,8 @@ public class BankAccount {
             throw new IllegalArgumentException("Illegal amount provided");
         }else{
             balance += amount;
+            String transaction ="deposit";
+            addToTransactionHistory(transaction,amount);
         }
     }
 
@@ -179,5 +189,24 @@ public class BankAccount {
 
 
     }
+    public void addToTransactionHistory(String transaction, double amount){
+        String amount1 = ""+amount;
+        //int i=0;
+        //int j=1;
+        String recordTransaction = transaction+" "+amount1;
+        TransactionHistory.add(recordTransaction);
 
+
+
+
+    }
+    public String getTransactionHistory(String email, int userID,String transactionToFind) {
+        if (email==this.email && userID==this.userID){
+            return TransactionHistory.get(TransactionHistory.indexOf(transactionToFind));
+
+        }
+
+        //return TransactionHistory;
+        return null;
+    }
 }
