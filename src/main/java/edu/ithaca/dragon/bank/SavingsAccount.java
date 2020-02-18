@@ -38,7 +38,7 @@ public class SavingsAccount extends BankAccount{
      */
     @Override
     public void transfer(BankAccount account, double amount) throws InsufficientFundsException {
-        if(!isAmountValid(amount) || amount == 0){
+        if(!isAmountValid(amount)){
             throw new IllegalArgumentException("Invalid amount");
         }
         if(account == this){
