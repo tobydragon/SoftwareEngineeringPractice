@@ -2,6 +2,7 @@ package edu.ithaca.dragon.bank;
 
 import java.security.PublicKey;
 import java.util.Collection;
+import java.util.Scanner;
 
 public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
 
@@ -37,6 +38,11 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
     //----------------- edu.ithaca.dragon.bank.BasicAPI methods -------------------------//
 
     public boolean confirmCredentials(String email, String password) {
+        for (int i = 0; i < numEmails; i++) {
+            if(emails[i] == email && passwords[i] == password){
+                return true;
+            }
+        }
         return false;
     }
 
@@ -134,6 +140,14 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
         }
         throw new IllegalArgumentException("Account not found");
     }
+    public Boolean isNewEmail(String email){
+        for (int i=0; i<numEmails; i++){
+            if (emails[i] == email){
+                return false;
+            }
+        }
+        return true;
+    }
 
 
     //----------------- edu.ithaca.dragon.bank.AdvancedAPI methods -------------------------//
@@ -151,13 +165,19 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
             CheckingAccount account = new CheckingAccount(email, startingBalance, acctId);
             accounts[numAccounts] = account;
             numAccounts++;
-            addNewEmail(email);
+            if(isNewEmail(email)) {
+                addEmail(email);
+                //setNewPassword();
+            }
         }
         else if(acctType.equals("Savings")){
             SavingsAccount account = new SavingsAccount(email, startingBalance, acctId);
             accounts[numAccounts] = account;
             numAccounts++;
-            addNewEmail(email);
+            if(isNewEmail(email)) {
+                addEmail(email);
+                //setNewPassword();
+            }
         }
         else{
             throw new IllegalArgumentException("AcctType must be either Savings or Checking");
@@ -172,22 +192,29 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
         setDailyMax(getAccountId(email,type),amount);
     }
 
-    public void addNewEmail(String email){
-        boolean newEmail = true;
-        for (int i = 0; i < numEmails; i++){
-            if(emails[i].equals(email)){
-                newEmail = false;
-                break;
-            }
-        }
-        if (newEmail){
-            emails[numEmails] = email;
-            numEmails++;
-        }
+    public void addEmail(String email){
+        emails[numEmails] = email;
+        numEmails++;
     }
 
     public void closeAccount(String acctId) {
 
+    }
+
+    public void setNewPassword(){
+        Scanner scanner = new Scanner(System.in);  // Create a Scanner object
+        System.out.println("Enter a new Password");
+
+        String password = scanner.nextLine();  // Read user input
+        passwords[numEmails] = password;  // Output user input
+    }
+
+    /**
+     * FOR TESTING ONLY
+     * @param password
+     */
+    public void addPassword(String password){
+        passwords[numEmails-1] = password;
     }
 
 
