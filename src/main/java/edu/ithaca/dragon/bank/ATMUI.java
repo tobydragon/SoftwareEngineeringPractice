@@ -18,16 +18,15 @@ public class ATMUI {
         acctId = sc.nextLine();
         System.out.println("Please type your password:");
         password = sc.nextLine();
-        if (!bank.confirmCredentials(acctId,password)){
-            while (!bank.confirmCredentials(acctId, password)){
-                System.out.println("Please type in your Account ID below:");
-                acctId = sc.nextLine();
-                System.out.println("Please type your password:");
-                password = sc.nextLine();
-            }
-        } else if (bank.checkFrozenAccountExists(acctId)){
+        while (!bank.confirmCredentials(acctId, password)){
+            System.out.println("Invalid ID or password");
+            System.out.println("Please type in your Account ID below:");
+            acctId = sc.nextLine();
+            System.out.println("Please type your password:");
+            password = sc.nextLine();
+        } if (bank.checkFrozenAccountExists(acctId)){
             frozenAcctMessage();
-        } else if (bank.confirmCredentials(acctId,password)){
+        } else {
             displayBalance(acctId);
         }
     }
@@ -49,16 +48,48 @@ public class ATMUI {
         System.out.println("Balance: $" + balance);
         System.out.println("withdraw(w), deposit(d), transfer(t), or quit(q)");
         String input = sc.nextLine();
+        while (input.compareToIgnoreCase("w") != 0 && input.compareToIgnoreCase("d") != 0 && input.compareToIgnoreCase("t") != 0 && input.compareToIgnoreCase("q") != 0){
+            System.out.println("Not a valid action");
+            System.out.println("withdraw(w), deposit(d), transfer(t), or quit(q)");
+            input = sc.nextLine();
+        }
         if (input.compareToIgnoreCase("w") == 0){
-            withdraw(acctId);
+            boolean success = false;
+            while(!success) {
+                try {
+                    withdraw(acctId);
+                } catch (InsufficientFundsException ife) {
+                    System.out.println("Not enough funds to withdraw");
+                } catch (IllegalArgumentException iae) {
+                    System.out.println("Not valid amount");
+                }
+            }
+
+
         } else if (input.compareToIgnoreCase("d") == 0){
-            deposit(acctId);
+            boolean success1 = false;
+            while(!success1) {
+                try {
+                    deposit(acctId);
+                } catch (IllegalArgumentException iae) {
+                    System.out.println("Not valid amount");
+                }
+            }
+
         } else if (input.compareToIgnoreCase("t") == 0){
-            transfer(acctId);
-        } else if (input.compareToIgnoreCase("q") == 0){
-            logIn();
+            boolean success2 = false;
+            while(!success2) {
+                try {
+                    transfer(acctId);
+                } catch (InsufficientFundsException ife) {
+                    System.out.println("Not enough funds to withdraw");
+                } catch (IllegalArgumentException iae) {
+                    System.out.println("Not valid amount or invalid account to send to");
+                }
+            }
         } else {
-            displayBalance(acctId);
+            input = "112";
+            logIn();
         }
     }
     
@@ -66,20 +97,29 @@ public class ATMUI {
         System.out.println("How much would you like to withdraw?");
         double amount = sc.nextDouble();
         bank.withdraw(acctId,amount);
+        displayBalance(acctId);
+
     }
 
-    public void deposit(String acctId){
+    public void deposit(String acctId) throws InsufficientFundsException{
         System.out.println("How much would you like to deposit?");
         double amount = sc.nextDouble();
         bank.deposit(acctId,amount);
+        displayBalance(acctId);
+
     }
 
     public void transfer(String acctId) throws InsufficientFundsException {
+        double amount;
+        String transferTo;
+        String strAmount;
         System.out.println("How much would you like to transfer?");
-        double amount = sc.nextDouble();
+        strAmount = sc.nextLine();
+        amount = Double.parseDouble(strAmount);
         System.out.println("What is the account ID of the account you are transferring to?");
-        String transferTo = sc.nextLine();
+        transferTo = sc.nextLine();
         bank.transfer(acctId, transferTo, amount);
+        displayBalance(acctId);
     }
 
 }

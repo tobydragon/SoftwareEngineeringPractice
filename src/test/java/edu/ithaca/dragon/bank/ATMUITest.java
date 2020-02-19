@@ -7,13 +7,17 @@ public class ATMUITest {
         CentralBank testBank = new CentralBank("NewBank");
         ATMUI testAtmUI = new ATMUI(testBank);
 
-        testBank.createAccount("tester1", 1000.0,"password", false);
+        testBank.createAccount("123", 500.00,"password", false);
 
         //user with just checking
-        testBank.createAccount("tester2", 2500.0,"password",false);
+        testBank.createAccount("789", 2500.0,"comp345",false);
 
         //user with just savings
-        testBank.createAccount("tester3", 2000.0,"password",true);
+        testBank.createAccount("456", 2000.0,"password",true);
+
+        testBank.freezeAccount("789");
+
+
 
 
         testAtmUI.logIn();

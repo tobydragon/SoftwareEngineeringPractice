@@ -2,7 +2,7 @@ Test Script
 
 1) Type ID as "123" and hit enter, type password as "password" and hit enter
     a) Check that it then displays balance of 500.00
-    b) When it asks for action, type in "withdraw" and hit enter
+    b) When it asks for action, type in "w" and hit enter
         1) Type -5.00 and hit enter
             a) Check that it says "invalid amount" and asks for amount again
         2) Type 700.108 and hit enter
@@ -11,14 +11,14 @@ Test Script
             a) Check that it says "insufficient funds" and asks for amount again
         3) Type 50.00
             a) Check that it shows new balance of 450.00 and asks for more actions
-    c) When it asks for action, type in "deposit" and hit enter
+    c) When it asks for action, type in "d" and hit enter
          1) Type -9.901 and hit enter
             a) Check that it says invalid amount and asks for amount again
          2) Type 26.7812 and hit enter
             a) Check that it says invalid amount and asks for amount again
          2) Enter 100.5
             a) Check that it shows new balance of 550.50 and asks for more actions
-    d) When it asks for action, type in "transfer"
+    d) When it asks for action, type in "t"
          1) Type -10.5 and hit enter, type in "456" as account ID and hit enter
             a) Check that it says "invalid amount" and asks for transfer input again
          2) Type 500.112244 and hit enter, type in "456" as account ID and hit enter
@@ -31,7 +31,7 @@ Test Script
             a) Check that it shows new balance of 450.00 and asks for more actions
     e) When it asks for action, type in "aaa"
             a) Check that it says "invalid action" and asks for another action
-    f) When it asks for action, type in "log out"
+    f) When it asks for action, type in "q"
 2) Type ID as "555" and hit enter, type password as "ithaca" and hit enter
     a) Check that it says that you entered invalid credentials
     b) Check that it asks you to log in again

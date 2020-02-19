@@ -31,13 +31,13 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
      * @return if password is valid
      * @throws IllegalArgumentException if account ID does not exist
      */
-    public boolean confirmCredentials(String acctId, String password) throws IllegalArgumentException{
-        if (!bankAccounts.containsKey(acctId)) {
+    public boolean confirmCredentials(String acctId, String password) throws IllegalArgumentException {
+        if (!bankAccounts.containsKey(acctId) && !frozenAccounts.containsKey(acctId)) {
             throw new IllegalArgumentException("Account ID does not exist");
-        } else if (password.equals(bankAccounts.get(acctId).getPassword())) {
-            return true;
+        } else if (bankAccounts.containsKey(acctId)) {
+            return password.equals(bankAccounts.get(acctId).getPassword());
         } else {
-            return false;
+          return password.equals(frozenAccounts.get(acctId).getPassword());
         }
     }
 
