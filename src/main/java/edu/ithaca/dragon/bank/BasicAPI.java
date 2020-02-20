@@ -34,4 +34,6 @@ public interface BasicAPI {
     CheckingAccount findCheckingAcct(String acctId);
 
     Boolean isNewEmail(String email);
+
+    Boolean isAccount(String email, String type);
 }

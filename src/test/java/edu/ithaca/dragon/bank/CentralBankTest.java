@@ -149,11 +149,9 @@ public class CentralBankTest {
         String[] passwords = new String[]{"aa", "bb", "cc", "dd"};
 
         for(int i=0; i< emails.length; i++) {
-            teller.createAccount(emails[i], balances[i], acctTypes[i%2]);
-            myBank.addPassword(passwords[i]);
-            Boolean result = atm.confirmCredentials(emails[i],passwords[i]);
+            teller.createNewUserAccount(emails[i], balances[i], acctTypes[i%2],passwords[i]);
+            boolean result = atm.confirmCredentials(emails[i],passwords[i]);
             assertTrue(result);
         }
-
     }
 }

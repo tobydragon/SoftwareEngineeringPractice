@@ -1,8 +1,6 @@
 package edu.ithaca.dragon.bank;
 
-import java.security.PublicKey;
 import java.util.Collection;
-import java.util.Scanner;
 
 public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
 
@@ -20,7 +18,7 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
 
     public CentralBank() {
 
-        int defaultArraySize = 10; //this may change
+        int defaultArraySize = 100; //this may change
 
         accounts = new BankAccount[defaultArraySize];
         emails = new String[defaultArraySize];
@@ -39,7 +37,7 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
 
     public boolean confirmCredentials(String email, String password) {
         for (int i = 0; i < numEmails; i++) {
-            if(emails[i] == email && passwords[i] == password){
+            if(emails[i].equals(email) && passwords[i].equals(password)){
                 return true;
             }
         }
@@ -107,7 +105,7 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
         return transactionHistory(getAccountId(email,type));
     }
 
-    public String getAccountId(String email, String accountType){
+    public String getAccountId(String email, String accountType) throws IllegalArgumentException{
         for (int i = 0; i < numAccounts; i++){
             if(accounts[i].getEmail().equals(email) && accounts[i].getType().equals(accountType)){
                 return accounts[i].getAcctId();
@@ -116,7 +114,7 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
         throw new IllegalArgumentException("Account not found");
     }
 
-    public BankAccount findAcct(String acctId){
+    public BankAccount findAcct(String acctId)throws IllegalArgumentException{
         for (int i = 0; i < numAccounts; i++){
             if(accounts[i].getAcctId().equals(acctId)){
                 return accounts[i];
@@ -124,7 +122,7 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
         }
         throw new IllegalArgumentException("Account not found");
     }
-    public SavingsAccount findSavingsAcct(String acctId){
+    public SavingsAccount findSavingsAcct(String acctId)throws IllegalArgumentException{
         for (int i = 0; i < numAccounts; i++){
             if(accounts[i].getAcctId().equals(acctId)){
                 return (SavingsAccount) accounts[i];
@@ -132,7 +130,7 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
         }
         throw new IllegalArgumentException("Account not found");
     }
-    public CheckingAccount findCheckingAcct(String acctId){
+    public CheckingAccount findCheckingAcct(String acctId)throws IllegalArgumentException{
         for (int i = 0; i < numAccounts; i++){
             if(accounts[i].getAcctId().equals(acctId)){
                 return (CheckingAccount) accounts[i];
@@ -147,6 +145,15 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
             }
         }
         return true;
+    }
+    public Boolean isAccount(String email, String type){
+        try{
+            getAccountId(email,type);
+            return true;
+        }
+        catch (Exception e){
+            return false;
+        }
     }
 
 
@@ -167,7 +174,6 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
             numAccounts++;
             if(isNewEmail(email)) {
                 addEmail(email);
-                //setNewPassword();
             }
         }
         else if(acctType.equals("Savings")){
@@ -176,8 +182,28 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
             numAccounts++;
             if(isNewEmail(email)) {
                 addEmail(email);
-                //setNewPassword();
             }
+        }
+        else{
+            throw new IllegalArgumentException("AcctType must be either Savings or Checking");
+        }
+    }
+    public void createNewUserAccount(String email, double startingBalance, String acctType, String password) {
+        String acctId = (this.numAccounts + 1) + acctType.substring(0,1);
+
+        if (acctType.equals("Checking")) {
+            CheckingAccount account = new CheckingAccount(email, startingBalance, acctId);
+            accounts[numAccounts] = account;
+            numAccounts++;
+            addEmail(email);
+            addPassword(password);
+        }
+        else if(acctType.equals("Savings")){
+            SavingsAccount account = new SavingsAccount(email, startingBalance, acctId);
+            accounts[numAccounts] = account;
+            numAccounts++;
+            addEmail(email);
+            addPassword(password);
         }
         else{
             throw new IllegalArgumentException("AcctType must be either Savings or Checking");
@@ -199,14 +225,6 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
 
     public void closeAccount(String acctId) {
 
-    }
-
-    public void setNewPassword(){
-        Scanner scanner = new Scanner(System.in);  // Create a Scanner object
-        System.out.println("Enter a new Password");
-
-        String password = scanner.nextLine();  // Read user input
-        passwords[numEmails] = password;  // Output user input
     }
 
     /**
@@ -273,5 +291,16 @@ public class CentralBank implements BasicAPI, AdvancedAPI, AdminAPI {
 
     public int getNumAccounts() {
         return numAccounts;
+    }
+
+    public int getNumEmails(){
+        return numEmails;
+    }
+
+    public String[] getEmails(){
+        return emails;
+    }
+    public String[] getPasswords(){
+        return passwords;
     }
 }

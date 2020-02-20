@@ -10,5 +10,5 @@ public interface AdvancedAPI extends BasicAPI {
     void setDailyMax(String acctId, float amount) throws InsufficientFundsException;
     void setDailyMax(String email, String type, float amount) throws InsufficientFundsException;
 
-    void setNewPassword();
+    void createNewUserAccount(String email, double startingBalance, String acctType, String password);
 }
