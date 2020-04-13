@@ -5,6 +5,20 @@ public class BankAccount {
     private String email;
     private double balance;
 
+    //----------used by json libraries
+    public BankAccount(){
+
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+    //---------- end used by json libraries
+
     /**
      * @throws IllegalArgumentException if email is invalid
      */

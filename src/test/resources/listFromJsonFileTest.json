@@ -1,0 +1,13 @@
+[ {
+  "email" : "a@b.com",
+  "balance" : 500.0
+}, {
+  "email" : "b@c.com",
+  "balance" : 1000.0
+}, {
+  "email" : "d@e.com",
+  "balance" : 5000.0
+}, {
+  "email" : "f@g.com",
+  "balance" : 10000.0
+} ]
