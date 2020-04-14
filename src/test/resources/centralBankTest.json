@@ -1,0 +1,20 @@
+{
+  "accountMap" : {
+    "f@g.com" : {
+      "email" : "f@g.com",
+      "balance" : 10000.0
+    },
+    "d@e.com" : {
+      "email" : "d@e.com",
+      "balance" : 5000.0
+    },
+    "a@b.com" : {
+      "email" : "a@b.com",
+      "balance" : 500.0
+    },
+    "b@c.com" : {
+      "email" : "b@c.com",
+      "balance" : 1000.0
+    }
+  }
+}
