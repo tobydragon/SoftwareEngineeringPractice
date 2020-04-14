@@ -1,0 +1,16 @@
+{
+  "accountMap" : {
+    "bob@gmail.com" : {
+      "email" : "bob@gmail.com",
+      "balance" : 1120.0
+    },
+    "carole@yahoo.com.br" : {
+      "email" : "carole@yahoo.com",
+      "balance" : 5000.0
+    },
+    "janice@gmail.com.de" : {
+      "email" : "janice@gmail.com.de",
+      "balance" : 123.75
+    }
+  }
+}
